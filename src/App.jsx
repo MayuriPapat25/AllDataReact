@@ -3,7 +3,7 @@ import "./App.css";
 
 import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy/cart-modal";
-// import ProfessionalCartHome from "./Cart/professional-cart";
+import ProfessionalCartHome from "./Cart/professional";
 import CartPage from "./Cart/diy"
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <header className="bg-gray-100 shadow-md p-4 flex gap-6">
         <Link to="/" className="text-blue-600 hover:underline">Home</Link>
         <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
-        {/* <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link> */}
+        <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
       </header>
 
       <main className="p-6">
@@ -25,7 +25,7 @@ function App() {
           <Route path="/diy" element={<DIYCartHome />} />
 
           {/* Professional Cart page */}
-          {/* <Route path="/professional" element={<ProfessionalCartHome />} /> */}
+          <Route path="/professional" element={<ProfessionalCartHome />} />
 
           <Route path="/diy-cart" element={<CartPage />} />
         </Routes>
