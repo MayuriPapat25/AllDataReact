@@ -1,33 +1,37 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import "./App.css";
 
-import './App.css'
-import { InputField } from './components/InputField/inputField'
-import { PhoneField } from './components/PhoneNumberField/phoneNumberField'
-import { SelectField } from './components/SelectField/selectField'
+import HomePage from "./HomePage";
+import DIYCartHome from "./Cart/diy/cart-modal";
+// import ProfessionalCartHome from "./Cart/professional-cart";
+import CartPage from "./Cart/diy"
 
 function App() {
-
-  const handleInputChange = (field, value) => {
-    console.log('field, value', field, value)
-    // setFormData((prev) => ({ ...prev, [field]: value }))
-
-    // if (errors[field as keyof ValidationErrors]) {
-    //   setErrors((prev) => ({ ...prev, [field]: undefined }))
-    // }
-  }
   return (
-    <div>
-      <InputField label="Name" required />
-      <PhoneField label="Business Phone Number" required placeholder="9999889889" />
-      <PhoneField
-            label="Business Phone Number"
-            required
-            value={9999889889}
-            onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-            // error={errors.phoneNumber}
-          />
-      <SelectField label="Business Type" required options={[{ value: '1', label: '1' }, { value: '2', label: '2' }]} />
-    </div>
-  )
+    <Router>
+      {/* Header with Navigation */}
+      <header className="bg-gray-100 shadow-md p-4 flex gap-6">
+        <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+        <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
+        {/* <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link> */}
+      </header>
+
+      <main className="p-6">
+        <Routes>
+          {/* Home page */}
+          <Route path="/" element={<HomePage />} />
+
+          {/* DIY Cart page */}
+          <Route path="/diy" element={<DIYCartHome />} />
+
+          {/* Professional Cart page */}
+          {/* <Route path="/professional" element={<ProfessionalCartHome />} /> */}
+
+          <Route path="/diy-cart" element={<CartPage />} />
+        </Routes>
+      </main>
+    </Router>
+  );
 }
 
-export default App
+export default App;
