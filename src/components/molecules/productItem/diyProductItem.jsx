@@ -1,4 +1,4 @@
-import { PlanDropdown } from "../../atoms/Dropdown/plan-dropdown"
+import { PlanDropdown } from "../../atoms/Dropdown/planDropdown"
 import { RemoveLink } from "../../atoms/links/remove-link"
 
 export function ProductSingleItem({ status, description, expiration, plan, price, onPlanChange, onRemove }) {

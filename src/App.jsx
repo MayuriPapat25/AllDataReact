@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
 import HomePage from "./HomePage";
-import DIYCartHome from "./Cart/diy/cart-modal";
+import DIYCartHome from "./Cart/diy/cartModal";
 import ProCartHome from "./Cart/professional";
 import CartPage from "./Cart/diy"
 
