@@ -1,4 +1,4 @@
-import { CartButtons } from "./components/atoms/Buttons/cartButtons";
+import CartButtons from "./components/atoms/Buttons/cartButtons";
 import { InputField } from "./components/atoms/InputField";
 import { PhoneField } from "./components/atoms/PhoneNumberField";
 import { SelectField } from "./components/atoms/SelectField";

@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Steps } from "../../components/molecules/steps/cartSteps"
-import { RegionDropdown } from "../../components/atoms/Dropdown/region-dropdown"
-import { ProductSingleItem } from "../../components/molecules/productItem/diyProductItem"
-import { CartButtons } from "../../components/atoms/Buttons/cartButtons"
-import { InputWithButton } from "../../components/atoms/inputWithButton/inputWithButton"
+import { Steps } from "../../components/molecules/steps/cartSteps" // relative path correct
+import { AccessPointDropdown } from "../../components/atoms/Dropdown/AccessPointDropdown" // use AccessPointDropdown as RegionDropdown
+import { ProductSingleItem } from "../../components/molecules/productItem/diyProductItem" // matches your path
+import CartButtons from "../../components/atoms/Buttons/cartButtons" // assuming CartButtons is implemented in LinkButton
+import { InputWithButton } from "../../components/atoms/InputField/InputWithButton" // updated path
 
 export default function CartPage() {
   const [region, setRegion] = useState("usa")
@@ -57,7 +57,7 @@ export default function CartPage() {
         <h1 className="text-2xl md:text-3xl font-bold mb-6">CART</h1>
         <div className="flex justify-center">
           <div className="w-full max-w-xs">
-            <RegionDropdown value={region} onValueChange={setRegion} />
+            <AccessPointDropdown value={region} onValueChange={setRegion} />
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function CartPage() {
         <div className="bg-gray-50 p-4 md:p-6 border-t">
           <div className="flex justify-end">
             <div className="w-full md:w-80">
-              {/* Promo Code (moved here) */}
+              {/* Promo Code */}
               <div className="border-t pt-4 mt-4">
                 <div className="text-sm font-medium mb-2">Add Promo Code</div>
                 <InputWithButton value={promoCode} onChange={setPromoCode} />

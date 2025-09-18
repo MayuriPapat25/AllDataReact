@@ -1,5 +1,4 @@
 import { HeaderWithCart } from "../../../components/Header/diyHeader";
-import "./cart-modal.css";
 
 export default function DIYCartHome() {
   return (
