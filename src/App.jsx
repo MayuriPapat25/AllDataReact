@@ -3,7 +3,7 @@ import "./App.css";
 
 import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy/cart-modal";
-import ProfessionalCartHome from "./Cart/professional";
+import ProCartHome from "./Cart/professional";
 import CartPage from "./Cart/diy"
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
           <Route path="/diy" element={<DIYCartHome />} />
 
           {/* Professional Cart page */}
-          <Route path="/professional" element={<ProfessionalCartHome />} />
+          <Route path="/professional" element={<ProCartHome />} />
 
           <Route path="/diy-cart" element={<CartPage />} />
         </Routes>

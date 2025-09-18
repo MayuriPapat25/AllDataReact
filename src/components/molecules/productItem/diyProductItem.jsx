@@ -1,7 +1,7 @@
 "use client"
 
-import { PlanDropdown } from "../Dropdown/plan-dropdown"
-import { RemoveLink } from "../links/remove-link"
+import { PlanDropdown } from "../../atoms/Dropdown/plan-dropdown"
+import { RemoveLink } from "../../atoms/links/remove-link"
 
 export function ProductSingleItem({ status, description, expiration, plan, price, onPlanChange, onRemove }) {
   return (

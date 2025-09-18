@@ -1,7 +1,7 @@
-import { CartButtons } from "./components/Buttons/cartButtons";
-import { InputField } from "./components/InputField/inputField";
-import { PhoneField } from "./components/PhoneNumberField/phoneNumberField";
-import { SelectField } from "./components/SelectField/selectField";
+import { CartButtons } from "./components/atoms/Buttons/cartButtons";
+import { InputField } from "./components/atoms/InputField";
+import { PhoneField } from "./components/atoms/PhoneNumberField";
+import { SelectField } from "./components/atoms/SelectField";
 
 export default function HomePage() {
   const handleInputChange = (field, value) => {

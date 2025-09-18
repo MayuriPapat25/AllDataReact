@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 import { Trash2 } from "lucide-react"
-import { AccessPointDropdown } from "../Dropdown/access-point-dropdown"
+import { AccessPointDropdown } from "../../atoms/Dropdown/access-point-dropdown"
 
 export function ProductItemList({ product }) {
   const [quantity, setQuantity] = useState(1);
