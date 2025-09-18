@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CartDropdown } from "../atoms/Dropdown/cart-dropdown";
+import { CartDropdown } from "../atoms/Dropdown/cartDropdown";
 
 export function HeaderWithCart() {
   const [isCartOpen, setIsCartOpen] = useState(false);

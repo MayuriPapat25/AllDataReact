@@ -1,5 +1,5 @@
 import { PlanDropdown } from "../../atoms/Dropdown/planDropdown"
-import { RemoveLink } from "../../atoms/links/remove-link"
+import { RemoveLink } from "../../atoms/links/removeLink"
 
 export function ProductSingleItem({ status, description, expiration, plan, price, onPlanChange, onRemove }) {
   return (
