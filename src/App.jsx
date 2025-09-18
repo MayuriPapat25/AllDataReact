@@ -1,34 +1,37 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import "./App.css";
 
-import './App.css'
-import { BusinessInformationForm } from './components/molecules/BusinessInformationForm'
-import { InputField } from './components/atoms/InputField'
-import { PhoneField } from './components/atoms/PhoneNumberField'
-import { SelectField } from './components/atoms/SelectField'
-import { VatField } from './components/atoms/VatField'
-// import { InputField } from './components/InputField/inputField'
-// import { PhoneField } from './components/PhoneNumberField/phoneNumberField'
-// import { SelectField } from './components/SelectField/selectField'
-import { SubscriptionCard } from './components/molecules/SubscriptionCard'
-import { BillingForm } from './components/molecules/BillingForm'
-import BillingInformationWithEdit from './components/molecules/BillInfoWithEdit'
+import HomePage from "./HomePage";
+import DIYCartHome from "./Cart/diy/cart-modal";
+import ProCartHome from "./Cart/professional";
+import CartPage from "./Cart/diy"
 
 function App() {
-  const handleEdit = () => {
-    console.log("Edit billing information clicked")
-    // Add your edit logic here
-  }
-
-
   return (
-    <div >
-      {/* <BillingInformationWithEdit /> */}
-      <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl py-8 bg-[#fafafa] px-20">
-          <BillingInformationWithEdit onEdit={handleEdit} />
-        </div>
-      </div>
-    </div>
-  )
+    <Router>
+      {/* Header with Navigation */}
+      <header className="bg-gray-100 shadow-md p-4 flex gap-6">
+        <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+        <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
+        <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
+      </header>
+
+      <main className="p-6">
+        <Routes>
+          {/* Home page */}
+          <Route path="/" element={<HomePage />} />
+
+          {/* DIY Cart page */}
+          <Route path="/diy" element={<DIYCartHome />} />
+
+          {/* Professional Cart page */}
+          <Route path="/professional" element={<ProCartHome />} />
+
+          <Route path="/diy-cart" element={<CartPage />} />
+        </Routes>
+      </main>
+    </Router>
+  );
 }
 
-export default App
+export default App;
