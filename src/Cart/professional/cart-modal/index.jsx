@@ -1,42 +1,22 @@
 "use client"
 
-import { useState } from "react"
-import { CartDropdown } from "../../../components/organisms/CartDropdown" // updated path
-import { Button } from "../../../components/atoms/Buttons/Button" // updated path
+import { CartDropdown } from "../../../components/organisms/CartDropdown"
 
-export default function Home() {
-  const [isCartOpen, setIsCartOpen] = useState(false)
-
+export default function CartModal({ onClose }) {
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">ALLDATA Cart Demo</h1>
+    <div className="h-full flex flex-col">
+      <div className="p-6 border-b flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-gray-800">Your Cart</h2>
+        <button
+          onClick={onClose}
+          className="text-gray-500 hover:text-gray-800 transition"
+        >
+          ✕
+        </button>
+      </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Cart Subscription Preview</h2>
-          <p className="text-gray-600 mb-6">Click the button below to open the cart dropdown.</p>
-
-          <Button onClick={() => setIsCartOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2">
-            Open Cart ({3} items)
-          </Button>
-        </div>
-
-        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-medium text-gray-800 mb-3">Component Structure</h3>
-          <div className="text-sm text-gray-600 space-y-2">
-            <p>
-              <strong>Atoms:</strong> Button, Input, Select, Badge
-            </p>
-            <p>
-              <strong>Molecules:</strong> CartItem, CartSection, CartSummary, PromoCodeSection, SubscriptionTerms
-            </p>
-            <p>
-              <strong>Organisms:</strong> CartDropdown (combines all molecules into the complete cart experience)
-            </p>
-          </div>
-        </div>
-
-        <CartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <div className="flex-1 overflow-y-auto">
+        <CartDropdown isOpen={true} onClose={onClose} />
       </div>
     </div>
   )
