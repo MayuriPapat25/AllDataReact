@@ -7,6 +7,7 @@ import { InputField } from "../../atoms/InputField";
 import { SelectField } from "../../atoms/SelectField";
 import { PhoneField } from "../../atoms/PhoneNumberField";
 import { VatField } from "../../atoms/VatField";
+import { Button } from "../../atoms/Buttons/Button"
 
 const phoneTypeOptions = [
   { value: "home", label: "Home" },
@@ -230,9 +231,9 @@ export function BusinessInformationForm() {
 
         {/* Submit Button */}
         <div className="pt-4">
-          <button type="submit" className="w-full">
+          <Button type="submit" variant="primary" size="md" className="w-full">
             Submit Business Information
-          </button>
+          </Button>
         </div>
       </form>
     </div>

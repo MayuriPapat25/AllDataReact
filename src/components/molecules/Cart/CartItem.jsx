@@ -36,6 +36,7 @@ export function CartItem({
         </div>
         {description && <p className="text-xs text-gray-500 ml-8">{description}</p>}
       </div>
+
       <div className="flex items-center gap-3 ml-4">
         <div className="text-right">
           {originalPrice && originalPrice !== price && (
@@ -43,10 +44,13 @@ export function CartItem({
           )}
           <div className="text-sm font-medium text-gray-900">${price.toFixed(2)}</div>
         </div>
+
+        {/* Remove button using shared Button */}
         <Button
+          onClick={() => onRemove(id)}
           variant="ghost"
           size="sm"
-          onClick={() => onRemove(id)}
+          aria-label="Remove item"
           className="text-gray-400 hover:text-red-500 p-1"
         >
           ×

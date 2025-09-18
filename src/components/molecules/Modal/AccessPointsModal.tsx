@@ -1,3 +1,5 @@
+import { Button } from "../../atoms/Buttons/Button"
+
 export function AccessPointsModal({ isOpen, onClose }) {
   if (!isOpen) return null
 
@@ -8,9 +10,15 @@ export function AccessPointsModal({ isOpen, onClose }) {
         <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-blue-600">What Are Access Points?</h2>
-            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl font-bold">
+            <Button
+              onClick={onClose}
+              variant="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-gray-600 text-xl font-bold p-0"
+              aria-label="Close modal"
+            >
               ×
-            </button>
+            </Button>
           </div>
 
           <div className="p-6 space-y-4">
@@ -35,12 +43,14 @@ export function AccessPointsModal({ isOpen, onClose }) {
           </div>
 
           <div className="p-6 border-t border-gray-200">
-            <button
+            <Button
               onClick={onClose}
-              className="w-full px-6 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              variant="secondary"
+              size="md"
+              className="w-full"
             >
               CLOSE
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,13 +1,24 @@
 import { cn } from "../../../../utils/utils"
 
-export function Button({ variant = "primary", size = "md", className, children, ...props }) {
-  const baseStyles = "font-medium rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
+export function Button({
+  children,
+  onClick,
+  type = "button",
+  variant = "primary",
+  size = "md",
+  className = "",
+  disabled = false,
+  ...props
+}) {
+  const baseClasses =
+    "font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
 
   const variants = {
-    primary: "bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500",
-    secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500",
-    outline: "border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
+    primary: "bg-orange-500 hover:bg-orange-600 text-white focus:ring-orange-500",
+    secondary: "bg-gray-200 hover:bg-gray-300 text-gray-900 focus:ring-gray-500",
+    outline: "border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 focus:ring-gray-500",
     ghost: "text-gray-700 hover:bg-gray-100 focus:ring-gray-500",
+    link: "text-blue-600 underline hover:text-blue-800 focus:ring-blue-500",
   }
 
   const sizes = {
@@ -17,8 +28,29 @@ export function Button({ variant = "primary", size = "md", className, children, 
   }
 
   return (
-    <button className={cn(baseStyles, variants[variant], sizes[size], className)} {...props}>
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(
+        baseClasses,
+        variants[variant],
+        sizes[size],
+        disabled && "opacity-50 cursor-not-allowed",
+        className
+      )}
+      {...props}
+    >
       {children}
     </button>
   )
 }
+
+
+
+{/* <Button variant="primary">Save</Button>
+<Button variant="secondary">Cancel</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="link">Go to Page</Button>
+<Button variant="primary" disabled>Disabled</Button> */}
