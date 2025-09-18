@@ -1,5 +1,3 @@
-"use client"
-
 export function AccessPointsModal({ isOpen, onClose }) {
   if (!isOpen) return null
 

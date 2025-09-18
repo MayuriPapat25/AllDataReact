@@ -1,5 +1,3 @@
-"use client"
-
 export function AccessPointDropdown({ value, onChange, className = "" }) {
   return (
     <div className={`flex items-center ${className}`}>

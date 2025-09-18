@@ -1,5 +1,3 @@
-"use client"
-
 import { CartItem } from "./CartItem" // already correct if CartSection and CartItem are in the same folder
 
 export function CartSection({ title, items, onRemoveItem }) {

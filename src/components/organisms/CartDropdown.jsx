@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { RadioButton } from "../atoms/RadioButton/RadioButton"
 import { ProductIcon, DeleteIcon } from "../atoms/Icon/Icon"

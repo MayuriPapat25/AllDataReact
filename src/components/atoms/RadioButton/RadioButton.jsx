@@ -1,5 +1,3 @@
-"use client"
-
 export function RadioButton({ name, value, checked, onChange, label, className = "" }) {
   return (
     <label className={`flex items-center cursor-pointer ${className}`}>

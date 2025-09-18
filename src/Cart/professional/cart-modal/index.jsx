@@ -1,5 +1,3 @@
-"use client"
-
 import { CartDropdown } from "../../../components/organisms/CartDropdown"
 
 export default function CartModal({ onClose }) {

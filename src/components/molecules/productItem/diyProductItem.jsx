@@ -1,5 +1,3 @@
-"use client"
-
 import { PlanDropdown } from "../../atoms/Dropdown/plan-dropdown"
 import { RemoveLink } from "../../atoms/links/remove-link"
 

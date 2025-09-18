@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "../../../components/atoms/Buttons/Button" // updated path
 import { Badge } from "../../../components/atoms/Badge/Badge" // updated path
 
