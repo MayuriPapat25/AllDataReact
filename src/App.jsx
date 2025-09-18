@@ -9,32 +9,23 @@ import { VatField } from './components/atoms/VatField'
 // import { PhoneField } from './components/PhoneNumberField/phoneNumberField'
 // import { SelectField } from './components/SelectField/selectField'
 import { SubscriptionCard } from './components/molecules/SubscriptionCard'
+import { BillingForm } from './components/molecules/BillingForm'
+import BillingInformationWithEdit from './components/molecules/BillInfoWithEdit'
+
 function App() {
+  const handleEdit = () => {
+    console.log("Edit billing information clicked")
+    // Add your edit logic here
+  }
 
-
-  const jobTitleOptions = [
-    { value: "manager", label: "Manager" },
-    { value: "director", label: "Director" },
-    { value: "owner", label: "Owner" },
-    { value: "employee", label: "Employee" },
-    { value: "other", label: "Other" },
-  ];
 
   return (
-    <div className="min-h-screen bg-background py-8">
-      <InputField label="Business/Shop Name" required value="" onChange={() => { }} error="" />
-      <PhoneField label="Business Phone Number" required value="" onChange={() => { }} error="" />
-      <VatField label="VAT Number" value="" onChange={() => { }} error="" />
-      <SelectField label="Job Title" required options={jobTitleOptions} value="" onChange={() => { }} error="" />
-      <BusinessInformationForm />
-      <div className="container mx-auto max-w-md">
-        <SubscriptionCard
-          title="ALLDATA DIY"
-          description="2018 Audi A3 Sportback e-tron (8VA) L4-1.4L Turbo (CXUA) Plugin Hybrid"
-          accessDuration="1 Month Access"
-          price="$19.99"
-          priceNote="one time charge"
-        />
+    <div >
+      {/* <BillingInformationWithEdit /> */}
+      <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+        <div className="mx-auto max-w-4xl py-8 bg-[#fafafa] px-20">
+          <BillingInformationWithEdit onEdit={handleEdit} />
+        </div>
       </div>
     </div>
   )
