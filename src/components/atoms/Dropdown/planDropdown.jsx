@@ -1,5 +1,3 @@
-"use client"
-
 export function PlanDropdown({ value, onValueChange }) {
   const plans = [
     { value: "1-year", label: "1 Year" },

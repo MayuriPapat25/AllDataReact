@@ -1,5 +1,3 @@
-"use client"
-
 import { Select } from "../../../components/atoms/SelectField" // updated path
 
 export function SubscriptionTerms({ selectedTerm, onTermChange }) {

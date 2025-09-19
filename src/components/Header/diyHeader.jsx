@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { CartDropdown } from "../atoms/Dropdown/cart-dropdown";
+import { useState } from "react"
+import { CartDropdown } from "../atoms/Dropdown/cartDropdown"
+import { Button } from "../atoms/Buttons/Button"
 
 export function HeaderWithCart() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false)
 
   return (
     <header className="bg-gray-100 border-b">
@@ -10,9 +11,11 @@ export function HeaderWithCart() {
         <h1 className="text-xl font-bold">ALLDATA DIY</h1>
 
         <div className="relative">
-          <button
+          <Button
             onClick={() => setIsCartOpen(!isCartOpen)}
-            className="relative p-2 rounded hover:bg-gray-200"
+            variant="ghost"
+            size="sm"
+            className="relative p-2 rounded"
           >
             <svg
               width="24"
@@ -32,11 +35,11 @@ export function HeaderWithCart() {
             <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
               2
             </span>
-          </button>
+          </Button>
 
           <CartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </div>
       </div>
     </header>
-  );
+  )
 }

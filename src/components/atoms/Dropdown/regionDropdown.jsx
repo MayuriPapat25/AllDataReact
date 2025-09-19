@@ -1,5 +1,3 @@
-"use client"
-
 export function RegionDropdown({ value, onValueChange }) {
   const regions = [
     { value: "usa", label: "USA" },

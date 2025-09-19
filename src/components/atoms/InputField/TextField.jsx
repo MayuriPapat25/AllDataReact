@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react";
 
 export function TextField({ placeholder, value, onChange, className = "" }) {

@@ -1,5 +1,3 @@
-"use client"
-
 import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton" // updated path
 import { CART_TEXT } from "@/constants/text"
 
