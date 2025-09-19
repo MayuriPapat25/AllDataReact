@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import StepContentUSAnonyCheckout from "../components/molecules/StepContentUSAnonyCheckout"
-import CheckoutSteps from "../components/atoms/checkoutSteps"
+import CheckoutSteps from "../components/atoms/CheckoutSteps"
 
 const Checkout = () => {
     const [currentStep, setCurrentStep] = useState(1)
