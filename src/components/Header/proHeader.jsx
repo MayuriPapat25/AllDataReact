@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { CartDropdown } from "../organisms/CartDropdown"
+import { CartDropdown } from "../organisms/proCartDropdown"
 import { Button } from "../atoms/Buttons/Button"
 
 export default function ProHeader() {
