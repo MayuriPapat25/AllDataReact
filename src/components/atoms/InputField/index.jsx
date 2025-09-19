@@ -2,7 +2,7 @@ import React, { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
 const InputField = forwardRef(
-  ({ label, required, optional, error, className, id, handleChange, type = "text", ...props }, ref) => {
+  ({ label, required, optional, error, helperText, className, id, onChange, type = "text", ...props }, ref) => {
     const describedById = id ? `${id}-error` : undefined
     return (
       <div className="space-y-2">
@@ -30,7 +30,7 @@ const InputField = forwardRef(
             aria-invalid={Boolean(error)}
             aria-describedby={describedById}
             {...props}
-            onChange={handleChange}
+            onChange={onChange}
           />
         </div>
         {
@@ -38,7 +38,7 @@ const InputField = forwardRef(
             {error || "_"}
           </p>
         }
-
+        {helperText && <p className="text-sm text-gray-500 leading-relaxed">{helperText}</p>}
       </div>
     )
   },

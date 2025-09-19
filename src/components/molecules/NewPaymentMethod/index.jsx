@@ -68,7 +68,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.cardNumber}
                 required
-                className="md:col-span-2"
+                className="md:col-span-2 border-gray-300"
             />
             <div className="grid grid-cols-2">
                 <SelectField
@@ -80,7 +80,7 @@ const NewPaymentMethod = (props) => {
                     error={errors.expirationMonth}
                     required
                     placeholder="Month"
-                    className="w-1/2"
+                    className="w-1/2 border-gray-300"
                 />
                 <SelectField
                     label=""
@@ -91,7 +91,7 @@ const NewPaymentMethod = (props) => {
                     error={errors.expirationYear}
                     required
                     placeholder="Year"
-                    className="mt-7 w-1/2"
+                    className="mt-7 w-1/2 border-gray-300"
                 />
             </div>
             <div className="grid grid-cols-2 gap-4" >
@@ -102,6 +102,7 @@ const NewPaymentMethod = (props) => {
                     onChange={handleInputChange}
                     error={errors.cvv}
                     required
+                    className="border-gray-300"
                 />
                 <img src="/visa-logo-generic.png" alt="Visa" className="h-8 w-12 object-contain mt-10" />
             </div>
@@ -113,6 +114,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.cardholderName}
                 required
+                className="border-gray-300"
             />
 
             <SelectField
@@ -123,7 +125,7 @@ const NewPaymentMethod = (props) => {
                 options={countries}
                 error={errors.country}
                 required
-                className="w-1/2"
+                className="w-1/2 border-gray-300"
             />
 
             <InputField
@@ -133,6 +135,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.state}
                 required
+                className='border-gray-300'
             />
             <InputField
                 label="Address 1 (Only enter A-Z, 0-9, hyphens, underscores, & periods)"
@@ -141,6 +144,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.address1}
                 required
+                className='border-gray-300'
             />
 
             <InputField
@@ -149,6 +153,7 @@ const NewPaymentMethod = (props) => {
                 value={formData.address2}
                 onChange={handleInputChange}
                 error={errors.address2}
+                className='border-gray-300'
             />
 
             <InputField
@@ -158,6 +163,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.city}
                 required
+                className='border-gray-300'
             />
             <InputField
                 label="Postal Code"
@@ -166,6 +172,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.postalCode}
                 required
+                className='border-gray-300'
             />
             <InputField
                 label="Email Address"
@@ -175,6 +182,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.email}
                 required
+                className='border-gray-300'
             />
 
             <div className="flex items-center text-sm text-gray-600 justify-end">

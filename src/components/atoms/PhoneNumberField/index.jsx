@@ -2,7 +2,7 @@ import React, { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
 const PhoneField = forwardRef(
-    ({ label, required, optional, error, countryCode, handleChaneg, className, ...props }, ref) => {
+    ({ label, required, optional, error, countryCode, className, onChange, ...props }, ref) => {
         return (
             <div className="space-y-2">
                 {
@@ -32,8 +32,8 @@ const PhoneField = forwardRef(
                             error && "border-destructive",
                             className,
                         )}
+                        onChange={onChange}
                         {...props}
-                        onChange={handleChaneg}
                     />
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}

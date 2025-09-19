@@ -1,21 +1,11 @@
-
 import { cn } from "../../../../utils/utils"
 
-
-const steps = [
-    { number: 1, label: "ACCOUNT" },
-    { number: 2, label: "COMPANY & BILLING" },
-    { number: 3, label: "REVIEW" },
-    { number: 4, label: "TERMS" },
-    { number: 5, label: "ORDER COMPLETE" },
-]
-
-const CheckoutSteps = ({ currentStep }) => {
+const CheckoutSteps = ({ currentStep, steps }) => {
     return (
         <div className="w-full max-w-4xl mx-auto px-4 py-8">
             <div className="overflow-x-auto">
                 <div className="flex items-start justify-center relative min-w-[600px] md:min-w-0 gap-4 md:gap-8 lg:gap-12">
-                    {steps.map((step, index) => {
+                    {steps.length > 0 && steps.map((step, index) => {
                         const isActive = step.number <= currentStep
                         const isCurrent = step.number === currentStep
                         const isLineCompleted = currentStep > step.number

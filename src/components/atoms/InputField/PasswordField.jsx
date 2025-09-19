@@ -3,6 +3,9 @@ import { useState } from "react"
 const PasswordField = ({
     id,
     label,
+    value = "",
+    onChange,
+    error,
     placeholder = "••••••••••",
     helperText,
     className = "",
@@ -31,10 +34,19 @@ const PasswordField = ({
                 <input
                     id={id}
                     type={showPassword ? "text" : "password"}
+                    value={value}
+                    onChange={(e) => onChange?.(e.target.value)}
                     placeholder={placeholder}
-                    className="px-3 py-2 text-base border-2 border-gray-300 focus:border-blue-500 pr-12 w-full"
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={id ? `${id}-error` : undefined}
+                    className={`px-3 py-2 text-base border-2 pr-12 w-full ${error ? "border-red-500 focus:border-red-500" : "border-gray-300 focus:border-blue-500"}`}
                 />
             </div>
+            {error && (
+                <p id={id ? `${id}-error` : undefined} className="text-sm text-red-500">
+                    {error}
+                </p>
+            )}
             {helperText && <p className="text-sm text-gray-500 leading-relaxed">{helperText}</p>}
         </div>
     )

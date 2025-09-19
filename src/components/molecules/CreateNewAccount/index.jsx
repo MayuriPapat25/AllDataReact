@@ -73,7 +73,6 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
     }
 
     const handleContinue = () => {
-        console.log('on click handleContinue')
         const isFormValid = validateForm()
 
         if (isFormValid && agreedToTerms) {
@@ -90,6 +89,9 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
         }
     }
 
+    const isAllFilled =
+        Boolean(formData.email && formData.phone && formData.username && formData.password && formData.confirmPassword && agreedToTerms)
+
     return (
         <div className="max-w-4xl mx-auto p-6 md:p-8">
             <div className="mb-8">
@@ -104,6 +106,7 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
                     <InputField
                         label="Primary Email Address for General Account Communication"
                         required
+                        id="email"
                         onChange={(e) => handleInputChange("email", e.target.value)}
                         error={errors.email}
                         className="w-full"
@@ -124,6 +127,7 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
                     <InputField
                         label="Username"
                         required
+                        id="username"
                         onChange={(e) => handleInputChange("username", e.target.value)}
                         error={errors.username}
                         className="w-full"
@@ -158,14 +162,15 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-6">
                     <Button
-                        handleClick={handleContinue}
+                        onClick={handleContinue}
                         className="h-12 px-8 hover:bg-gray-50 bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"
+                        disabled={!isAllFilled}
                     >
                         CONTINUE TO COMPANY & BILLING
                     </Button>
                     {onCancel && (
                         <Button
-                            handleClick={onCancel}
+                            onClick={onCancel}
                             variant="outline"
                             className="h-12 px-8 border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"
                             variants='outline'
