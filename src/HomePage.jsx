@@ -5,6 +5,7 @@ import PhoneField from "./components/atoms/PhoneNumberField";
 import SelectField from "./components/atoms/SelectField";
 import CheckoutSteps from "./components/atoms/checkoutSteps";
 import FormFileUpload from './components/atoms/FileUpload'
+import AccountSidebar from "./components/molecules/AccountSidebar";
 
 export default function HomePage() {
   const handleInputChange = (field, value) => {
@@ -15,6 +16,28 @@ export default function HomePage() {
   const handleStepClick = (stepNumber) => {
     setCurrentStep(stepNumber)
   }
+
+  const accountDetails = [
+    {
+      id: 1,
+      label: "Account Information",
+      link: "#",
+      isActive: true,
+    },
+    {
+      id: 2,
+      label: "Contact Information",
+      link: "#",
+      isActive: false,
+    },
+    {
+      id: 3,
+      label: "Legal Agreements & Contracts",
+      link: "#",
+      isActive: false,
+    }
+  ];
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Welcome to the Demo components.</h1>
@@ -46,6 +69,7 @@ export default function HomePage() {
       />
 
       <CartButtons />
+      <AccountSidebar headline="Account Details" className="sidebar" accountDetails={accountDetails} />
 
       {/* File Upload */}
       <FormFileUpload
@@ -54,6 +78,10 @@ export default function HomePage() {
         accept=".pdf,.jpg,.jpeg,.png"
         helperText="Warning: Reseller Certificate does not qualify for tax exemption."
       />
+
+      <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
+        <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} />
+      </div>
 
     </div>
 
