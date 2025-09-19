@@ -2,7 +2,7 @@ import React, { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
 const PhoneField = forwardRef(
-    ({ label, required, optional, error, countryCode = "+49", className, ...props }, ref) => {
+    ({ label, required, optional, error, countryCode, handleChaneg, className, ...props }, ref) => {
         return (
             <div className="space-y-2">
                 {
@@ -26,13 +26,14 @@ const PhoneField = forwardRef(
                         ref={ref}
                         type="tel"
                         className={cn(
-                            "flex-1 px-3 py-2 border border-input bg-background rounded-r-md text-sm",
+                            "flex-1 px-3 py-2 border border-input bg-background text-sm",
                             "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
                             "placeholder:text-muted-foreground",
                             error && "border-destructive",
                             className,
                         )}
                         {...props}
+                        onChange={handleChaneg}
                     />
                 </div>
                 {error && <p className="text-sm text-red-500">{error}</p>}
@@ -43,4 +44,4 @@ const PhoneField = forwardRef(
 
 PhoneField.displayName = "PhoneField"
 
-export { PhoneField }
+export default PhoneField 

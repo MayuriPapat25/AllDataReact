@@ -3,9 +3,9 @@
 import React from "react";
 
 import { useState } from "react";
-import { InputField } from "../../atoms/InputField";
-import { SelectField } from "../../atoms/SelectField";
-import { PhoneField } from "../../atoms/PhoneNumberField";
+import InputField from "../../atoms/InputField";
+import SelectField from "../../atoms/SelectField";
+import PhoneField from "../../atoms/PhoneNumberField";
 import { VatField } from "../../atoms/VatField";
 
 const phoneTypeOptions = [

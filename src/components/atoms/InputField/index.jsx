@@ -2,7 +2,7 @@ import React, { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
 const InputField = forwardRef(
-  ({ label, required, optional, error, className, id, type = "text", ...props }, ref) => {
+  ({ label, required, optional, error, className, id, handleChange, type = "text", ...props }, ref) => {
     const describedById = id ? `${id}-error` : undefined
     return (
       <div className="space-y-2">
@@ -21,7 +21,7 @@ const InputField = forwardRef(
             id={id}
             type={type}
             className={cn(
-              "min-w-1/2 px-3 py-2 border border-input bg-background rounded-md text-sm",
+              "px-3 py-2 border border-input bg-background text-sm",
               "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
               "placeholder:text-muted-foreground",
               error && "border-destructive",
@@ -30,6 +30,7 @@ const InputField = forwardRef(
             aria-invalid={Boolean(error)}
             aria-describedby={describedById}
             {...props}
+            onChange={handleChange}
           />
         </div>
         {
@@ -43,6 +44,4 @@ const InputField = forwardRef(
   },
 )
 
-InputField.displayName = "InputField"
-
-export { InputField }
+export default InputField 

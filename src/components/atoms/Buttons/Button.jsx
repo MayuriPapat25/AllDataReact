@@ -1,6 +1,6 @@
 import { cn } from "../../../../utils/utils"
 
-export function Button({ variant = "primary", size = "md", className, children, ...props }) {
+export function Button({ variant, size = "md", className, handleClick, children, ...props }) {
   const baseStyles = "font-medium rounded transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2"
 
   const variants = {
@@ -17,7 +17,7 @@ export function Button({ variant = "primary", size = "md", className, children, 
   }
 
   return (
-    <button className={cn(baseStyles, variants[variant], sizes[size], className)} {...props}>
+    <button className={cn(baseStyles, variants[variant], sizes[size], className)} {...props} onClick={handleClick}>
       {children}
     </button>
   )

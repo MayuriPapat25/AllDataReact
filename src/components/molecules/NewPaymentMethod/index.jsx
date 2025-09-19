@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { InputField } from '../../atoms/InputField'
-import { SelectField } from '../../atoms/SelectField'
+import InputField from '../../atoms/InputField'
+import SelectField from '../../atoms/SelectField'
 
 const NewPaymentMethod = (props) => {
     const [formData, setFormData] = useState({

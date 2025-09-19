@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
-import { SelectField } from "../../atoms/SelectField"
+import SelectField from "../../atoms/SelectField"
 import NewPaymentMethod from "../NewPaymentMethod"
 
 

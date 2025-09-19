@@ -5,6 +5,7 @@ import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy/cart-modal";
 import ProCartHome from "./Cart/professional";
 import CartPage from "./Cart/diy"
+import Checkout from './Checkout/index'
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
         <Link to="/" className="text-blue-600 hover:underline">Home</Link>
         <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
         <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
+        <Link to='/checkout' className="text-blue-600 hover:underline">Checkout</Link>
       </header>
 
-      <main className="p-6">
+      <main className="p-6 bg-[#fafafa]">
         <Routes>
           {/* Home page */}
           <Route path="/" element={<HomePage />} />
@@ -28,6 +30,7 @@ function App() {
           <Route path="/professional" element={<ProCartHome />} />
 
           <Route path="/diy-cart" element={<CartPage />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>
     </Router>

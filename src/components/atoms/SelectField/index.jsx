@@ -39,6 +39,5 @@ const SelectField = forwardRef(
   },
 )
 
-SelectField.displayName = "SelectField"
 
-export { SelectField }
+export default SelectField 
