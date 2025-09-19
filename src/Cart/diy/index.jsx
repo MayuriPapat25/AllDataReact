@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Steps } from "../../components/molecules/steps/cartSteps" // relative path correct
 import { AccessPointDropdown } from "../../components/atoms/Dropdown/AccessPointDropdown" // use AccessPointDropdown as RegionDropdown

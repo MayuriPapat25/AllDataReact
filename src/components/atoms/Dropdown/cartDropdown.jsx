@@ -1,7 +1,6 @@
-"use client"
-
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import { Button } from "../Buttons/Button"
 
 export function CartDropdown({ isOpen, onClose, className }) {
   const [cartItems] = useState([
@@ -31,12 +30,14 @@ export function CartDropdown({ isOpen, onClose, className }) {
           <span className="text-sm font-medium text-gray-800">
             {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in cart
           </span>
-          <button
+          <Button
             onClick={onClose}
-            className="h-6 w-6 p-0 flex items-center justify-center rounded hover:bg-gray-100"
+            variant="ghost"
+            size="sm"
+            className="h-6 w-6 p-0 flex items-center justify-center rounded"
           >
             ✕
-          </button>
+          </Button>
         </div>
 
         {/* Cart Items */}
@@ -64,9 +65,9 @@ export function CartDropdown({ isOpen, onClose, className }) {
         {cartItems.length > 0 && (
           <div className="px-4 py-4 border-t">
             <Link to="/diy-cart" onClick={onClose}>
-              <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium text-sm sm:text-base py-2 rounded">
+              <Button variant="primary" size="md" className="w-full">
                 VIEW CART
-              </button>
+              </Button>
             </Link>
           </div>
         )}

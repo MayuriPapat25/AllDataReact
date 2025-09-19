@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { TextField } from "./TextField" // updated to match InputField/index.jsx
 import { PrimaryButton } from "../Buttons/PrimaryButton"

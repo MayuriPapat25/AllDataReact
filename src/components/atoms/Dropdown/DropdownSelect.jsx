@@ -1,5 +1,3 @@
-"use client"
-
 export function DropdownSelect({ value, onChange, options, className = "" }) {
   return (
     <select

@@ -1,27 +1,49 @@
+import {
+  X, // close
+  Check, // success
+  ShoppingCart, // cart
+  Smartphone, // mobile
+  Stethoscope, // diagnostics
+  Wrench, // repair
+  Globe, // community
+  BarChart3, // estimator
+  Trash2, // delete
+  AlertCircle, // error
+  AlertTriangle, // warning
+  Info, // info
+  CheckCircle2, // success
+} from "lucide-react"
+
 export function Icon({ type, className, onClick }) {
   const icons = {
-    close: "✕",
-    check: "✔",
-    cart: "🛒",
-    mobile: "📱",
-    diagnostics: "🩺",
-    repair: "🛠️",
-    community: "🌐",
-    estimator: "📊",
-    delete: "🗑️",
+    close: X,
+    check: Check,
+    cart: ShoppingCart,
+    mobile: Smartphone,
+    diagnostics: Stethoscope,
+    repair: Wrench,
+    community: Globe,
+    estimator: BarChart3,
+    delete: Trash2,
+    error: AlertCircle,
+    warning: AlertTriangle,
+    info: Info,
+    success: CheckCircle2,
   }
 
+  const LucideIcon = icons[type] || AlertCircle
+
   return (
-    <span
+    <LucideIcon
       className={className}
       onClick={onClick}
       style={{ cursor: onClick ? "pointer" : "default" }}
-    >
-      {icons[type] || "❓"}
-    </span>
+      size={18}
+    />
   )
 }
 
-// Optional aliases for clarity
+// Aliases
 export const ProductIcon = (props) => <Icon {...props} />
 export const DeleteIcon = (props) => <Icon {...props} type="delete" />
+export const MessageIcon = (props) => <Icon {...props} />
