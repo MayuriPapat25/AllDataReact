@@ -1,13 +1,21 @@
 import { useState } from "react"
-import { Steps } from "../../../components/molecules/steps/cartSteps" // relative path correct
-import { CounterDropdown } from "../../../components/atoms/Dropdown/CounterDropdown" // use CounterDropdown as RegionDropdown
+import { Dropdown } from "../../../components/atoms/Dropdown/Dropdown"
 import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem" // matches your path
-import CartButtons from "../../../components/atoms/Buttons/cartButtons" // assuming CartButtons is implemented in LinkButton
 import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton" // updated path
+import { Button } from "../../../components/atoms/Buttons/Button"
+import CheckoutSteps from "../../../components/atoms/CheckoutSteps"
 
 export default function CartPage() {
   const [region, setRegion] = useState("usa")
-  const [promoCode, setPromoCode] = useState("")
+  const regionOptions = [
+    { value: "usa", label: "USA" },
+    { value: "canada", label: "Canada" },
+    { value: "uk", label: "United Kingdom" },
+    { value: "eu", label: "European Union" },
+  ]
+  const handleApplyPromo = () => {
+    console.log("Applying promo code:", promoCode)
+  }
   const [cartItems, setCartItems] = useState([
     {
       id: "1",
@@ -48,25 +56,28 @@ export default function CartPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-6">
-      <Steps currentStep={2} />
+    <div className="mx-auto">
+      <CheckoutSteps currentStep={3} />
 
       <div className="text-center mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-6">CART</h1>
         <div className="flex justify-center">
-          <div className="w-full max-w-xs">
-            <CounterDropdown value={region} onValueChange={setRegion} />
-          </div>
+          <Dropdown
+            label="Region"
+            options={regionOptions}
+            value={region}
+            onValueChange={setRegion}
+          />
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border">
-        <div className="p-4 md:p-6">
+      <div className="">
+        <div className="">
           <h2 className="text-lg font-semibold mb-6 text-center">
             REVIEW ALLDATA DIY SUBSCRIPTIONS
           </h2>
 
-          <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm font-medium text-gray-600">
+          <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm text-gray-500">
             <div className="col-span-1">Status</div>
             <div className="col-span-4">Description</div>
             <div className="col-span-2">Expiration</div>
@@ -93,13 +104,20 @@ export default function CartPage() {
           </div>
         </div>
 
-        <div className="bg-gray-50 p-4 md:p-6 border-t">
+        <div className="bg-gray-50">
           <div className="flex justify-end">
             <div className="w-full md:w-80">
               {/* Promo Code */}
-              <div className="border-t pt-4 mt-4">
-                <div className="text-sm font-medium mb-2">Add Promo Code</div>
-                <InputWithButton value={promoCode} onChange={setPromoCode} />
+              <div className="mb-6 items-center">
+                <div className="text-sm mb-2 font-medium text-gray-700 whitespace-nowrap">
+                  Add Promo Code
+                </div>
+                <InputWithButton
+                  placeholder="ENTER CODE"
+                  buttonText="APPLY"
+                  onSubmit={handleApplyPromo}
+                  className="flex-1 min-w-0"
+                />
               </div>
 
               <div className="mt-6 space-y-2">
@@ -107,16 +125,28 @@ export default function CartPage() {
                   <span>Subtotal:</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-lg font-bold border-t pt-2">
+                <div className="flex justify-between text-lg font-bold pt-2">
                   <span>Total:</span>
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
               </div>
 
-              <CartButtons
-                onAddMoreVehicles={handleAddMoreVehicles}
-                onCheckout={handleCheckout}
-              />
+              <div className="flex sm:flex-row gap-4 mt-6">
+                <Button
+                  onClick={handleAddMoreVehicles}
+                  variant="outline"
+                  size="md"
+                >
+                  ADD MORE VEHICLES
+                </Button>
+                <Button
+                  onClick={handleCheckout}
+                  variant="outline"
+                  size="md"
+                >
+                  CHECKOUT
+                </Button>
+              </div>
             </div>
           </div>
         </div>

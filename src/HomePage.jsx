@@ -1,12 +1,9 @@
 import { useState } from "react";
-import CartButtons from "./components/atoms/Buttons/cartButtons";
 import InputField from "./components/atoms/InputField";
 import PhoneField from "./components/atoms/PhoneNumberField";
 import SelectField from "./components/atoms/SelectField";
 import CheckoutSteps from "./components/atoms/CheckoutSteps";
 import AccountSidebar from "./components/molecules/AccountSidebar";
-
-
 
 export default function HomePage() {
   const handleInputChange = (field, value) => {
@@ -69,9 +66,7 @@ export default function HomePage() {
         className="w-1/6"
       />
 
-      <CartButtons />
       <AccountSidebar headline="Account Details" className="sidebar" accountDetails={accountDetails} />
-
 
       <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
         <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} />
