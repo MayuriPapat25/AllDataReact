@@ -23,13 +23,13 @@ export default function HomePage() {
       id: 1,
       label: "Account Information",
       link: "#",
-      isActive: true,    
+      isActive: true,
     },
     {
       id: 2,
       label: "Contact Information",
       link: "#",
-      isActive: false,    
+      isActive: false,
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ export default function HomePage() {
       isActive: false,
     }
   ];
-  
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Welcome to the Demo components.</h1>

@@ -2,13 +2,16 @@ import { useState } from "react"
 import { RadioButton } from "../atoms/RadioButton/RadioButton"
 import { ProductIcon } from "../atoms/Icon/Icon"
 import { ProductName } from "../atoms/TextIcon/ProductName"
-import { AccessPointDropdown } from "../atoms/Dropdown/AccessPointDropdown"
+import { CounterDropdown } from "../atoms/Dropdown/CounterDropdown"
 import { PriceText } from "../atoms/Price/PriceText"
 import { TextField } from "../atoms/InputField/TextField"
 import { Button } from "../atoms/Buttons/Button"
 import { DropdownSelect } from "../atoms/Dropdown/DropdownSelect"
 import { AccessPointsModal } from "../molecules/Modal/AccessPointsModal"
+import { InputWithButton } from "../atoms/InputField/InputWithButton"
 import { Message } from "../atoms/Message/Message"
+import { Icon, DeleteIcon, MessageIcon } from "../atoms/Icon/Icon"
+import { LinkButton } from "../atoms/links/linkButton"
 
 export function CartDropdown({ isOpen, onClose }) {
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
@@ -44,18 +47,17 @@ export function CartDropdown({ isOpen, onClose }) {
         <div className="absolute inset-0 bg-black bg-opacity-50" onClick={onClose} />
 
         {/* 👉 Make whole panel scrollable */}
-        <div className="absolute right-0 top-0 h-full w-[480px] bg-white shadow-xl overflow-y-auto">
+        <div className="absolute right-0 top-0 h-full w-full sm:w-[480px] md:w-[600px] bg-[#faf9f9] shadow-xl overflow-y-auto">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b-2 border-orange-500">
-            <h2 className="text-lg font-semibold text-blue-600">Cart Subscription Preview</h2>
+          <div className="flex items-center justify-between p-4">
+            <h2 className="text-2xl font-medium">Cart Subscription Preview</h2>
             <Button
               onClick={onClose}
               variant="ghost"
-              size="sm"
               aria-label="Close cart"
-              className="text-gray-400 hover:text-gray-600 text-xl font-bold p-0"
+              className="p-0 text-gray-400 hover:text-gray-600 cursor-pointer"
             >
-              ×
+              <Icon type="close" className="text-xl" />
             </Button>
           </div>
 
@@ -67,129 +69,226 @@ export function CartDropdown({ isOpen, onClose }) {
             <Message type="success" className="mb-3">Success text</Message>
 
             {/* Payment Frequency */}
-            <div className="mb-6 flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-700">Payment Frequency</label>
-              <div className="flex gap-6">
-                <RadioButton
-                  name="paymentFrequency"
-                  value="MONTHLY"
-                  checked={paymentFrequency === "MONTHLY"}
-                  onChange={setPaymentFrequency}
-                  label="MONTHLY"
-                />
-                <RadioButton
-                  name="paymentFrequency"
-                  value="ANNUALLY"
-                  checked={paymentFrequency === "ANNUALLY"}
-                  onChange={setPaymentFrequency}
-                  label="ANNUALLY"
-                />
+            <div className="mb-6 bg-white p-4" style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)"}}>
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-gray-700">Payment Frequency</label>
+                <div className="flex gap-6">
+                  <RadioButton
+                    name="paymentFrequency"
+                    value="MONTHLY"
+                    checked={paymentFrequency === "MONTHLY"}
+                    onChange={setPaymentFrequency}
+                    label="MONTHLY"
+                    className="accent-[#f75e00]"
+                  />
+                  <RadioButton
+                    name="paymentFrequency"
+                    value="ANNUALLY"
+                    checked={paymentFrequency === "ANNUALLY"}
+                    onChange={setPaymentFrequency}
+                    label="ANNUALLY"
+                    className="accent-[#f75e00]"
+                  />
+                </div>
               </div>
             </div>
 
-
             {/* Access Points Info */}
             <div className="mb-4 flex justify-end">
-              <Button
-                onClick={() => setShowAccessPointsModal(true)}
-                variant="link"
-                size="sm"
-              >
-                What are Access Points?
-              </Button>
+              {/* Access Points Info */}
+              <div className="mb-4 flex justify-end">
+                <LinkButton size="sm" onClick={() => setShowAccessPointsModal(true)} className="flex items-center gap-1 font-normal text-[#282970] focus:outline-none focus:ring-0 focus:border-0">
+                  <MessageIcon type="info" className="w-4 h-4 text-[#282970]" />
+                  What are Access Points?
+                </LinkButton>
+              </div>
             </div>
 
             {/* Cart Items */}
-            <div className="space-y-4 mb-6">
-              {cartItems.map(item => (
-                <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
-                  <div className="flex items-center gap-3">
-                    <ProductIcon type={item.type} />
-                    <div className="flex flex-col">
+            <div
+              className="mb-6 bg-white"
+              style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)" }}
+            >
+              {cartItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`p-4 ${
+                    index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""
+                  }`}
+                >
+                  {/* Desktop / Tablet: 4 column grid */}
+                  <div className="hidden sm:grid items-center gap-4"
+                      style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
+                    {/* Column 1: Product icon + name */}
+                    <div className="flex items-center gap-3">
+                      <ProductIcon type={item.type} />
                       <ProductName name={item.name} />
-                      <AccessPointDropdown value={item.accessPoints} onChange={value => handleAccessPointChange(item.id, value)} />
+                    </div>
+
+                    {/* Column 2: Access points */}
+                    <div className="text-center">
+                      <CounterDropdown
+                        value={item.accessPoints}
+                        onChange={(value) => handleAccessPointChange(item.id, value)}
+                      />
+                    </div>
+
+                    {/* Column 3: Price + monthly/included */}
+                    <div className="text-right">
+                      <div className="font-normal">${item.price.toFixed(2)}</div>
+                      <div className="text-sm text-gray-500 font-light">
+                        {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                      </div>
+                    </div>
+
+                    {/* Column 4: Delete */}
+                    <div className="flex justify-end">
+                      <DeleteIcon
+                        onClick={() => handleRemoveItem(item.id)}
+                        className="text-gray-400 hover:text-red-500 cursor-pointer"
+                      />
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-right">
-                      <div className="font-semibold text-gray-900">${item.price.toFixed(2)}</div>
-                      <div className="text-sm text-gray-600">{item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}</div>
+
+                  {/* Mobile: 2 rows stacked */}
+                  <div className="sm:hidden space-y-2">
+                    {/* Row 1: Product + Delete */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <ProductIcon type={item.type} />
+                        <ProductName name={item.name} />
+                      </div>
+                      <DeleteIcon
+                        onClick={() => handleRemoveItem(item.id)}
+                        className="text-gray-400 hover:text-red-500 cursor-pointer"
+                      />
                     </div>
-                    <Button
-                      onClick={() => handleRemoveItem(item.id)}
-                      variant="ghost"
-                      size="sm"
-                      aria-label={`Remove ${item.name}`}
-                      className="text-gray-400 hover:text-red-500 p-1"
-                    >
-                      ×
-                    </Button>
+
+                    {/* Row 2: Access Points + Price */}
+                    <div className="flex items-center justify-between">
+                      <CounterDropdown
+                        value={item.accessPoints}
+                        onChange={(value) => handleAccessPointChange(item.id, value)}
+                      />
+                      <div className="text-right">
+                        <div className="font-normal">${item.price.toFixed(2)}</div>
+                        <div className="text-sm text-gray-500 font-light">
+                          {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
+            {/* Remove Products */}
             <div className="mb-6 flex justify-end">
-              <Button variant="link" size="sm" onClick={() => console.log("Remove added products")}>
+              <LinkButton size="sm" onClick={() => console.log("Remove added products")}>
                 Remove Added Products
-              </Button>
+              </LinkButton>
             </div>
 
             {/* Pricing Summary */}
-            <div className="border-t border-gray-200 pt-4 space-y-2 mb-6">
-              <PriceText amount={218.0} label="Subscription Subtotal" />
-              <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
-              <div className="border-t border-gray-200 pt-2">
-                <PriceText amount={205.25} label="Total Monthly" />
-              </div>
-              <div className="border-t-2 border-gray-300 pt-3">
-                <PriceText amount={205.25} label="Total Due:" isTotal />
-                <p className="text-xs text-gray-500 text-right mt-1">Taxes Not Included</p>
+            <div
+              className="mb-6 bg-white"
+              style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)" }}
+            >
+              <div className="space-y-2">
+                <div className="border-b-2 border-[#faf9f9]">
+                  <div className="p-4">
+                    <PriceText amount={218.0} label="Subscription Subtotal" />
+                  </div>
+                </div>
+
+                <div className="border-b-2 border-[#faf9f9]">
+                  <div className="p-4">
+                    <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
+                  </div>
+                </div>
+                <div className="border-b-2 border-[#faf9f9]">
+                  <div className="p-4">
+                    <PriceText amount={205.25} label="Total Monthly" />
+                  </div>
+                </div>
+                <div className="border-b-2 border-[#faf9f9]">
+                  <div className="p-4">
+                    <PriceText amount={205.25} label="Total Due:" isTotal />
+                    <p className="text-xs text-gray-500 text-right mt-1">Taxes Not Included</p>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Promo Code */}
-            <div className="mb-6">
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Add Promo Code</label>
-                  <TextField placeholder="ENTER CODE" value={promoCode} onChange={setPromoCode} className="w-full" />
+            <div
+              className="mb-6 bg-white p-4 flex items-center"
+              style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)" }}
+            >
+              <span className="text-sm font-medium text-gray-700 whitespace-nowrap mr-4">
+                Add Promo Code
+              </span>
+              <InputWithButton
+                placeholder="ENTER CODE"
+                buttonText="APPLY"
+                onSubmit={handleApplyPromo}
+                className="flex-1 min-w-0"
+              />
+            </div>
+
+            {/* Subscription Term */}
+            <div
+              className="mb-4 bg-white"
+              style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)" }}
+            >
+              {/* Subscription Term */}
+              <div className="flex items-center justify-between border-b-2 border-[#faf9f9] p-4">
+                <label className="text-sm font-medium text-gray-700">Subscription Term</label>
+                <div className="flex-1 ml-4">
+                  <DropdownSelect
+                    value={subscriptionTerm}
+                    onChange={setSubscriptionTerm}
+                    options={[
+                      { value: "3 Months", label: "3 Months" },
+                      { value: "6 Months", label: "6 Months" },
+                      { value: "12 Months", label: "12 Months" },
+                    ]}
+                    className="w-full"
+                  />
                 </div>
-                <div className="flex items-end">
-                  <Button onClick={handleApplyPromo} variant="outline" size="sm">
-                    APPLY
-                  </Button>
+              </div>
+
+              {/* Auto Renewal Date */}
+              <div className="flex items-center justify-between p-4">
+                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Auto Renewal Date:
+                </label>
+                <div className="flex-1 ml-4 text-gray-900 text-right">
+                  09/09/2026
                 </div>
               </div>
             </div>
 
-            {/* Subscription Term */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Subscription Term</label>
-              <DropdownSelect
-                value={subscriptionTerm}
-                onChange={setSubscriptionTerm}
-                options={[
-                  { value: "3 Months", label: "3 Months" },
-                  { value: "6 Months", label: "6 Months" },
-                  { value: "12 Months", label: "12 Months" },
-                ]}
-                className="w-full"
-              />
-            </div>
 
             {/* Footer (now scrolls too) */}
-            <div className="p-4 border-t border-gray-200 space-y-3 bg-white">
-              <p className="text-xs text-gray-500">Auto Renewal Date: 09/09/2026</p>
-              <p className="text-xs text-gray-500">
+            <div className="space-y-3">
+              <p className="text-xs text-gray-500 mb-6">
                 *Promotional rate. All rates subject to applicable sales taxes. Taxes applied at checkout.
               </p>
-              <Button variant="primary" size="lg" className="w-full">
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col gap-2">
+              <Button
+                variant="outline"
+                style={{ borderColor: "#f75e00", color: "#f75e00" }}
+                className="w-full cursor-pointer"
+              >
                 CHECKOUT
               </Button>
-              <Button variant="link" size="sm" onClick={onClose} className="block w-full text-center">
+              <LinkButton className="w-full text-center">
                 Continue Shopping
-              </Button>
+              </LinkButton>
             </div>
           </div>
         </div>

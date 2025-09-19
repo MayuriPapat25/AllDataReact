@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Steps } from "../../components/molecules/steps/cartSteps" // relative path correct
-import { AccessPointDropdown } from "../../components/atoms/Dropdown/AccessPointDropdown" // use AccessPointDropdown as RegionDropdown
+import { CounterDropdown } from "../../components/atoms/Dropdown/CounterDropdown" // use CounterDropdown as RegionDropdown
 import { ProductSingleItem } from "../../components/molecules/productItem/diyProductItem" // matches your path
 import CartButtons from "../../components/atoms/Buttons/cartButtons" // assuming CartButtons is implemented in LinkButton
 import { InputWithButton } from "../../components/atoms/InputField/InputWithButton" // updated path
@@ -55,7 +55,7 @@ export default function CartPage() {
         <h1 className="text-2xl md:text-3xl font-bold mb-6">CART</h1>
         <div className="flex justify-center">
           <div className="w-full max-w-xs">
-            <AccessPointDropdown value={region} onValueChange={setRegion} />
+            <CounterDropdown value={region} onValueChange={setRegion} />
           </div>
         </div>
       </div>
