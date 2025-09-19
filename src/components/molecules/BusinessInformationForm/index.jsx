@@ -3,9 +3,9 @@
 import React from "react";
 
 import { useState } from "react";
-import { InputField } from "../../atoms/InputField";
-import { SelectField } from "../../atoms/SelectField";
-import { PhoneField } from "../../atoms/PhoneNumberField";
+import InputField from "../../atoms/InputField";
+import SelectField from "../../atoms/SelectField";
+import PhoneField from "../../atoms/PhoneNumberField";
 import { VatField } from "../../atoms/VatField";
 import { Button } from "../../atoms/Buttons/Button"
 
@@ -157,6 +157,7 @@ export function BusinessInformationForm() {
             value={formData.phoneType}
             onChange={(e) => handleInputChange("phoneType", e.target.value)}
             error={errors.phoneType}
+            className="w-1/2"
           />
         </div>
 
@@ -187,6 +188,7 @@ export function BusinessInformationForm() {
             value={formData.jobTitle}
             onChange={(e) => handleInputChange("jobTitle", e.target.value)}
             error={errors.jobTitle}
+            className="w-1/2"
           />
           <SelectField
             label="Shop Type"
@@ -195,6 +197,7 @@ export function BusinessInformationForm() {
             value={formData.shopType}
             onChange={(e) => handleInputChange("shopType", e.target.value)}
             error={errors.shopType}
+            className="w-1/2"
           />
         </div>
 
@@ -227,6 +230,7 @@ export function BusinessInformationForm() {
           value={formData.language}
           onChange={(e) => handleInputChange("language", e.target.value)}
           error={errors.language}
+          className="w-1/2"
         />
 
         {/* Submit Button */}

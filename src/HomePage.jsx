@@ -1,13 +1,21 @@
+import { useState } from "react";
 import CartButtons from "./components/atoms/Buttons/cartButtons";
-import { InputField } from "./components/atoms/InputField";
-import { PhoneField } from "./components/atoms/PhoneNumberField";
-import { SelectField } from "./components/atoms/SelectField";
+import InputField from "./components/atoms/InputField";
+import PhoneField from "./components/atoms/PhoneNumberField";
+import SelectField from "./components/atoms/SelectField";
+import CheckoutSteps from "./components/atoms/checkoutSteps";
+
+
 
 export default function HomePage() {
   const handleInputChange = (field, value) => {
     console.log("field, value", field, value);
   };
+  const [currentStep, setCurrentStep] = useState(1)
 
+  const handleStepClick = (stepNumber) => {
+    setCurrentStep(stepNumber)
+  }
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Welcome to the Demo components.</h1>
@@ -23,6 +31,7 @@ export default function HomePage() {
         label="Business Phone Number"
         required
         value={9999889889}
+        countryCode="+49"
         onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
       />
 
@@ -33,9 +42,16 @@ export default function HomePage() {
           { value: "1", label: "1" },
           { value: "2", label: "2" },
         ]}
+        onChange={(e) => handleInputChange("language", e.target.value)}
+        className="w-1/6"
       />
 
       <CartButtons />
+
+
+      <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
+        <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} />
+      </div>
     </div>
   );
 }

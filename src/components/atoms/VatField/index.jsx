@@ -5,15 +5,22 @@ const VatField = forwardRef(
   ({ label, required, optional, error, countryPrefix = "DE", className, ...props }, ref) => {
     return (
       <div className="space-y-2">
-        <label className="flex text-sm font-medium text-muted-foreground justify-between">
-          {label}
-          {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
-        </label>
+        {
+          label &&
+          <h3 className="flex text-sm font-medium text-muted-foreground justify-between">
+            {label}
+            {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
+          </h3>
+        }
+
         <div className="flex items-center">
-          {required && <span className="mr-1 text-muted-foreground">|</span>}
-          <div className="flex items-center px-3 py-2 border border-r-0 border-input bg-muted rounded-l-md text-sm font-medium">
-            {countryPrefix}
-          </div>
+          {
+            countryPrefix &&
+            <h3 className="flex items-center px-3 py-2 border border-r-0 border-input bg-muted rounded-l-md text-sm font-medium">
+              {countryPrefix}
+            </h3>
+          }
+
           <input
             ref={ref}
             type="text"
@@ -27,7 +34,7 @@ const VatField = forwardRef(
             {...props}
           />
         </div>
-        {error && <p className="text-sm text-destructive">{error}</p>}
+        {error && <p className="text-sm text-red-500">{error}</p>}
       </div>
     )
   },

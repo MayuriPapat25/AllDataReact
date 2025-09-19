@@ -4,7 +4,7 @@ export function Button({
   children,
   onClick,
   type = "button",
-  variant = "primary",
+  variant,
   size = "md",
   className = "",
   disabled = false,
