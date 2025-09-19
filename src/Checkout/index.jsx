@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import StepContent from "../components/molecules/StepContent"
+import StepContentUSAnonyCheckout from "../components/molecules/StepContentUSAnonyCheckout"
 import CheckoutSteps from "../components/atoms/checkoutSteps"
 
 const Checkout = () => {
@@ -19,15 +19,23 @@ const Checkout = () => {
         }
     }
 
+    const steps = [
+        { number: 1, label: "ACCOUNT" },
+        { number: 2, label: "COMPANY & BILLING" },
+        { number: 3, label: "REVIEW" },
+        { number: 4, label: "TERMS" },
+        { number: 5, label: "ORDER COMPLETE" },
+    ]
+
     return (
         <div className="min-h-screen bg-[#fafafa] py-12">
             <div className="max-w-6xl mx-auto">
                 <div className="p-8 mb-8 bg-[#fafafa]">
-                    <CheckoutSteps currentStep={currentStep} />
+                    <CheckoutSteps currentStep={currentStep} steps={steps} />
                 </div>
 
                 <div className="bg-[#fafafa] p-8">
-                    <StepContent currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
+                    <StepContentUSAnonyCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
                 </div>
             </div>
         </div>
