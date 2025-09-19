@@ -131,7 +131,7 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <div className="flex sm:flex-row gap-4 mt-6">
+              <div className="flex sm:flex-row gap-4 mt-6 justify-between">
                 <Button
                   onClick={handleAddMoreVehicles}
                   variant="outline"

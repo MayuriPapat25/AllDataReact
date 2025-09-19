@@ -6,12 +6,13 @@ import { CounterDropdown } from "../atoms/Dropdown/CounterDropdown"
 import { PriceText } from "../atoms/Price/PriceText"
 import { TextField } from "../atoms/InputField/TextField"
 import { Button } from "../atoms/Buttons/Button"
-import { DropdownSelect } from "../atoms/Dropdown/DropdownSelect"
 import { AccessPointsModal } from "../molecules/Modal/AccessPointsModal"
 import { InputWithButton } from "../atoms/InputField/InputWithButton"
 import { Message } from "../atoms/Message/Message"
 import { Icon, DeleteIcon, MessageIcon } from "../atoms/Icon/Icon"
 import { LinkButton } from "../atoms/links/linkButton"
+import SelectField from "../atoms/SelectField"
+import { Dropdown } from "../atoms/Dropdown/Dropdown"
 
 export function ProCartDropdown({ isOpen, onClose }) {
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
@@ -242,24 +243,24 @@ export function ProCartDropdown({ isOpen, onClose }) {
               style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)" }}
             >
               {/* Subscription Term */}
-              <div className="flex items-center justify-between border-b-2 border-[#faf9f9] p-4">
+              <div className="flex items-center justify-between border-b-2 border-[#faf9f9] p-4 w-full">
                 <label className="text-sm font-medium text-gray-700">Subscription Term</label>
                 <div className="flex-1 ml-4">
-                  <DropdownSelect
+                  <Dropdown
                     value={subscriptionTerm}
-                    onChange={setSubscriptionTerm}
+                    onValueChange={setSubscriptionTerm} // Dropdown uses onValueChange
                     options={[
                       { value: "3 Months", label: "3 Months" },
                       { value: "6 Months", label: "6 Months" },
                       { value: "12 Months", label: "12 Months" },
                     ]}
-                    className="w-full"
+                    className="w-32" // fixed width to match your design
                   />
                 </div>
               </div>
 
               {/* Auto Renewal Date */}
-              <div className="flex items-center justify-between p-4">
+              <div className="flex items-center justify-between p-4 w-full">
                 <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
                   Auto Renewal Date:
                 </label>
