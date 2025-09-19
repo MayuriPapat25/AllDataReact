@@ -13,7 +13,7 @@ import { Message } from "../atoms/Message/Message"
 import { Icon, DeleteIcon, MessageIcon } from "../atoms/Icon/Icon"
 import { LinkButton } from "../atoms/links/linkButton"
 
-export function CartDropdown({ isOpen, onClose }) {
+export function ProCartDropdown({ isOpen, onClose }) {
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
   const [subscriptionTerm, setSubscriptionTerm] = useState("12 Months")
   const [promoCode, setPromoCode] = useState("")
