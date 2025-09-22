@@ -6,6 +6,7 @@ import DIYCartHome from "./Cart/diy";
 import ProCartHome from "./Cart/professional";
 import CartPage from "./Cart/diy/cartModal"
 import Checkout from './Checkout/index'
+import { ProfCustomPortal } from "./ProfCustomPortal";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
         <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
         <Link to='/checkout' className="text-blue-600 hover:underline">Checkout</Link>
+        <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
+
       </header>
 
       <main className="p-6 bg-[#fafafa]">
@@ -31,6 +34,7 @@ function App() {
 
           <Route path="/diy-cart" element={<CartPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/profcustomportal" element={<ProfCustomPortal />} />
         </Routes>
       </main>
     </Router>

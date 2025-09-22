@@ -16,27 +16,6 @@ export default function HomePage() {
     setCurrentStep(stepNumber)
   }
 
-  const accountDetails = [
-    {
-      id: 1,
-      label: "Account Information",
-      link: "#",
-      isActive: true,
-    },
-    {
-      id: 2,
-      label: "Contact Information",
-      link: "#",
-      isActive: false,
-    },
-    {
-      id: 3,
-      label: "Legal Agreements & Contracts",
-      link: "#",
-      isActive: false,
-    }
-  ];
-
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Welcome to the Demo components.</h1>
@@ -79,8 +58,7 @@ export default function HomePage() {
 
       <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
         <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} />
-      </div>
-
+      </div>        
     </div>
 
 
