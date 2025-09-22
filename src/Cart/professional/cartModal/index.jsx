@@ -1,4 +1,4 @@
-import { CartDropdown } from "../../../components/organisms/CartDropdown"
+import { ProCartDropdown } from "../../../components/organisms/proCartDropdown"
 import { Button } from "../../../components/atoms/Buttons/Button" // import common Button
 
 export default function CartModal({ onClose }) {
@@ -20,7 +20,7 @@ export default function CartModal({ onClose }) {
 
       {/* Cart Content */}
       <div className="flex-1 overflow-y-auto">
-        <CartDropdown isOpen={true} onClose={onClose} />
+        <ProCartDropdown isOpen={true} onClose={onClose} />
       </div>
     </div>
   )

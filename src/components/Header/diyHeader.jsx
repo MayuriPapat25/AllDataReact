@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { CartDropdown } from "../atoms/Dropdown/cartDropdown"
+import { DiyCartDropdown } from "../organisms/diyCartDropdown"
 import { Button } from "../atoms/Buttons/Button"
 
 export function HeaderWithCart() {
@@ -37,7 +37,7 @@ export function HeaderWithCart() {
             </span>
           </Button>
 
-          <CartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+          <DiyCartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </div>
       </div>
     </header>

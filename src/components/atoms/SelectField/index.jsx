@@ -18,7 +18,7 @@ const SelectField = forwardRef(
           <select
             ref={ref}
             className={cn(
-              "px-3 py-2 border border-input bg-background rounded-md text-sm appearance-none",
+              "px-3 py-2 border border-input bg-background text-sm appearance-none",
               "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
               error && "border-destructive",
               className,
@@ -40,4 +40,4 @@ const SelectField = forwardRef(
 )
 
 
-export default SelectField 
+export default SelectField
