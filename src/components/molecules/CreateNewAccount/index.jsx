@@ -3,7 +3,6 @@ import InputField from '../../atoms/InputField'
 import PhoneField from '../../atoms/PhoneNumberField'
 import PasswordField from '../../atoms/InputField/PasswordField'
 import TermsConditions from '../../atoms/TermsCondition'
-import { Button } from '../../atoms/Buttons/Button'
 
 const CreateNewAccount = ({ onValidationChange }) => {
     const [agreedToTerms, setAgreedToTerms] = useState(false)
@@ -77,8 +76,10 @@ const CreateNewAccount = ({ onValidationChange }) => {
 
         if (isFormValid && agreedToTerms) {
             onContinue()
+        } else {
+            // ensure latest validation state is reflected in parent disabling Continue
+            onValidationChange?.(false)
         }
-        // If validation fails, errors are already set by validateForm() and will be displayed
     }
 
     const handleInputChange = (field, value) => {
@@ -89,15 +90,30 @@ const CreateNewAccount = ({ onValidationChange }) => {
         }
     }
 
-    const isAllFilled =
-        Boolean(formData.email && formData.phone && formData.username && formData.password && formData.confirmPassword && agreedToTerms)
+    const isPasswordStrong = (password) => {
+        if (!password || password.length < 8) return false
+        let types = 0
+        if (/[0-9]/.test(password)) types++
+        if (/[a-z]/.test(password)) types++
+        if (/[A-Z]/.test(password)) types++
+        if (/[!@#$%&? ,*]/.test(password)) types++
+        return types >= 3
+    }
 
-    // Notify parent component about validation state changes
+    const computeIsValid = () => {
+        const emailOk = !!formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+        const phoneDigits = (formData.phone || "").replace(/\D/g, "")
+        const phoneOk = phoneDigits.length >= 10
+        const usernameOk = !!formData.username && formData.username.length >= 6
+        const passwordOk = isPasswordStrong(formData.password)
+        const confirmOk = !!formData.confirmPassword && formData.confirmPassword === formData.password
+        return emailOk && phoneOk && usernameOk && passwordOk && confirmOk && agreedToTerms
+    }
+
+    // Notify parent component about validation state changes (live)
     React.useEffect(() => {
-        if (onValidationChange) {
-            onValidationChange(isAllFilled)
-        }
-    }, [isAllFilled, onValidationChange])
+        onValidationChange?.(computeIsValid())
+    }, [formData, agreedToTerms])
 
     return (
         <div className="max-w-4xl mx-auto p-6 md:p-8">

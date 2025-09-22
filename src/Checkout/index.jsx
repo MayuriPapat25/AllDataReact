@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import StepContentUSAnonyCheckout from "../components/molecules/StepContentUSAnonyCheckout"
 import CheckoutSteps from "../components/atoms/CheckoutSteps"
@@ -27,14 +25,6 @@ const Checkout = () => {
             setCurrentStep(currentStep - 1)
         }
     }
-
-    const steps = [
-        { number: 1, label: "ACCOUNT" },
-        { number: 2, label: "COMPANY & BILLING" },
-        { number: 3, label: "REVIEW" },
-        { number: 4, label: "TERMS" },
-        { number: 5, label: "ORDER COMPLETE" },
-    ]
 
     return (
         <div className="min-h-screen bg-[#fafafa] py-12">
