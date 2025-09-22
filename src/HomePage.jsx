@@ -3,6 +3,7 @@ import InputField from "./components/atoms/InputField";
 import PhoneField from "./components/atoms/PhoneNumberField";
 import SelectField from "./components/atoms/SelectField";
 import CheckoutSteps from "./components/atoms/CheckoutSteps";
+import FormFileUpload from './components/atoms/FileUpload';
 import AccountSidebar from "./components/molecules/AccountSidebar";
 
 export default function HomePage() {
@@ -67,6 +68,14 @@ export default function HomePage() {
       />
 
       <AccountSidebar headline="Account Details" className="sidebar" accountDetails={accountDetails} />
+
+      {/* File Upload */}
+      <FormFileUpload
+        label="Please Upload Your Tax Exempt Certificate Here"
+        onChange={(file) => handleInputChange("certificate", file)}
+        accept=".pdf,.jpg,.jpeg,.png"
+        helperText="Warning: Reseller Certificate does not qualify for tax exemption."
+      />
 
       <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
         <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} />
