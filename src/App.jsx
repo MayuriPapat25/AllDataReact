@@ -4,6 +4,7 @@ import "./App.css";
 import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy";
 import ProCartHome from "./Cart/professional";
+import RepCartHome from "./Cart/rep";
 import CartPage from "./Cart/diy/cartModal"
 import Checkout from './Checkout/index'
 import { ProfCustomPortal } from "./ProfCustomPortal";
@@ -16,6 +17,7 @@ function App() {
         <Link to="/" className="text-blue-600 hover:underline">Home</Link>
         <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
         <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
+        <Link to="/rep" className="text-blue-600 hover:underline">Rep Initiated Cart</Link>
         <Link to='/checkout' className="text-blue-600 hover:underline">Checkout</Link>
         <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
 
@@ -31,6 +33,7 @@ function App() {
 
           {/* Professional Cart page */}
           <Route path="/professional" element={<ProCartHome />} />
+          <Route path="/rep" element={<RepCartHome />} />
 
           <Route path="/diy-cart" element={<CartPage />} />
           <Route path="/checkout" element={<Checkout />} />
