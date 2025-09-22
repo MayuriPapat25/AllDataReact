@@ -55,9 +55,15 @@ export default function CartPage() {
     console.log("Proceed to checkout")
   }
 
+  const steps = [
+    { number: 1, label: "Find your vehicle" },
+    { number: 2, label: "Pick your plan" },
+    { number: 3, label: "Place your order" }
+  ]
+
   return (
     <div className="mx-auto">
-      <CheckoutSteps currentStep={3} />
+      <CheckoutSteps currentStep={3} steps={steps} />
 
       <div className="text-center mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-6">CART</h1>

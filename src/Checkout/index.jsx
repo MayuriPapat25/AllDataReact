@@ -5,6 +5,15 @@ import StepContent from "../components/molecules/StepContent"
 import CheckoutSteps from "../components/atoms/CheckoutSteps"
 
 const Checkout = () => {
+
+    const steps = [
+        { number: 1, label: "ACCOUNT" },
+        { number: 2, label: "COMPANY & BILLING" },
+        { number: 3, label: "REVIEW" },
+        { number: 4, label: "TERMS" },
+        { number: 5, label: "ORDER COMPLETE" },
+    ]
+
     const [currentStep, setCurrentStep] = useState(1)
 
     const handleContinue = () => {
@@ -23,7 +32,7 @@ const Checkout = () => {
         <div className="min-h-screen bg-[#fafafa] py-12">
             <div className="max-w-6xl mx-auto">
                 <div className="p-8 mb-8 bg-[#fafafa]">
-                    <CheckoutSteps currentStep={currentStep} />
+                    <CheckoutSteps currentStep={currentStep} steps={steps} />
                 </div>
 
                 <div className="bg-[#fafafa] p-8">

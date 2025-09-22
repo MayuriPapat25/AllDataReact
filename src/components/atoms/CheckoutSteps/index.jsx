@@ -1,16 +1,7 @@
 
 import { cn } from "../../../../utils/utils"
 
-
-const steps = [
-    { number: 1, label: "ACCOUNT" },
-    { number: 2, label: "COMPANY & BILLING" },
-    { number: 3, label: "REVIEW" },
-    { number: 4, label: "TERMS" },
-    { number: 5, label: "ORDER COMPLETE" },
-]
-
-const CheckoutSteps = ({ currentStep }) => {
+const CheckoutSteps = ({ currentStep, steps }) => {
     return (
         <div className="w-full max-w-4xl mx-auto px-4 py-8">
             <div className="overflow-x-auto">
