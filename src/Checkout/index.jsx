@@ -6,14 +6,6 @@ import CheckoutSteps from "../components/atoms/CheckoutSteps"
 
 const Checkout = () => {
 
-    const steps = [
-        { number: 1, label: "ACCOUNT" },
-        { number: 2, label: "COMPANY & BILLING" },
-        { number: 3, label: "REVIEW" },
-        { number: 4, label: "TERMS" },
-        { number: 5, label: "ORDER COMPLETE" },
-    ]
-
     const [currentStep, setCurrentStep] = useState(1)
 
     const handleContinue = () => {
