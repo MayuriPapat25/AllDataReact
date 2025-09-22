@@ -29,12 +29,12 @@ const Checkout = () => {
 
     return (
         <div className="min-h-screen bg-[#fafafa] py-12">
-            <div className="max-w-6xl mx-auto">
+            <div className="">
                 <div className="p-8 mb-8 bg-[#fafafa]">
                     <CheckoutSteps currentStep={currentStep} steps={steps} />
                 </div>
 
-                <div className="bg-[#fafafa] p-8">
+                <div className="bg-[#fafafa] mx-20">
                     <StepContentUSAnonyCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
                 </div>
             </div>

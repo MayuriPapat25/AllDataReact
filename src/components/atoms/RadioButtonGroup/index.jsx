@@ -34,8 +34,11 @@ export function RadioGroupItem({ value, id, className }) {
             value={value}
             checked={isChecked}
             onChange={() => onValueChange(value)}
-            className={cn("h-4 w-4 text-orange-400 focus:ring-orange-400 border-gray-500 rounded-full", className)}
+            className={cn(
+                "h-4 w-4 text-orange-500 border-2 border-gray-300 rounded-full focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer",
+                isChecked && "border-orange-500 bg-orange-500",
+                className
+            )}
         />
-
     )
 }

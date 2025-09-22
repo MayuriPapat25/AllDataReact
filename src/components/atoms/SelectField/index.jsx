@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react"
 import { cn } from "../../../../utils/utils"
 
 const SelectField = forwardRef(
-  ({ label, required, optional, error, options = [], className, ...props }, ref) => {
+  ({ label, required, optional, error, options = [], className, wrapperClass, ...props }, ref) => {
     return (
       <div className="space-y-2">
         {
@@ -13,7 +13,7 @@ const SelectField = forwardRef(
             {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
           </h3>
         }
-        <div className="flex items-center">
+        <div className={cn("flex items-center", wrapperClass)}>
           {label && required && <span className="mr-1 text-muted-foreground text-green-600">|</span>}
           <select
             ref={ref}

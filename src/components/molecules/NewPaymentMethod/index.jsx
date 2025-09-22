@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import InputField from '../../atoms/InputField'
 import SelectField from '../../atoms/SelectField'
 
-const NewPaymentMethod = (props) => {
+const NewPaymentMethod = ({ singlePayment }) => {
     const [formData, setFormData] = useState({
         paymentType: "existing",
         selectedCard: "", // Initialize selectedCard
@@ -68,9 +68,9 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.cardNumber}
                 required
-                className="md:col-span-2 border-gray-300"
+                className="md:col-span-2 border-gray-300 w-1/2 rounded-sm"
             />
-            <div className="grid grid-cols-2">
+            <div className="flex flex-row items-center">
                 <SelectField
                     label="Expiration Date"
                     name="expirationMonth"
@@ -80,8 +80,9 @@ const NewPaymentMethod = (props) => {
                     error={errors.expirationMonth}
                     required
                     placeholder="Month"
-                    className="w-1/2 border-gray-300"
+                    className="w-40 border-gray-300"
                 />
+                <span className='ml-5 mt-7'>/</span>
                 <SelectField
                     label=""
                     name="expirationYear"
@@ -91,10 +92,11 @@ const NewPaymentMethod = (props) => {
                     error={errors.expirationYear}
                     required
                     placeholder="Year"
-                    className="mt-7 w-1/2 border-gray-300"
+                    className="w-40 border-gray-300 ml-2"
+                    wrapperClass="mt-7"
                 />
             </div>
-            <div className="grid grid-cols-2 gap-4" >
+            <div className="flex    " >
                 <InputField
                     label="CVV"
                     name="cvv"
@@ -102,7 +104,7 @@ const NewPaymentMethod = (props) => {
                     onChange={handleInputChange}
                     error={errors.cvv}
                     required
-                    className="border-gray-300"
+                    className="border-gray-300 rounded-sm"
                 />
                 <img src="/visa-logo-generic.png" alt="Visa" className="h-8 w-12 object-contain mt-10" />
             </div>
@@ -114,7 +116,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.cardholderName}
                 required
-                className="border-gray-300"
+                className="border-gray-300 w-1/2 rounded-sm"
             />
 
             <SelectField
@@ -125,7 +127,7 @@ const NewPaymentMethod = (props) => {
                 options={countries}
                 error={errors.country}
                 required
-                className="w-1/2 border-gray-300"
+                className="w-1/2 border-gray-300 rounded-sm"
             />
 
             <InputField
@@ -135,7 +137,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.state}
                 required
-                className='border-gray-300'
+                className="border-gray-300 w-1/2 rounded-sm"
             />
             <InputField
                 label="Address 1 (Only enter A-Z, 0-9, hyphens, underscores, & periods)"
@@ -144,7 +146,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.address1}
                 required
-                className='border-gray-300'
+                className="border-gray-300 w-1/2 rounded-sm"
             />
 
             <InputField
@@ -153,7 +155,7 @@ const NewPaymentMethod = (props) => {
                 value={formData.address2}
                 onChange={handleInputChange}
                 error={errors.address2}
-                className='border-gray-300'
+                className="border-gray-300 w-1/2 rounded-sm"
             />
 
             <InputField
@@ -163,7 +165,7 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.city}
                 required
-                className='border-gray-300'
+                className='border-gray-300 w-1/2 rounded-sm'
             />
             <InputField
                 label="Postal Code"
@@ -172,24 +174,28 @@ const NewPaymentMethod = (props) => {
                 onChange={handleInputChange}
                 error={errors.postalCode}
                 required
-                className='border-gray-300'
+                className='border-gray-300 w-1/2 rounded-sm'
             />
-            <InputField
-                label="Email Address"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                error={errors.email}
-                required
-                className='border-gray-300'
-            />
+            {
+                !singlePayment &&
+                <InputField
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    error={errors.email}
+                    required
+                    className='border-gray-300 w-1/2'
+                />
+            }
+
 
             <div className="flex items-center text-sm text-gray-600 justify-end">
                 <span className="text-green-600 mr-2 ">|</span>
                 = Required Field
             </div>
-            <div className="border-b-4 border-gray-500" />
+            {!singlePayment && <div className="border-b-4 border-gray-500" />}
 
         </div>
     )

@@ -7,7 +7,7 @@ import NewPaymentMethod from "../NewPaymentMethod"
 const BillingFormSinglePayment = ({ paymentOptions, header }) => {
 
     return (
-        <div className="w-full mr-10 pt-8">
+        <div className="w-full">
             <div className="pb-4">
                 {
                     header && <h1 className="text-2xl font-bold text-gray-900">{header}</h1>
@@ -35,8 +35,8 @@ const BillingFormSinglePayment = ({ paymentOptions, header }) => {
                     </RadioGroup>
                 </div>
                 {paymentOptions[0]?.value === "new" && (
-                    <div className="ml-6 mt-3 h-12  bg-background">
-                        <NewPaymentMethod />
+                    <div className="ml-6 mt-3 bg-background">
+                        <NewPaymentMethod singlePayment={true} />
                     </div>
                 )}
 

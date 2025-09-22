@@ -74,7 +74,7 @@ const BusinessInformationForm = () => {
     return (
         <div className="w-full border-b-4 border-gray-300 pb-8">
             <div>
-                <div className="text-2xl font-bold text-foreground">BUSINESS INFORMATION</div>
+                <div className="text-2xl font-bold text-foreground ml-1 mb-4">BUSINESS INFORMATION</div>
             </div>
             <div className="space-y-6">
                 {/* Business Name */}
@@ -147,20 +147,20 @@ const BusinessInformationForm = () => {
                 </div>
 
                 {/* Tax Exempt Status */}
-                <div className="space-y-3">
-                    <label className="text-sm font-medium text-muted-foreground">Tax Exempt Status</label>
+                <div className="space-y-4">
+                    <label className="text-sm font-medium text-gray-700 block">Tax Exempt Status</label>
                     <RadioGroup
                         value={formData.taxExemptStatus}
                         onValueChange={(value) => handleInputChange("taxExemptStatus", value)}
                         name="tax-exempt-status"
-                        className="space-y-3"
+                        className="space-y-4"
                     >
                         {taxExemptOptions.map((option) => (
                             <div key={option.value} className="flex items-center space-x-3">
                                 <RadioGroupItem value={option.value} id={`tax-exempt-${option.value}`} />
                                 <label
                                     htmlFor={`tax-exempt-${option.value}`}
-                                    className="text-sm font-medium text-muted-foreground cursor-pointer"
+                                    className="text-sm font-medium text-gray-700 cursor-pointer select-none"
                                 >
                                     {option.label}
                                 </label>

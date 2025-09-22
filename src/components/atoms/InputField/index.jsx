@@ -8,7 +8,7 @@ const InputField = forwardRef(
       <div className="space-y-2">
         {
           label &&
-          <h3 className="flex text-display-sm-medium justify-between">
+          <h3 className="flex text-display-sm-medium justify-between ml-2.5">
             {label}
             {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
           </h3>
@@ -22,7 +22,7 @@ const InputField = forwardRef(
             type={type}
             className={cn(
               "px-3 py-2 border border-input bg-background text-sm",
-              "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
+              // "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
               "placeholder:text-muted-foreground",
               error && "border-destructive",
               className,

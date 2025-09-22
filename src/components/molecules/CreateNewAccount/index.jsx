@@ -5,7 +5,7 @@ import PasswordField from '../../atoms/InputField/PasswordField'
 import TermsConditions from '../../atoms/TermsCondition'
 import { Button } from '../../atoms/Buttons/Button'
 
-const CreateNewAccount = ({ onContinue, onCancel }) => {
+const CreateNewAccount = ({ onValidationChange }) => {
     const [agreedToTerms, setAgreedToTerms] = useState(false)
 
     const [formData, setFormData] = useState({
@@ -92,9 +92,16 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
     const isAllFilled =
         Boolean(formData.email && formData.phone && formData.username && formData.password && formData.confirmPassword && agreedToTerms)
 
+    // Notify parent component about validation state changes
+    React.useEffect(() => {
+        if (onValidationChange) {
+            onValidationChange(isAllFilled)
+        }
+    }, [isAllFilled, onValidationChange])
+
     return (
         <div className="max-w-4xl mx-auto p-6 md:p-8">
-            <div className="mb-8">
+            <div className="mb-8 ml-2.5">
                 <h1 className="text-3xl md:text-4xl font-bold text-black mb-4 tracking-tight">CREATE A NEW ACCOUNT</h1>
                 <p className="text-gray-600 text-lg">
                     If you are purchasing a new subscription, please create an account below to complete purchase.
@@ -109,7 +116,7 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
                         id="email"
                         onChange={(e) => handleInputChange("email", e.target.value)}
                         error={errors.email}
-                        className="w-full"
+                        className="w-full border-[#c7c7c7] border-2"
                     />
                 </div>
 
@@ -120,6 +127,7 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
                         placeholder="9999889889"
                         onChange={(e) => handleInputChange("phone", e.target.value)}
                         error={errors.phone}
+                        className="border-[#c7c7c7] border-2"
                     />
                 </div>
 
@@ -130,7 +138,7 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
                         id="username"
                         onChange={(e) => handleInputChange("username", e.target.value)}
                         error={errors.username}
-                        className="w-full"
+                        className="w-full border-[#c7c7c7] border-2"
                     />
                 </div>
                 {/* Password */}
@@ -158,27 +166,6 @@ const CreateNewAccount = ({ onContinue, onCancel }) => {
 
 
                 <TermsConditions checked={agreedToTerms} onCheckedChange={setAgreedToTerms} />
-
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-6">
-                    <Button
-                        onClick={handleContinue}
-                        className="h-12 px-8 hover:bg-gray-50 bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"
-                        disabled={!isAllFilled}
-                    >
-                        CONTINUE TO COMPANY & BILLING
-                    </Button>
-                    {onCancel && (
-                        <Button
-                            onClick={onCancel}
-                            variant="outline"
-                            className="h-12 px-8 border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"
-                            variants='outline'
-                        >
-                            CANCEL
-                        </Button>
-                    )}
-                </div>
             </div>
         </div>
     )
