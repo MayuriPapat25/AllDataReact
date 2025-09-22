@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { CartDropdown } from "../organisms/CartDropdown"
+import { ProCartDropdown } from "../organisms/proCartDropdown"
 import { Button } from "../atoms/Buttons/Button"
 
 export default function ProHeader() {
@@ -42,7 +42,7 @@ export default function ProHeader() {
       </div>
 
       {/* Fullscreen Drawer Modal */}
-      <CartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <ProCartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   )
 }

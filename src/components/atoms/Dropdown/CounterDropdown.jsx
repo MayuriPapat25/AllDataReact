@@ -1,9 +1,10 @@
 import { Button } from "../Buttons/Button"
 
-export function AccessPointDropdown({ value, onChange, className = "" }) {
+export function CounterDropdown({ value, onChange, className = "" }) {
   return (
-    <div className={`flex items-center ${className}`}>
-      <span className="text-sm text-gray-600 mr-2">Access Points</span>
+    <div className={`inline-flex items-center gap-2 ${className}`}>
+      {/* Label is optional; remove if you don't want it */}
+      {/* <span className="text-sm text-gray-600 whitespace-nowrap">Access Points</span> */}
       <div className="flex items-center border border-gray-300 rounded">
         <Button
           onClick={() => onChange(Math.max(1, value - 1))}
