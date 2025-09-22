@@ -28,14 +28,6 @@ const Checkout = () => {
         }
     }
 
-    const steps = [
-        { number: 1, label: "ACCOUNT" },
-        { number: 2, label: "COMPANY & BILLING" },
-        { number: 3, label: "REVIEW" },
-        { number: 4, label: "TERMS" },
-        { number: 5, label: "ORDER COMPLETE" },
-    ]
-
     return (
         <div className="min-h-screen bg-[#fafafa] py-12">
             <div className="max-w-6xl mx-auto">

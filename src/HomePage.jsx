@@ -46,7 +46,7 @@ export default function HomePage() {
         className="w-1/6"
       />
 
-      <AccountSidebar headline="Account Details" className="sidebar" accountDetails={accountDetails} />
+      {/* <AccountSidebar headline="Account Details" className="sidebar" accountDetails={accountDetails} /> */}
 
       {/* File Upload */}
       <FormFileUpload
@@ -57,10 +57,8 @@ export default function HomePage() {
       />
 
       <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-        <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} />
-      </div>        
+        {/* <CheckoutSteps currentStep={currentStep} onStepClick={handleStepClick} /> */}
+      </div>
     </div>
-
-
   );
 }
