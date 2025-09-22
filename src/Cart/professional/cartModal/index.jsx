@@ -20,7 +20,7 @@ export default function CartModal({ onClose }) {
 
       {/* Cart Content */}
       <div className="flex-1 overflow-y-auto">
-        <ProCartDropdown isOpen={true} onClose={onClose} />
+        <ProCartDropdown isOpen={true} onClose={onClose} variant="dropdown" />
       </div>
     </div>
   )
