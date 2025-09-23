@@ -1,6 +1,8 @@
 import React from 'react';
 import { Tabs } from '../components/molecules/Tabs';
 import { ProductInfo } from '../components/atoms/ProductInfo';
+import { PriceText } from '../components/atoms/Price/PriceText';
+import BillSummary from '../components/organisms/billSummary';
 
 export const ProfCustomPortal = () => {
 
@@ -10,10 +12,9 @@ export const ProfCustomPortal = () => {
       id: 'billing',
       label: 'Billing',
       content: (
-        <div className="p-6 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-semibold mb-3">Billing Information</h3>
-          <p className="text-gray-600">Manage your billing details and payment methods.</p>
-        </div>
+        <>
+          <BillSummary />
+        </>
       )
     },
     {

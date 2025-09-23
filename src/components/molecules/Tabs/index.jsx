@@ -122,7 +122,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
       </div>
 
       {/* Tab Content */}
-      <div className="mt-6">
+      <div className="mt-6 content">
         {activeTabContent}
       </div>
 
