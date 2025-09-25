@@ -3,6 +3,8 @@ import { Tabs } from '../components/molecules/Tabs';
 import { ProductInfo } from '../components/atoms/ProductInfo';
 import { PriceText } from '../components/atoms/Price/PriceText';
 import BillSummary from '../components/organisms/billSummary';
+import ProductsPortal from '../components/organisms/ProductsPortal';
+import AccountSettings from '../components/organisms/AccountSettings';
 
 export const ProfCustomPortal = () => {
 
@@ -21,20 +23,18 @@ export const ProfCustomPortal = () => {
       id: 'products',
       label: 'Products',
       content: (
-        <div className="p-6 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-semibold mb-3">Products</h3>
-          <p className="text-gray-600">View and manage your products and services.</p>
-        </div>
+        <>
+          <ProductsPortal />
+        </>
       )
     },
     {
       id: 'account-settings',
       label: 'Account Settings',
       content: (
-        <div className="p-6 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-semibold mb-3">Account Settings</h3>
-          <p className="text-gray-600">Update your account preferences and settings.</p>
-        </div>
+        <>
+          <AccountSettings />
+        </>
       )
     }
   ];

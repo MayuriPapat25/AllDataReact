@@ -12,6 +12,7 @@ import {
   AlertTriangle, // warning
   Info, // info
   CheckCircle2, // success
+  CircleMinus, // remove
 } from "lucide-react"
 
 export function Icon({ type, className, onClick }) {
@@ -29,6 +30,7 @@ export function Icon({ type, className, onClick }) {
     warning: AlertTriangle,
     info: Info,
     success: CheckCircle2,
+    remove: CircleMinus,
   }
 
   const LucideIcon = icons[type] || AlertCircle

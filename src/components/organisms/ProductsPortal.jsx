@@ -1,0 +1,186 @@
+import React, { useState } from 'react';
+import ProductCard from '../molecules/ProductCard';
+import { Car, MessageSquare, Plus } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import { InfoText } from '../atoms/Info/InfoText';
+import { RepCartContent } from './RepCartContent';
+import { Icon, ProductIcon } from '../atoms/Icon/Icon';
+import { ProductName } from '../atoms/TextIcon/ProductName';
+import { CounterDropdown } from '../atoms/Dropdown/CounterDropdown';
+import { Button } from '../atoms/Buttons/Button';
+import AccountClosureModal from '../molecules/AccountClosureModal';
+
+
+const ProductsPortal = () => {
+
+  const navigate = useNavigate();
+
+  const productCards = [
+    {
+      id: "repair",
+      title: "REPAIR",
+      icon: <Car className="w-8 h-8" />,
+      iconColor: "bg-blue-600",
+      onClick: () => navigate('/repair'),
+    },
+    {
+      id: "community",
+      title: "COMMUNITY",
+      icon: <MessageSquare className="w-8 h-8" />,
+      iconColor: "bg-orange-500",
+      onClick: () => console.log("Community clicked"),
+    },
+    {
+      id: "find-fix",
+      title: "FIND A FIX",
+      icon: <Plus className="w-8 h-8" />,
+      iconColor: "bg-gray-600",
+      onClick: () => console.log("Find a fix clicked"),
+    },
+    {
+      id: "estimator",
+      title: "ESTIMATOR",
+      icon: <Plus className="w-8 h-8" />,
+      iconColor: "bg-gray-600",
+      onClick: () => console.log("Estimator clicked"),
+    },
+    {
+      id: "add-products",
+      title: "ADD PRODUCTS",
+      subtitle: "Shop Additional Products",
+      icon: <Plus className="w-6 h-6" />,
+      iconColor: "bg-transparent border-2 border-gray-400",
+      isDashed: true,
+      onClick: () => console.log("Add products clicked"),
+    },
+  ];
+
+  const [cartItems, setCartItems] = useState([
+    { id: "mobile", name: "Mobile", type: "mobile", price: 39.0, accessPoints: 1 },
+    { id: "basic-diagnostics", name: "Basic Diagnostics", type: "diagnostics", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Mobile" },
+    { id: "repair", name: "Repair", type: "repair", price: 179.0, accessPoints: 1 },
+    { id: "community", name: "Community", type: "community", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+    { id: "estimator", name: "Estimator", type: "estimator", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+  ]);
+
+  const handleAccessPointChange = (itemId, newValue) => {
+    setCartItems(prev => prev.map(item => item.id === itemId ? { ...item, accessPoints: newValue } : item));
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <main className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto">
+          <h1 className="text-3xl font-bold text-center mb-8 text-gray-900">Product Services</h1>
+          <ProductCard cards={productCards} />
+        </div>
+      </main>
+      <div className="mb-6 bg-white shadow-sm general-list">
+        <h1 className='text-3xl font-bold'>Your Subscription</h1>
+        <div className="border-b-2 border-[#faf9f9]">
+          <div className="p-4">
+            <InfoText label="Subscription Term" value="1 Year" />
+          </div>
+          <div className="p-4">
+            <InfoText label="Auto Renewal Date" value="09/23/2026" />
+          </div>
+          <div className="p-4">
+            <InfoText label="Invoice Frequency" value="Monthly" />
+          </div>
+        </div>
+      </div>
+
+      {/* Cart Items */}
+      <div className="mb-6 bg-white shadow-sm">
+        {cartItems.map((item, index) => (
+          <div
+            key={item.id}
+            className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""}`}
+          >
+            {/* Desktop */}
+            <div
+              className="hidden sm:grid items-center gap-4"
+              style={{ gridTemplateColumns: "1fr 144px 1fr" }} // removed delete column
+            >
+              {/* Product Info */}
+              <div className="flex items-center gap-3">
+                <ProductIcon type={item.type} />
+                <ProductName name={item.name} />
+              </div>
+
+              {/* Counter */}
+              <div className="text-center">
+                <CounterDropdown
+                  value={item.accessPoints}
+                  onChange={(value) => handleAccessPointChange(item.id, value)}
+                />
+              </div>
+
+              {/* Price + Info */}
+              <div className="text-right">
+                <div className="font-medium">${item.price.toFixed(2)}</div>
+                <div className="text-sm text-gray-500">
+                  {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile */}
+            <div className="sm:hidden space-y-2">
+              {/* Product Info */}
+              <div className="flex items-center gap-3">
+                <ProductIcon type={item.type} />
+                <ProductName name={item.name} />
+              </div>
+
+              {/* Counter + Price */}
+              <div className="flex items-center justify-between">
+                <CounterDropdown
+                  value={item.accessPoints}
+                  onChange={(value) => handleAccessPointChange(item.id, value)}
+                />
+                <div className="text-right">
+                  <div className="font-medium">${item.price.toFixed(2)}</div>
+                  <div className="text-sm text-gray-500">
+                    {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Cancel Subscription */}
+      <div className="mb-6 bg-white shadow-sm general-list">
+        <Button
+          variant="ghost"
+          className="w-full justify-start gap-3 h-auto py-3 px-4 text-left font-normal hover:bg-gray-50"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <div className="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300">
+            <Icon type="remove" className="text-xl" size={16} />
+          </div>
+          <span className="text-gray-700">Cancel Subscription</span>
+        </Button>
+        <AccountClosureModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Requesting Account Closure" desc1="This request will not automatically cancel your subscription service(s)." desc2="An agent will follow up with you within 24-48 hours* after reviewing the terms of your agreement for eligibility." requiredMessage="*excluding weekends and holidays" />
+      </div>
+
+      <div className="mb-6 bg-white shadow-sm invoice-history-list">
+        <div className="border-b-2 border-[#faf9f9]">
+          <div className="p-4">
+            <InfoText
+              label="September 23, 2025"
+              value="View"
+              link="/"
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ProductsPortal;;
