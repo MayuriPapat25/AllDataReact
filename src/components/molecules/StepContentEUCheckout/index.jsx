@@ -1,7 +1,5 @@
 
 import { Button } from "../../atoms/Buttons/Button"
-// import CreateNewAccount from "../CreateNewAccount"
-import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
 import BillingAddressForm from '../BillingAddress'
@@ -11,16 +9,17 @@ import BillingEmailForm from "../BillingEmailAddress"
 import PhoneSignupForm from "../PhoneSignUpForm"
 import { useState } from "react"
 import OrderSummary from "../OrderSummary"
-import AccountInformation from "../AccountInformation"
-import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../atoms/BusinessAddressReview"
-import BillingInfoReview from "../../atoms/BillingInfoReview"
-import AgreementPage from "../../atoms/AgreementPage"
-import OrderConfirmation from "../OrderConfirmation"
+// import AccountInformation from "../AccountInformation"
+// import BusinessInfoReview from "../BusinessInfoReview"
+// import BusinessAddressReview from "../../atoms/BusinessAddressReview"
+// import BillingInfoReview from "../../atoms/BillingInfoReview"
+// import AgreementPage from "../../atoms/AgreementPage"
+// import OrderConfirmation from "../OrderConfirmation"
+// import EmailForm from "../EmailForm"
 import AccountCreationForm from "../AccountCreationForm"
 
 
-const StepContentUSAnonyCheckout = ({
+const StepContentEUCheckout = ({
     currentStep,
     onContinue,
     onBack,
@@ -139,31 +138,14 @@ const StepContentUSAnonyCheckout = ({
         onBack()
     }
 
-    const handleLogin = () => {
-        console.log(`Login clicked for ${currentVariant} variant`)
-        // Add your login logic here
-    }
-
-
     const renderStepContent = () => {
         switch (currentStep) {
             case 1:
                 return (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mx-auto relative">
+                    <div className=" mx-auto relative">
                         <div>
-                            <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-12"/>
-                        </div>
-                        {/* Vertical divider - hidden on mobile, visible on desktop */}
-                        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
-                        <div className="flex items-start pt-8 mx-auto p-6">
-                            {/* <LoginForm
-                                onLogin={() => {
-                                    // Handle login logic here
-                                    console.log("Login clicked")
-                                }}
-                            /> */}
-                            <LoginForm onLogin={handleLogin} variant='alldata' />
-                        </div>
+                            <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
+                        </div>                  
                     </div>
                 )
 
@@ -172,8 +154,9 @@ const StepContentUSAnonyCheckout = ({
                     <div className="bg-background p-4 md:p-8">
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm />
-                                <BusinessAddressForm />
+                                {/* this same component we can use for US journey for Anonymous flow,US journey for Authenticated flow, Rep Initiated flow */}
+                                <BusinessInformationForm variant="standard" />
+                                <BusinessAddressForm/>
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
@@ -193,7 +176,7 @@ const StepContentUSAnonyCheckout = ({
             case 3:
                 return (
                     <div className="bg-background p-4 md:p-8">
-                        <div className="mx-auto flex justify-between gap-8">
+                        {/* <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <AccountInformation  {...accountData} />
                                 <BusinessInfoReview onEdit={handleEdit} />
@@ -205,24 +188,24 @@ const StepContentUSAnonyCheckout = ({
                             </div>
                             <div className="w-1/2">
                                 <OrderSummary data={sampleOrderData} />
-                                {/* <OrderSummary data={orderSummaryData} /> */}
+                                <OrderSummary data={orderSummaryData} />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 )
 
             case 4:
                 return (
                     <div bg-background p-4 md:p-8>
-                        <AgreementPage />
+                        {/* <AgreementPage /> */}
                     </div>
                 )
 
             case 5:
                 return (
                     <div className="min-h-screen bg-gray-50 py-12 ">
-                        <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
-                        <OrderSummary data={sampleOrderData} listClassName="my-10" fromStepFive={false}/>
+                        {/* <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
+                        <OrderSummary data={sampleOrderData} listClassName="my-10" fromStepFive={false}/> */}
                         {/* <OrderSummary data={orderSummaryData} /> */}
                     </div>
                 )
@@ -244,8 +227,12 @@ const StepContentUSAnonyCheckout = ({
                     onClick: onContinue,
                     disabled: !step1Valid
                 },
-                secondaryButton: null,
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-6 lg:ml-20 md:ml-0 sm:ml-0 md:justify-center lg:justify-start"
+                secondaryButton: {
+                    text: "CANCEL",
+                    onClick: onBack,
+                    variant: "outline"
+                }, 
+                buttonLayout: "max-w-2xl mx-auto p-6 justify-between"
             },
             2: {
                 showButtons: true,
@@ -306,7 +293,7 @@ const StepContentUSAnonyCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     disabled={primaryButton.disabled}
-                    className={primaryButton.className || "h-12 px-8 bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
+                    className={primaryButton.className || "h-12 px-8  bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -333,4 +320,4 @@ const StepContentUSAnonyCheckout = ({
     )
 }
 
-export default StepContentUSAnonyCheckout
+export default StepContentEUCheckout

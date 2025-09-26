@@ -1,10 +1,8 @@
-"use client"
-
 import { useState } from "react"
 import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
 
 const BillingEmailForm = () => {
-    const [usePrimaryEmail, setUsePrimaryEmail] = useState(false)
+    const [usePrimaryEmail, setUsePrimaryEmail] = useState(true)
     const [customEmail, setCustomEmail] = useState("")
 
     // Sample primary email address
@@ -26,7 +24,7 @@ const BillingEmailForm = () => {
     }
 
     return (
-        <div className="w-full space-y-6">
+        <div className="w-full space-y-6 ">
             <h2 className="text-2xl font-semibold text-gray-900">Billing Email Address</h2>
 
             <div className="space-y-4">

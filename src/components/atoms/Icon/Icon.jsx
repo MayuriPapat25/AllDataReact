@@ -12,6 +12,17 @@ import {
   AlertTriangle, // warning
   Info, // info
   CheckCircle2, // success
+  Bell, // info
+  CirclePlus,//circle plus icon
+  RotateCcw, //refund
+  CarFront, //car front
+  Euro, //euro currency
+  DollarSign, //doller currency
+  FileDown, //file download
+  CircleMinus, //cancel subscription
+  ChevronDown, //down Arrow
+  ToggleLeft,// toggle yes
+  ToggleRight,// toggle no
 } from "lucide-react"
 
 export function Icon({ type, className, onClick }) {
@@ -25,10 +36,21 @@ export function Icon({ type, className, onClick }) {
     community: Globe,
     estimator: BarChart3,
     delete: Trash2,
-    error: AlertCircle,
+    error: AlertTriangle,
     warning: AlertTriangle,
     info: Info,
     success: CheckCircle2,
+    information: Bell,
+    plus: CirclePlus,
+    refund: RotateCcw,
+    carFront: CarFront,
+    euro: Euro,
+    doller: DollarSign,
+    downloadFile: FileDown,
+    cancelSubscription: CircleMinus,
+    downArrow: ChevronDown,
+    toggleYes: ToggleLeft,
+    toggleNo: ToggleRight
   }
 
   const LucideIcon = icons[type] || AlertCircle

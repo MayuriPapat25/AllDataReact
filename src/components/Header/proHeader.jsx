@@ -1,4 +1,3 @@
-"use client"
 import { useState } from "react"
 import { ProCartDropdown } from "../organisms/proCartDropdown"
 import { Button } from "../atoms/Buttons/Button"

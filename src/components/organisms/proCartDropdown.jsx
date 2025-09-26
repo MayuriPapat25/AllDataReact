@@ -65,12 +65,12 @@ export function ProCartDropdown({ isOpen, onClose }) {
           <div className="p-4">
             {/* Warning / Messages */}
             <Message type="error" className="mb-3">In order to purchase <strong>ALLDATA INSPECTIONS</strong>, you must also purchase{" "} <strong>ALLDATA REPAIR</strong> or <strong>ALLDATA COLLISION</strong></Message>
-            <Message type="info" className="mb-3"><strong>ALLDATA INSPECTIONS</strong> requires <strong>ALLDATA MOBILE</strong>, and it has been added to your cart.</Message>
+            <Message type="information" className="mb-3 text-[#"><strong>ALLDATA INSPECTIONS</strong> requires <strong>ALLDATA MOBILE</strong>, and it has been added to your cart.</Message>
             <Message type="warning" className="mb-3">Your Total Due has been updated. Please review your cart before continuing with purchase.</Message>
             <Message type="success" className="mb-3">Success text</Message>
 
             {/* Payment Frequency */}
-            <div className="mb-6 bg-white p-4" style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)"}}>
+            <div className="mb-6 bg-white p-4" style={{ boxShadow: "0 6px 20px rgba(0,0,0,0.05)" }}>
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium text-gray-700">Payment Frequency</label>
                 <div className="flex gap-6">
@@ -113,13 +113,12 @@ export function ProCartDropdown({ isOpen, onClose }) {
               {cartItems.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`p-4 ${
-                    index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""
-                  }`}
+                  className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""
+                    }`}
                 >
                   {/* Desktop / Tablet: 4 column grid */}
                   <div className="hidden sm:grid items-center gap-4"
-                      style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
+                    style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
                     {/* Column 1: Product icon + name */}
                     <div className="flex items-center gap-3">
                       <ProductIcon type={item.type} />
@@ -146,7 +145,7 @@ export function ProCartDropdown({ isOpen, onClose }) {
                     <div className="flex justify-end">
                       <DeleteIcon
                         onClick={() => handleRemoveItem(item.id)}
-                        className="text-gray-400 hover:text-red-500 cursor-pointer"
+                        className="text-[#004a87] cursor-pointer"
                       />
                     </div>
                   </div>

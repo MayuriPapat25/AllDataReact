@@ -1,32 +1,31 @@
-import React, { forwardRef } from "react"
+
+import { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
 const PhoneField = forwardRef(
     ({ label, required, optional, error, countryCode, className, onChange, ...props }, ref) => {
         return (
             <div className="space-y-2">
-                {
-                    label &&
+                {label && (
                     <h3 className="block text-display-sm-medium text-muted-foreground ml-2.5">
                         {label}
                         {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
                     </h3>
-                }
+                )}
 
-                <div className="flex items-center">
+                <div className="flex items-center w-full">
                     {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>}
-                    {
-                        countryCode &&
+                    {countryCode && (
                         <h3 className="flex items-center px-3 py-2 border border-r-0 border-input bg-muted rounded-l-md text-sm text-muted-foreground">
                             {countryCode}
                         </h3>
-                    }
+                    )}
 
                     <input
                         ref={ref}
                         type="tel"
                         className={cn(
-                            "flex-1 px-3 py-2 border border-input bg-background text-sm",
+                            "w-full px-3 py-2 border border-input bg-background text-sm",
                             // "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
                             "placeholder:text-muted-foreground",
                             error && "border-destructive",
@@ -44,4 +43,4 @@ const PhoneField = forwardRef(
 
 PhoneField.displayName = "PhoneField"
 
-export default PhoneField 
+export default PhoneField

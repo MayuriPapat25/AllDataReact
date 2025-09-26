@@ -1,12 +1,10 @@
-"use client"
-
 import React from "react"
 import { createContext, useContext } from "react"
 import { cn } from "../../../../utils/utils"
 
 const RadioGroupContext = createContext(undefined)
 
-export function RadioGroup({ value, onValueChange, name = "radio-group", className, children }) {
+export const RadioGroup = ({ value, onValueChange, name = "radio-group", className, children }) => {
     return (
         <RadioGroupContext.Provider value={{ value, onValueChange, name }}>
             <div className={cn("space-y-2", className)} role="radiogroup">

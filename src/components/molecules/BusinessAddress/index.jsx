@@ -1,6 +1,6 @@
 import { useState } from "react"
-import InputField from "../../atoms/InputField"
-import SelectField from "../../atoms/SelectField"
+import InputField from "../../atoms/InputField/index" // Updated import path for InputField
+import SelectField from "../../atoms/SelectField" // Updated import path for SelectField
 
 const US_STATES = [
     { value: "AL", label: "Alabama" },
@@ -55,13 +55,24 @@ const US_STATES = [
     { value: "WY", label: "Wyoming" },
 ]
 
-const BusinessAddressForm = ({ onDataChange }) => {
-    const [formData, setFormData] = useState({
-        streetAddress: "12191 West Dr",
-        unit: "",
-        city: "Desert Hot Springs",
-        state: "CA",
-        zipCode: "92240-3851",
+const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
+    const [formData, setFormData] = useState(() => {
+        if (variant === "us") {
+            return {
+                streetAddress: "12191 West Dr",
+                unit: "",
+                city: "Desert Hot Springs",
+                state: "CA",
+                zipCode: "92240-3851",
+            }
+        } else {
+            return {
+                streetNumber: "Infantrieweg 21",
+                city: "Oldenburg (Oldenburg)",
+                stateCounty: "Berlin",
+                postCode: "26129",
+            }
+        }
     })
 
     const updateField = (field, value) => {
@@ -72,54 +83,98 @@ const BusinessAddressForm = ({ onDataChange }) => {
 
     return (
         <div className="space-y-6 mt-8 pb-8 border-b-4 border-gray-300">
-            <div className="">
+            <div className="flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-foreground tracking-wide">BUSINESS ADDRESS</h2>
+                {variant === "international" && <span className="text-sm text-muted-foreground">| = Fields are Required</span>}
             </div>
 
             <div className="space-y-6">
-                <InputField
-                    label="Street Address"
-                    value={formData.streetAddress}
-                    onChange={(value) => updateField("streetAddress", value)}
-                    placeholder="Enter street address"
-                    className='w-full border-gray-300 '
-                />
+                {variant === "us" ? (
+                    <>
+                        <InputField
+                            label="Street Address"
+                            value={formData.streetAddress}
+                            onChange={(value) => updateField("streetAddress", value)}
+                            placeholder="Enter street address"
+                            className="w-full border-gray-300 "
+                        />
 
-                <div className="relative">
-                    <InputField
-                        label="Unit, Suite, Apartment, etc."
-                        value={formData.unit}
-                        onChange={(value) => updateField("unit", value)}
-                        placeholder="Enter unit, suite, apartment, etc."
-                        className='w-full border-gray-300 '
-                    />
-                    <span className="absolute top-0 right-0 text-sm text-muted-foreground">Optional</span>
-                </div>
+                        <div className="relative">
+                            <InputField
+                                label="Unit, Suite, Apartment, etc."
+                                value={formData.unit}
+                                onChange={(value) => updateField("unit", value)}
+                                placeholder="Enter unit, suite, apartment, etc."
+                                className="w-full border-gray-300 "
+                            />
+                            <span className="absolute top-0 right-0 text-sm text-muted-foreground">Optional</span>
+                        </div>
 
-                <InputField
-                    label="City"
-                    value={formData.city}
-                    onChange={(value) => updateField("city", value)}
-                    placeholder="Enter city"
-                    className='w-full border-gray-300 '
-                />
+                        <InputField
+                            label="City"
+                            value={formData.city}
+                            onChange={(value) => updateField("city", value)}
+                            placeholder="Enter city"
+                            className="w-full border-gray-300 "
+                        />
 
-                <SelectField
-                    label="State"
-                    value={formData.state}
-                    onChange={(value) => updateField("state", value)}
-                    options={US_STATES}
-                    placeholder="Select state"
-                    className='w-1/2 border-gray-300 '
-                />
+                        <SelectField
+                            label="State"
+                            value={formData.state}
+                            onChange={(value) => updateField("state", value)}
+                            options={US_STATES}
+                            placeholder="Select state"
+                            className="w-1/2 border-gray-300 "
+                        />
 
-                <InputField
-                    label="ZIP Code"
-                    value={formData.zipCode}
-                    onChange={(value) => updateField("zipCode", value)}
-                    placeholder="Enter ZIP code"
-                    className='w-1/2 border-gray-300 '
-                />
+                        <InputField
+                            label="ZIP Code"
+                            value={formData.zipCode}
+                            onChange={(value) => updateField("zipCode", value)}
+                            placeholder="Enter ZIP code"
+                            className="w-1/2 border-gray-300 "
+                        />
+                    </>
+                ) : (
+                    <>
+                        <InputField
+                            label="Street Number"
+                            value={formData.streetNumber}
+                            onChange={(value) => updateField("streetNumber", value)}
+                            placeholder="Enter street number"
+                            className="w-full border-gray-300 "
+                            required
+                        />
+
+                        <InputField
+                            label="City"
+                            value={formData.city}
+                            onChange={(value) => updateField("city", value)}
+                            placeholder="Enter city"
+                            className="w-full border-gray-300"
+                            required
+                        />
+
+                        <SelectField
+                            label="State"
+                            value={formData.state}
+                            onChange={(value) => updateField("state", value)}
+                            options={US_STATES}
+                            placeholder="Select state"
+                            className="w-1/2 border-gray-300 "
+                            required
+                        />
+
+                        <InputField
+                            label="Post Code"
+                            value={formData.postCode}
+                            onChange={(value) => updateField("postCode", value)}
+                            placeholder="Enter post code"
+                            className="w-1/2 border-gray-300 "
+                            required
+                        />
+                    </>
+                )}
             </div>
         </div>
     )

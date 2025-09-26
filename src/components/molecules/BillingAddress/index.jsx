@@ -4,7 +4,7 @@ import SelectField from "../../atoms/SelectField"
 
 const BillingAddressForm = ({ fromReview, onEdit }) => {
     const [formData, setFormData] = useState({
-        sameAsBusinessAddress: false,
+        sameAsBusinessAddress: true,
         firstName: "",
         lastName: "",
         streetAddress: "",

@@ -73,7 +73,7 @@ const PasswordField = ({
                     placeholder={placeholder}
                     aria-invalid={Boolean(error || validationError)}
                     aria-describedby={id ? `${id}-error` : undefined}
-                    className={`px-3 py-2 text-base border-2 pr-12 w-full ${(error || validationError) ? "border-red-500 focus:border-red-500" : "border-gray-300 focus:border-blue-500"}`}
+                    className={`px-3 py-2 text-base border-2 pr-12 w-full ${error || validationError ? "border-red-500 focus:border-red-500" : "border-gray-300 focus:border-blue-500"}`}
                 />
             </div>
             {error && (
@@ -82,9 +82,7 @@ const PasswordField = ({
                 </p>
             )}
             {helperText && (
-                <p className={`text-sm leading-relaxed ${validationError ? "text-red-500" : "text-gray-500"}`}>
-                    {helperText}
-                </p>
+                <p className={`text-sm leading-relaxed ${validationError ? "text-red-500" : "text-gray-500"}`}>{helperText}</p>
             )}
         </div>
     )

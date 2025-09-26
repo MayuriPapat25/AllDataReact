@@ -37,7 +37,7 @@ export function DiyCartDropdown({ isOpen, onClose, className }) {
             size="sm"
             className="flex items-center justify-center p-1 rounded"
           >
-            <Icon type="close" className="text-gray-500 hover:text-gray-700" size={20} />
+            <Icon type="close" className="text-black" size={20} />
           </Button>
         </div>
 

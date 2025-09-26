@@ -1,6 +1,7 @@
 import { useState } from "react"
 import StepContentUSAnonyCheckout from "../components/molecules/StepContentUSAnonyCheckout"
 import CheckoutSteps from "../components/atoms/CheckoutSteps"
+import StepContentEUCheckout from "../components/molecules/StepContentEUCheckout"
 
 const Checkout = () => {
 
@@ -34,7 +35,10 @@ const Checkout = () => {
                 </div>
 
                 <div className="bg-[#fafafa] mx-20">
-                    <StepContentUSAnonyCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
+                    {/* this same component we can use for US journey for Anonymous flow, Rep Initiated flow , DIY flow */}
+                    {/* <StepContentUSAnonyCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} /> */}
+                    {/* Professional EU journey flow */}
+                    <StepContentEUCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
                 </div>
             </div>
         </div>

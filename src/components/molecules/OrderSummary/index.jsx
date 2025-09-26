@@ -1,114 +1,88 @@
 import { cn } from "../../../../utils/utils"
+import ImageTitleValue from "../../atoms/ImageTitleValue"
+import TitleValue from "../../atoms/TitleValue"
 
-const OrderSummary = ({ data, className }) => {
-    const {
-        paymentFrequency,
-        subscriptionTerm,
-        autoRenewalDate,
-        services,
-        subscriptionSubtotal,
-        bundleDiscount,
-        discount,
-        totalMonthly,
-        totalDueToday,
-        isPromotionalRate = true,
-    } = data
+const OrderSummary = ({ data, className, listClassName, type }) => {
+    const showBundleDiscount =
+        data?.bundleDiscount && data.bundleDiscount > 0 && (type === "variant2" || type === "variant4")
+    const showDiscount = data?.discount && data.discount > 0 && (type === "variant2" || type === "variant4")
+    const showSalesTax = data?.salesTax && (type === "variant1" || type === "variant3")
+    const showTaxesNotIncluded = type === "variant3" || type === "variant4"
+    const showPromotionalRateNotice = data?.isPromotionalRate && (type === "variant2" || type === "variant4")
+    const showAllRatesSubjectToSalesTaxNotice = !showPromotionalRateNotice && (type === "variant1" || type === "variant3")
 
     return (
-        <div className={cn("w-full max-w-2xl mx-auto p-6 space-y-6", className)}>
+        <div className={cn("w-full max-w-2xl mx-auto", className)}>
             {/* Header */}
-            <div className="text-center">
-                <h2 className="text-xl font-bold tracking-wide text-foreground">ORDER SUMMARY</h2>
+            <div className="">
+                <h2 className="text-xl font-bold tracking-wide mb-8">ORDER SUMMARY</h2>
             </div>
 
             {/* Subscription Details */}
-            <div className="space-y-4 border-b border-border pb-6">
-                <div className="flex justify-between items-center">
-                    <span className="text-foreground font-medium">Payment Frequency</span>
-                    <span className="text-muted-foreground font-medium">{paymentFrequency}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                    <span className="text-foreground font-medium">Subscription Term</span>
-                    <span className="text-muted-foreground font-medium">{subscriptionTerm}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                    <span className="text-foreground font-medium">Auto Renewal Date</span>
-                    <span className="text-muted-foreground font-medium">{autoRenewalDate}</span>
-                </div>
+            <div className="space-y-1">
+                {data?.paymentFrequency && <TitleValue title="Payment Frequency" value={data?.paymentFrequency} />}
+                {data?.subscriptionTerm && <TitleValue title="Subscription Term" value={data?.subscriptionTerm} />}
+                {data?.autoRenewalDate && <TitleValue title="Auto Renewal Date" value={data?.autoRenewalDate} />}
             </div>
 
             {/* Services List */}
-            <div className="space-y-4">
-                {services.map((service) => {
-                    // const IconComponent = iconMap[service.icon]
-                    // const iconStyles = iconColorMap[service.icon]
-
-                    return (
-                        <div key={service.id} className="flex items-center gap-4 py-2">
-                            <div
-                            // className={cn("w-12 h-12 rounded-full flex items-center justify-center", iconStyles)}
-                            >
-                                {/* <IconComponent className="w-6 h-6" /> */}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <h3 className="font-bold text-foreground text-sm sm:text-base">{service.name}</h3>
-                                <p className="text-muted-foreground text-sm">Access Points: {service.accessPoints}</p>
-                            </div>
-                            <div className="text-right">
-                                <div className="font-bold text-foreground">${service.monthlyPrice.toFixed(2)}</div>
-                                <div className="text-muted-foreground text-sm">Monthly</div>
-                            </div>
-                        </div>
-                    )
-                })}
+            <div className={cn("space-y-1", listClassName)}>
+                {data?.services?.length > 0 &&
+                    data.services.map((service, index) => {
+                        return (
+                            <ImageTitleValue
+                                key={index}
+                                name={service?.name}
+                                accessPoints={service?.accessPoints}
+                                monthelyPrice={service.monthlyPrice}
+                                icon={service.icon}
+                                paymentFrequency="Monthly"
+                            />
+                        )
+                    })}
             </div>
 
             {/* Pricing Breakdown */}
-            <div className="space-y-3 border-t border-border pt-6">
-                <div className="flex justify-between items-center">
-                    <span className="text-foreground font-medium">Subscription Subtotal</span>
-                    <span className="text-foreground font-medium">${subscriptionSubtotal.toFixed(2)}</span>
-                </div>
+            <div className="space-y-1 mt-1">
+                {data?.subscriptionSubtotal && <TitleValue title="Subscription Subtotal" value={data?.subscriptionSubtotal} />}
 
-                {bundleDiscount > 0 && (
-                    <div className="flex justify-between items-center">
-                        <span className="text-foreground font-medium">Bundle Discount</span>
-                        <span className="text-foreground font-medium">-${bundleDiscount.toFixed(2)}</span>
-                    </div>
+                {data?.bundleDiscount && <TitleValue title="Bundle Discount" value={data?.bundleDiscount} />}
+
+                {data?.discount && <TitleValue title="Discount" value={data?.discount} />}
+                {data?.totalMonthly && (
+                    <TitleValue title="Total Monthly" value={data?.totalMonthly} isPromotionalRate={data?.isPromotionalRate} />
                 )}
-
-                {discount > 0 && (
-                    <div className="flex justify-between items-center">
-                        <span className="text-foreground font-medium">Discount</span>
-                        <span className="text-foreground font-medium">-${discount.toFixed(2)}</span>
-                    </div>
-                )}
-
-                <div className="flex justify-between items-center border-t border-border pt-3">
-                    <span className="text-foreground font-medium">Total Monthly</span>
-                    <span className="text-foreground font-medium">
-                        ${totalMonthly.toFixed(2)}
-                        {isPromotionalRate && "*"}
-                    </span>
-                </div>
             </div>
-
-            {/* Total Due Today */}
-            <div className="bg-muted/50 rounded-lg p-4">
-                <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-foreground">Total Due Today:</span>
-                    <span className="text-lg font-bold text-foreground">
-                        ${totalDueToday.toFixed(2)}
-                        {isPromotionalRate && "*"}
-                    </span>
-                </div>
-            </div>
-
+            {data?.CurrentTotalMonthlySubtotal && (
+                <TitleValue title="Current Monthly Subscription" value={data?.CurrentTotalMonthlySubtotal} />
+            )}
+            {data?.MonthlySubscriptionSubtotal && (
+                <TitleValue title="New Monthly Subscription Subtotal" value={data?.MonthlySubscriptionSubtotal} />
+            )}
+            {/* sales tax */}
+            {showSalesTax && <TitleValue title="Sales Tax" value={data?.salesTax} />}
+            {data?.totalDueToday && (
+                <ImageTitleValue
+                    name="Total Due Today:"
+                    monthelyPrice={data?.totalDueToday}
+                    paymentFrequency={showTaxesNotIncluded ? "Taxes Not Included" : ""}
+                    isPromotionalRate={data?.isPromotionalRate}
+                />
+            )}
+            {data?.CurrentTotalMonthlySubtotal && (
+                <ImageTitleValue
+                    name="Next Monthly Subscription"
+                    monthelyPrice={data?.CurrentTotalMonthlySubtotal}
+                    promotionMsg="*Prorated balance will be applied on the next invoice."
+                    isPromotionalRate={data?.isPromotionalRate}
+                />
+            )}
             {/* Promotional Rate Notice */}
-            {isPromotionalRate && (
-                <div className="text-center">
-                    <p className="text-sm text-red-600">*Promotional rate. All rates subject to applicable sales taxes.</p>
-                </div>
+            {showPromotionalRateNotice && (
+                <p className="text-sm text-gray-600">*Promotional rate. All rates subject to applicable sales taxes.</p>
+            )}
+            {showAllRatesSubjectToSalesTaxNotice && (
+                <p className="text-sm text-gray-600">*All rates subject to applicable sales taxes.</p>
             )}
         </div>
     )
