@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Dropdown } from "../../../components/atoms/Dropdown/Dropdown"
-import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem" // matches your path
-import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton" // updated path
+import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem"
+import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton"
 import { Button } from "../../../components/atoms/Buttons/Button"
 import CheckoutSteps from "../../../components/atoms/CheckoutSteps"
 
@@ -13,10 +13,9 @@ export default function CartPage() {
     { value: "uk", label: "United Kingdom" },
     { value: "eu", label: "European Union" },
   ]
-  const handleApplyPromo = () => {
-    console.log("Applying promo code:", promoCode)
-  }
+
   const [cartItems, setCartItems] = useState([
+    // For testing empty cart, set this array to []
     {
       id: "1",
       status: "NEW",
@@ -55,6 +54,10 @@ export default function CartPage() {
     console.log("Proceed to checkout")
   }
 
+  const handleGoHome = () => {
+    console.log("Go to ALLDATA DIY Home")
+  }
+
   const steps = [
     { number: 1, label: "Find your vehicle" },
     { number: 2, label: "Pick your plan" },
@@ -67,18 +70,29 @@ export default function CartPage() {
 
       <div className="text-center mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-6">CART</h1>
-        <div className="flex justify-center">
-          <Dropdown
-            label="Region"
-            options={regionOptions}
-            value={region}
-            onValueChange={setRegion}
-          />
-        </div>
       </div>
 
-      <div className="">
-        <div className="">
+      {cartItems.length === 0 ? (
+        // ✅ Empty cart UI
+        <div className="text-center pt-2 pb-6">
+          <h2 className="text-lg font-semibold mb-6 text-center">
+            REVIEW ALLDATA DIY SUBSCRIPTIONS
+          </h2>
+          <p className="text-lg font-medium text-gray-600 mb-8">
+            There are no items in your cart.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button onClick={handleGoHome} variant="outline" size="md">
+              ALLDATA DIY Home
+            </Button>
+            <Button onClick={handleAddMoreVehicles} variant="outline" size="md">
+              Add More Vehicles
+            </Button>
+          </div>
+        </div>
+      ) : (
+        // ✅ Cart items UI
+        <div>
           <h2 className="text-lg font-semibold mb-6 text-center">
             REVIEW ALLDATA DIY SUBSCRIPTIONS
           </h2>
@@ -108,55 +122,43 @@ export default function CartPage() {
           <div className="mt-4 text-xs text-gray-500">
             Status may change upon account login. Taxes will be applied during the checkout process.
           </div>
-        </div>
 
-        <div className="bg-gray-50">
-          <div className="flex justify-end">
-            <div className="w-full md:w-80">
-              {/* Promo Code */}
-              <div className="mb-6 items-center">
-                <div className="text-sm mb-2 font-medium text-gray-700 whitespace-nowrap">
-                  Add Promo Code
+          {/* Totals + Checkout */}
+          <div className="bg-gray-50 mt-6">
+            <div className="flex justify-end">
+              <div className="w-full md:w-80">
+                <div className="mt-6 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal:</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-lg font-bold pt-2">
+                    <span>Total:</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                  </div>
                 </div>
-                <InputWithButton
-                  placeholder="ENTER CODE"
-                  buttonText="APPLY"
-                  onSubmit={handleApplyPromo}
-                  className="flex-1 min-w-0"
-                />
-              </div>
 
-              <div className="mt-6 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Subtotal:</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                <div className="flex sm:flex-row gap-4 mt-6 justify-between">
+                  <Button
+                    onClick={handleAddMoreVehicles}
+                    variant="outline"
+                    size="md"
+                  >
+                    ADD MORE VEHICLES
+                  </Button>
+                  <Button
+                    onClick={handleCheckout}
+                    variant="outline"
+                    size="md"
+                  >
+                    CHECKOUT
+                  </Button>
                 </div>
-                <div className="flex justify-between text-lg font-bold pt-2">
-                  <span>Total:</span>
-                  <span>${subtotal.toFixed(2)}</span>
-                </div>
-              </div>
-
-              <div className="flex sm:flex-row gap-4 mt-6 justify-between">
-                <Button
-                  onClick={handleAddMoreVehicles}
-                  variant="outline"
-                  size="md"
-                >
-                  ADD MORE VEHICLES
-                </Button>
-                <Button
-                  onClick={handleCheckout}
-                  variant="outline"
-                  size="md"
-                >
-                  CHECKOUT
-                </Button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

@@ -23,6 +23,7 @@ import {
   ChevronDown, //down Arrow
   ToggleLeft,// toggle yes
   ToggleRight,// toggle no
+  CircleMinus, // remove
 } from "lucide-react"
 
 export function Icon({ type, className, onClick }) {
@@ -50,7 +51,8 @@ export function Icon({ type, className, onClick }) {
     cancelSubscription: CircleMinus,
     downArrow: ChevronDown,
     toggleYes: ToggleLeft,
-    toggleNo: ToggleRight
+    toggleNo: ToggleRight,
+    remove: CircleMinus,
   }
 
   const LucideIcon = icons[type] || AlertCircle

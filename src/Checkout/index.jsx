@@ -5,27 +5,27 @@ import StepContentEUCheckout from "../components/molecules/StepContentEUCheckout
 
 const Checkout = () => {
 
+    const [currentStep, setCurrentStep] = useState(1);
+
+    const handleContinue = () => {
+        if (currentStep < 5) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const handleBack = () => {
+        if (currentStep > 1) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
     const steps = [
         { number: 1, label: "ACCOUNT" },
         { number: 2, label: "COMPANY & BILLING" },
         { number: 3, label: "REVIEW" },
         { number: 4, label: "TERMS" },
         { number: 5, label: "ORDER COMPLETE" },
-    ]
-
-    const [currentStep, setCurrentStep] = useState(1)
-
-    const handleContinue = () => {
-        if (currentStep < 5) {
-            setCurrentStep(currentStep + 1)
-        }
-    }
-
-    const handleBack = () => {
-        if (currentStep > 1) {
-            setCurrentStep(currentStep - 1)
-        }
-    }
+    ];
 
     return (
         <div className="min-h-screen bg-[#fafafa] py-12">
@@ -42,7 +42,7 @@ const Checkout = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Checkout
+export default Checkout;
