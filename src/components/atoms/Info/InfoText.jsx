@@ -1,15 +1,14 @@
-export function InfoText({ label, value, link, billStatus }) {
+export function InfoText({ label, value, link, billStatus, className }) {
   // normalize status → lowercase, no spaces
-  const statusClass = billStatus
-    ? billStatus.toLowerCase().replace(/\s+/g, "-")
-    : "";
+  const statusClass = `mr-auto ml-6 ${billStatus ? billStatus.toLowerCase().replace(/\s+/g, "-") : ""
+    }`;
 
   const isFunctionLink = typeof link === "function";
 
   return (
-    <div className="flex justify-between items-center">
+    <div className={`flex justify-between items-center w-full ${className}`}>
       {/* Label */}
-      <span className="text-sm text-gray-600">{label}</span>
+      <span className="text-sm text-gray-600 ml">{label}</span>
 
       {/* Bill Status */}
       {billStatus && <span className={statusClass}>{billStatus}</span>}

@@ -16,10 +16,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 body, #root {
   width: 100%;
   display: block;
