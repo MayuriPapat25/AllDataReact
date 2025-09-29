@@ -2,7 +2,7 @@ import { useState } from "react"
 import InputField from "../../atoms/InputField"
 
 const PhoneSignupForm = ({ onEdit }) => {
-    const [phoneNumber, setPhoneNumber] = useState("999 898 9898")
+    const [phoneNumber, setPhoneNumber] = useState("")
 
     return (
         <>

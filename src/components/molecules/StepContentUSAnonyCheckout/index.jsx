@@ -15,7 +15,7 @@ import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
 import BusinessAddressReview from "../../atoms/BusinessAddressReview"
 import BillingInfoReview from "../../atoms/BillingInfoReview"
-import AgreementPage from "../../atoms/AgreementPage"
+import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 
@@ -33,105 +33,7 @@ const StepContentUSAnonyCheckout = ({
         phoneNumber: "701 617 6368",
         subscriptionLength: "12 Months",
     }
-
-    const sampleOrderData = {
-        paymentFrequency: "MONTHLY",
-        subscriptionTerm: "12 MONTHS",
-        autoRenewalDate: "09/10/2026",
-        services: [
-            {
-                id: "1",
-                name: "ALLDATA REPAIR",
-                accessPoints: 5,
-                monthlyPrice: 209.0,
-                icon: "car",
-            },
-            {
-                id: "2",
-                name: "ALLDATA MOBILE",
-                accessPoints: 2,
-                monthlyPrice: 39.0,
-                icon: "plus",
-            },
-            {
-                id: "3",
-                name: "ESTIMATOR",
-                accessPoints: 5,
-                monthlyPrice: 0.0,
-                icon: "plus",
-            },
-            {
-                id: "4",
-                name: "ALLDATA COMMUNITY",
-                accessPoints: 5,
-                monthlyPrice: 0.0,
-                icon: "book",
-            },
-            {
-                id: "5",
-                name: "ALLDATA FIND A FIX",
-                accessPoints: 5,
-                monthlyPrice: 0.0,
-                icon: "plus",
-            },
-            {
-                id: "6",
-                name: "BASIC DIAGNOSTICS",
-                accessPoints: 2,
-                monthlyPrice: 0.0,
-                icon: "plus",
-            },
-        ],
-        subscriptionSubtotal: 248.0,
-        bundleDiscount: 12.4,
-        discount: 9.93,
-        totalMonthly: 225.67,
-        totalDueToday: 225.67,
-        isPromotionalRate: true,
-    }
-
-    const orderSummaryData = {
-        paymentFrequency: "MONTHLY",
-        subscriptionTerm: "12 MONTHS",
-        autoRenewalDate: "09/09/2026",
-        services: [
-            {
-                id: "1",
-                name: "ALLDATA COLLISION",
-                accessPoints: 1,
-                monthlyPrice: 229.0,
-                icon: "car", // Based on the icon shown
-            },
-            {
-                id: "2",
-                name: "ALLDATA COMMUNITY",
-                accessPoints: 1,
-                monthlyPrice: 0.0,
-                icon: "book", // Represents community
-            },
-            {
-                id: "3",
-                name: "ALLDATA FIND A FIX",
-                accessPoints: 1,
-                monthlyPrice: 0.0,
-                icon: "plus",
-            },
-            {
-                id: "4",
-                name: "ESTIMATOR",
-                accessPoints: 1,
-                monthlyPrice: 0.0,
-                icon: "plus",
-            },
-        ],
-        MonthlySubscriptionSubtotal: 229.0, // New Monthly Subscription Subtotal
-        // bundleDiscount: 0.0,         // No bundle discount mentioned
-        // discount: 0.0,               // No discount applied
-        CurrentTotalMonthlySubtotal: 247.32,        // New Monthly Subscription total (includes tax)
-        // totalDueToday: 247.32,       // Matches total monthly
-        salesTax: 18.32,             // From the image
-        isPromotionalRate: true,    // Not marked as promotional
-    };
+   
 
     const handleEdit = () => {
         console.log("Edit button clicked")
@@ -142,6 +44,23 @@ const StepContentUSAnonyCheckout = ({
     const handleLogin = () => {
         console.log(`Login clicked for ${currentVariant} variant`)
         // Add your login logic here
+    }
+
+    const variant3Data = {
+        paymentFrequency: "MONTHLY",
+        subscriptionTerm: "12 MONTHS",
+        autoRenewalDate: "09/10/2026",
+        services: [
+            { name: "ALLDATA COLLISION", accessPoints: 1, monthlyPrice: "$229.00", icon: "/car-icon.png" },
+            { name: "ALLDATA COMMUNITY", accessPoints: 1, monthlyPrice: "$0.00", icon: "/community-icon.png" },
+            { name: "ALLDATA FIND A FIX", accessPoints: 1, monthlyPrice: "$0.00", icon: "/plus-icon.png" },
+            { name: "ESTIMATOR", accessPoints: 1, monthlyPrice: "$0.00", icon: "/plus-icon.png" },
+        ],
+        subscriptionSubtotal: "$229.00",
+        totalMonthly: "$229.00",
+        salesTax: "+$0.00",
+        totalDueToday: "$229.00",
+        isPromotionalRate: false,
     }
 
 
@@ -156,12 +75,6 @@ const StepContentUSAnonyCheckout = ({
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
                         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
                         <div className="flex items-start pt-8 mx-auto p-6">
-                            {/* <LoginForm
-                                onLogin={() => {
-                                    // Handle login logic here
-                                    console.log("Login clicked")
-                                }}
-                            /> */}
                             <LoginForm onLogin={handleLogin} variant='alldata' />
                         </div>
                     </div>
@@ -172,7 +85,7 @@ const StepContentUSAnonyCheckout = ({
                     <div className="bg-background p-4 md:p-8">
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm />
+                                <BusinessInformationForm variant="authorized"/>
                                 <BusinessAddressForm />
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
@@ -184,7 +97,7 @@ const StepContentUSAnonyCheckout = ({
                                 </div>
                             </div>
                             <div className="w-1/2">
-                                <OrderSummary data={sampleOrderData} />
+                                <OrderSummary data={variant3Data} type="variant3" />
                             </div>
                         </div>
                     </div>
@@ -201,11 +114,9 @@ const StepContentUSAnonyCheckout = ({
                                 <BillingAddressForm fromReview={true} onEdit={handleEdit} />
                                 <ShippingAddressForm fromReview={true} onEdit={handleEdit} />
                                 <BillingInfoReview />
-                                <PhoneSignupForm onEdit={handleEdit} />
                             </div>
                             <div className="w-1/2">
-                                <OrderSummary data={sampleOrderData} />
-                                {/* <OrderSummary data={orderSummaryData} /> */}
+                                <OrderSummary data={variant3Data} type="variant3" />
                             </div>
                         </div>
                     </div>
@@ -222,8 +133,8 @@ const StepContentUSAnonyCheckout = ({
                 return (
                     <div className="min-h-screen bg-gray-50 py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
-                        <OrderSummary data={sampleOrderData} listClassName="my-10" fromStepFive={false}/>
-                        {/* <OrderSummary data={orderSummaryData} /> */}
+                        <OrderSummary data={variant3Data} type="variant3" />
+                        
                     </div>
                 )
 

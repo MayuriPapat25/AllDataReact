@@ -2,7 +2,7 @@ import InfoField from "../../atoms/InfoField"
 
 const PlaceOrderForm = () => {
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white">
+        <div className="max-w-2xl bg-[#fafafa]">
             <div className="mb-8">
                 <h1 className="text-2xl font-bold text-black mb-2">PLACE ORDER</h1>
                 <h2 className="text-lg font-semibold text-gray-700 mb-6">ACCOUNT INFORMATION</h2>

@@ -23,7 +23,6 @@ import {
   ChevronDown, //down Arrow
   ToggleLeft,// toggle yes
   ToggleRight,// toggle no
-  CircleMinus, // remove
 } from "lucide-react"
 
 export function Icon({ type, className, onClick }) {

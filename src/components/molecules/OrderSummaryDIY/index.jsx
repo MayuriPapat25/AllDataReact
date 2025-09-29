@@ -2,7 +2,7 @@ import OrderSummaryCardDIY from "../OrderSummaryCardDIY"
 
 const OrderSummaryDIY = () => {
     return (
-        <div className="max-w-md mx-auto bg-[#f5f5f5]  p-6">
+        <div className="max-w-2xl mx-auto bg-[#f5f5f5]  p-6">
             <h2 className="text-sm font-bold mb-4 uppercase tracking-wide text-black">Order Summary</h2>
             <OrderSummaryCardDIY />
             <div className="space-y-2">

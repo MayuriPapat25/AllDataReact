@@ -6,8 +6,12 @@ import DIYCartHome from "./Cart/diy";
 import ProCartHome from "./Cart/professional";
 import RepCartHome from "./Cart/rep";
 import CartPage from "./Cart/diy/cartModal"
-import Checkout from './Checkout/index'
 import { ProfCustomPortal } from "./ProfCustomPortal";
+import DIYCheckout from "./Checkout/DiyCheckoutFlow/inde";
+import UsAnonyCheckout from "./Checkout/USAnonyCheckout/index";
+import UsAuthCheckout from "./Checkout/UsAuthCheckout";
+import EuCheckout from "./Checkout/EuCheckout";
+import RepInitiatedCheckout from "./Checkout/RepInitiatedCheckout";
 
 function App() {
   return (
@@ -18,8 +22,12 @@ function App() {
         <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
         <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
         <Link to="/rep" className="text-blue-600 hover:underline">Rep Initiated Cart</Link>
-        <Link to='/checkout' className="text-blue-600 hover:underline">Checkout</Link>
         <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
+        <Link to='/diycheckout' className="text-blue-600 hover:underline">DIY CHECKOUT</Link>
+        <Link to='/usanonycheckout' className="text-blue-600 hover:underline">US Anony Checkout</Link>
+        <Link to='/usauthcheckout' className="text-blue-600 hover:underline">US Auth Checkout</Link>
+        <Link to='/eucheckout' className="text-blue-600 hover:underline">EU Checkout</Link>
+        <Link to='/repinitiatedcheckout' className="text-blue-600 hover:underline">Rep Initiated Checkout</Link>
 
       </header>
 
@@ -36,8 +44,13 @@ function App() {
           <Route path="/rep" element={<RepCartHome />} />
 
           <Route path="/diy-cart" element={<CartPage />} />
-          <Route path="/checkout" element={<Checkout />} />
+
           <Route path="/profcustomportal" element={<ProfCustomPortal />} />
+          <Route path="/diycheckout" element={<DIYCheckout />} />
+          <Route path="/usanonycheckout" element={<UsAnonyCheckout />} />
+          <Route path="/usauthcheckout" element={<UsAuthCheckout />} />
+          <Route path="/eucheckout" element={<EuCheckout />} />
+          <Route path="/repinitiatedcheckout" element={<RepInitiatedCheckout />} />
         </Routes>
       </main>
     </Router>

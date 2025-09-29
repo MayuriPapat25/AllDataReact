@@ -1,11 +1,11 @@
 
 import { Button } from "../../atoms/Buttons/Button"
+import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
 import BillingAddressForm from '../BillingAddress'
-
+import ShippingAddressForm from '../ShippingAddress'
 import BillingEmailForm from "../BillingEmailAddress"
-import PhoneSignupForm from "../PhoneSignUpForm"
 import { useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
@@ -17,7 +17,7 @@ import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 
 
-const StepContentEUCheckout = ({
+const StepContentRepInitiatedCheckout = ({
     currentStep,
     onContinue,
     onBack,
@@ -31,6 +31,16 @@ const StepContentEUCheckout = ({
         subscriptionLength: "12 Months",
     }
 
+    const handleEdit = () => {
+        console.log("Edit button clicked")
+        // Navigate back to step 2 for editing
+        onBack()
+    }
+
+    const handleLogin = () => {
+        console.log(`Login clicked for ${currentVariant} variant`)
+        // Add your login logic here
+    }
     const variant2Data = {
         paymentFrequency: "MONTHLY",
         subscriptionTerm: "12 MONTHS",
@@ -44,26 +54,27 @@ const StepContentEUCheckout = ({
             { name: "BASIC DIAGNOSTICS", accessPoints: 2, monthlyPrice: "$0.00", icon: "/diagnostics-icon.png" },
         ],
         subscriptionSubtotal: "$248.00",
+        bundleDiscount: "-$12.40",
         discount: "-$9.93",
         totalMonthly: "$225.67",
         totalDueToday: "$225.67",
         isPromotionalRate: true,
     }
 
-    const handleEdit = () => {
-        console.log("Edit button clicked")
-        // Navigate back to step 2 for editing
-        onBack()
-    }
 
     const renderStepContent = () => {
         switch (currentStep) {
             case 1:
                 return (
-                    <div className=" mx-auto relative">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mx-auto relative">
                         <div>
-                            <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
-                        </div>                  
+                            <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-12"/>
+                        </div>
+                        {/* Vertical divider - hidden on mobile, visible on desktop */}
+                        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
+                        <div className="flex items-start pt-8 mx-auto p-6">
+                            <LoginForm onLogin={handleLogin} variant='alldata' />
+                        </div>
                     </div>
                 )
 
@@ -72,10 +83,10 @@ const StepContentEUCheckout = ({
                     <div className="bg-background p-4 md:p-8">
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm variant="standard" />
-                                <BusinessAddressForm/>
+                                <BusinessInformationForm variant="authorized"/>
+                                <BusinessAddressForm />
                                 <BillingAddressForm />
-                               
+                                <ShippingAddressForm />
                                 <div className="space-y-6">
                                     <span className="text-2xl font-bold text-gray-900">Billing Information</span>
                                     <iframe></iframe>
@@ -98,11 +109,11 @@ const StepContentEUCheckout = ({
                                 <BusinessInfoReview onEdit={handleEdit} />
                                 <BusinessAddressReview onEdit={handleEdit} />
                                 <BillingAddressForm fromReview={true} onEdit={handleEdit} />
+                                <ShippingAddressForm fromReview={true} onEdit={handleEdit} />
                                 <BillingInfoReview />
-                            
                             </div>
                             <div className="w-1/2">
-                                <OrderSummary data={variant2Data} type="variant2" />
+                                 <OrderSummary data={variant2Data} type="variant2" />
                             </div>
                         </div>
                     </div>
@@ -119,8 +130,7 @@ const StepContentEUCheckout = ({
                 return (
                     <div className="min-h-screen bg-gray-50 py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
-                        <OrderSummary data={variant2Data} type="variant2" />
-
+                         <OrderSummary data={variant2Data} type="variant2" />
                     </div>
                 )
 
@@ -141,12 +151,8 @@ const StepContentEUCheckout = ({
                     onClick: onContinue,
                     disabled: !step1Valid
                 },
-                secondaryButton: {
-                    text: "CANCEL",
-                    onClick: onBack,
-                    variant: "outline"
-                }, 
-                buttonLayout: "max-w-2xl mx-auto p-6 justify-between"
+                secondaryButton: null,
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-6 lg:ml-20 md:ml-0 sm:ml-0 md:justify-center lg:justify-start"
             },
             2: {
                 showButtons: true,
@@ -207,7 +213,7 @@ const StepContentEUCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     disabled={primaryButton.disabled}
-                    className={primaryButton.className || "h-12 px-8  bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
+                    className={primaryButton.className || "h-12 px-8 bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -234,4 +240,4 @@ const StepContentEUCheckout = ({
     )
 }
 
-export default StepContentEUCheckout
+export default StepContentRepInitiatedCheckout

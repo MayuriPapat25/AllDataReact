@@ -1,11 +1,10 @@
 import { useState } from "react"
-import StepContentUSAnonyCheckout from "../components/molecules/StepContentUSAnonyCheckout"
-import CheckoutSteps from "../components/atoms/CheckoutSteps"
-import StepContentEUCheckout from "../components/molecules/StepContentEUCheckout"
+import CheckoutSteps from "../../components/molecules/CheckoutSteps/index"
+import StepContentUSAuthCheckout from "../../components/molecules/StepContentUSAuthCheckout";
 
-const Checkout = () => {
+const UsAuthCheckout = () => {
 
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(2);
 
     const handleContinue = () => {
         if (currentStep < 5) {
@@ -35,14 +34,11 @@ const Checkout = () => {
                 </div>
 
                 <div className="bg-[#fafafa] mx-20">
-                    {/* this same component we can use for US journey for Anonymous flow, Rep Initiated flow , DIY flow */}
-                    {/* <StepContentUSAnonyCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} /> */}
-                    {/* Professional EU journey flow */}
-                    <StepContentEUCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
+                    <StepContentUSAuthCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
                 </div>
             </div>
         </div>
     );
 };
 
-export default Checkout;
+export default UsAuthCheckout;

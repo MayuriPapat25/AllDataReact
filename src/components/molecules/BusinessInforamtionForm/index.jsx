@@ -3,9 +3,8 @@ import { useState } from "react"
 import InputField from "../../atoms/InputField/index"
 import SelectField from "../../atoms/SelectField"
 import PhoneField from "../../atoms/PhoneNumberField"
-import { VatField } from "../../atoms/VatField"
 import FileUploadField from "../../atoms/FileUpload"
-import CustomRadioGroupField from "../../atoms/CustomRadioGroupField"
+import CustomRadioGroupField from "../../molecules/CustomRadioGroupField"
 
 const phoneTypeOptions = [
     { value: "home", label: "Home" },
@@ -161,11 +160,11 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
     }
 
     return (
-        <div className="max-w-2xl bg-card">
+        <div className="max-w-2xl bg-card pb-8 border-b-4 border-gray-300">
             <div className="mb-6 flex justify-between text-center">
                 <h2 className="text-lg font-semibold text-foreground mb-1">BUSINESS INFORMATION</h2>
                 <p className="text-sm text-muted-foreground">
-                    {variant === "authorized" ? "* Fields are Required" : "| = Fields are Required"}
+                    {variant === "standard" && "| = Fields are Required"}
                 </p>
             </div>
 
@@ -173,7 +172,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                 {/* Business/Shop Name */}
                 <InputField
                     label="Business/Shop Name"
-                    required
                     value={formData.businessName}
                     onChange={(e) => handleInputChange("businessName", e.target.value)}
                     error={errors.businessName}
@@ -184,18 +182,17 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <PhoneField
                             label="Business Phone Number"
-                            required
                             value={formData.phoneNumber}
                             onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
                             error={errors.phoneNumber}
                         />
                         <SelectField
                             label="Business Phone Type"
-                            required
                             options={phoneTypeOptions}
                             value={formData.phoneType}
                             onChange={(e) => handleInputChange("phoneType", e.target.value)}
                             error={errors.phoneType}
+                            className="w-full"
                         />
                     </div>
                 )}
@@ -204,14 +201,12 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <InputField
                         label={variant === "authorized" ? "Authorized Signer First Name" : "First Name"}
-                        required
                         value={formData.firstName}
                         onChange={(e) => handleInputChange("firstName", e.target.value)}
                         error={errors.firstName}
                     />
                     <InputField
                         label={variant === "authorized" ? "Authorized Signer Last Name" : "Last Name"}
-                        required
                         value={formData.lastName}
                         onChange={(e) => handleInputChange("lastName", e.target.value)}
                         error={errors.lastName}
@@ -221,7 +216,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                 {/* Job Title */}
                 <SelectField
                     label={variant === "authorized" ? "Title Of Authorized Signer" : "Job Title"}
-                    required
                     options={jobTitleOptions}
                     value={formData.jobTitle}
                     onChange={(e) => handleInputChange("jobTitle", e.target.value)}
@@ -234,7 +228,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                     <InputField
                         label="Authorized Signer Email Address"
                         type="email"
-                        required
                         value={formData.email}
                         onChange={(e) => handleInputChange("email", e.target.value)}
                         error={errors.email}
@@ -245,21 +238,20 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <SelectField
                         label="Shop Type"
-                        required
                         options={shopTypeOptions}
                         value={formData.shopType}
                         onChange={(e) => handleInputChange("shopType", e.target.value)}
                         error={errors.shopType}
-                        className="w-1/2 border-gray-300 "
+                        className="w-full border-gray-300 "
                     />
                     {variant === "authorized" && (
                         <SelectField
                             label="Ownership Type"
-                            required
                             options={ownershipTypeOptions}
                             value={formData.ownershipType}
                             onChange={(e) => handleInputChange("ownershipType", e.target.value)}
                             error={errors.ownershipType}
+                            className="w-full border-gray-300 "
                         />
                     )}
                 </div>
@@ -273,7 +265,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                             options={taxExemptOptions}
                             value={formData.taxExemptStatus}
                             onChange={(value) => handleInputChange("taxExemptStatus", value)}
-                            required
                             error={errors.taxExemptStatus}
                         />
 
@@ -281,7 +272,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                         {formData.taxExemptStatus === "exempt" && (
                             <InputField
                                 label="Enter Your Tax ID Number"
-                                required
                                 value={formData.taxIdNumber}
                                 onChange={(e) => handleInputChange("taxIdNumber", e.target.value)}
                                 error={errors.taxIdNumber}
@@ -302,14 +292,14 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
                 )}
 
                 {/* VAT */}
-                <VatField
+                {/* <VatField
                     label="VAT"
                     optional
                     placeholder="ENTER VAT ID"
                     value={formData.vat}
                     onChange={(e) => handleInputChange("vat", e.target.value)}
                     error={errors.vat}
-                />
+                /> */}
 
                 {/* Standard variant: Purchase Order Reference Number */}
                 {variant === "standard" && (
