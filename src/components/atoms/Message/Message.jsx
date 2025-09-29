@@ -12,6 +12,8 @@ export const Message = ({ type, children, className = "" }) => {
         return "bg-blue-50 text-blue-800 border-t-[4px]"
       case "success":
         return "bg-green-50 text-green-800 border-t-[4px]"
+      case "information":
+        return "bg-blue-50 text-blue-800 border-t-[4px]"
       default:
         return "bg-gray-50 text-gray-800 border-t-[4px]"
     }
@@ -27,6 +29,8 @@ export const Message = ({ type, children, className = "" }) => {
         return "text-[#6897e6]"
       case "success":
         return "text-green-500"
+      case "information":
+        return "text-[#6897e6]"
       default:
         return "text-gray-500"
     }
@@ -42,6 +46,8 @@ export const Message = ({ type, children, className = "" }) => {
         return { borderTopColor: "#facc15" } // yellow-400
       case "success":
         return { borderTopColor: "#22c55e" } // green-500
+      case "information":
+        return { borderTopColor: "#6897e6" }
       default:
         return { borderTopColor: "#9ca3af" } // gray-400
     }

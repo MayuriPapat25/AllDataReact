@@ -1,0 +1,57 @@
+import { useState } from "react"
+import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
+
+const BillingEmailForm = () => {
+    const [usePrimaryEmail, setUsePrimaryEmail] = useState(true)
+    const [customEmail, setCustomEmail] = useState("")
+
+    // Sample primary email address
+    const primaryEmail = "kiwow31027@inupup.com"
+
+    const handleRadioChange = (value) => {
+        if (value === "primary") {
+            setUsePrimaryEmail(true)
+            setCustomEmail("") // Clear custom email when selecting primary
+        } else {
+            setUsePrimaryEmail(false)
+        }
+    }
+
+    const handleRadioClick = () => {
+        if (usePrimaryEmail) {
+            setUsePrimaryEmail(false)
+        }
+    }
+
+    return (
+        <div className="w-full space-y-6 pb-8 border-b-4 border-gray-300 ">
+            < h2 className="text-2xl font-semibold text-gray-900" > Billing Email Address</h2 >
+
+            <div className="space-y-4">
+                <RadioGroup value={usePrimaryEmail ? "primary" : ""} onValueChange={handleRadioChange} className="space-y-3">
+                    <label className="flex items-center space-x-3 cursor-pointer" onClick={handleRadioClick}>
+                        <RadioGroupItem value="primary" />
+                        <span className="text-lg text-gray-700">Use my primary email address for billing statements.</span>
+                    </label>
+                </RadioGroup>
+
+                {/* Email input field */}
+                <div>
+                    <input
+                        type="email"
+                        value={usePrimaryEmail ? primaryEmail : customEmail}
+                        onChange={(e) => setCustomEmail(e.target.value)}
+                        disabled={usePrimaryEmail}
+                        placeholder={usePrimaryEmail ? "" : "EMAIL ADDRESS FOR BILLING STATEMENTS"}
+                        className={`w-full px-4 py-3 text-lg border-2 rounded-md transition-colors ${usePrimaryEmail
+                            ? "bg-gray-100 border-gray-300 text-gray-600 cursor-not-allowed"
+                            : "bg-white border-gray-300 text-gray-900 focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:ring-opacity-20"
+                            }`}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default BillingEmailForm

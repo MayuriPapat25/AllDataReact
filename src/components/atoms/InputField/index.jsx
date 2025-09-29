@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
 const InputField = forwardRef(
@@ -6,13 +6,12 @@ const InputField = forwardRef(
     const describedById = id ? `${id}-error` : undefined
     return (
       <div className="space-y-2">
-        {
-          label &&
-          <h3 className="flex text-display-sm-medium justify-between">
+        {label && (
+          <h3 className="flex text-display-sm-medium justify-between ml-2.5">
             {label}
             {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
           </h3>
-        }
+        )}
 
         <div className="flex items-center">
           {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>}
@@ -21,8 +20,8 @@ const InputField = forwardRef(
             id={id}
             type={type}
             className={cn(
-              "px-3 py-2 border border-input bg-background text-sm",
-              "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
+              "w-full px-3 py-2 border border-input bg-background text-sm",
+              // "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
               "placeholder:text-muted-foreground",
               error && "border-destructive",
               className,
@@ -33,15 +32,15 @@ const InputField = forwardRef(
             onChange={onChange}
           />
         </div>
-        {
-          error && <p id={describedById} className={cn("text-sm min-h-[1.25rem]", error ? "text-red-500" : "text-transparent")}>
+        {error && (
+          <p id={describedById} className={cn("text-sm min-h-[1.25rem]", error ? "text-red-500" : "text-transparent")}>
             {error || "_"}
           </p>
-        }
+        )}
         {helperText && <p className="text-sm text-gray-500 leading-relaxed">{helperText}</p>}
       </div>
     )
   },
 )
 
-export default InputField 
+export default InputField

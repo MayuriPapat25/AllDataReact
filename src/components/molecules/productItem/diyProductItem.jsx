@@ -41,7 +41,7 @@ export function ProductSingleItem({ status, description, expiration, plan, price
       <div className="flex justify-between items-center md:col-span-3">
         <p className="text-sm text-gray-500">${price}</p>
         <LinkButton onClick={onRemove} className="flex items-center gap-1">
-          <DeleteIcon />
+          <DeleteIcon className="text-[#004a87]" />
           Remove
         </LinkButton>
       </div>

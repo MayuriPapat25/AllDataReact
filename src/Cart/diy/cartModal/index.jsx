@@ -1,9 +1,7 @@
 import { useState } from "react"
-import { Dropdown } from "../../../components/atoms/Dropdown/Dropdown"
 import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem"
-import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton"
 import { Button } from "../../../components/atoms/Buttons/Button"
-import CheckoutSteps from "../../../components/atoms/CheckoutSteps"
+import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
 
 export default function CartPage() {
   const [region, setRegion] = useState("usa")
