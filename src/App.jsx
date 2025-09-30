@@ -5,13 +5,14 @@ import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy";
 import ProCartHome from "./Cart/professional";
 import RepCartHome from "./Cart/rep";
-import CartPage from "./Cart/diy/cartModal"
+import CartPage from "./Cart/diy/cartModal";
 import { ProfCustomPortal } from "./ProfCustomPortal";
 import DIYCheckout from "./Checkout/DiyCheckoutFlow/index";
 import UsAnonyCheckout from "./Checkout/USAnonyCheckout/index";
 import UsAuthCheckout from "./Checkout/UsAuthCheckout";
 import EuCheckout from "./Checkout/EuCheckout";
 import RepInitiatedCheckout from "./Checkout/RepInitiatedCheckout";
+import DIYCustomerAccount from "./DIYCustomerAccount";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
         <Link to='/usauthcheckout' className="text-blue-600 hover:underline">US Auth Checkout</Link>
         <Link to='/eucheckout' className="text-blue-600 hover:underline">EU Checkout</Link>
         <Link to='/repinitiatedcheckout' className="text-blue-600 hover:underline">Rep Initiated Checkout</Link>
-
+        <Link to='/diycustomeraccount' className="text-blue-600 hover:underline">DIY Customer Account</Link>
       </header>
 
       <main className="p-6 bg-[#fafafa]">
@@ -51,6 +52,7 @@ function App() {
           <Route path="/usauthcheckout" element={<UsAuthCheckout />} />
           <Route path="/eucheckout" element={<EuCheckout />} />
           <Route path="/repinitiatedcheckout" element={<RepInitiatedCheckout />} />
+          <Route path="/diycustomeraccount" element={<DIYCustomerAccount />} />
         </Routes>
       </main>
     </Router>
