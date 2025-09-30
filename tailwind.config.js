@@ -8,22 +8,7 @@ export default {
     extend: {
       fontFamily: {
         gotham: ["Gotham", "sans-serif"],
-      },
-      fontSize: {
-        // Custom font sizes
-        "display-lg": "48px",
-        "display-sm": "40px",
-        "title-lg": "32px",
-        "title-md": "24px",
-        "title-sm": "20px",
-        "body-lg": "16px", // <-- This is REQUIRED
-        "body-md": "14px",
-        "body-sm": "12px",
-      },
-      colors: {
-        "ink-black-500": "#000000",
-      },
-    },
-  },
-  plugins: [],
+      }
+    }
+  }
 };

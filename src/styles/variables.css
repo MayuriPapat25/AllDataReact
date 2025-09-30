@@ -1,0 +1,16 @@
+@theme {
+  /* Colors */
+  --color-primary: #282970;
+
+  /* Font family */
+  --font-primary: "Gotham", sans-serif;
+
+  /* Font sizes */
+  --text-h1: 40px;
+  --text-h2: 32px;
+  --text-h3: 28px;
+  --text-h4: 24px;
+  --text-h5: 20px;
+  --text-h6: 16px;
+  --text-base: 14px;
+}
