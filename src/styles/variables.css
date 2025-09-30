@@ -1,6 +1,17 @@
 @theme {
   /* Colors */
-  --color-primary: #282970;
+  --color-primary: #1b3d6e;
+  --color-primary-dark: #1d3359;
+  --color-primary-light: #004987;
+  --color-secondary: #f16824;
+  --color-success: #28a745;
+  --color-info: #17a2b8;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-light-smoky-white: #faf9f9;
+  --color-dark-smoky-white: #eeebeb;
 
   /* Font family */
   --font-primary: "Gotham", sans-serif;

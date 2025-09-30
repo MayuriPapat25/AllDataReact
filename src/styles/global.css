@@ -10,6 +10,7 @@ html, body, #root {
   width: 100%;
   display: block;
 }
+
 /* Headings */
 h1, .h1,
 h2, .h2,
@@ -50,6 +51,7 @@ a:hover {
 /* Text helpers */
 b, strong { font-weight: 600; }
 small, .small { font-size: 80%; }
+label {font-weight: 500;}
 
 /* Shadow utility */
 .shadow-box {
