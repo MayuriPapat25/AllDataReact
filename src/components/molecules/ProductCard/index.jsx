@@ -4,20 +4,19 @@ const ProductCard = ({ cards = [] }) => {
 
   function Card({ className = "", onClick, children, ...props }) {
     return (
-      <div className={`bg-white rounded-xl border shadow-sm ${className}`} onClick={onClick} {...props}>
+      <div className={`bg-white shadow-sm ${className}`} onClick={onClick} {...props}>
         {children}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 p-6 max-w-4xl mx-auto">
+    <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 px-0 py-6 max-w-4xl mx-0">
       {cards.map((card) => (
         <Card
           key={card.id}
           className={`
-            p-6 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105
-            ${card.isDashed ? "border-dashed border-2 border-gray-300" : "border border-gray-200"}
+            p-6 cursor-pointer ${card.isDashed ? "border-dashed border-2" : ""}
             bg-white
           `}
           onClick={card.onClick}
@@ -26,7 +25,7 @@ const ProductCard = ({ cards = [] }) => {
             {/* Icon Circle */}
             <div
               className={`
-              w-16 h-16 rounded-full flex items-center justify-center text-white
+              w-16 h-16 rounded-full flex items-center justify-center
               ${card.iconColor}
               ${card.isDashed ? "text-gray-400" : ""}
             `}

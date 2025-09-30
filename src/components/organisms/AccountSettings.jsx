@@ -61,7 +61,7 @@ const AccountSettings = () => {
       <UpdateAccoutDetails />
 
       {/* Account Information */}
-      <div className="max-w-4xl mx-auto p-6 bg-white">
+      <div className="max-w-4xl mx-0 p-6 bg-white">
         <div className="space-y-6">
           {/* Company Name - Read Only */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
@@ -327,157 +327,169 @@ const AccountSettings = () => {
       </div>
 
       {/* Contact Information */}
-      <h1>Contact Information</h1>
-      <div className="max-w-4xl mx-auto p-6 bg-white">
-        <div className="space-y-6">
-          {/* Account Phone No */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            <label className="text-sm font-medium text-gray-700 pt-2">Account Phone Number</label>
-            <div className="md:col-span-2">
-              <InputField
-                id="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                onBlur={handleInputFieldBlur("phoneNumber")}
-                className="w-full border-gray-300"
-                error={errors.phoneNumber}
-                disabled={true}
-              />
+      <>
+        <h1 className='md:my-6'>Contact Information</h1>
+        <div className="max-w-4xl mx-auto p-6 bg-white">
+          <div className="space-y-6">
+            {/* Account Phone No */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+              <label className="text-sm font-medium text-gray-700 pt-2">Account Phone Number</label>
+              <div className="md:col-span-2">
+                <InputField
+                  id="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                  onBlur={handleInputFieldBlur("phoneNumber")}
+                  className="w-full border-gray-300"
+                  error={errors.phoneNumber}
+                  disabled={true}
+                />
+              </div>
             </div>
-          </div>
-          {/* Email Add */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            <label className="text-sm font-medium text-gray-700 pt-2">Email Address</label>
-            <div className="md:col-span-2">
-              <InputField
-                id="emailAddress"
-                value={formData.emailAddress}
-                onChange={(e) => handleInputChange("emailAddress", e.target.value)}
-                onBlur={handleInputFieldBlur("emailAddress")}
-                className="w-full border-gray-300"
-                error={errors.emailAddress}
-                disabled={true}
-              />
+            {/* Email Add */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+              <label className="text-sm font-medium text-gray-700 pt-2">Email Address</label>
+              <div className="md:col-span-2">
+                <InputField
+                  id="emailAddress"
+                  value={formData.emailAddress}
+                  onChange={(e) => handleInputChange("emailAddress", e.target.value)}
+                  onBlur={handleInputFieldBlur("emailAddress")}
+                  className="w-full border-gray-300"
+                  error={errors.emailAddress}
+                  disabled={true}
+                />
+              </div>
             </div>
-          </div>
-          {/* Business Email Add */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            <label className="text-sm font-medium text-gray-700 pt-2"> Business Email Address</label>
-            <div className="md:col-span-2">
-              <InputField
-                id="emailAddress"
-                value={formData.emailAddress}
-                onChange={(e) => handleInputChange("emailAddress", e.target.value)}
-                onBlur={handleInputFieldBlur("emailAddress")}
-                className="w-full border-gray-300"
-                error={errors.emailAddress}
-                disabled={true}
-              />
+            {/* Business Email Add */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+              <label className="text-sm font-medium text-gray-700 pt-2"> Business Email Address</label>
+              <div className="md:col-span-2">
+                <InputField
+                  id="emailAddress"
+                  value={formData.emailAddress}
+                  onChange={(e) => handleInputChange("emailAddress", e.target.value)}
+                  onBlur={handleInputFieldBlur("emailAddress")}
+                  className="w-full border-gray-300"
+                  error={errors.emailAddress}
+                  disabled={true}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
+
 
       {/* {Legal Agreements & Contracts} */}
-      <h1>Legal Agreements & Contracts</h1>
-      <div className="max-w-4xl mx-auto p-6 bg-white">
-        <div className="space-y-6">
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <InfoText
-                label="Recent Subscription Contract"
-                value="Download"
-                link="/path/to/invoice.pdf"
-                billStatus="Signed on September 23, 2025"
-              />
+      <>
+        <h1 className='md:my-6'>Legal Agreements & Contracts</h1>
+        <div className="max-w-4x p-6 bg-white">
+          <div className="space-y-6">
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <InfoText
+                  label="Recent Subscription Contract"
+                  value="Download"
+                  link="/path/to/invoice.pdf"
+                  billStatus="Signed on September 23, 2025"
+                />
+              </div>
             </div>
-          </div>
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <InfoText
-                label="Recent Subscription Contract"
-                value="Download"
-                link="/path/to/invoice.pdf"
-                billStatus="Signed on September 23, 2025"
-              />
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <InfoText
+                  label="Recent Subscription Contract"
+                  value="Download"
+                  link="/path/to/invoice.pdf"
+                  billStatus="Signed on September 23, 2025"
+                />
+              </div>
             </div>
-          </div>
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <InfoText
-                label="Payment Notifications"
-                billStatus="0 notifications"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Automatic Payments */}
-      <h1>Automatic Payments</h1>
-      <div className="max-w-4xl mx-auto p-6 bg-white">
-        <div className="space-y-6">
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <InfoText
-                label="Automatic Payments"
-                billStatus="Yes"
-              />
-            </div>
-          </div>
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <SelectField
-                label="State"
-                options={paymentMethodOptions}
-                value={formData.state}
-                className="w-1/2 px-4 py-3 border-2 border-gray-300 rounded-none focus:border-blue-500 text-base"
-                disabled={true}
-              />
-            </div>
-          </div>
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <PriceText amount={179.00} label="Payment Amount" />
-            </div>
-          </div>
-          <div className="border-b-2 border-[#faf9f9]">
-            <div className="p-4">
-              <InfoText
-                label="Payment Frequency"
-                value="Monthly"
-              />
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <InfoText
+                  label="Payment Notifications"
+                  billStatus="0 notifications"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+      </>
 
       {/* Automatic Payments */}
-      <h1>Saved Payment Methods</h1>
-      <div className="max-w-4xl mx-auto p-6 bg-white">
-        <SavedPaymentMethods />
-      </div>
+      <>
+        <h1 className='md:my-6'>Automatic Payments</h1>
+        <div className="max-w-4xl p-6 bg-white">
+          <div className="space-y-6">
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <InfoText
+                  label="Automatic Payments"
+                  billStatus="Yes"
+                />
+              </div>
+            </div>
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <SelectField
+                  label="State"
+                  options={paymentMethodOptions}
+                  value={formData.state}
+                  className="w-1/2 px-4 py-3 border-2 border-gray-300 rounded-none focus:border-blue-500 text-base"
+                  disabled={true}
+                />
+              </div>
+            </div>
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <PriceText amount={179.00} label="Payment Amount" />
+              </div>
+            </div>
+            <div className="border-b-2 border-[#faf9f9]">
+              <div className="p-4">
+                <InfoText
+                  label="Payment Frequency"
+                  value="Monthly"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+
+      {/* Automatic Payments */}
+      <>
+        <h1 className='md:my-6'>Saved Payment Methods</h1>
+        <div className="max-w-4xl p-6 bg-white">
+          <SavedPaymentMethods />
+        </div>
+      </>
 
       {/* Billing Cycle */}
-      <h1>Billing Cycle</h1>
-      <div className="max-w-4xl mx-auto p-6 bg-white">
-        <div className="border-b-2 border-[#faf9f9]">
-          <div className="p-4">
-            <InfoText
-              label="Invoice Due Date"
-              value="23 of the month"
-            />
+      <>
+        <h1 className='md:my-6'>Billing Cycle</h1>
+        <div className="max-w-4xl p-6 bg-white">
+          <div className="border-b-2 border-[#faf9f9]">
+            <div className="p-4">
+              <InfoText
+                label="Invoice Due Date"
+                value="23 of the month"
+              />
+            </div>
+          </div>
+          <div className="border-b-2 border-[#faf9f9]">
+            <div className="p-4">
+              <InfoText
+                label="Current Billing Cycle"
+                value="Sep 23-Oct 22"
+              />
+            </div>
           </div>
         </div>
-        <div className="border-b-2 border-[#faf9f9]">
-          <div className="p-4">
-            <InfoText
-              label="Current Billing Cycle"
-              value="Sep 23-Oct 22"
-            />
-          </div>
-        </div>
-      </div>
+      </>
     </>
   );
 };

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-export const TabButton = ({ 
-  children, 
-  isActive, 
-  onClick, 
+export const TabButton = ({
+  children,
+  isActive,
+  onClick,
   variant = "tab", // "tab", "dropdown-toggle", "dropdown-item"
   isOpen = false // for dropdown toggle
 }) => {
@@ -30,25 +30,24 @@ export const TabButton = ({
     return (
       <button
         onClick={onClick}
-        className={`w-full text-left px-4 py-3 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
-          isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
-        }`}
+        className={`w-full text-left px-4 py-3 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
+          }`}
       >
         {children}
       </button>
     );
   }
 
-  // Default: tab variant
+  // Default: tab variant - styled to match the image
   return (
     <button
       onClick={onClick}
       className={`
-        relative px-8 py-4 text-base font-medium transition-all duration-200
-        focus:outline-none whitespace-nowrap
-        ${isActive 
-          ? 'text-gray-900 after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-1 after:bg-[url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 4\'%3E%3Cpath d=\'M0,4 Q25,0 50,2 Q75,4 100,1 L100,4 Z\' fill=\'%23ff6b35\'/%3E%3C/svg%3E")] after:bg-cover after:bg-no-repeat' 
-          : 'text-gray-500 hover:text-gray-700'
+        relative px-12 py-4 text-sm transition-all duration-200
+        focus:outline-none whitespace-nowrap border-b-2
+        ${isActive
+          ? 'text-[#1b3d6e] border-orange-500 font-bold'
+          : 'text-[#1b3d6e] border-transparent hover:border-gray-300'
         }
       `}
     >

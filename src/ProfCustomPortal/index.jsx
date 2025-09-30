@@ -37,39 +37,15 @@ export const ProfCustomPortal = () => {
         </>
       )
     }
-  ];
-
-  const sections = [
-    {
-      headerText: "Viewing Shop",
-      showDropdown: false,
-      productInfo: {
-        title: "Downtown Branch",
-        description: "456 Oak Street, Nashville, Tennessee, 37201-1234",
-        className: "space-y-1",
-      },
-    },
-  ];
+  ];  
 
   return (
-    <div>
+    <div className='customer-portal-professional'>
       <Tabs
         tabs={tabsData}
         defaultActiveTab="billing"
         onTabChange={(tabId) => console.log('Active tab:', tabId)}
-      />
-
-      <div className="mt-12 space-y-8">
-        {sections.map((section, index) => (
-          <div
-            key={index}
-            className="bg-white p-4 rounded-lg shadow-sm w-80"
-          >
-            <h4>{section.headerText}</h4>
-            <ProductInfo {...section.productInfo} />
-          </div>
-        ))}
-      </div>
+      />      
     </div>
   );
 };
