@@ -7,7 +7,7 @@ import BillingInformationEdit from "../BillingInformationEdit"
 import TermsConditions from "../../atoms/TermsCondition"
 import OrderConfirmation from "../OrderConfirmation"
 
-const StepContentEUCheckout = ({
+const StepContentDIYCheckout = ({
     currentStep,
     onContinue,
     onBack,
@@ -25,7 +25,9 @@ const StepContentEUCheckout = ({
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <span className="text-2xl font-bold text-gray-900">Billing Information</span>
-                                <iframe></iframe>
+                                {import.meta.env.STORYBOOK
+                                    ? <div>[iframe placeholder]</div>
+                                    : <iframe title="Billing Info" />}
                             </div>
                             <div className="w-1/2">
                                 <OrderSummaryDIY />
@@ -171,4 +173,4 @@ const StepContentEUCheckout = ({
     )
 }
 
-export default StepContentEUCheckout
+export default StepContentDIYCheckout
