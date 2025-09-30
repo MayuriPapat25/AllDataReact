@@ -85,7 +85,7 @@ const AccountUpdateModal = ({ isOpen, onClose, title, desc1, desc2 }) => {
             <h3 className="text-lg font-medium text-gray-900 mb-4">Account Information</h3>
 
             <div className="grid grid-cols-1 gap-4">
-              <div>
+              <>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Company Name
                 </label>
@@ -96,7 +96,7 @@ const AccountUpdateModal = ({ isOpen, onClose, title, desc1, desc2 }) => {
                   placeholder="Tea Shop"
                   className="w-full"
                 />
-              </div>
+              </>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">

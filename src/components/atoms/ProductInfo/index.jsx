@@ -1,6 +1,6 @@
 export function ProductInfo({ title, description, className = "" }) {
   return (
-    <div className={`space-y-3 ${className}`}>
+    <div className={` p-4 space-y-3 ${className}`}>
       {
         title && <h2 className="text-xl md:text-2xl font-bold text-black tracking-wide">{title}</h2>
       }
