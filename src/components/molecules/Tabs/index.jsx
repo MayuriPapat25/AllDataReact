@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TabButton } from '../../atoms/TabButton';
-import AccountSidebar from '../AccountSidebar';
 
 export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]?.id);
@@ -14,65 +13,8 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
     }
   };
 
-  const handleItemClick = (item, sectionIndex, itemIndex) => {
-    console.log('Clicked item:', item, 'in section:', sectionIndex, 'at index:', itemIndex);
-  };
-
-  const handleSectionClick = (section, sectionIndex) => {
-    console.log('Clicked section:', section, 'at index:', sectionIndex);
-  };
-
-  const getSidebarData = (tabId) => {
-    const sidebarConfigs = {
-      billing: [
-        {
-          id: 'billing',
-          title: 'Billing',
-          items: [
-            { id: 'bill-summary', label: 'Bill summary', isActive: true },
-            { id: 'invoice-history', label: 'Invoice History' },
-            { id: 'payment-history', label: 'Payment History' }
-          ]
-        }
-      ],
-      products: [
-        {
-          id: 'products',
-          title: 'Products',
-          items: [
-            { id: 'active-products', label: 'Active Products', isActive: true },
-            { id: 'your-subscription', label: 'Your Subscription' }
-          ]
-        }
-      ],
-      'account-settings': [
-        {
-          id: 'account-details',
-          title: 'Account Details',
-          items: [
-            { id: 'account-info', label: 'Account Information', isActive: true },
-            { id: 'contact-info', label: 'Contact Information' },
-            { id: 'legal-agreements', label: 'Legal Agreements & Contracts' }
-          ]
-        },
-        {
-          id: 'payments-billing',
-          title: 'Payments and Billing',
-          items: [
-            { id: 'automatic-payments', label: 'Automatic Payments' },
-            { id: 'saved-payment-methods', label: 'Saved Payment Methods' },
-            { id: 'billing-cycle', label: 'Billing Cycle' }
-          ]
-        }
-      ]
-    };
-
-    return sidebarConfigs[tabId] || [];
-  };
-
   const activeTabData = tabs.find(tab => tab.id === activeTab);
   const activeTabContent = activeTabData?.content;
-  const currentSidebarData = getSidebarData(activeTab);
 
   return (
     <div className={`w-full ${className}`}>
@@ -146,22 +88,9 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
         )}
       </div>
 
-      <div className='lg:flex'>
-        {/* Sidebar */}
-        <div className="mt-6 w-full lg:max-w-[30%] customer-portal-sidebar-section ">
-          <AccountSidebar
-            sections={currentSidebarData}
-            onItemClick={handleItemClick}
-            onSectionClick={handleSectionClick}
-            className="shadow-lg"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="mt-6 w-full lg:max-w-[70%] content customer-portal-summary-section">
-          {activeTabContent}
-        </div>
-
+      {/* Content */}
+      <div className="mt-6 w-full content">
+        {activeTabContent}
       </div>
     </div >
   );
