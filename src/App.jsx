@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+import "./styles/global.css";
 
 import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy";

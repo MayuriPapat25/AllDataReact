@@ -7,8 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        avenirRegular: ["AvenirRegular", "sans-serif"],
-        avenirBold: ["AvenirBold", "sans-serif"],
+        gotham: ["Gotham", "sans-serif"],
       },
       fontSize: {
         // Custom font sizes
