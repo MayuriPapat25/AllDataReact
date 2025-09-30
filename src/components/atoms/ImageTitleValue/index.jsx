@@ -29,7 +29,7 @@ const ImageTitleValue = ({ name, accessPoints, monthelyPrice, icon, paymentFrequ
                             name && <h2 className="text-xl font-bold text-gray-900 tracking-wide">{name}</h2>
                         }
                         {
-                            promotionMsg && <h5 className="text-gray-500 text-sm">{promotionMsg} {isPromotionalRate}</h5>
+                            promotionMsg && <h3 className="text-gray-500 text-sm">{promotionMsg} {isPromotionalRate}</h3>
                         }
                         {
                             accessPoints && <p className="text-gray-500 text-sm mt-1">Access Points: {accessPoints}</p>
@@ -40,7 +40,7 @@ const ImageTitleValue = ({ name, accessPoints, monthelyPrice, icon, paymentFrequ
                 {/* Price */}
                 <div className="text-right">
                     {
-                        monthelyPrice && <h5 className="text-2xl font-bold text-gray-900">{monthelyPrice} {isPromotionalRate && "*"}</h5>
+                        monthelyPrice && <h4 className="text-2xl font-bold text-gray-900">{monthelyPrice} {isPromotionalRate && "*"}</h4>
                     }
                     {
                         paymentFrequency && <h5 className="text-gray-500 text-sm">{paymentFrequency}</h5>

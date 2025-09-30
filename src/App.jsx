@@ -7,7 +7,7 @@ import ProCartHome from "./Cart/professional";
 import RepCartHome from "./Cart/rep";
 import CartPage from "./Cart/diy/cartModal"
 import { ProfCustomPortal } from "./ProfCustomPortal";
-import DIYCheckout from "./Checkout/DiyCheckoutFlow/inde";
+import DIYCheckout from "./Checkout/DiyCheckoutFlow/index";
 import UsAnonyCheckout from "./Checkout/USAnonyCheckout/index";
 import UsAuthCheckout from "./Checkout/UsAuthCheckout";
 import EuCheckout from "./Checkout/EuCheckout";
