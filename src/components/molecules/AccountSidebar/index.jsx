@@ -81,10 +81,10 @@ const AccountSidebar = ({
                     const isActive = activeItem === itemId || item.isActive;
 
                     return (
-                      <button
+                      <button 
                         key={item.id || itemIndex}
                         onClick={() => handleItemClick(item, sectionIndex, itemIndex)}
-                        className={`w-full text-left block px-6 py-3 text-sm transition-colors duration-150 ${isActive
+                        className={`w-full text-left block px-6 py-3 text-sm transition-colors duration-150 border-b border-gray-200 ${isActive
                           ? 'text-gray-900 font-medium bg-white'
                           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                           }`}
@@ -105,9 +105,11 @@ const AccountSidebar = ({
         {addressCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white p-4 rounded-lg shadow-sm w-80"
+            className="bg-white rounded-lg shadow-sm w-80"
           >
-            <h4>{section.headerText}</h4>
+            <div className='border-b border-gray-200'>
+              <h4 className='p-4'>{section.headerText}</h4>
+            </div>
             <ProductInfo {...section.productInfo} />
           </div>
         ))}
@@ -118,9 +120,11 @@ const AccountSidebar = ({
         {managerCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white p-4 rounded-lg shadow-sm w-80"
+            className="bg-white rounded-lg shadow-sm w-80"
           >
-            <h4>{section.headerText}</h4>
+            <div className='border-b border-gray-200'>
+              <h4 className='p-4'>{section.headerText}</h4>
+            </div>
             <ProductInfo {...section.productInfo} />
           </div>
         ))}

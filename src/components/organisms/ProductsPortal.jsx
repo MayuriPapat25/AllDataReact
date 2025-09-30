@@ -11,6 +11,7 @@ import { Button } from '../atoms/Buttons/Button';
 import AccountClosureModal from '../molecules/AccountClosureModal';
 import { LinkButton } from '../atoms/links/linkButton';
 import { AccessPointsModal } from '../molecules/Modal/AccessPointsModal';
+import SubscriptionManager from '../molecules/SubscriptionManager';
 
 
 const ProductsPortal = () => {
@@ -25,28 +26,28 @@ const ProductsPortal = () => {
       id: "repair",
       title: "REPAIR",
       icon: <Car className="w-8 h-8" />,
-      iconColor: "bg-blue-600",
+      iconColor: "bg-blue-600 text-white",
       onClick: () => navigate('/repair'),
     },
     {
       id: "community",
       title: "COMMUNITY",
       icon: <MessageSquare className="w-8 h-8" />,
-      iconColor: "bg-orange-500",
+      iconColor: "bg-orange-500 text-white",
       onClick: () => console.log("Community clicked"),
     },
     {
       id: "find-fix",
       title: "FIND A FIX",
       icon: <Plus className="w-8 h-8" />,
-      iconColor: "bg-gray-600",
+      iconColor: "bg-gray-600 text-white",
       onClick: () => console.log("Find a fix clicked"),
     },
     {
       id: "estimator",
       title: "ESTIMATOR",
       icon: <Plus className="w-8 h-8" />,
-      iconColor: "bg-gray-600",
+      iconColor: "bg-gray-600 text-white",
       onClick: () => console.log("Estimator clicked"),
     },
     {
@@ -109,65 +110,9 @@ const ProductsPortal = () => {
         </LinkButton>
       </div>
 
-      {/* Cart Items */}
+      {/*  Subscription Management */}
       <div className="mb-6 bg-white shadow-sm">
-        {cartItems.map((item, index) => (
-          <div
-            key={item.id}
-            className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""}`}
-          >
-            {/* Desktop */}
-            <div
-              className="hidden sm:grid items-center gap-4"
-              style={{ gridTemplateColumns: "1fr 144px 1fr" }} // removed delete column
-            >
-              {/* Product Info */}
-              <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
-                <ProductName name={item.name} />
-              </div>
-
-              {/* Counter */}
-              <div className="text-center">
-                <CounterDropdown
-                  value={item.accessPoints}
-                  onChange={(value) => handleAccessPointChange(item.id, value)}
-                />
-              </div>
-
-              {/* Price + Info */}
-              {/* <div className="text-right">
-                <div className="font-medium">${item.price.toFixed(2)}</div>
-                <div className="text-sm text-gray-500">
-                  {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
-                </div>
-              </div> */}
-            </div>
-
-            {/* Mobile */}
-            <div className="sm:hidden space-y-2">
-              {/* Product Info */}
-              <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
-                <ProductName name={item.name} />
-              </div>
-
-              {/* Counter + Price */}
-              <div className="flex items-center justify-between">
-                <CounterDropdown
-                  value={item.accessPoints}
-                  onChange={(value) => handleAccessPointChange(item.id, value)}
-                />
-                <div className="text-right">
-                  <div className="font-medium">${item.price.toFixed(2)}</div>
-                  <div className="text-sm text-gray-500">
-                    {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+        <SubscriptionManager />
       </div>
 
       {/* Cancel Subscription */}
@@ -193,7 +138,7 @@ const ProductsPortal = () => {
               value="View"
               link="/"
             />
-            <SquareArrowOutUpRightIcon size={16} className='text-blue-800'/>
+            <SquareArrowOutUpRightIcon size={16} className='text-blue-800' />
           </div>
         </div>
       </div>

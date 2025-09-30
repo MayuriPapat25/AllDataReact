@@ -25,7 +25,7 @@ const ProductCard = ({ cards = [] }) => {
             {/* Icon Circle */}
             <div
               className={`
-              w-16 h-16 rounded-full flex items-center justify-center text-white
+              w-16 h-16 rounded-full flex items-center justify-center
               ${card.iconColor}
               ${card.isDashed ? "text-gray-400" : ""}
             `}

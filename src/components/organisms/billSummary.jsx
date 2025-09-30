@@ -48,6 +48,7 @@ const BillSummary = () => {
               value="Download"
               link="/path/to/invoice.pdf"
               billStatus="Current Bill"
+              billStatusClassName="uppercase px-2.5 py-0.5 border border-[#1b3e6f] bg-[rgba(27,62,111,0.15)] text-sm text-[#1b3e6f]"
             />
           </div>
         </div>

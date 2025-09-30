@@ -1,6 +1,6 @@
-import { useState } from "react"
-import InputField from "../../atoms/InputField"
-import SelectField from "../../atoms/SelectField"
+import { useState } from "react";
+import InputField from "../../atoms/InputField";
+import SelectField from "../../atoms/SelectField";
 
 const BillingAddressForm = ({ fromReview, onEdit }) => {
     const [formData, setFormData] = useState({
@@ -12,55 +12,55 @@ const BillingAddressForm = ({ fromReview, onEdit }) => {
         city: "",
         state: "",
         zipCode: "",
-    })
+    });
 
     const [errors, setErrors] = useState({
         streetAddress: "",
         city: "",
         zipCode: "",
-    })
+    });
 
     const handleInputChange = (field, value) => {
-        setFormData((prev) => ({ ...prev, [field]: value }))
+        setFormData((prev) => ({ ...prev, [field]: value }));
 
         // Clear errors when user starts typing
         if (typeof value === "string" && errors[field]) {
-            setErrors((prev) => ({ ...prev, [field]: "" }))
+            setErrors((prev) => ({ ...prev, [field]: "" }));
         }
-    }
+    };
 
     const validateField = (field, value) => {
-        let error = ""
+        let error = "";
 
         switch (field) {
             case "streetAddress":
                 if (value.length < 4) {
-                    error = "Please enter at least 4 characters."
+                    error = "Please enter at least 4 characters.";
                 }
-                break
+                break;
             case "city":
                 if (value.length < 3) {
-                    error = "Please enter at least 3 characters."
+                    error = "Please enter at least 3 characters.";
                 }
-                break
+                break;
             case "zipCode":
                 if (value.length < 5) {
-                    error = "Please enter at least 5 characters."
+                    error = "Please enter at least 5 characters.";
                 }
-                break
+                break;
         }
 
-        setErrors((prev) => ({ ...prev, [field]: error }))
-    }
+        setErrors((prev) => ({ ...prev, [field]: error }));
+    };
 
     const handleInputFieldChange = (field) => (e) => {
-        const value = e.target.value
-        handleInputChange(field, value)
-    }
+        const value = e.target.value;
+        handleInputChange(field, value);
+    };
 
     const handleInputFieldBlur = (field) => (e) => {
-        validateField(field, e.target.value)
-    }
+        validateField(field, e.target.value);
+    };
 
     const stateOptions = [
         "Alabama",
@@ -113,7 +113,7 @@ const BillingAddressForm = ({ fromReview, onEdit }) => {
         "West Virginia",
         "Wisconsin",
         "Wyoming",
-    ]
+    ];
 
     return (
         <div className={`${!fromReview ? "max-w-4xl pt-6 bg-[#fafafa]  pb-8 border-b-4 border-gray-300" : "max-w-2xl pt-2 bg-[#fafafa]  pb-8 border-b-4 border-gray-300"}`}>
@@ -231,7 +231,7 @@ const BillingAddressForm = ({ fromReview, onEdit }) => {
             }
 
         </div>
-    )
-}
+    );
+};
 
-export default BillingAddressForm
+export default BillingAddressForm;
