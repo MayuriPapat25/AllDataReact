@@ -7,7 +7,7 @@ export function RepCartDropdown({ isOpen = true, variant = "dropdown" }) {
   // Full page
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-medium mb-4">Cart Subscription Review</h2>
+      <h4 className="mb-4 text-primary">Cart Subscription Review</h4>
       <RepCartContent />
     </div>
   )
