@@ -19,11 +19,11 @@ const TermsConditions = ({
             />
             <label htmlFor={id} className="text-gray-600 leading-relaxed cursor-pointer">
                 I agree to {companyName}'s{" "}
-                <a href={termsUrl} className="text-blue-600 hover:underline font-medium">
+                <a href={termsUrl} className="text-primary hover:underline font-medium">
                     Terms & Conditions
                 </a>{" "}
                 and opt-in to receive emails from {companyName}. We respect your privacy. Learn more about {companyName}'s{" "}
-                <a href={privacyUrl} className="text-blue-600 hover:underline font-medium">
+                <a href={privacyUrl} className="text-primary hover:underline font-medium">
                     Privacy Policy
                 </a>
                 .

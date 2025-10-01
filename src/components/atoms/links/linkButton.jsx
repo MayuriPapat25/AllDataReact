@@ -6,7 +6,7 @@ export function LinkButton({ children, className = "", ...props }) {
     <Button
       variant="link"
       {...props}
-      className={`no-underline text-[#282970] hover:opacity-80 font-normal cursor-pointer ${className}`}
+      className={`no-underline text-primary hover:opacity-80 text-sm cursor-pointer ${className}`}
       style={{ textDecoration: "none" }}
     >
       {children}

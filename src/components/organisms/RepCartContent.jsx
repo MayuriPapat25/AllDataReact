@@ -12,6 +12,7 @@ import { LinkButton } from "../atoms/links/linkButton"
 import { Dropdown } from "../atoms/Dropdown/Dropdown"
 import { AccessPointsModal } from "../molecules/Modal/AccessPointsModal"
 import { Button } from "../atoms/Buttons/Button"
+import repairIcon from "../../assets/images/repair_color.png"
 
 export function RepCartContent() {
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
@@ -86,7 +87,7 @@ export function RepCartContent() {
             >
               {/* Product Info */}
               <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
+                <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
                 <ProductName name={item.name} />
               </div>
 
@@ -111,7 +112,7 @@ export function RepCartContent() {
             <div className="sm:hidden space-y-2">
               {/* Product Info */}
               <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
+                <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
                 <ProductName name={item.name} />
               </div>
 

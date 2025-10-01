@@ -12,6 +12,7 @@
   --color-white: #ffffff;
   --color-light-smoky-white: #faf9f9;
   --color-dark-smoky-white: #eeebeb;
+  --color-transparent: transparent;
 
   /* Font family */
   --font-primary: "Gotham", sans-serif;
@@ -24,4 +25,7 @@
   --text-h5: 20px;
   --text-h6: 16px;
   --text-base: 14px;
+  --text-md: 18px;
+  --text-sm: 12px;
+  --text-xs: 10px;
 }
