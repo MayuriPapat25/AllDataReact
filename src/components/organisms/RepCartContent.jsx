@@ -12,6 +12,7 @@ import { LinkButton } from "../atoms/links/linkButton"
 import { Dropdown } from "../atoms/Dropdown/Dropdown"
 import { AccessPointsModal } from "../molecules/Modal/AccessPointsModal"
 import { Button } from "../atoms/Buttons/Button"
+import repairIcon from "../../assets/images/repair_color.png"
 
 export function RepCartContent() {
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
@@ -65,9 +66,9 @@ export function RepCartContent() {
         <LinkButton
           size="sm"
           onClick={() => setShowAccessPointsModal(true)}
-          className="flex items-center gap-1 font-normal text-[#282970]"
+          className="flex items-center text-xs"
         >
-          <MessageIcon type="info" className="w-4 h-4 text-[#282970]" />
+          <MessageIcon type="info" className="mr-1" />
           What are Access Points?
         </LinkButton>
       </div>
@@ -86,7 +87,7 @@ export function RepCartContent() {
             >
               {/* Product Info */}
               <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
+                <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
                 <ProductName name={item.name} />
               </div>
 
@@ -111,7 +112,7 @@ export function RepCartContent() {
             <div className="sm:hidden space-y-2">
               {/* Product Info */}
               <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
+                <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
                 <ProductName name={item.name} />
               </div>
 
@@ -161,7 +162,7 @@ export function RepCartContent() {
 
       {/* Footer */}
       <div className="space-y-3">
-        <p className="text-xs text-gray-500 mb-6">
+        <p className="text-gray-600 mb-6">
           *Promotional rate. All rates subject to applicable sales taxes. Taxes applied at checkout.
         </p>
       </div>

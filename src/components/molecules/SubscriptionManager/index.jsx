@@ -113,7 +113,7 @@ const SubscriptionManager = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => setIsRemovalModalOpen(true)}
-                  className="flex items-center gap-2 text-blue-600 border-blue-200 hover:bg-blue-50"
+                  className="flex items-center gap-2 text-primary border-blue-200 hover:bg-blue-50"
                 >
                   <Trash2 className="w-4 h-4" />
                   Remove

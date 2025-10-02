@@ -1,5 +1,6 @@
 import ProHeader from "../../components/Header/proHeader";
-import { ProCartDropdown } from "../../components/organisms/proCartDropdown"
+import { ProCartDropdown } from "../../components/organisms/proCartDropdown";
+import "../../styles/button.css"
 
 export default function ProCartHome() {
   return (

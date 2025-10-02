@@ -1,30 +1,58 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx,css}", // <--- Ensure Tailwind scans CSS files too
+    "./index.html",  // root HTML
+    "./src/**/*.{js,jsx,ts,tsx}", // all JS/JSX/TS/TSX files in src and nested folders
+    "./src/Cart/**/*.{js,jsx,ts,tsx}",  // explicitly include Cart
+    "./src/Checkout/**/*.{js,jsx,ts,tsx}",  // explicitly include Checkout
+    "./src/ProfCustomPortal/**/*.{js,jsx,ts,tsx}",  // explicitly include ProfCustomPortal
+    "./src/components/**/*.{js,jsx,ts,tsx}",  // all components
+    "./templates/**/*.twig", // Twig templates
   ],
   theme: {
     extend: {
       fontFamily: {
-        avenirRegular: ["AvenirRegular", "sans-serif"],
-        avenirBold: ["AvenirBold", "sans-serif"],
+        gotham: ["Gotham", "sans-serif"],
+        primary: "var(--font-primary)",
       },
       fontSize: {
-        // Custom font sizes
-        "display-lg": "48px",
-        "display-sm": "40px",
-        "title-lg": "32px",
-        "title-md": "24px",
-        "title-sm": "20px",
-        "body-lg": "16px", // <-- This is REQUIRED
-        "body-md": "14px",
-        "body-sm": "12px",
+        h1: "var(--text-h1)",
+        h2: "var(--text-h2)",
+        h3: "var(--text-h3)",
+        h4: "var(--text-h4)",
+        h5: "var(--text-h5)",
+        h6: "var(--text-h6)",
+        base: "var(--text-base)",
+        sm: "var(--text-sm)",
+        xs: "var(--text-xs)",
       },
       colors: {
-        "ink-black-500": "#000000",
+        primary: "var(--color-primary)",
+        "primary-dark": "var(--color-primary-dark)",
+        "primary-light": "var(--color-primary-light)",
+        secondary: "var(--color-secondary)",
+        success: "var(--color-success)",
+        info: "var(--color-info)",
+        warning: "var(--color-warning)",
+        danger: "var(--color-danger)",
+        black: "var(--color-black)",
+        white: "var(--color-white)",
+        "light-smoky-white": "var(--color-light-smoky-white)",
+        "dark-smoky-white": "var(--color-dark-smoky-white)",
+        transparent: "var(--color-transparent)",
+      },
+      fontWeight: {
+        thin: "100",
+        light: "300",
+        book: "400",
+        medium: "500",
+        bold: "600",
+        ultra: "700",
+      },
+      boxShadow: {
+        sm: "0 1px 2px 0 rgba(0,0,0,0.05)", // override Tailwind's default
+        "custom-sm": "0 22px 44px 0 rgba(0,0,0,.05)", // new custom shadow
       },
     },
   },
-  plugins: [],
 };

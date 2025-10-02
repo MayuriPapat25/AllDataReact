@@ -37,7 +37,7 @@ const ProductCard = ({ cards = [] }) => {
             <h3 className="font-bold text-sm tracking-wide text-gray-900">{card.title}</h3>
 
             {/* Subtitle */}
-            {card.subtitle && <p className="text-sm text-blue-600 font-medium">{card.subtitle}</p>}
+            {card.subtitle && <p className="text-sm text-primary font-medium">{card.subtitle}</p>}
           </div>
         </Card>
       ))}

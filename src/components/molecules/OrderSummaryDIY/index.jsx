@@ -21,8 +21,8 @@ const OrderSummaryDIY = () => {
                     </span>
                 </div>
                 <div className="flex justify-between items-center py-2 mt-1">
-                    <span className="text-blue-600 font-bold text-xl">Total:</span>
-                    <span className="text-blue-600 font-bold text-xl">$21.76</span>
+                    <span className="text-primary font-bold text-xl">Total:</span>
+                    <span className="text-primary font-bold text-xl">$21.76</span>
                 </div>
             </div>
         </div>

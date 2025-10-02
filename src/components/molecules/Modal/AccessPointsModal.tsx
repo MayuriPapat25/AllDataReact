@@ -14,7 +14,7 @@ export function AccessPointsModal({ isOpen, onClose }) {
         <div className="bg-white shadow-xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between p-6">
-            <h2 className="text-xl font-semibold text-blue-600">
+            <h2 className="text-xl font-semibold text-primary">
               What Are Access Points?
             </h2>
             <Button
