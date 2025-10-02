@@ -17,27 +17,9 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log("Form submitted:", formData);
-    onClose();
-  };
-
-  const handleCancel = () => {
-    // Reset form and close modal
-    setFormData({
-      firstName: "",
-      lastName: "",
-      title: "",
-      phoneNumber: "",
-      email: "",
-    });
-    onClose();
-  };
-
   if (!isOpen) return null;
 
-  return (  
+  return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}

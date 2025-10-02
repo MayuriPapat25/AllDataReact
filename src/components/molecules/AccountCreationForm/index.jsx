@@ -3,7 +3,6 @@ import InputField from "../../atoms/InputField/index"
 import PasswordField from "../../atoms/InputField/PasswordField"
 import PhoneField from "../../atoms/PhoneNumberField"
 import SelectField from "../../atoms/SelectField"
-import { Button } from "../../atoms/Buttons/Button"
 
 const AccountCreationForm = ({
     variant = "full", // "full", "business", or "email"
