@@ -20,15 +20,17 @@ const DIYCustomerAccount = () => {
     },
     {
       id: 'payment-information',
-      label: 'Profile Information',
+      label: 'Payment Information',
       content: <DiyPaymentInfo />
     }
   ];
 
   return (
     <>
-      <h1 class="title text-center"> <span class="title-first-part">My Account : </span>
-        <span class="title-username">TestLib TesMath</span>
+      <h1 className="title text-center">
+        {/* @todo: Get content from Drupal */}
+        <span className="title-first-part">My Account : </span>
+        <span className="title-username">TestLib TesMath</span>
       </h1>
 
       <Tabs
