@@ -28,11 +28,11 @@ const PhoneSignupForm = ({ onEdit }) => {
                                     By entering your phone number above, you agree to receive recurring automated marketing messages, including
                                     cart reminders, at the phone number provided. Consent is not a condition of purchase. Reply STOP to
                                     unsubscribe. Reply HELP for help. Message frequency varies. Msg & data rates may apply. View our{" "}
-                                    <a href="#" className="text-blue-600 hover:underline">
+                                    <a href="#" className="text-primary hover:underline">
                                         Privacy Statement
                                     </a>{" "}
                                     and{" "}
-                                    <a href="#" className="text-blue-600 hover:underline">
+                                    <a href="#" className="text-primary hover:underline">
                                         Terms of Use
                                     </a>
                                     .

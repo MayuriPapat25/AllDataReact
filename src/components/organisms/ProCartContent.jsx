@@ -11,6 +11,7 @@ import { LinkButton } from "../atoms/links/linkButton"
 import { Dropdown } from "../atoms/Dropdown/Dropdown"
 import { AccessPointsModal } from "../molecules/Modal/AccessPointsModal"
 import { Button } from "../atoms/Buttons/Button"
+import repairIcon from "../../assets/images/repair_color.png"
 
 export function ProCartContent() {
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
@@ -52,11 +53,12 @@ export function ProCartContent() {
         Your Total Due has been updated. Please review your cart before continuing with purchase.
       </Message>
       <Message type="success" className="mb-3">Success text</Message>
+      <Message type="default" className="mb-3">Default</Message>
 
       {/* Payment Frequency */}
-      <div className="mb-6 bg-white p-4 shadow-sm">
+      <div className="mb-6 bg-white p-4 shadow-custom-sm">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-gray-700">Payment Frequency</label>
+          <label className="text-md text-black">Payment Frequency</label>
           <div className="flex gap-6">
             <RadioButton
               name="paymentFrequency"
@@ -64,7 +66,7 @@ export function ProCartContent() {
               checked={paymentFrequency === "MONTHLY"}
               onChange={setPaymentFrequency}
               label="MONTHLY"
-              className="accent-[#f75e00]"
+              className="accent-[#f75e00] text-sm text-black"
             />
             <RadioButton
               name="paymentFrequency"
@@ -72,7 +74,7 @@ export function ProCartContent() {
               checked={paymentFrequency === "ANNUALLY"}
               onChange={setPaymentFrequency}
               label="ANNUALLY"
-              className="accent-[#f75e00]"
+              className="accent-[#f75e00] text-sm text-black"
             />
           </div>
         </div>
@@ -81,45 +83,44 @@ export function ProCartContent() {
       {/* Access Points Info */}
       <div className="mb-4 flex justify-end">
         <LinkButton
-          size="sm"
           onClick={() => setShowAccessPointsModal(true)}
-          className="flex items-center gap-1 font-normal text-[#282970]"
+          className="flex items-center text-xs"
         >
-          <MessageIcon type="info" className="w-4 h-4 text-[#282970]" />
+          <MessageIcon type="info" className="mr-1" />
           What are Access Points?
         </LinkButton>
       </div>
 
       {/* Cart Items */}
-      <div className="mb-6 bg-white shadow-sm">
+      <div className="mb-6 bg-white shadow-custom-sm">
         {cartItems.map((item, index) => (
           <div
             key={item.id}
             className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""}`}
           >
             {/* Desktop */}
-            <div className="hidden sm:grid items-center gap-4"
-                 style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
-              <div className="flex items-center gap-3">
-                <ProductIcon type={item.type} />
+            <div className="hidden sm:grid items-center gap-4" style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
+              <div className="flex items-center gap-3 text-md">
+                <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
                 <ProductName name={item.name} />
               </div>
               <div className="text-center">
                 <CounterDropdown
                   value={item.accessPoints}
                   onChange={(value) => handleAccessPointChange(item.id, value)}
+                  className="flex-col"
                 />
               </div>
               <div className="text-right">
                 <div className="font-normal">${item.price.toFixed(2)}</div>
-                <div className="text-sm text-gray-500 font-light">
+                <div className="text-sm text-gray-600">
                   {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
                 </div>
               </div>
               <div className="flex justify-end">
                 <DeleteIcon
                   onClick={() => handleRemoveItem(item.id)}
-                  className="text-gray-400 hover:text-red-500 cursor-pointer"
+                  className="text-primary hover:text-red-500 cursor-pointer"
                 />
               </div>
             </div>
@@ -128,7 +129,7 @@ export function ProCartContent() {
             <div className="sm:hidden space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <ProductIcon type={item.type} />
+                  <img src={repairIcon} alt="Repair Color" className="w-[30px]" />
                   <ProductName name={item.name} />
                 </div>
                 <DeleteIcon
@@ -155,13 +156,13 @@ export function ProCartContent() {
 
       {/* Remove Products */}
       <div className="mb-6 flex justify-end">
-        <LinkButton size="sm" onClick={() => console.log("Remove added products")}>
+        <LinkButton size="sm" className="text-xs" onClick={() => console.log("Remove added products")}>
           Remove Added Products
         </LinkButton>
       </div>
 
       {/* Pricing Summary */}
-      <div className="mb-6 bg-white shadow-sm">
+      <div className="mb-6 bg-white shadow-custom-sm">
         <div className="space-y-2">
           <div className="border-b-2 border-[#faf9f9]">
             <div className="p-4">
@@ -181,15 +182,15 @@ export function ProCartContent() {
           <div className="border-b-2 border-[#faf9f9]">
             <div className="p-4">
               <PriceText amount={205.25} label="Total Due:" isTotal />
-              <p className="text-xs text-gray-500 text-right mt-1">Taxes Not Included</p>
+              <p className="text-gray-600 text-right mt-1">Taxes Not Included</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Promo Code */}
-      <div className="mb-6 bg-white p-4 flex items-center shadow-sm">
-        <span className="text-sm font-medium text-gray-700 whitespace-nowrap mr-4">
+      <div className="mb-6 bg-white p-4 flex items-center shadow-custom-sm">
+        <span className="text-md text-black whitespace-nowrap mr-4">
           Add Promo Code
         </span>
         <InputWithButton
@@ -201,33 +202,31 @@ export function ProCartContent() {
       </div>
 
       {/* Subscription Term */}
-      <div className="mb-4 bg-white shadow-sm">
+      <div className="mb-4 bg-white shadow-custom-sm">
         <div className="flex items-center justify-between border-b-2 border-[#faf9f9] p-4 w-full">
-          <label className="text-sm font-medium text-gray-700">Subscription Term</label>
-          <div className="ml-4">
-            <Dropdown
-              value={subscriptionTerm}
-              onValueChange={setSubscriptionTerm}
-              options={[
-                { value: "3 Months", label: "3 Months" },
-                { value: "6 Months", label: "6 Months" },
-                { value: "12 Months", label: "12 Months" },
-              ]}
-              className="w-32"
-            />
-          </div>
+          <label className="text-md text-black">Subscription Term</label>
+          <Dropdown
+            value={subscriptionTerm}
+            onValueChange={setSubscriptionTerm}
+            options={[
+              { value: "3 Months", label: "3 Months" },
+              { value: "6 Months", label: "6 Months" },
+              { value: "12 Months", label: "12 Months" },
+            ]}
+            className="max-w-[300px] ml-auto mx-0 mr-0"
+          />
         </div>
         <div className="flex items-center justify-between p-4 w-full">
-          <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+          <label className="text-black text-md whitespace-nowrap">
             Auto Renewal Date:
           </label>
-          <div className="flex-1 ml-4 text-gray-900 text-right">09/09/2026</div>
+          <div className="text-md ml-4 text-blck text-right">09/09/2026</div>
         </div>
       </div>
 
       {/* Footer */}
       <div className="space-y-3">
-        <p className="text-xs text-gray-500 mb-6">
+        <p className="text-gray-600 mb-6">
           *Promotional rate. All rates subject to applicable sales taxes. Taxes applied at checkout.
         </p>
       </div>
@@ -236,12 +235,11 @@ export function ProCartContent() {
       <div className="flex flex-col gap-2">
         <Button
           variant="outline"
-          style={{ borderColor: "#f75e00", color: "#f75e00" }}
-          className="w-full cursor-pointer"
+          className="btn-full cursor-pointer btn btn-primary"
         >
           CHECKOUT
         </Button>
-        <LinkButton className="w-full text-center">
+        <LinkButton variant="ghost" className="w-full text-center">
           Continue Shopping
         </LinkButton>
       </div>

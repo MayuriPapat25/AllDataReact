@@ -13,16 +13,16 @@ export function ProductSingleItem({ status, description, expiration, plan, price
     <div className="py-4 border-b border-gray-200 space-y-2 md:space-y-0 md:grid md:grid-cols-12 md:gap-4 items-start md:items-center">
       {/* Status */}
       <div className="hidden md:block md:col-span-1">
-        <span className="inline-block text-[#1b3d6e] text-xs font-medium">{status}</span>
+        <strong className="inline-block text-md">{status}</strong>
       </div>
 
       {/* Name / Description */}
       <div className="col-span-1 md:col-span-4">
-        <p className="text-sm font-medium text-gray-900 break-words">{description}</p>
+        <p className="text-md break-words">{description}</p>
       </div>
 
       <div className="md:col-span-2 flex items-center">
-        <p className="text-sm text-gray-600 font-semibold">{expiration}</p>
+        <p className="text-md font-medium">{expiration}</p>
       </div>
 
       {/* Plan */}
@@ -39,9 +39,9 @@ export function ProductSingleItem({ status, description, expiration, plan, price
 
       {/* Row 3: Price and Remove */}
       <div className="flex justify-between items-center md:col-span-3">
-        <p className="text-sm text-gray-500">${price}</p>
-        <LinkButton onClick={onRemove} className="flex items-center gap-1">
-          <DeleteIcon className="text-[#004a87]" />
+        <p className="text-gray-500">${price}</p>
+        <LinkButton onClick={onRemove} className="flex items-center gap-1 text-primary">
+          <DeleteIcon />
           Remove
         </LinkButton>
       </div>

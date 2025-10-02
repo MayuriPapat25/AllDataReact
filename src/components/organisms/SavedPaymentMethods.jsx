@@ -69,7 +69,7 @@ const SavedPaymentMethods = () => {
 
             <span className="text-sm text-gray-600 font-mono">•••• •••• •••• 1111</span>
 
-            <div className="text-xs text-blue-600 border border-blue-600 bg-blue-50 px-2 py-1 rounded-md">
+            <div className="text-xs text-primary border border-blue-600 bg-blue-50 px-2 py-1 rounded-md">
               AUTOMATIC PAYMENTS
             </div>
 
@@ -120,7 +120,7 @@ const SavedPaymentMethods = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className={`text-blue-600 border-blue-600 hover:bg-blue-50 bg-transparent ${areAllFieldsFilled ? "font-bold" : ""
+                  className={`text-primary border-blue-600 hover:bg-blue-50 bg-transparent ${areAllFieldsFilled ? "font-bold" : ""
                     }`}
                 >
                   Save
@@ -136,7 +136,7 @@ const SavedPaymentMethods = () => {
 
 
       <button
-        className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors"
+        className="flex items-center space-x-2 text-primary hover:text-blue-700 transition-colors"
         onClick={() => setIsAddingNewMethod(!isAddingNewMethod)}
       >
         <div className="w-5 h-5 rounded-full border border-blue-600 flex items-center justify-center">

@@ -58,7 +58,7 @@ const PasswordField = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-blue-600 hover:text-blue-700 font-medium"
+                    className="text-primary hover:text-blue-700 font-medium"
                 >
                     {showPassword ? "HIDE" : "SHOW"}
                 </button>

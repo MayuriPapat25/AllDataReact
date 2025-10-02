@@ -3,7 +3,7 @@ export function PriceText({ amount, label, isTotal = false, isDiscount = false, 
     return price < 0 ? `-$${Math.abs(price).toFixed(2)}` : `$${price.toFixed(2)}`
   }
 
-  const baseClasses = isTotal ? "text-lg font-bold text-gray-900" : isDiscount ? "text-gray-700" : "text-gray-700"
+  const baseClasses = isTotal ? "text-h4 font-medium text-black" : isDiscount ? "text-md text-black" : "text-md text-black"
 
   return (
     <div className={`flex justify-between items-center ${className}`}>

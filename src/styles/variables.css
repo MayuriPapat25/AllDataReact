@@ -1,0 +1,31 @@
+@theme {
+  /* Colors */
+  --color-primary: #1b3d6e;
+  --color-primary-dark: #1d3359;
+  --color-primary-light: #004987;
+  --color-secondary: #f16824;
+  --color-success: #28a745;
+  --color-info: #17a2b8;
+  --color-warning: #ffc107;
+  --color-danger: #dc3545;
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-light-smoky-white: #faf9f9;
+  --color-dark-smoky-white: #eeebeb;
+  --color-transparent: transparent;
+
+  /* Font family */
+  --font-primary: "Gotham", sans-serif;
+
+  /* Font sizes */
+  --text-h1: 40px;
+  --text-h2: 32px;
+  --text-h3: 28px;
+  --text-h4: 24px;
+  --text-h5: 20px;
+  --text-h6: 16px;
+  --text-base: 14px;
+  --text-md: 18px;
+  --text-sm: 12px;
+  --text-xs: 10px;
+}

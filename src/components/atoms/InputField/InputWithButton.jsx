@@ -44,7 +44,7 @@ export function InputWithButton({
             setError("")
           }}
           onKeyDown={handleKeyDown}
-          className="flex-1 min-w-0"
+          className="flex-1 min-w-0 border-2"
         />
         <Button
           variant="outline"

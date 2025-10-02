@@ -30,7 +30,7 @@ export const TabButton = ({
     return (
       <button
         onClick={onClick}
-        className={`w-full text-left px-4 py-3 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
+        className={`w-full text-left px-4 py-3 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${isActive ? 'text-primary bg-blue-50' : 'text-gray-700'
           }`}
       >
         {children}

@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Using variables from variables.css for button colors */
+  --btn-primary-border: var(--color-secondary);
+  --btn-primary-text: var(--color-primary);
+  --btn-primary-hover-bg: var(--color-secondary);
+  --btn-primary-hover-text: var(--color-white);
+
+  --btn-secondary-border: var(--color-gray);
+  --btn-secondary-text: var(--color-primary);
+  --btn-secondary-hover-bg: var(--color-secondary);
+  --btn-secondary-hover-border: var(--color-secondary);
+  --btn-secondary-hover-text: var(--color-white);
+}
+
+.btn {
+  @apply relative cursor-pointer rounded-none px-3.5 py-2 h-auto inline-block appearance-none shadow-none;
+  @apply font-medium text-center transition-colors duration-300 ease-in-out overflow-hidden;
+  font-family: var(--font-primary);
+
+  /* Bottom-to-top fill animation */
+  &::before {
+    content: "";
+    @apply absolute bottom-0 left-0 w-full h-0 transition-all duration-300 ease-in-out -z-10;
+  }
+
+  &:focus {
+    box-shadow: none;
+    border: 0;
+    outline: none;
+  }
+
+  /* Size Variants */
+  &.btn-small {
+    @apply min-h-[2.375rem] py-2 px-4;
+    font-size: var(--text-sm);
+  }
+
+  &.btn-medium {
+    @apply min-h-[3.125rem] min-w-[9.375rem] py-3.5 px-6;
+    font-size: var(--text-base);
+  }
+
+  &.btn-large {
+    @apply min-h-[3.125rem] min-w-[18.75rem] py-3.5 px-8;
+    font-size: var(--text-h6);
+  }
+
+  &.btn-full {
+    @apply w-full;
+  }
+
+  &.btn-half {
+    @apply w-1/2;
+  }
+
+  /* Primary Button - Orange border, blue text, hover orange fill */
+  &.btn-primary {
+    @apply border-2 border-solid bg-white relative z-0;
+    border-color: var(--btn-primary-border);
+    color: var(--btn-primary-text);
+
+    &::before {
+      background-color: var(--btn-primary-hover-bg);
+    }
+
+    &:hover,
+    &:active {
+      color: var(--btn-primary-hover-text);
+
+      &::before {
+        @apply h-full;
+      }
+    }
+  }
+
+  /* Secondary Button - Gray border, blue text, hover orange fill */
+  &.btn-secondary {
+    @apply border-2 border-solid bg-white relative z-0;
+    border-color: var(--btn-secondary-border);
+    color: var(--btn-secondary-text);
+
+    &::before {
+      background-color: var(--btn-secondary-hover-bg);
+    }
+
+    &:hover,
+    &:active {
+      border-color: var(--btn-secondary-hover-border);
+      color: var(--btn-secondary-hover-text);
+
+      &::before {
+        @apply h-full;
+      }
+    }
+  }
+
+  /* Filled variant (no animation, solid background) */
+  &.btn-filled {
+    @apply border-2 border-solid;
+    background-color: var(--btn-primary-hover-bg);
+    border-color: var(--btn-primary-border);
+    color: var(--btn-primary-hover-text);
+
+    &::before {
+      @apply hidden;
+    }
+  }
+
+  /* Disabled State */
+  &.btn-disabled,
+  &:disabled {
+    @apply pointer-events-none opacity-50 cursor-not-allowed;
+  }
+}

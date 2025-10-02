@@ -67,16 +67,16 @@ export default function CartPage() {
       <CheckoutSteps currentStep={3} steps={steps} />
 
       <div className="text-center mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6">CART</h1>
+        <h1 className="mb-6">CART</h1>
       </div>
 
       {cartItems.length === 0 ? (
         // ✅ Empty cart UI
         <div className="text-center pt-2 pb-6">
-          <h2 className="text-lg font-semibold mb-6 text-center">
+          <h5 className="mb-6 text-center text-md text-gray-600">
             REVIEW ALLDATA DIY SUBSCRIPTIONS
-          </h2>
-          <p className="text-lg font-medium text-gray-600 mb-8">
+          </h5>
+          <p className="text-gray-600 mb-8">
             There are no items in your cart.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -91,9 +91,9 @@ export default function CartPage() {
       ) : (
         // ✅ Cart items UI
         <div>
-          <h2 className="text-lg font-semibold mb-6 text-center">
+          <h5 className="text-md mb-6 text-center text-gray-600">
             REVIEW ALLDATA DIY SUBSCRIPTIONS
-          </h2>
+          </h5>
 
           <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm text-gray-500">
             <div className="col-span-1">Status</div>
@@ -130,7 +130,7 @@ export default function CartPage() {
                     <span>Subtotal:</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-lg font-bold pt-2">
+                  <div className="flex justify-between text-h4 font-medium text-primary pt-2">
                     <span>Total:</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
@@ -140,14 +140,14 @@ export default function CartPage() {
                   <Button
                     onClick={handleAddMoreVehicles}
                     variant="outline"
-                    size="md"
+                    className="btn btn-secondary"
                   >
                     ADD MORE VEHICLES
                   </Button>
                   <Button
                     onClick={handleCheckout}
                     variant="outline"
-                    size="md"
+                    className="btn btn-secondary"
                   >
                     CHECKOUT
                   </Button>
