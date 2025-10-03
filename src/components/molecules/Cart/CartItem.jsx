@@ -51,7 +51,7 @@ export function CartItem({
           variant="ghost"
           size="sm"
           aria-label="Remove item"
-          className="text-gray-400 hover:text-red-500 p-1"
+          className="text-gray-400 hover:text-error p-1"
         >
           ×
         </Button>

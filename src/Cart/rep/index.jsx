@@ -3,7 +3,7 @@ import { RepCartDropdown } from "../../components/organisms/RepCartDropdown/repC
 export default function RepCartHome() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <main className="p-4">
+      <main className="container">
         <RepCartDropdown variant="fullpage" />
       </main>
     </div>

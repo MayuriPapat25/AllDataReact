@@ -10,7 +10,7 @@ export function PriceText({ amount, label, isTotal = false, isDiscount = false, 
       {label && <span className={baseClasses}>{label}</span>}
       <span className={`${baseClasses} ${isDiscount ? "text-red-600" : ""}`}>
         {formatPrice(amount)}
-        {isTotal && <span className="text-red-500">*</span>}
+        {isTotal && <span className="text-error">*</span>}
       </span>
     </div>
   )

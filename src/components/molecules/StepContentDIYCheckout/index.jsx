@@ -137,7 +137,7 @@ const StepContentDIYCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     // disabled={primaryButton.disabled}
-                    className={primaryButton.className || "h-12 px-8  bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
+                    className={primaryButton.className || "btn btn-primary"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -145,7 +145,7 @@ const StepContentDIYCheckout = ({
                     <Button
                         onClick={secondaryButton.onClick}
                         variant={secondaryButton.variant || "outline"}
-                        className={secondaryButton.className || "h-12 px-8 border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"}
+                        className={secondaryButton.className || "btn btn-secondary"}
                     >
                         {secondaryButton.text}
                     </Button>
@@ -154,7 +154,7 @@ const StepContentDIYCheckout = ({
                     <Button
                         onClick={ternaryButton.onClick}
                         variant={ternaryButton.variant || "outline"}
-                        className={ternaryButton.className || "h-12 px-8 border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"}
+                        className={ternaryButton.className || "border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"}
                     >
                         {ternaryButton.text}
                     </Button>

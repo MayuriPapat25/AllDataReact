@@ -56,7 +56,7 @@ export function ProCartContent() {
       <Message type="default" className="mb-3">Default</Message>
 
       {/* Payment Frequency */}
-      <div className="mb-6 bg-white p-4 shadow-custom-sm">
+      <div className="mb-6 bg-white p-4 shadow-lg">
         <div className="flex items-center justify-between">
           <label className="text-md text-black">Payment Frequency</label>
           <div className="flex gap-6">
@@ -109,6 +109,7 @@ export function ProCartContent() {
                   value={item.accessPoints}
                   onChange={(value) => handleAccessPointChange(item.id, value)}
                   className="flex-col"
+                  showLabel={true}
                 />
               </div>
               <div className="text-right">
@@ -120,7 +121,7 @@ export function ProCartContent() {
               <div className="flex justify-end">
                 <DeleteIcon
                   onClick={() => handleRemoveItem(item.id)}
-                  className="text-primary hover:text-red-500 cursor-pointer"
+                  className="text-primary hover:text-error cursor-pointer"
                 />
               </div>
             </div>
@@ -134,13 +135,15 @@ export function ProCartContent() {
                 </div>
                 <DeleteIcon
                   onClick={() => handleRemoveItem(item.id)}
-                  className="text-gray-400 hover:text-red-500 cursor-pointer"
+                  className="text-gray-400 hover:text-error cursor-pointer"
                 />
               </div>
               <div className="flex items-center justify-between">
                 <CounterDropdown
                   value={item.accessPoints}
                   onChange={(value) => handleAccessPointChange(item.id, value)}
+                  className="flex-col"
+                  showLabel={true}
                 />
                 <div className="text-right">
                   <div className="font-normal">${item.price.toFixed(2)}</div>

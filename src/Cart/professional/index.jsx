@@ -6,7 +6,7 @@ const ProCartHome = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <ProHeader />
-      <main className="p-4">
+      <main className="container">
         <ProCartDropdown variant="fullpage" />
       </main>
     </div>

@@ -50,8 +50,22 @@ a:hover {
 /* Text helpers */
 b, strong { font-weight: 600; }
 small, .small { font-size: 80%; }
-
+.link { font-size: 12px; }
+input { font-size: 12px; }
+.container { max-width: 1336px;padding: 0 20px;margin: 0 auto; }
 /* Shadow utility */
 .shadow-box {
   box-shadow: 0 42px 44px rgba(0, 0, 0, 0.05);
+}
+.br-field-left {
+  position: relative;
+}
+.br-field-left::before {
+  border-left: 3px solid #d2d9e2;
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: -7px;
+  height: 40px;
+  width: 3px;
 }

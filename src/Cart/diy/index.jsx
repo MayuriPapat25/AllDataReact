@@ -5,7 +5,7 @@ export default function DIYCartHome() {
     <div className="min-h-screen bg-background">
       <HeaderWithCart />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container">
 
       </main>
     </div>

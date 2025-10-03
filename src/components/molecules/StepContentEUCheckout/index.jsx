@@ -63,7 +63,7 @@ const StepContentEUCheckout = ({
                     <div className=" mx-auto relative">
                         <div>
                             <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
-                        </div>                  
+                        </div>
                     </div>
                 )
 
@@ -75,7 +75,7 @@ const StepContentEUCheckout = ({
                                 <BusinessInformationForm variant="standard" />
                                 <BusinessAddressForm/>
                                 <BillingAddressForm />
-                               
+
                                 <div className="space-y-6">
                                     <span className="text-2xl font-bold text-gray-900">Billing Information</span>
                                     <iframe></iframe>
@@ -99,7 +99,7 @@ const StepContentEUCheckout = ({
                                 <BusinessAddressReview onEdit={handleEdit} />
                                 <BillingAddressForm fromReview={true} onEdit={handleEdit} />
                                 <BillingInfoReview />
-                            
+
                             </div>
                             <div className="w-1/2">
                                 <OrderSummary data={variant2Data} type="variant2" />
@@ -145,8 +145,7 @@ const StepContentEUCheckout = ({
                     text: "CANCEL",
                     onClick: onBack,
                     variant: "outline"
-                }, 
-                buttonLayout: "max-w-2xl mx-auto p-6 justify-between"
+                },
             },
             2: {
                 showButtons: true,
@@ -159,7 +158,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-8 md:ml-0 sm:ml-0"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 mt-8"
             },
             3: {
                 showButtons: true,
@@ -172,7 +171,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-8 md:ml-0 sm:ml-0"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 mt-8"
             },
             4: {
                 showButtons: true,
@@ -185,7 +184,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-60 md:ml-0 sm:ml-0"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 mt-8"
             },
             5: {
                 showButtons: false
@@ -197,7 +196,7 @@ const StepContentEUCheckout = ({
             showButtons = true,
             primaryButton = { text: "Continue", onClick: onContinue },
             secondaryButton = currentStep > 1 ? { text: "Back", onClick: onBack } : null,
-            buttonLayout = "flex-col sm:flex-row gap-4 pt-6 lg:ml-30 md:ml-0 sm:ml-0"
+            buttonLayout = "flex-col sm:flex-row gap-4 pt-6 mr-2"
         } = finalConfig
 
         if (!showButtons) return null
@@ -207,7 +206,7 @@ const StepContentEUCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     disabled={primaryButton.disabled}
-                    className={primaryButton.className || "h-12 px-8  bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
+                    className={primaryButton.className || "btn btn-primary mr-2"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -215,7 +214,7 @@ const StepContentEUCheckout = ({
                     <Button
                         onClick={secondaryButton.onClick}
                         variant={secondaryButton.variant || "outline"}
-                        className={secondaryButton.className || "h-12 px-8 border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"}
+                        className={secondaryButton.className || "btn btn-secondary"}
                     >
                         {secondaryButton.text}
                     </Button>
@@ -225,11 +224,9 @@ const StepContentEUCheckout = ({
     }
 
     return (
-        <div className="mx-auto">
+        <div>
             {renderStepContent()}
-            <div className="">
-                {getStepButtons()}
-            </div>
+            {getStepButtons()}
         </div>
     )
 }

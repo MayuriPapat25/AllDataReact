@@ -8,7 +8,7 @@ const BillingInfoReview = ({
     onEdit,
 }) => {
     return (
-        <div className="bg-[#fafafa] border-b-4 border-gray-300 pb-8 max-w-2xl" >
+        <div className="border-b-4 border-gray-300 pb-8 max-w-2xl" >
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-semibold text-gray-900 tracking-wide uppercase">BILLING INFORMATION</h2>
                 <button variant="ghost" size="sm" onClick={onEdit} className="text-gray-500 hover:text-gray-700 font-medium">

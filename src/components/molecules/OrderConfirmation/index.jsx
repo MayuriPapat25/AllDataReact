@@ -1,6 +1,6 @@
 const OrderConfirmation = ({ orderNumber, loginUrl = "myalldata.com" }) => {
     return (
-        <div className="max-w-2xl mx-auto pb-8 bg-[#fafafa]">
+        <div className="max-w-2xl mx-auto pb-8">
             <div className="text-sm text-muted-foreground mb-4">ORDER #{orderNumber}</div>
 
             <h1 className="text-4xl font-bold text-foreground mb-8 text-balance">THANK YOU FOR YOUR PURCHASE.</h1>
