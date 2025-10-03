@@ -13,6 +13,7 @@
   --color-light-smoky-white: #faf9f9;
   --color-dark-smoky-white: #eeebeb;
   --color-transparent: transparent;
+  --color-error: #c80e0b;
 
   /* Font family */
   --font-primary: "Gotham", sans-serif;

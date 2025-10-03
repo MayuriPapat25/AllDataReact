@@ -50,7 +50,7 @@ const PasswordField = ({
     return (
         <div className={`space-y-2 ${className}`}>
             <div className="flex justify-between items-center">
-                <label htmlFor={id} className="text-base font-medium text-gray-700 ml-2.5">
+                <label htmlFor={id}>
                     {label}
                 </label>
                 <button
@@ -58,13 +58,13 @@ const PasswordField = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-primary hover:text-blue-700 font-medium"
+                    className="text-primary hover:text-blue-700 text-xs font-medium"
                 >
                     {showPassword ? "HIDE" : "SHOW"}
                 </button>
             </div>
-            <div className="relative flex">
-                {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>}
+            <div className="br-field-left">
+                {/* {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>} */}
                 <input
                     id={id}
                     type={showPassword ? "text" : "password"}
@@ -73,16 +73,16 @@ const PasswordField = ({
                     placeholder={placeholder}
                     aria-invalid={Boolean(error || validationError)}
                     aria-describedby={id ? `${id}-error` : undefined}
-                    className={`px-3 py-2 text-base border-2 pr-12 w-full ${error || validationError ? "border-red-500 focus:border-red-500" : "border-gray-300 focus:border-blue-500"}`}
+                    className={`px-3 py-2 text-base border-2 pr-12 w-full ${error || validationError ? "border-error focus:border-error" : "border-gray-300 focus:border-blue-500"}`}
                 />
             </div>
             {error && (
-                <p id={id ? `${id}-error` : undefined} className="text-sm text-red-500">
+                <p id={id ? `${id}-error` : undefined} className="text-sm text-error">
                     {error}
                 </p>
             )}
             {helperText && (
-                <p className={`text-sm leading-relaxed ${validationError ? "text-red-500" : "text-gray-500"}`}>{helperText}</p>
+                <div className={`text-xs leading-relaxed ${validationError ? "text-error" : "text-gray-500"}`}>{helperText}</div>
             )}
         </div>
     )

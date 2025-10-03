@@ -7,20 +7,20 @@ const InputField = forwardRef(
     return (
       <div className="space-y-2">
         {label && (
-          <h3 className="flex text-display-sm-medium justify-between ml-2.5">
+          <label className="flex justify-between">
             {label}
             {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
-          </h3>
+          </label>
         )}
 
-        <div className="flex items-center">
-          {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>}
+        <div className="br-field-left">
+          {/* {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>} */}
           <input
             ref={ref}
             id={id}
             type={type}
             className={cn(
-              "w-full px-3 py-2 border border-input bg-background text-sm",
+              "w-full px-3 py-2 border-2 border-gray-300 text-sm",
               // "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
               "placeholder:text-muted-foreground",
               error && "border-destructive",
@@ -33,11 +33,11 @@ const InputField = forwardRef(
           />
         </div>
         {error && (
-          <p id={describedById} className={cn("text-sm min-h-[1.25rem]", error ? "text-red-500" : "text-transparent")}>
+          <p id={describedById} className={cn("text-sm min-h-[1.25rem]", error ? "text-error" : "text-transparent")}>
             {error || "_"}
           </p>
         )}
-        {helperText && <p className="text-sm text-gray-500 leading-relaxed">{helperText}</p>}
+        {helperText && <div className="text-xs text-gray-500 leading-relaxed">{helperText}</div>}
       </div>
     )
   },

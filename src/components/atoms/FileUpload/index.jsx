@@ -23,7 +23,7 @@ const FileUpload = ({ label, onChange, accept, helperText, required = false, cla
 
     return (
         <div className={cn("space-y-2", className)}>
-            <label className="text-sm font-medium text-muted-foreground">
+            <label>
                 {label}
                 {required && <span className="text-destructive ml-1">*</span>}
             </label>
@@ -49,7 +49,7 @@ const FileUpload = ({ label, onChange, accept, helperText, required = false, cla
                 />
 
             </div>
-            {helperText && <p className="text-sm text-gray-500 leading-relaxed">{helperText}</p>}
+            {helperText && <div className="text-xs text-gray-500 leading-relaxed">{helperText}</div>}
         </div>
     )
 }

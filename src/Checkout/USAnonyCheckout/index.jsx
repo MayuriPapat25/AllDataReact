@@ -27,12 +27,12 @@ const UsAnonyCheckout = () => {
     ];
 
     return (
-        <div className="min-h-screen bg-[#fafafa] py-12">
+        <div className="min-h-screen py-12">
             <div className="">
-                <div className="p-8 mb-8 bg-[#fafafa]">
+                <div className="p-8 mb-8">
                     <CheckoutSteps currentStep={currentStep} steps={steps} />
                 </div>
-                <div className="bg-[#fafafa] mx-20">
+                <div>
                     <StepContentUSAnonyCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
                 </div>
             </div>
