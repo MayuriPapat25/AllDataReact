@@ -1,11 +1,25 @@
+import React, { useEffect } from "react"
 import { Button } from "../../atoms/Buttons/Button"
 import { Icon } from "../../atoms/Icon/Icon"
 
-export function AccessPointsModal({ isOpen, onClose }) {
+type AccessPointsModalProps = {
+  isOpen: boolean
+  onClose: () => void
+}
+
+export function AccessPointsModal({ isOpen, onClose }: AccessPointsModalProps) {
+  useEffect(() => {
+    if (!isOpen) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [isOpen, onClose])
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="access-points-title">
       <div
         className="absolute inset-0 bg-black bg-opacity-50"
         onClick={onClose}
@@ -14,7 +28,7 @@ export function AccessPointsModal({ isOpen, onClose }) {
         <div className="bg-white shadow-xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between p-6">
-            <h2 className="text-xl font-semibold text-primary">
+            <h2 id="access-points-title" className="text-xl font-semibold text-primary">
               What Are Access Points?
             </h2>
             <Button

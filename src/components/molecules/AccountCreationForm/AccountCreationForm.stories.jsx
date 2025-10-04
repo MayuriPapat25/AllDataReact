@@ -1,7 +1,7 @@
 // src/stories/AccountCreationForm.stories.jsx
 import React from "react";
 import AccountCreationForm from "./index"; // adjust import path
-import { action } from "@storybook/addon-actions";
+import { action } from "storybook/actions";
 
 export default {
     title: "Forms/AccountCreationForm",

@@ -1,12 +1,10 @@
 
 import { Button } from "../../atoms/Buttons/Button"
-// import CreateNewAccount from "../CreateNewAccount"
 import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
 import BillingAddressForm from '../BillingAddress'
 import ShippingAddressForm from '../ShippingAddress'
-// import BillingFormSinglePayment from '../BillingFormSinglePayment'
 import BillingEmailForm from "../BillingEmailAddress"
 import PhoneSignupForm from "../PhoneSignUpForm"
 import { useState } from "react"

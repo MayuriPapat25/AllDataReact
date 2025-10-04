@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../atoms/Buttons/Button';
 import AccountClosureModal from '../AccountClosureModal';
+import { CircleMinus } from 'lucide-react';
 
 const CancelSubscriptionTrigger = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +16,7 @@ const CancelSubscriptionTrigger = () => {
         onClick={() => setIsModalOpen(true)}
       >
         <div className="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300">
-          <Minus className="w-3 h-3 text-gray-600" />
+          <CircleMinus className="w-3 h-3 text-gray-600" />
         </div>
         <span className="text-gray-700">Cancel Subscription</span>
       </Button>

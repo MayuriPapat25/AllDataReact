@@ -1,9 +1,7 @@
 import React from "react"
 import { useState } from "react"
 import InputField from "../../atoms/InputField/index"
-import { Button } from "../../atoms/Buttons/Button"
 import TermsConditions from "../../atoms/TermsCondition"
-// import { Checkbox } from "./ui/checkbox"
 
 export default function EmailForm() {
     const [email, setEmail] = useState("hinal.parik@qed42.org")
@@ -51,7 +49,7 @@ export default function EmailForm() {
                         className="w-full rounded-md"
                     />
 
-                    <TermsConditions checked={agreedToTerms} onCheckedChange={setAgreedToTerms} />
+                    <TermsConditions checked={agreedToEmails} onCheckedChange={setAgreedToEmails} />
 
                 </form>
             </div>
