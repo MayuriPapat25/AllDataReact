@@ -25,7 +25,7 @@ const VatField = forwardRef(
             ref={ref}
             type="text"
             className={cn(
-              "flex-1 px-3 py-2 border border-input bg-background rounded-r-md text-sm",
+              "flex-1 px-3 py-2 border-2 border-gray-300 rounded-r-md text-sm",
               "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
               "placeholder:text-muted-foreground",
               error && "border-destructive",
@@ -34,7 +34,7 @@ const VatField = forwardRef(
             {...props}
           />
         </div>
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && <p className="text-sm text-error">{error}</p>}
       </div>
     )
   },

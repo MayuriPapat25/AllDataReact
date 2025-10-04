@@ -68,7 +68,7 @@ const StepContentRepInitiatedCheckout = ({
                 return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mx-auto relative">
                         <div>
-                            <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-12"/>
+                            <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-6"/>
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
                         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
@@ -152,7 +152,7 @@ const StepContentRepInitiatedCheckout = ({
                     disabled: !step1Valid
                 },
                 secondaryButton: null,
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-6 lg:ml-20 md:ml-0 sm:ml-0 md:justify-center lg:justify-start"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-6 md:justify-center lg:justify-start"
             },
             2: {
                 showButtons: true,
@@ -213,7 +213,7 @@ const StepContentRepInitiatedCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     disabled={primaryButton.disabled}
-                    className={primaryButton.className || "h-12 px-8 bg-transparent text-gray-700 font-medium text-base border-2 border-orange-500"}
+                    className={primaryButton.className || "btn btn-primary"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -221,7 +221,7 @@ const StepContentRepInitiatedCheckout = ({
                     <Button
                         onClick={secondaryButton.onClick}
                         variant={secondaryButton.variant || "outline"}
-                        className={secondaryButton.className || "h-12 px-8 border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"}
+                        className={secondaryButton.className || "btn btn-secondary"}
                     >
                         {secondaryButton.text}
                     </Button>

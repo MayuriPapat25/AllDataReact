@@ -56,7 +56,7 @@ export function InputWithButton({
         </Button>
       </div>
 
-      {error && <span className="text-sm text-red-500">{error}</span>}
+      {error && <span className="text-sm text-error">{error}</span>}
     </div>
   )
 }
