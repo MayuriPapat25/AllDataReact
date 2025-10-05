@@ -59,7 +59,7 @@ export function Button({
   ...props
 }) {
   const baseClasses =
-    "font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer"
+    "font-medium transition-colors cursor-pointer"
 
   const variants = {
     primary: "bg-orange-500 hover:bg-orange-600 text-white focus:ring-orange-500",
