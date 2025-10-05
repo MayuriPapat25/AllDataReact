@@ -1,4 +1,4 @@
-import { ProCartDropdown } from "../../../components/organisms/proCartDropdown"
+import { ProCartDropdown } from "../../../components/organisms/ProCartDropdown/proCartDropdown"
 import { Button } from "../../../components/atoms/Buttons/Button" // import common Button
 
 export default function CartModal({ onClose }) {

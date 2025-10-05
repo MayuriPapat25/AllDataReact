@@ -1,6 +1,6 @@
-import { Button } from "../atoms/Buttons/Button"
-import { Icon } from "../atoms/Icon/Icon"
-import { ProCartContent } from "./ProCartContent"
+import { Button } from "../../atoms/Buttons/Button"
+import { Icon } from "../../atoms/Icon/Icon"
+import { ProCartContent } from "../ProCartContent/ProCartContent"
 
 export function ProCartDropdown({ isOpen = true, onClose, variant = "dropdown" }) {
   if (variant === "dropdown" && !isOpen) return null

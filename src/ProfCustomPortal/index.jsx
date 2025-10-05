@@ -1,7 +1,5 @@
 import React from 'react';
 import { Tabs } from '../components/molecules/Tabs';
-import { ProductInfo } from '../components/atoms/ProductInfo';
-import { PriceText } from '../components/atoms/Price/PriceText';
 import BillSummary from '../components/organisms/billSummary';
 import ProductsPortal from '../components/organisms/ProductsPortal';
 import AccountSettings from '../components/organisms/AccountSettings';
@@ -37,7 +35,7 @@ export const ProfCustomPortal = () => {
         </>
       )
     }
-  ];  
+  ];
 
   return (
     <div className='customer-portal-professional'>
@@ -45,7 +43,7 @@ export const ProfCustomPortal = () => {
         tabs={tabsData}
         defaultActiveTab="billing"
         onTabChange={(tabId) => console.log('Active tab:', tabId)}
-      />      
+      />
     </div>
   );
 };

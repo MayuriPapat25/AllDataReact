@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { DiyCartDropdown } from "../organisms/diyCartDropdown"
+import { DiyCartDropdown } from "../organisms/DiyCartDropdown/diyCartDropdown"
 import { Button } from "../atoms/Buttons/Button"
 
 export function HeaderWithCart() {

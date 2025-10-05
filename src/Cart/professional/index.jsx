@@ -1,8 +1,8 @@
 import ProHeader from "../../components/Header/proHeader";
-import { ProCartDropdown } from "../../components/organisms/proCartDropdown";
+import { ProCartDropdown } from "../../components/organisms/ProCartDropdown/proCartDropdown";
 import "../../styles/button.css"
 
-export default function ProCartHome() {
+const ProCartHome = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <ProHeader />
@@ -12,3 +12,5 @@ export default function ProCartHome() {
     </div>
   );
 }
+
+export default ProCartHome

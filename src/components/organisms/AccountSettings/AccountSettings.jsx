@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { InfoText } from '../atoms/Info/InfoText';
-import InputField from '../atoms/InputField';
-import SelectField from '../atoms/SelectField';
-import { PriceText } from '../atoms/Price/PriceText';
-import SavedPaymentMethods from './SavedPaymentMethods';
-import { Button } from '../atoms/Buttons/Button';
-import { Icon } from '../atoms/Icon/Icon';
-import AccountClosureModal from '../molecules/AccountClosureModal';
-import UpdateAccoutDetails from '../molecules/UpdateAccoutDetails';
+import { InfoText } from '../../atoms/Info/InfoText';
+import InputField from '../../atoms/InputField';
+import SelectField from '../../atoms/SelectField';
+import { PriceText } from '../../atoms/Price/PriceText';
+import SavedPaymentMethods from '../SavedPaymentMethods/SavedPaymentMethods';
+import { Button } from '../../atoms/Buttons/Button';
+import { Icon } from '../../atoms/Icon/Icon';
+import AccountClosureModal from '../../molecules/AccountClosureModal';
+import UpdateAccoutDetails from '../../molecules/UpdateAccoutDetails';
 
 const AccountSettings = () => {
   const [formData, setFormData] = useState({

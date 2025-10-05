@@ -1,6 +1,4 @@
-import { Button } from "../atoms/Buttons/Button"
-import { Icon } from "../atoms/Icon/Icon"
-import { RepCartContent } from "./RepCartContent"
+import { RepCartContent } from "../RepCartContent/RepCartContent"
 
 export function RepCartDropdown({ isOpen = true, variant = "dropdown" }) {
   if (variant === "dropdown" && !isOpen) return null

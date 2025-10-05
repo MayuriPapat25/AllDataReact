@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import ProductCard from '../molecules/ProductCard';
+import ProductCard from '../../molecules/ProductCard';
 import { Car, MessageSquare, Plus, SquareArrowOutUpRightIcon } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
-import { InfoText } from '../atoms/Info/InfoText';
-import { RepCartContent } from './RepCartContent';
-import { Icon, MessageIcon, ProductIcon } from '../atoms/Icon/Icon';
-import { ProductName } from '../atoms/TextIcon/ProductName';
-import { CounterDropdown } from '../atoms/Dropdown/CounterDropdown';
-import { Button } from '../atoms/Buttons/Button';
-import AccountClosureModal from '../molecules/AccountClosureModal';
-import { LinkButton } from '../atoms/links/linkButton';
-import { AccessPointsModal } from '../molecules/Modal/AccessPointsModal';
-import SubscriptionManager from '../molecules/SubscriptionManager';
+import { InfoText } from '../../atoms/Info/InfoText';
+import { Icon, MessageIcon, ProductIcon } from '../../atoms/Icon/Icon';
+import { Button } from '../../atoms/Buttons/Button';
+import AccountClosureModal from '../../molecules/AccountClosureModal';
+import { LinkButton } from '../../atoms/links/linkButton';
+import { AccessPointsModal } from '../../molecules/Modal/AccessPointsModal';
+import SubscriptionManager from '../../molecules/SubscriptionManager';
 
 
 const ProductsPortal = () => {

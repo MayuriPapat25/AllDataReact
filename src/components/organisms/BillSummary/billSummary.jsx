@@ -1,8 +1,8 @@
 import React from 'react';
-import { PriceText } from '../atoms/Price/PriceText';
-import { Button } from '../atoms/Buttons/Button';
-import { InfoText } from '../atoms/Info/InfoText';
-import { Icon } from '../atoms/Icon/Icon';
+import { PriceText } from '../../atoms/Price/PriceText';
+import { Button } from '../../atoms/Buttons/Button';
+import { InfoText } from '../../atoms/Info/InfoText';
+import { Icon } from '../../atoms/Icon/Icon';
 
 const BillSummary = () => {
   return (

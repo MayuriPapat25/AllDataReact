@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ProCartDropdown } from "../organisms/proCartDropdown"
+import { ProCartDropdown } from "../organisms/ProCartDropdown/proCartDropdown"
 import { Button } from "../atoms/Buttons/Button"
 
 export default function ProHeader() {

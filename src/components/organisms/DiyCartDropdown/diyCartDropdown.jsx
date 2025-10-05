@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import { Button } from "../atoms/Buttons/Button"
-import { Icon } from "../atoms/Icon/Icon"
+import { Button } from "../../atoms/Buttons/Button"
+import { Icon } from "../../atoms/Icon/Icon"
 
 export function DiyCartDropdown({ isOpen, onClose, className }) {
   const [cartItems] = useState([
