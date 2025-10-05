@@ -3,7 +3,6 @@ import InputField from "../../atoms/InputField/index"
 import PasswordField from "../../atoms/InputField/PasswordField"
 import PhoneField from "../../atoms/PhoneNumberField"
 import SelectField from "../../atoms/SelectField"
-import { Button } from "../../atoms/Buttons/Button"
 
 const AccountCreationForm = ({
     variant = "full", // "full", "business", or "email"
@@ -285,7 +284,7 @@ const AccountCreationForm = ({
                                     Don't see your State/Province?
                                     <br />
                                     Change your Region and reselect Plan{" "}
-                                    <a href="#" className="text-primary underline">
+                                    <a href="#" className="text-blue-600 underline">
                                         HERE
                                     </a>
                                     .
@@ -306,7 +305,7 @@ const AccountCreationForm = ({
                                 id="billingAddress"
                                 checked={formData.useBillingAddress}
                                 onChange={(e) => handleInputChange("useBillingAddress", e.target.checked)}
-                                className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                             />
                             <label htmlFor="billingAddress" className="text-sm text-gray-700">
                                 Use for my billing address
@@ -362,7 +361,7 @@ const AccountCreationForm = ({
                         {variant === "email" ? (
                             <>
                                 I agree to opt-in to receive emails from ALLDATA. We respect your privacy. Learn more about ALLDATA's{" "}
-                                <a href="#" className="text-primary underline">
+                                <a href="#" className="text-blue-600 underline">
                                     Privacy Policy
                                 </a>
                                 .
@@ -370,11 +369,11 @@ const AccountCreationForm = ({
                         ) : (
                             <>
                                 I agree to ALLDATA's{" "}
-                                <a href="#" className="text-primary underline">
+                                <a href="#" className="text-blue-600 underline">
                                     Terms & Conditions
                                 </a>{" "}
                                 and opt-in to receive emails from ALLDATA. We respect your privacy. Learn more about ALLDATA's{" "}
-                                <a href="#" className="text-primary underline">
+                                <a href="#" className="text-blue-600 underline">
                                     Privacy Policy
                                 </a>
                                 .
@@ -383,10 +382,6 @@ const AccountCreationForm = ({
                     </label>
                     {errors.agreeToTerms && <p className="text-sm text-red-500 mt-1">{errors.agreeToTerms}</p>}
                 </div>
-
-                {/* <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 text-lg font-medium">
-                    {variant === "email" ? "Continue" : "Create Account"}
-                </Button> */}
             </form>
         </div>)
 }

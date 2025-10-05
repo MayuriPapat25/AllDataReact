@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Card } from "@/components/ui/card";
 const ProductCard = ({ cards = [] }) => {
 
   function Card({ className = "", onClick, children, ...props }) {

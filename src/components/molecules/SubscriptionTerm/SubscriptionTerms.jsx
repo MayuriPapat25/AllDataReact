@@ -1,4 +1,4 @@
-import { Select } from "../../../components/atoms/SelectField" // updated path
+import SelectField from "../../atoms/SelectField"
 
 export function SubscriptionTerms({ selectedTerm, onTermChange }) {
   const termOptions = [
@@ -9,7 +9,7 @@ export function SubscriptionTerms({ selectedTerm, onTermChange }) {
 
   return (
     <div className="border-t border-gray-200 pt-4 mt-4">
-      <Select label="Subscription Terms" options={termOptions} value={selectedTerm} onChange={onTermChange} />
+      <SelectField label="Subscription Terms" options={termOptions} value={selectedTerm} onChange={onTermChange} />
     </div>
   )
 }

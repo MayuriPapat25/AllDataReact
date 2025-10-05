@@ -1,22 +1,5 @@
-import { Button } from "../../atoms/Buttons/Button"
-import { useState } from "react"
 
 const AgreementPage = () => {
-    const [isProcessing, setIsProcessing] = useState(false)
-
-    const handleCompletePurchase = () => {
-        setIsProcessing(true)
-        // Simulate processing
-        setTimeout(() => {
-            setIsProcessing(false)
-            // Handle purchase completion logic here
-        }, 2000)
-    }
-
-    const handleBack = () => {
-        // Handle back navigation
-        window.history.back()
-    }
 
     return (
         <div className="bg-background p-4 md:p-8">
@@ -87,26 +70,6 @@ const AgreementPage = () => {
                         entries comply with applicable law. I agree to print or save a copy of my contract for my records.
                     </p>
                 </div>
-
-                {/* Action Buttons */}
-                {/* <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <Button
-                        onClick={handleCompletePurchase}
-                        disabled={isProcessing}
-                        className="w-full sm:w-auto min-w-[200px] bg-background text-orange-600 border-2 border-orange-600 hover:bg-orange-50 hover:text-orange-700 font-semibold py-3 px-8 text-sm md:text-base"
-                        variant="outline"
-                    >
-                        {isProcessing ? "PROCESSING..." : "COMPLETE PURCHASE"}
-                    </Button>
-
-                    <Button
-                        onClick={handleBack}
-                        variant="outline"
-                        className="w-full sm:w-auto min-w-[120px] bg-background text-muted-foreground border-2 border-border hover:bg-muted font-semibold py-3 px-8 text-sm md:text-base"
-                    >
-                        BACK
-                    </Button>
-                </div> */}
             </div>
         </div>
     )

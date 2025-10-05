@@ -5,9 +5,9 @@ import "./styles/global.css";
 
 import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy";
-import ProCartHome from "./Cart/professional";
+import ProCartHome from "./Cart/professional/index";
 import RepCartHome from "./Cart/rep";
-import CartPage from "./Cart/diy/cartModal"
+import CartPage from "./Cart/diy/cartModal/index"
 import { ProfCustomPortal } from "./ProfCustomPortal";
 import DIYCheckout from "./Checkout/DiyCheckoutFlow/index";
 import UsAnonyCheckout from "./Checkout/USAnonyCheckout/index";
