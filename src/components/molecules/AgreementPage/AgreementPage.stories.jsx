@@ -25,7 +25,7 @@ const AgreementPageWithButtons = () => {
     const handleBack = () => alert("Back clicked!");
 
     return (
-        <div className="bg-background p-4 md:p-8">
+        <div>
             <div className="mx-20 max-w-4xl">
                 <AgreementPage />
 

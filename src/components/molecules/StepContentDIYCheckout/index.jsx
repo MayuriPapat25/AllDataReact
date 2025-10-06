@@ -21,7 +21,7 @@ const StepContentDIYCheckout = ({
         switch (currentStep) {
             case 1:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <h2>BILLING INFORMATION</h2>
@@ -39,7 +39,7 @@ const StepContentDIYCheckout = ({
 
             case 2:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <PlaceOrderForm />
@@ -55,7 +55,7 @@ const StepContentDIYCheckout = ({
 
             case 3:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <OrderConfirmation />
                         <OrderSummaryDIY />
                     </div>
@@ -105,7 +105,7 @@ const StepContentDIYCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-8 md:ml-0 sm:ml-0"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center lg:justify-start"
             },
             3: {
                 showButtons: true,
@@ -167,9 +167,7 @@ const StepContentDIYCheckout = ({
     return (
         <div className="mx-auto">
             {renderStepContent()}
-            <div className="">
-                {getStepButtons()}
-            </div>
+            {getStepButtons()}
         </div>
     )
 }
