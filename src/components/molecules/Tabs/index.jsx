@@ -38,7 +38,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
                   handleTabChange(tab.id);
                 }}
                 className={`
-                  relative block px-2 py-4 text-[1rem] transition-all duration-200 uppercase whitespace-nowrap border-b-4 no-underline hover:no-underline
+                  relative block px-2 py-4 text-[1rem] transition-all duration-200 uppercase whitespace-nowrap border-b-2 no-underline hover:no-underline
                   ${activeTab === tab.id
                   ? '!text-gray-600 border-orange-500'
                   : 'text-[#1b3d6e] border-transparent'

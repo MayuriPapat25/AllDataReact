@@ -158,7 +158,7 @@ const AccountSettings = () => {
 
           {/* Billing Address */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            <label className="text-sm font-medium text-gray-700 pt-2">Billing Address</label>
+            <h2 className="text-md">Billing Address</h2>
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
                 <input

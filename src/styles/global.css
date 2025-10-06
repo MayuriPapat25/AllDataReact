@@ -9,6 +9,7 @@ html, body, #root {
   font-weight: 400;
   width: 100%;
   display: block;
+  font-size: 14px;
 }
 
 /* Headings */
@@ -46,6 +47,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
+ol li, ul li {
+  margin: 0;
+}
 
 /* Text helpers */
 b, strong { font-weight: 600; }
@@ -53,6 +57,10 @@ small, .small { font-size: 80%; }
 .link { font-size: 12px; }
 input { font-size: 12px; }
 .container { max-width: 1336px;padding: 0 20px;margin: 0 auto; }
+.text-md {font-size: 18px;}
+.text-sm {font-size: 12px;}
+.text-xs {font-size: 10px;}
+
 /* Shadow utility */
 .shadow-box {
   box-shadow: 0 42px 44px rgba(0, 0, 0, 0.05);

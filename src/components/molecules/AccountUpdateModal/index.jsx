@@ -82,7 +82,7 @@ const AccountUpdateModal = ({ isOpen, onClose, title, desc1, desc2 }) => {
         <div className="p-6 space-y-6">
           {/* Account Information Section */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Account Information</h3>
+            <h2 className="text-md mb-4">Account Information</h2>
 
             <div className="grid grid-cols-1 gap-4">
               <>
@@ -147,7 +147,7 @@ const AccountUpdateModal = ({ isOpen, onClose, title, desc1, desc2 }) => {
 
           {/* Billing Address */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            <label className="text-sm font-medium text-gray-700 pt-2">Billing Address</label>
+            <h2 className="text-md">Billing Address</h2>
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
                 <input

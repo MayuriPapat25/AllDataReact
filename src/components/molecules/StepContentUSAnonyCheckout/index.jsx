@@ -72,7 +72,7 @@ const StepContentUSAnonyCheckout = ({
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
                         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
-                        <div className="flex items-start pt-8 mx-auto p-6">
+                        <div className="flex items-start mx-auto pl-6">
                             <LoginForm onLogin={handleLogin} variant='alldata' />
                         </div>
                     </div>
@@ -80,7 +80,7 @@ const StepContentUSAnonyCheckout = ({
 
             case 2:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <BusinessInformationForm variant="authorized"/>
@@ -88,7 +88,7 @@ const StepContentUSAnonyCheckout = ({
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
-                                    <span className="text-2xl font-bold text-gray-900">Billing Information</span>
+                                    <h2 className="text-md">Billing Information</h2>
                                     <iframe></iframe>
                                     <BillingEmailForm />
                                     <PhoneSignupForm />
@@ -103,7 +103,7 @@ const StepContentUSAnonyCheckout = ({
 
             case 3:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <AccountInformation  {...accountData} />
@@ -167,7 +167,7 @@ const StepContentUSAnonyCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-8 md:ml-0 sm:ml-0"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start"
             },
             3: {
                 showButtons: true,
@@ -180,7 +180,7 @@ const StepContentUSAnonyCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-8 md:ml-0 sm:ml-0"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start"
             },
             4: {
                 showButtons: true,

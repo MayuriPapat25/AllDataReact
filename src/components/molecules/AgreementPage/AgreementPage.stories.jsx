@@ -25,12 +25,12 @@ const AgreementPageWithButtons = () => {
     const handleBack = () => alert("Back clicked!");
 
     return (
-        <div className="bg-background p-4 md:p-8">
+        <div>
             <div className="mx-20 max-w-4xl">
                 <AgreementPage />
 
                 {/* Action Buttons Section */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <button
                         onClick={handleCompletePurchase}
                         className="w-full sm:w-auto min-w-[200px] bg-background text-orange-600 border-2 border-orange-600 hover:bg-orange-50 hover:text-orange-700 font-semibold py-3 px-8 text-sm md:text-base"

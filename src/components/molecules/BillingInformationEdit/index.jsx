@@ -18,8 +18,8 @@ const BillingInformationEdit = ({
     return (
         <div className="w-full max-w-2xl">
             <div className="flex flex-row items-center justify-between space-y-0 pb-4">
-                <h2 className="text-lg font-semibold text-foreground">BILLING INFORMATION</h2>
-                <Button variant="ghost" size="sm" onClick={onEdit} className="text-muted-foreground hover:text-foreground">
+                <h2 className="text-md">BILLING INFORMATION</h2>
+                <Button variant="ghost" size="sm" onClick={onEdit} className="text-primary text-sm font-medium">
                     EDIT
                 </Button>
             </div>
@@ -27,8 +27,8 @@ const BillingInformationEdit = ({
                 <InfoField label="Payment Type" value={paymentType} />
 
                 <div className="space-y-2">
-                    <label className="block text-sm font-medium text-muted-foreground">Address</label>
-                    <div className="space-y-1">
+                    <label className="block">Address</label>
+                    <div className="space-y-1 text-gray-500">
                         <p className="text-sm text-muted-foreground">{name}</p>
                         <p className="text-sm text-muted-foreground">{address.street}</p>
                         <p className="text-sm text-muted-foreground">

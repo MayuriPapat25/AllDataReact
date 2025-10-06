@@ -82,9 +82,9 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
     }
 
     return (
-        <div className="space-y-6 mt-8 pb-8 border-b-4 border-gray-300">
+        <div className="space-y-6 mt-8 pb-8 border-b-2 border-gray-300">
             <div className="flex justify-between items-center">
-                <h2 className="text-lg font-semibold text-foreground tracking-wide">BUSINESS ADDRESS</h2>
+                <h2 className="text-md">BUSINESS ADDRESS</h2>
                 {variant === "international" && <span className="text-sm text-muted-foreground">| = Fields are Required</span>}
             </div>
 

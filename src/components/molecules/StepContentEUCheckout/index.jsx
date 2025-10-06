@@ -60,7 +60,7 @@ const StepContentEUCheckout = ({
         switch (currentStep) {
             case 1:
                 return (
-                    <div className=" mx-auto relative">
+                    <div className="mx-auto relative max-w-3xl">
                         <div>
                             <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
                         </div>
@@ -69,7 +69,7 @@ const StepContentEUCheckout = ({
 
             case 2:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <BusinessInformationForm variant="standard" />
@@ -77,7 +77,7 @@ const StepContentEUCheckout = ({
                                 <BillingAddressForm />
 
                                 <div className="space-y-6">
-                                    <span className="text-2xl font-bold text-gray-900">Billing Information</span>
+                                    <h2 className="text-md">Billing Information</h2>
                                     <iframe></iframe>
                                     <BillingEmailForm />
                                 </div>
@@ -91,7 +91,7 @@ const StepContentEUCheckout = ({
 
             case 3:
                 return (
-                    <div className="bg-background p-4 md:p-8">
+                    <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <AccountInformation  {...accountData} />
@@ -146,6 +146,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
+                buttonLayout: "flex mx-auto max-w-3xl"
             },
             2: {
                 showButtons: true,
@@ -158,7 +159,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 mt-8"
+                buttonLayout: "flex-col sm:flex-row gap-4 mt-8"
             },
             3: {
                 showButtons: true,
@@ -171,7 +172,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 mt-8"
+                buttonLayout: "flex-col sm:flex-row gap-4 mt-8"
             },
             4: {
                 showButtons: true,
@@ -184,7 +185,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 mt-8"
+                buttonLayout: "flex mx-auto max-w-3xl py-4 md:p-8"
             },
             5: {
                 showButtons: false
