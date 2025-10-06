@@ -27,7 +27,7 @@ const SelectField = forwardRef(
         {label && (
           <label
             htmlFor={selectId}
-            className="block text-sm font-medium text-muted-foreground"
+            className="block"
           >
             {label}
             {optional && (

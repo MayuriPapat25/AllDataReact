@@ -243,9 +243,7 @@ const StepContentUSAuthCheckout = ({
     return (
         <div className="mx-auto">
             {renderStepContent()}
-            <div className="">
-                {getStepButtons()}
-            </div>
+            {getStepButtons()}
         </div>
     )
 }

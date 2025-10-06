@@ -27,13 +27,9 @@ const DIYCheckout = () => {
     return (
         <div className="min-h-screen py-12">
             <div className="">
-                <div className="p-8 mb-8">
-                    <CheckoutSteps currentStep={currentStep} steps={steps} />
-                </div>
+                <CheckoutSteps currentStep={currentStep} steps={steps} />
 
-                <div>
-                    <StepContentDIYCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
-                </div>
+                <StepContentDIYCheckout currentStep={currentStep} onContinue={handleContinue} onBack={handleBack} />
             </div>
         </div>
     );

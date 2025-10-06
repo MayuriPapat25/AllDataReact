@@ -27,8 +27,8 @@ const BillingInformationEdit = ({
                 <InfoField label="Payment Type" value={paymentType} />
 
                 <div className="space-y-2">
-                    <label className="block text-sm font-medium text-muted-foreground">Address</label>
-                    <div className="space-y-1">
+                    <label className="block">Address</label>
+                    <div className="space-y-1 text-gray-500">
                         <p className="text-sm text-muted-foreground">{name}</p>
                         <p className="text-sm text-muted-foreground">{address.street}</p>
                         <p className="text-sm text-muted-foreground">

@@ -60,7 +60,7 @@ const StepContentEUCheckout = ({
         switch (currentStep) {
             case 1:
                 return (
-                    <div className=" mx-auto relative">
+                    <div className="mx-auto relative max-w-3xl">
                         <div>
                             <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
                         </div>
@@ -226,7 +226,9 @@ const StepContentEUCheckout = ({
     return (
         <div>
             {renderStepContent()}
-            {getStepButtons()}
+            <div className="p-4">
+                {getStepButtons()}
+            </div>
         </div>
     )
 }

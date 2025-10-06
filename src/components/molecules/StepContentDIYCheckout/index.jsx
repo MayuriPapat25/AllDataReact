@@ -24,7 +24,8 @@ const StepContentDIYCheckout = ({
                     <div className="bg-background p-4 md:p-8">
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <h2 className="text-md">Billing Information</h2>
+                                <h2>BILLING INFORMATION</h2>
+                                <p>You will have time toreview your order before completing your purchase.</p>
                                 {import.meta.env.STORYBOOK
                                     ? <div>[iframe placeholder]</div>
                                     : <iframe title="Billing Info" />}
@@ -86,7 +87,7 @@ const StepContentDIYCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "max-w-2xl  p-6 justify-between flex-start"
+                buttonLayout: "max-w-2xl p-6 flex-start"
             },
             2: {
                 showButtons: true,
@@ -117,7 +118,7 @@ const StepContentDIYCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start lg:ml-8 md:ml-0 sm:ml-0"
+                buttonLayout: "flex flex-col sm:flex-row gap-4 mx-auto justify-center"
             },
         }
 
@@ -137,7 +138,7 @@ const StepContentDIYCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     // disabled={primaryButton.disabled}
-                    className={primaryButton.className || "btn btn-primary"}
+                    className={primaryButton.className || "btn btn-primary mr-2"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -145,12 +146,12 @@ const StepContentDIYCheckout = ({
                     <Button
                         onClick={secondaryButton.onClick}
                         variant={secondaryButton.variant || "outline"}
-                        className={secondaryButton.className || "btn btn-secondary"}
+                        className={secondaryButton.className || "btn btn-secondary mr-2"}
                     >
                         {secondaryButton.text}
                     </Button>
                 )}
-                {ternaryButton && (
+                {/* {ternaryButton && (
                     <Button
                         onClick={ternaryButton.onClick}
                         variant={ternaryButton.variant || "outline"}
@@ -158,7 +159,7 @@ const StepContentDIYCheckout = ({
                     >
                         {ternaryButton.text}
                     </Button>
-                )}
+                )} */}
             </div>
         )
     }
