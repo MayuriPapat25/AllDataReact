@@ -13,7 +13,7 @@ const PhoneSignupForm = ({ onEdit }) => {
                             <h2 className="text-2xl font-bold text-gray-900 mb-8 tracking-wide">DON'T MISS OUT ON UPDATES AND OFFERS!</h2>
 
                             <div className="space-y-4">
-                                <label className="block text-gray-600 text-lg font-medium">Mobile Phone</label>
+                                <label>Mobile Phone</label>
 
                                 <InputField
                                     type="tel"
@@ -24,7 +24,7 @@ const PhoneSignupForm = ({ onEdit }) => {
                                     className="w-full px-4 py-3 text-gray-700 placeholder-gray-400 border-2 border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 />
 
-                                <p className="text-gray-500 text-sm leading-relaxed mt-6">
+                                <div className="text-gray-500 text-xs leading-relaxed mt-6">
                                     By entering your phone number above, you agree to receive recurring automated marketing messages, including
                                     cart reminders, at the phone number provided. Consent is not a condition of purchase. Reply STOP to
                                     unsubscribe. Reply HELP for help. Message frequency varies. Msg & data rates may apply. View our{" "}
@@ -36,7 +36,7 @@ const PhoneSignupForm = ({ onEdit }) => {
                                         Terms of Use
                                     </a>
                                     .
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>

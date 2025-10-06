@@ -15,10 +15,10 @@ const BusinessInfoReview = ({
     onEdit,
 }) => {
     return (
-        <div className="bg-[#fafafa] max-w-2xl border-b-4 border-gray-300 pb-8">
+        <div className="max-w-2xl border-b-4 border-gray-300 pb-8">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-                <h2 className="text-lg font-semibold text-gray-900 tracking-wide">BUSINESS INFORMATION</h2>
+                <h2 className="">BUSINESS INFORMATION</h2>
                 {onEdit && (
                     <button
                         variant="outline"

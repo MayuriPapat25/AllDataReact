@@ -2,16 +2,14 @@ import { useState } from "react"
 import { ProductName } from "../../atoms/TextIcon/ProductName"
 import { CounterDropdown } from "../../atoms/Dropdown/CounterDropdown"
 import { PriceText } from "../../atoms/Price/PriceText"
-import { InfoText } from "../../atoms/Info/InfoText"
 import { MessageIcon } from "../../atoms/Icon/Icon"
 import { LinkButton } from "../../atoms/links/linkButton"
 import { AccessPointsModal } from "../../molecules/Modal/AccessPointsModal"
 import { Button } from "../../atoms/Buttons/Button"
 import repairIcon from "../../../assets/images/repair_color.png"
+import PaymentFrequency from "../../molecules/paymentFrequency"
 
 export function RepCartContent() {
-  const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
-  const [subscriptionTerm, setSubscriptionTerm] = useState("12 Months")
   const [promoCode, setPromoCode] = useState("")
   const [showAccessPointsModal, setShowAccessPointsModal] = useState(false)
 
@@ -27,34 +25,10 @@ export function RepCartContent() {
     setCartItems(prev => prev.map(item => item.id === itemId ? { ...item, accessPoints: newValue } : item))
   }
 
-  const handleRemoveItem = (itemId) => {
-    setCartItems(prev => prev.filter(item => item.id !== itemId))
-  }
-
-  const handleApplyPromo = () => {
-    console.log("Applying promo code:", promoCode)
-  }
-
   return (
     <div>
       {/* Payment Frequency */}
-      <div className="mb-6 bg-white shadow-sm">
-        <div className="border-b-2 border-[#faf9f9]">
-          <div className="p-4">
-            <InfoText label="Payment Frequency" value="Monthly" />
-          </div>
-        </div>
-        <div className="border-b-2 border-[#faf9f9]">
-          <div className="p-4">
-            <InfoText label="Subscription Term" value="12 Months" />
-          </div>
-        </div>
-        <div className="border-b-2 border-[#faf9f9]">
-          <div className="p-4">
-            <InfoText label="Auto Renewal Date" value="09/10/2026" />
-          </div>
-        </div>
-      </div>
+      <PaymentFrequency />
 
       {/* Access Points Info */}
       <div className="mb-4 flex justify-end">
@@ -91,6 +65,7 @@ export function RepCartContent() {
                 <CounterDropdown
                   value={item.accessPoints}
                   onChange={(value) => handleAccessPointChange(item.id, value)}
+                  showLabel={false}
                 />
               </div>
 
@@ -116,6 +91,7 @@ export function RepCartContent() {
                 <CounterDropdown
                   value={item.accessPoints}
                   onChange={(value) => handleAccessPointChange(item.id, value)}
+                  showLabel={false}
                 />
                 <div className="text-right">
                   <div className="font-medium">${item.price.toFixed(2)}</div>

@@ -149,9 +149,9 @@ const AccountCreationForm = ({
     }, [formData, variant])
 
     return (
-        <div className={`max-w-2xl mx-auto p-6 ${className}`}>
+        <div className={`max-w-2xl ${className}`}>
             <div className="mb-8">
-                <h1 className="text-4xl font-bold text-black mb-4">{headerContent.title}</h1>
+                <h1 className="h2 text-black mb-4">{headerContent.title}</h1>
                 <p className="text-gray-600">{headerContent.description}</p>
                 {variant === "email" && (
                     <p className="text-gray-600 mt-4">
@@ -357,11 +357,11 @@ const AccountCreationForm = ({
                         onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
                         className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 mt-1"
                     />
-                    <label htmlFor="terms" className="text-sm text-gray-700 leading-relaxed">
+                    <div htmlFor="terms" className="text-sm text-gray-700 leading-relaxed">
                         {variant === "email" ? (
                             <>
                                 I agree to opt-in to receive emails from ALLDATA. We respect your privacy. Learn more about ALLDATA's{" "}
-                                <a href="#" className="text-blue-600 underline">
+                                <a href="#" className="text-primary">
                                     Privacy Policy
                                 </a>
                                 .
@@ -369,18 +369,18 @@ const AccountCreationForm = ({
                         ) : (
                             <>
                                 I agree to ALLDATA's{" "}
-                                <a href="#" className="text-blue-600 underline">
+                                <a href="#" className="text-primary">
                                     Terms & Conditions
                                 </a>{" "}
                                 and opt-in to receive emails from ALLDATA. We respect your privacy. Learn more about ALLDATA's{" "}
-                                <a href="#" className="text-blue-600 underline">
+                                <a href="#" className="text-primary">
                                     Privacy Policy
                                 </a>
                                 .
                             </>
                         )}
-                    </label>
-                    {errors.agreeToTerms && <p className="text-sm text-red-500 mt-1">{errors.agreeToTerms}</p>}
+                    </div>
+                    {errors.agreeToTerms && <p className="text-sm text-error mt-1">{errors.agreeToTerms}</p>}
                 </div>
             </form>
         </div>)

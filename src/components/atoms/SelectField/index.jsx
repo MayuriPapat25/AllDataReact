@@ -43,8 +43,9 @@ const SelectField = forwardRef(
             aria-label={computedAriaLabel}
             aria-invalid={!!error}
             className={cn(
-              "block w-full border-2 border-gray-300 p-2 text-sm rounded-none appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500",
-              error && "border-red-500",
+              "w-full px-3 py-2 border-2 border-gray-300 text-sm appearance-none",
+              "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
+              error && "border-destructive",
               className
             )}
             {...props}
@@ -59,11 +60,7 @@ const SelectField = forwardRef(
           <ChevronDown className="absolute right-3 pointer-events-none h-4 w-4 text-muted-foreground" />
         </div>
 
-        {error && (
-          <p className="text-sm text-red-500" id={`${selectId}-error`}>
-            {error}
-          </p>
-        )}
+        {error && <p className="text-sm text-error" id={`${selectId}-error`}>{error}</p>}
       </div>
     );
   }

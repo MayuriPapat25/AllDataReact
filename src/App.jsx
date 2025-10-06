@@ -33,7 +33,7 @@ function App() {
 
       </header>
 
-      <main className="p-6 bg-[#fafafa]">
+      <main className="container">
         <Routes>
           {/* Home page */}
           <Route path="/" element={<HomePage />} />

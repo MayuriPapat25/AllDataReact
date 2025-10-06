@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tabs } from '../components/molecules/Tabs';
-import BillSummary from '../components/organisms/billSummary';
-import ProductsPortal from '../components/organisms/ProductsPortal';
-import AccountSettings from '../components/organisms/AccountSettings';
+import BillSummary from '../components/organisms/BillSummary/billSummary';
+import ProductsPortal from '../components/organisms/ProductsPortal/ProductsPortal';
+import AccountSettings from '../components/organisms/AccountSettings/AccountSettings';
 
 export const ProfCustomPortal = () => {
 
