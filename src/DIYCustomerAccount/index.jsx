@@ -27,14 +27,15 @@ const DIYCustomerAccount = () => {
 
   return (
     <>
-      <h1 className="title text-center">
+      <h1 className="title text-center mt-20">
         {/* @todo: Get content from Drupal */}
         <span className="title-first-part">My Account : </span>
-        <span className="title-username">TestLib TesMath</span>
+        <span className="title-username font-normal">TestLib TesMath</span>
       </h1>
 
       <Tabs
         tabs={tabsData}
+        className='mt-10'
         defaultActiveTab="subscriptions"
         onTabChange={(tabId) => {
           console.log('Active tab:', tabId);

@@ -62,17 +62,17 @@ const DiyProfileInfo = () => {
   return (
     <div className="mx-auto p-8 bg-gray-50 min-h-screen">
       <div className="p-8">
-        <h1 className="text-2xl font-bold mb-8">MY PROFILE</h1>
+        <h2 className="!text-lg font-bold mb-2 text-foreground">MY PROFILE</h2>
 
         {/* Contact Information Section */}
         <div className="mb-8">
-          <h2 className="text-sm font-semibold mb-6 pb-3 border-b border-gray-200">
+          <h3 className="!text-sm text-gray-600 font-semibold mb-6 pb-3 border-b border-gray-200">
             Contact Information
-          </h2>
+          </h3>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
             <div>
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="firstName" className="block text-sm text-gray-700 mb-2">
                 First Name
               </label>
               <input
@@ -85,7 +85,7 @@ const DiyProfileInfo = () => {
             </div>
 
             <div>
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="lastName" className="block text-sm text-gray-700 mb-2">
                 Last Name
               </label>
               <input
@@ -100,7 +100,7 @@ const DiyProfileInfo = () => {
 
           <div className="grid lg:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm text-gray-700 mb-2">
                 Email Address
               </label>
               <input
@@ -116,7 +116,7 @@ const DiyProfileInfo = () => {
             </div>
 
             <div>
-              <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="contactNumber" className="block text-sm text-gray-700 mb-2">
                 Contact Number
               </label>
               <div className="flex gap-2">
@@ -189,7 +189,7 @@ const DiyProfileInfo = () => {
 
           <div className="grid lg:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm text-gray-700 mb-2">
                 Username
               </label>
               <div className="w-full px-4 py-2 bg-gray-50 text-gray-700 rounded">
@@ -198,7 +198,7 @@ const DiyProfileInfo = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm text-gray-700 mb-2">
                 Password
               </label>
               <div className="w-full px-4 py-2 bg-gray-50 text-gray-700 rounded">

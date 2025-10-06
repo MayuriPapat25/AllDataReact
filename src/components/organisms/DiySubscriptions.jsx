@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Car, Plus, RotateCcw, ChevronDown } from "lucide-react";
+import { Car, Plus, RotateCcw, ChevronDown, CarFront, CirclePlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import VehicleChangeModal from "../molecules/VehicleChangeModal";
 import VehicleChangeLimitModal from "../molecules/VehicleChangeLimitModal";
@@ -111,8 +111,8 @@ const DiySubscriptions = () => {
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2 text-foreground">MANAGE SUBSCRIPTIONS</h1>
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <h2 className="!text-lg font-bold mb-2 text-foreground">MANAGE SUBSCRIPTIONS</h2>
+        <p className="text-sm text-muted-foreground leading-relaxed text-gray-600">
           Subscription options include: change vehicle, renew vehicle, remove vehicle, or refund request. The
           availability of each option will vary based on the subscription. See{" "}
           <a href="#" className="text-blue-600 hover:underline">
@@ -123,8 +123,8 @@ const DiySubscriptions = () => {
       </div>
 
       <table className="w-full">
-        <thead className="bg-muted/50 border-b border-border">
-          <tr>
+        <thead className="hidden lg:table-header-group lg:bg-muted/50  lg:order-b lg:border-border">
+          <tr className="flex flex-col lg:table-row">
             <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">
               <div className="flex items-center gap-1">
                 Vehicle
@@ -136,30 +136,34 @@ const DiySubscriptions = () => {
             <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="flex flex-col lg:table-header-group">
           {subscriptions.map((subscription, index) => (
             <tr
               key={subscription.id}
-              className={`border-b border-border ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}
+              className={`border-b border-border flex flex-col lg:table-row ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}
             >
-              <td className="py-4 px-4">
+              <td className="py-4 lg:px-4 lg:w-[45%]">
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-blue-700">{subscription.vehicle}</span>
+                  <span className="text-lg font-normal text-primary">{subscription.vehicle}</span>
                   <button
                     onClick={() => handleChangeVehicle(subscription.vehicle, subscription.id)}
-                    className="flex items-center gap-1 text-xs text-blue-600 hover:underline w-fit"
+                    className="flex items-center gap-1 text-lg text-primary hover:underline w-fit"
                   >
-                    <Car className="w-3 h-3" />
+                    <CarFront className="w-[1.125rem] h-[1.125rem]" />
                     Change Vehicle
                   </button>
                 </div>
               </td>
-              <td className="py-4 px-4">
-                <span className="text-sm text-foreground">{subscription.expiration}</span>
+              <td className="py-4 lg:px-4">
+                <span className="text-lg font-semibold text-gray-600 text-foreground">{subscription.expiration}</span>
               </td>
-              <td className="py-4 px-4">
-                <div className="flex items-center gap-3">
-                  <select className="border border-border rounded px-3 py-1.5 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+              <td className="py-4 lg:px-4">
+                <div className="flex flex-col items-start lg:flex-row lg:items-center gap-3">
+                  <select 
+                    name={`subscription-${subscription.id}`}
+                    id={`subscription-${subscription.id}`}
+                    className="border-2 border-gray-300 h-10 bg-white px-3 py-1.5 text-sm text-foreground w-full lg:w-auto"
+                  >
                     <option>{subscription.price}</option>
                   </select>
                   {subscription.inCart ? (
@@ -169,18 +173,18 @@ const DiySubscriptions = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleAddToCart(subscription.id)}
-                      className="flex items-center gap-1 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                      className="flex items-center gap-1 !text-primary"
                     >
-                      <Plus className="w-4 h-4" />
+                      <CirclePlus className="w-4 h-4 text-primary" />
                       ADD TO CART
                     </Button>
                   )}
                 </div>
               </td>
-              <td className="py-4 px-4">
+              <td className="py-4 lg:px-4">
                 <button
                   onClick={() => handleRefundRequest(subscription.vehicle, subscription.id)}
-                  className="flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                  className="flex items-center gap-1 text-primary text-xs uppercase font-semibold cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   REFUND

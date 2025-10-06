@@ -19,7 +19,7 @@ const PaymentInformation = () => {
 
   return (
     <div className="w-full mx-auto p-8">
-      <h1 className="text-2xl font-bold tracking-tight mb-2">MY PAYMENT INFORMATION</h1>
+      <h2 className="!text-lg font-bold mb-2 text-foreground">MY PAYMENT INFORMATION</h2>
       <p className="text-muted-foreground mb-8">Card Information is added during the checkout process</p>
 
       <table className="w-full">
