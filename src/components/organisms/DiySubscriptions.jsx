@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Car, Plus, RotateCcw, ChevronDown, CarFront, CirclePlus } from "lucide-react";
 import { Link } from "react-router-dom";

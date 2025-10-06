@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { X, ChevronDown, Search, Loader2 } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
