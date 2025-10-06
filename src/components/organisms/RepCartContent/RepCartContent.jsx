@@ -1,22 +1,15 @@
 import { useState } from "react"
-import { RadioButton } from "../atoms/RadioButton/RadioButton"
-import { ProductIcon } from "../atoms/Icon/Icon"
-import { ProductName } from "../atoms/TextIcon/ProductName"
-import { CounterDropdown } from "../atoms/Dropdown/CounterDropdown"
-import { PriceText } from "../atoms/Price/PriceText"
-import { InputWithButton } from "../atoms/InputField/InputWithButton"
-import { Message } from "../atoms/Message/Message"
-import { DeleteIcon, MessageIcon } from "../atoms/Icon/Icon"
-import { LinkButton } from "../atoms/links/linkButton"
-import { Dropdown } from "../atoms/Dropdown/Dropdown"
-import { AccessPointsModal } from "../molecules/Modal/AccessPointsModal"
-import { Button } from "../atoms/Buttons/Button"
-import repairIcon from "../../assets/images/repair_color.png"
-import PaymentFrequency from "../molecules/paymentFrequency"
+import { ProductName } from "../../atoms/TextIcon/ProductName"
+import { CounterDropdown } from "../../atoms/Dropdown/CounterDropdown"
+import { PriceText } from "../../atoms/Price/PriceText"
+import { MessageIcon } from "../../atoms/Icon/Icon"
+import { LinkButton } from "../../atoms/links/linkButton"
+import { AccessPointsModal } from "../../molecules/Modal/AccessPointsModal"
+import { Button } from "../../atoms/Buttons/Button"
+import repairIcon from "../../../assets/images/repair_color.png"
+import PaymentFrequency from "../../molecules/paymentFrequency"
 
 export function RepCartContent() {
-  const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
-  const [subscriptionTerm, setSubscriptionTerm] = useState("12 Months")
   const [promoCode, setPromoCode] = useState("")
   const [showAccessPointsModal, setShowAccessPointsModal] = useState(false)
 
@@ -30,14 +23,6 @@ export function RepCartContent() {
 
   const handleAccessPointChange = (itemId, newValue) => {
     setCartItems(prev => prev.map(item => item.id === itemId ? { ...item, accessPoints: newValue } : item))
-  }
-
-  const handleRemoveItem = (itemId) => {
-    setCartItems(prev => prev.filter(item => item.id !== itemId))
-  }
-
-  const handleApplyPromo = () => {
-    console.log("Applying promo code:", promoCode)
   }
 
   return (
