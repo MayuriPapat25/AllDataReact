@@ -46,7 +46,7 @@ export const TabButton = ({
         relative px-12 py-4 text-sm transition-all duration-200
         focus:outline-none whitespace-nowrap border-b-2
         ${isActive
-          ? 'text-[#1b3d6e] border-orange-500 font-bold'
+          ? 'text-gray-500 border-orange-500 font-bold'
           : 'text-[#1b3d6e] border-transparent hover:border-gray-300'
         }
       `}

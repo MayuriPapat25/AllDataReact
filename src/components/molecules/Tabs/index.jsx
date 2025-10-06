@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TabButton } from '../../atoms/TabButton';
-import AccountSidebar from '../AccountSidebar';
 
 export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]?.id);
@@ -14,77 +13,20 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
     }
   };
 
-  const handleItemClick = (item, sectionIndex, itemIndex) => {
-    console.log('Clicked item:', item, 'in section:', sectionIndex, 'at index:', itemIndex);
-  };
-
-  const handleSectionClick = (section, sectionIndex) => {
-    console.log('Clicked section:', section, 'at index:', sectionIndex);
-  };
-
-  const getSidebarData = (tabId) => {
-    const sidebarConfigs = {
-      billing: [
-        {
-          id: 'billing',
-          title: 'Billing',
-          items: [
-            { id: 'bill-summary', label: 'Bill summary', isActive: true },
-            { id: 'invoice-history', label: 'Invoice History' },
-            { id: 'payment-history', label: 'Payment History' }
-          ]
-        }
-      ],
-      products: [
-        {
-          id: 'products',
-          title: 'Products',
-          items: [
-            { id: 'active-products', label: 'Active Products', isActive: true },
-            { id: 'your-subscription', label: 'Your Subscription' }
-          ]
-        }
-      ],
-      'account-settings': [
-        {
-          id: 'account-details',
-          title: 'Account Details',
-          items: [
-            { id: 'account-info', label: 'Account Information', isActive: true },
-            { id: 'contact-info', label: 'Contact Information' },
-            { id: 'legal-agreements', label: 'Legal Agreements & Contracts' }
-          ]
-        },
-        {
-          id: 'payments-billing',
-          title: 'Payments and Billing',
-          items: [
-            { id: 'automatic-payments', label: 'Automatic Payments' },
-            { id: 'saved-payment-methods', label: 'Saved Payment Methods' },
-            { id: 'billing-cycle', label: 'Billing Cycle' }
-          ]
-        }
-      ]
-    };
-
-    return sidebarConfigs[tabId] || [];
-  };
-
   const activeTabData = tabs.find(tab => tab.id === activeTab);
   const activeTabContent = activeTabData?.content;
-  const currentSidebarData = getSidebarData(activeTab);
 
   return (
     <div className={`w-full ${className}`}>
       {/* Desktop Tabs - Hidden on mobile */}
       <div className="hidden md:block border-b border-gray-200 bg-white">
-        <ul className="horizontal-tabs-list bg-white border-b-2 border-[#faf9f9] flex items-center px-[15%] py-8 m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
+        <ul className="horizontal-tabs-list bg-white border-b-2 border-[#faf9f9] flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
           {tabs.map((tab, index) => (
             <li
               key={tab.id}
               className={`horizontal-tab-button horizontal-tab-button-${index} ${index === 0 ? 'first' : ''
                 } ${index === tabs.length - 1 ? 'last' : ''} ${activeTab === tab.id ? 'selected' : ''
-                } m-0 min-w-20 float-left lg:bg-white lg:flex-1 lg:text-center lg:pt-5 lg:border-b lg:border-gray-300 ${activeTab === tab.id ? 'lg:-mb-1' : ''
+                } m-0 min-w-20 float-left lg:bg-white lg:flex-1 lg:text-center ${activeTab === tab.id ? 'lg:-mb-1' : ''
                 }`}
               tabIndex="-1"
               data-horizontaltabbutton={index}
@@ -96,30 +38,29 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
                   handleTabChange(tab.id);
                 }}
                 className={`
-                    relative block px-12 py-4 text-sm transition-all duration-200
-                    focus:outline-none whitespace-nowrap border-b-2 no-underline hover:no-underline
-                    ${activeTab === tab.id
-                    ? 'text-[#1b3d6e] border-orange-500'
-                    : 'text-[#1b3d6e] border-transparent'
+                  relative block px-2 py-4 text-[1rem] transition-all duration-200 uppercase whitespace-nowrap border-b-4 no-underline hover:no-underline
+                  ${activeTab === tab.id
+                  ? '!text-gray-600 border-orange-500'
+                  : 'text-[#1b3d6e] border-transparent'
                   }
                   `}
-              >
-                <strong className={activeTab === tab.id ? 'font-bold' : 'font-normal'}>
+                >
+                <span className={activeTab === tab.id ? '!font-semibold' : '!font-normal'}>
                   {tab.label}
-                </strong>
+                </span>
                 <span className="summary"></span>
                 {activeTab === tab.id && (
                   <span id="active-horizontal-tab" className="sr-only">
-                    (active tab)
+                  (active tab)
                   </span>
                 )}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+                </a>
+              </li>
+              ))}
+            </ul>
+            </div>
 
-      {/* Mobile Dropdown - Visible only on mobile */}
+            {/* Mobile Dropdown - Visible only on mobile */}
       <div className="md:hidden relative mb-6">
         <TabButton
           variant="dropdown-toggle"
@@ -146,22 +87,9 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
         )}
       </div>
 
-      <div className='lg:flex'>
-        {/* Sidebar */}
-        <div className="mt-6 w-full lg:max-w-[30%] customer-portal-sidebar-section ">
-          <AccountSidebar
-            sections={currentSidebarData}
-            onItemClick={handleItemClick}
-            onSectionClick={handleSectionClick}
-            className="shadow-lg"
-          />
-        </div>
-
-        {/* Content */}
-        <div className="mt-6 w-full lg:max-w-[70%] content customer-portal-summary-section">
-          {activeTabContent}
-        </div>
-
+      {/* Content */}
+      <div className="mt-6 w-full content">
+        {activeTabContent}
       </div>
     </div >
   );

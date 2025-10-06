@@ -60,6 +60,41 @@ export default {
       boxShadow: {
         lg: '0 22px 44px 0 rgba(0,0,0,.05)'
       },
+      screens: {
+        // Extra small (xs): from 0 up
+        xs: '0px',
+        maxXs: { max: '575px' },
+        // => @media (max-width: 575px)
+
+        // Small (sm): from 576px up
+        sm: '576px',
+        maxSm: { max: '767px' },
+        // => @media (max-width: 767px)
+
+        // Medium (md): from 768px up
+        md: '768px',
+        maxMd: { max: '991px' },
+        // => @media (max-width: 991px)
+
+        // Large (lg): from 992px up
+        lg: '992px',
+        maxLg: { max: '1199px' },
+        // => @media (max-width: 1199px)
+
+        // Extra Large (xl): from 1200px up
+        xl: '1200px',
+        maxXl: { max: '1399px' },
+        // => @media (max-width: 1399px)
+
+        // You can optionally include 2xl for larger monitors if needed
+        '2xl': '1400px',
+        max2xl: { max: '1535px' },
+        // => @media (max-width: 1535px)
+
+        // Custom range for tablet devices (between md and lg)
+        tablet: { min: '768px', max: '991px' },
+        // => @media (min-width: 768px) and (max-width: 991px)
+      },
     },
   },
 };
