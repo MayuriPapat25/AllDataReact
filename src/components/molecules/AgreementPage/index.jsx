@@ -6,14 +6,14 @@ const AgreementPage = () => {
             <div className="mx-20 max-w-4xl">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-6">AGREEMENT</h1>
+                    <h1 className="text-md mb-6">AGREEMENT</h1>
 
-                    <p className="text-muted-foreground mb-6 text-sm md:text-base">
+                    <p className="mb-6 text-gray-500">
                         To complete your order, follow these steps to review and sign the terms of your agreement:
                     </p>
 
                     {/* Steps List */}
-                    <ol className="space-y-3 text-sm md:text-base text-muted-foreground">
+                    <ol className="space-y-3 text-gray-500">
                         <li className="flex flex-col sm:flex-row gap-2">
                             <span className="font-medium text-foreground min-w-fit">1.</span>
                             <span>
@@ -58,14 +58,14 @@ const AgreementPage = () => {
 
                 {/* Review Agreement Terms Section */}
                 <div className="mb-12">
-                    <h2 className="text-lg md:text-xl font-medium text-foreground mb-8 underline decoration-2 underline-offset-4">
+                    <button className="h5 text-primary underline font-light" style={{ fontWeight: 400, textDecorationStyle: 'dotted' }}>
                         Review Agreement Terms
-                    </h2>
+                    </button>
                 </div>
 
                 {/* Legal Text */}
-                <div className="mb-12">
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                <div className="text-gray-500">
+                    <p>
                         By selecting "Complete Purchase" below, I authorize my payment to be processed. I agree that these debit
                         entries comply with applicable law. I agree to print or save a copy of my contract for my records.
                     </p>

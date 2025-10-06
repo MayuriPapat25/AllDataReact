@@ -32,7 +32,7 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
         <div className={cn("w-full max-w-2xl mx-auto", className)}>
             {/* Header */}
             <div className="">
-                <h2 className="text-xl font-bold tracking-wide mb-8">ORDER SUMMARY</h2>
+                <h2 className="text-md mb-6">ORDER SUMMARY</h2>
             </div>
 
             {/* Payment Frequency */}

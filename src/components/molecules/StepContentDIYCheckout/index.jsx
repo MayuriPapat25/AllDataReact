@@ -24,7 +24,7 @@ const StepContentDIYCheckout = ({
                     <div className="bg-background p-4 md:p-8">
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <span className="text-2xl font-bold text-gray-900">Billing Information</span>
+                                <h2 className="text-md">Billing Information</h2>
                                 {import.meta.env.STORYBOOK
                                     ? <div>[iframe placeholder]</div>
                                     : <iframe title="Billing Info" />}

@@ -24,14 +24,14 @@ const BillingEmailForm = () => {
     }
 
     return (
-        <div className="w-full space-y-6 pb-8 border-b-4 border-gray-300 ">
-            < h2 className="text-2xl font-semibold text-gray-900" > Billing Email Address</h2 >
+        <div className="w-full space-y-6 pb-8 border-b-2 border-gray-300 ">
+            <h2 className="text-md"> Billing Email Address</h2>
 
             <div className="space-y-4">
                 <RadioGroup value={usePrimaryEmail ? "primary" : ""} onValueChange={handleRadioChange} className="space-y-3">
                     <label className="flex items-center space-x-3 cursor-pointer" onClick={handleRadioClick}>
                         <RadioGroupItem value="primary" />
-                        <span className="text-lg text-gray-700">Use my primary email address for billing statements.</span>
+                        <span className="text-sm text-gray-700">Use my primary email address for billing statements.</span>
                     </label>
                 </RadioGroup>
 

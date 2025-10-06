@@ -18,8 +18,8 @@ const BillingInformationEdit = ({
     return (
         <div className="w-full max-w-2xl">
             <div className="flex flex-row items-center justify-between space-y-0 pb-4">
-                <h2 className="text-lg font-semibold text-foreground">BILLING INFORMATION</h2>
-                <Button variant="ghost" size="sm" onClick={onEdit} className="text-muted-foreground hover:text-foreground">
+                <h2 className="text-md">BILLING INFORMATION</h2>
+                <Button variant="ghost" size="sm" onClick={onEdit} className="text-primary text-sm font-medium">
                     EDIT
                 </Button>
             </div>

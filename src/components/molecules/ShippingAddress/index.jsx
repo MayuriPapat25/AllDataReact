@@ -116,12 +116,12 @@ const ShippingAddressForm = ({ fromReview, onEdit }) => {
     ]
 
     return (
-        <div className={`${!fromReview ? "max-w-4xl pt-6  pb-8 border-b-4 border-gray-300" : "max-w-2xl pt-2 pb-8 border-b-4 border-gray-300"}`}>
+        <div className={`${!fromReview ? "max-w-4xl pt-6  pb-8 border-b-2 border-gray-300" : "max-w-2xl pt-2 pb-8 border-b-2 border-gray-300"}`}>
             {
-                !fromReview ? <h1 className="text-2xl font-bold text-gray-900 mb-4 tracking-wide">SHIPPING ADDRESS</h1>
+                !fromReview ? <h2 className="text-md mb-4">SHIPPING ADDRESS</h2>
                     : <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-sm font-semibold text-gray-900 tracking-wide uppercase">SHIPPING ADDRESS</h2>
-                        <button variant="ghost" size="sm" onClick={onEdit} className="text-gray-500 hover:text-gray-700 font-medium">
+                        <h2 className="text-md">SHIPPING ADDRESS</h2>
+                        <button variant="ghost" size="sm" onClick={onEdit} className="text-primary text-sm font-medium">
                             EDIT
                         </button>
                     </div>

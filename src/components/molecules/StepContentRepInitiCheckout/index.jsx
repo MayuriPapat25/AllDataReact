@@ -72,7 +72,7 @@ const StepContentRepInitiatedCheckout = ({
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
                         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
-                        <div className="flex items-start pt-8 mx-auto p-6">
+                        <div className="flex items-start mx-auto pl-6">
                             <LoginForm onLogin={handleLogin} variant='alldata' />
                         </div>
                     </div>
@@ -88,7 +88,7 @@ const StepContentRepInitiatedCheckout = ({
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
-                                    <span className="text-2xl font-bold text-gray-900">Billing Information</span>
+                                    <h2 className="text-md">Billing Information</h2>
                                     <iframe></iframe>
                                     <BillingEmailForm />
                                 </div>

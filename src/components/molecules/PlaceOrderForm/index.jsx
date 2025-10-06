@@ -5,7 +5,7 @@ const PlaceOrderForm = () => {
         <div className="max-w-2xl">
             <div className="mb-8">
                 <h1 className="text-2xl font-bold text-black mb-2">PLACE ORDER</h1>
-                <h2 className="text-lg font-semibold text-gray-700 mb-6">ACCOUNT INFORMATION</h2>
+                <h2 className="text-md mb-6">ACCOUNT INFORMATION</h2>
 
                 <div className="space-y-6">
                     <InfoField label="Email Address" value="cidameb2019.knilok.com" />

@@ -8,7 +8,7 @@ const UpdateAccoutDetails = () => {
 
   return (
     <div class="flex w-full align-center mb-4">
-      <h1 class="w-full">Account Information</h1>
+      <h1 class="text-md w-full">Account Information</h1>
       <InfoText
         value="Update Account Details"
         link={() => setIsModalOpen(true)}

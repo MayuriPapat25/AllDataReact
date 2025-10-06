@@ -77,7 +77,7 @@ const StepContentEUCheckout = ({
                                 <BillingAddressForm />
 
                                 <div className="space-y-6">
-                                    <span className="text-2xl font-bold text-gray-900">Billing Information</span>
+                                    <h2 className="text-md">Billing Information</h2>
                                     <iframe></iframe>
                                     <BillingEmailForm />
                                 </div>

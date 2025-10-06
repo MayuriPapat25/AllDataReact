@@ -160,9 +160,9 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
     }
 
     return (
-        <div className="max-w-2xl bg-card pb-8 border-b-4 border-gray-300">
+        <div className="max-w-2xl bg-card pb-8 border-b-2 border-gray-300">
             <div className="mb-6 flex justify-between text-center">
-                <h2 className="mb-1">BUSINESS INFORMATION</h2>
+                <h2 className="mb-1 text-md">BUSINESS INFORMATION</h2>
                 <p className="text-sm text-muted-foreground">
                     {variant === "standard" && "| = Fields are Required"}
                 </p>
