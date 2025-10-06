@@ -1,6 +1,11 @@
+import { useState } from "react"
 import { cn } from "../../../../utils/utils"
 import ImageTitleValue from "../../atoms/ImageTitleValue"
 import TitleValue from "../../atoms/TitleValue"
+import PaymentFrequency from "../paymentFrequency"
+import repairIcon from "../../../assets/images/repair_color.png"
+import { ProductName } from "../../atoms/TextIcon/ProductName"
+import { PriceText } from "../../atoms/Price/PriceText"
 
 const OrderSummary = ({ data, className, listClassName, type }) => {
     const showBundleDiscount =
@@ -11,6 +16,18 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
     const showPromotionalRateNotice = data?.isPromotionalRate && (type === "variant2" || type === "variant4")
     const showAllRatesSubjectToSalesTaxNotice = !showPromotionalRateNotice && (type === "variant1" || type === "variant3")
 
+    const [cartItems, setCartItems] = useState([
+        { id: "mobile", name: "Mobile", type: "mobile", price: 39.0, accessPoints: 1 },
+        { id: "basic-diagnostics", name: "Basic Diagnostics", type: "diagnostics", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Mobile" },
+        { id: "repair", name: "Repair", type: "repair", price: 179.0, accessPoints: 1 },
+        { id: "community", name: "Community", type: "community", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+        { id: "estimator", name: "Estimator", type: "estimator", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+    ])
+
+    const handleAccessPointChange = (itemId, newValue) => {
+        setCartItems(prev => prev.map(item => item.id === itemId ? { ...item, accessPoints: newValue } : item))
+    }
+
     return (
         <div className={cn("w-full max-w-2xl mx-auto", className)}>
             {/* Header */}
@@ -18,15 +35,56 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
                 <h2 className="text-xl font-bold tracking-wide mb-8">ORDER SUMMARY</h2>
             </div>
 
+            {/* Payment Frequency */}
+            <PaymentFrequency />
             {/* Subscription Details */}
-            <div className="space-y-1">
+            {/* <div className="space-y-1">
                 {data?.paymentFrequency && <TitleValue title="Payment Frequency" value={data?.paymentFrequency} />}
                 {data?.subscriptionTerm && <TitleValue title="Subscription Term" value={data?.subscriptionTerm} />}
                 {data?.autoRenewalDate && <TitleValue title="Auto Renewal Date" value={data?.autoRenewalDate} />}
-            </div>
+            </div> */}
 
+            {/* Cart Items */}
+            <div className="mb-6 bg-white shadow-sm">
+                {cartItems.map((item, index) => (
+                <div
+                    key={item.id}
+                    className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""}`}
+                >
+                    {/* Desktop */}
+                    <div
+                    className="hidden sm:grid items-center gap-4"
+                    style={{ gridTemplateColumns: "1fr 144px 1fr" }} // removed delete column
+                    >
+                    {/* Product Info */}
+                    <div className="flex items-center gap-3">
+                        <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
+                        <ProductName name={item.name} />
+                    </div>
+
+                    {/* Price + Info */}
+                    <div className="text-right">
+                        <div className="font-medium">${item.price.toFixed(2)}</div>
+                        <div className="text-sm text-gray-500">
+                        {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                        </div>
+                    </div>
+                    </div>
+
+                    {/* Mobile */}
+                    <div className="sm:hidden space-y-2">
+                    {/* Product Info */}
+                    <div className="flex items-center gap-3">
+                        <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
+                        <ProductName name={item.name} />
+                    </div>
+
+                    </div>
+                </div>
+                ))}
+            </div>
             {/* Services List */}
-            <div className={cn("space-y-1", listClassName)}>
+            {/* <div className={cn("space-y-1", listClassName)}>
                 {data?.services?.length > 0 &&
                     data.services.map((service, index) => {
                         return (
@@ -40,50 +98,33 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
                             />
                         )
                     })}
+            </div> */}
+
+            {/* Pricing Summary */}
+            <div className="mb-6 bg-white shadow-sm">
+                <div className="space-y-2">
+                <div className="border-b-2 border-[#faf9f9]">
+                    <div className="p-4">
+                    <PriceText amount={218.0} label="Subscription Subtotal" />
+                    </div>
+                </div>
+                <div className="border-b-2 border-[#faf9f9]">
+                    <div className="p-4">
+                    <PriceText amount={205.25} label="Total Monthly" />
+                    </div>
+                </div>
+                <div className="border-b-2 border-[#faf9f9]">
+                    <div className="p-4">
+                    <PriceText amount={-12.75} label="Sales Tax" isDiscount />
+                    </div>
+                </div>
+                <div className="border-b-2 border-[#faf9f9]">
+                    <div className="p-4">
+                    <PriceText amount={205.25} label="Total Due:" isTotal />
+                    </div>
+                </div>
+                </div>
             </div>
-
-            {/* Pricing Breakdown */}
-            <div className="space-y-1 mt-1">
-                {data?.subscriptionSubtotal && <TitleValue title="Subscription Subtotal" value={data?.subscriptionSubtotal} />}
-
-                {data?.bundleDiscount && <TitleValue title="Bundle Discount" value={data?.bundleDiscount} />}
-
-                {data?.discount && <TitleValue title="Discount" value={data?.discount} />}
-                {data?.totalMonthly && (
-                    <TitleValue title="Total Monthly" value={data?.totalMonthly} isPromotionalRate={data?.isPromotionalRate} />
-                )}
-            </div>
-            {data?.CurrentTotalMonthlySubtotal && (
-                <TitleValue title="Current Monthly Subscription" value={data?.CurrentTotalMonthlySubtotal} />
-            )}
-            {data?.MonthlySubscriptionSubtotal && (
-                <TitleValue title="New Monthly Subscription Subtotal" value={data?.MonthlySubscriptionSubtotal} />
-            )}
-            {/* sales tax */}
-            {showSalesTax && <TitleValue title="Sales Tax" value={data?.salesTax} />}
-            {data?.totalDueToday && (
-                <ImageTitleValue
-                    name="Total Due Today:"
-                    monthelyPrice={data?.totalDueToday}
-                    paymentFrequency={showTaxesNotIncluded ? "Taxes Not Included" : ""}
-                    isPromotionalRate={data?.isPromotionalRate}
-                />
-            )}
-            {data?.CurrentTotalMonthlySubtotal && (
-                <ImageTitleValue
-                    name="Next Monthly Subscription"
-                    monthelyPrice={data?.CurrentTotalMonthlySubtotal}
-                    promotionMsg="*Prorated balance will be applied on the next invoice."
-                    isPromotionalRate={data?.isPromotionalRate}
-                />
-            )}
-            {/* Promotional Rate Notice */}
-            {showPromotionalRateNotice && (
-                <p className="text-sm text-gray-600">*Promotional rate. All rates subject to applicable sales taxes.</p>
-            )}
-            {showAllRatesSubjectToSalesTaxNotice && (
-                <p className="text-sm text-gray-600">*All rates subject to applicable sales taxes.</p>
-            )}
         </div>
     )
 }
