@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import InputField from '../../atoms/InputField';
+import InputField from '../../atoms/InputField/InputFieldWithoutBorder';
 import { Button } from '../../atoms/Buttons/Button';
 
 const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMessage }) => {
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -17,14 +16,36 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleSubmitRequest = () => {
+    console.log("Submitting removal request:", formData);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      title: "",
+      phoneNumber: "",
+      email: "",
+    });
+  };
+
+  const handleCancel = () => {
+    setFormData({
+      firstName: "",
+      lastName: "",
+      title: "",
+      phoneNumber: "",
+      email: "",
+    });
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex w-max-[1000px] mx-auto items-center justify-center p-4">
+      <div className="fixed inset-0 bg-black bg-opacity-50"></div>
+      <div className="relative bg-white rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+          <h2 className="h3 text-primary pr-8 font-normal" style={{ fontWeight:500 }}>{title}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -34,7 +55,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4">
+        <div className="space-y-4 w-[60%] mx-auto">
           <p className="text-sm text-gray-600">
             {desc1}
           </p>
@@ -45,8 +66,8 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
             <span className="text-xs text-gray-500">{requiredMessage}</span>
           </p>
 
-          <div className="bg-gray-50 p-3 rounded-md text-center required-text">
-            <p className="text-sm text-gray-600">=Required Fields</p>
+          <div className="text-right">
+            <span className="text-gray-500">=Required Fields</span>
           </div>
 
           {/* Form Fields */}
@@ -96,18 +117,20 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-gray-200 flex gap-3">
+        <div className="flex gap-3 pt-4 w-[80%] mx-auto">
           <Button
             variant="outline"
-            style={{ borderColor: "#f75e00", color: "##1b3d6e" }}
-            className="w-full cursor-pointer"
+            className="btn btn-primary w-1/2"
+            size="sm"
+            onClick={handleCancel}
           >
             Cancel
           </Button>
           <Button
             variant="outline"
-            style={{ borderColor: "#f75e00", color: "##1b3d6e" }}
-            className="w-full cursor-pointer"
+            className="btn btn-primary w-1/2"
+            size="sm"
+            onClick={handleSubmitRequest}
           >
             SUBMIT REQUEST
           </Button>

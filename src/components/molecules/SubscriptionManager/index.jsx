@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { X, Wrench, Users, Target, Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
-import InputField from "../../atoms/InputField";
+import InputField from "../../atoms/InputField/InputFieldWithoutBorder";
 import repairIcon from "../../../assets/images/repair_color.png"
 import { DeleteIcon, MessageIcon } from "../../atoms/Icon/Icon"
 import { ProductName } from "../../atoms/TextIcon/ProductName"
@@ -180,7 +180,7 @@ const SubscriptionManager = () => {
       ))}
 
       {isRemovalModalOpen && (
-        <div className="fixed inset-0 z-50 flex w-[1000px] mx-auto items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex w-max-[1000px] mx-auto items-center justify-center p-4">
           {/* Modal overlay */}
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCancel} />
 
