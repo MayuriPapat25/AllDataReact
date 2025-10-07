@@ -50,7 +50,7 @@ const taxExemptOptions = [
     { value: "exempt", label: "MY BUSINESS IS TAX EXEMPT" },
 ]
 
-const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
+const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationChange }) => {
     const [formData, setFormData] = useState({
         businessName: "",
         phoneNumber: "",
@@ -78,68 +78,72 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
         if (errors[field]) {
             setErrors((prev) => ({ ...prev, [field]: undefined }))
         }
+        // Emit validation status on every change
+        const next = { ...formData, [field]: value }
+        const validationErrors = validateForm(next)
+        onValidationChange?.(Object.keys(validationErrors).length === 0)
     }
 
-    const validateForm = () => {
+    const validateForm = (data = formData) => {
         const newErrors = {}
 
-        if (!formData.businessName.trim()) {
+        if (!data.businessName.trim()) {
             newErrors.businessName = "Business/Shop Name is required"
         }
 
         if (variant === "standard") {
-            if (!formData.phoneNumber.trim()) {
+            if (!data.phoneNumber.trim()) {
                 newErrors.phoneNumber = "Business Phone Number is required"
-            } else if (!/^\d{10,15}$/.test(formData.phoneNumber.replace(/\s/g, ""))) {
+            } else if (!/^\d{10,15}$/.test(data.phoneNumber.replace(/\s/g, ""))) {
                 newErrors.phoneNumber = "Please enter a valid phone number"
             }
 
-            if (!formData.phoneType) {
+            if (!data.phoneType) {
                 newErrors.phoneType = "Business Phone Type is required"
             }
         }
 
-        if (!formData.firstName.trim()) {
+        if (!data.firstName.trim()) {
             newErrors.firstName =
                 variant === "authorized" ? "Authorized Signer First Name is required" : "First Name is required"
         }
 
-        if (!formData.lastName.trim()) {
+        if (!data.lastName.trim()) {
             newErrors.lastName =
                 variant === "authorized" ? "Authorized Signer Last Name is required" : "Last Name is required"
         }
 
-        if (!formData.jobTitle) {
+        if (!data.jobTitle) {
             newErrors.jobTitle = variant === "authorized" ? "Title of Authorized Signer is required" : "Job Title is required"
         }
 
         if (variant === "authorized") {
-            if (!formData.email.trim()) {
+            if (!data.email.trim()) {
                 newErrors.email = "Authorized Signer Email Address is required"
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
                 newErrors.email = "Please Enter A Valid Email Address."
             }
 
-            if (!formData.ownershipType) {
+            if (!data.ownershipType) {
                 newErrors.ownershipType = "Ownership Type is required"
             }
 
-            if (formData.taxExemptStatus === "exempt" && !formData.taxIdNumber.trim()) {
+            if (data.taxExemptStatus === "exempt" && !data.taxIdNumber.trim()) {
                 newErrors.taxIdNumber = "Tax ID Number is required for tax exempt businesses"
             }
         }
 
-        if (!formData.shopType) {
+        if (!data.shopType) {
             newErrors.shopType = "Shop Type is required"
         }
 
         if (variant === "standard") {
-            if (!formData.language) {
+            if (!data.language) {
                 newErrors.language = "Preferred Language is required"
             }
         }
 
-        if (formData.vat && !/^[A-Z]{2}[0-9A-Z]{2,12}$/.test(formData.vat)) {
+        if (data.vat && !/^[A-Z]{2}[0-9A-Z]{2,12}$/.test(data.vat)) {
             newErrors.vat = "Please enter a valid VAT ID (e.g., DE123456789)"
         }
 
@@ -158,6 +162,12 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit }) => {
             onSubmit?.(formData)
         }
     }
+
+    // Emit initial validation state
+    React.useEffect(() => {
+        onValidationChange?.(Object.keys(validateForm()).length === 0)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className="max-w-2xl bg-card pb-8 border-b-2 border-gray-300">

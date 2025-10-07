@@ -1,6 +1,9 @@
 /** @type { import('@storybook/react-vite').Preview } */
+import '../src/styles/global.css'; // ✅ Import global styles here
+
 const preview = {
   parameters: {
+    layout: "centered",
     controls: {
       matchers: {
        color: /(background|color)$/i,

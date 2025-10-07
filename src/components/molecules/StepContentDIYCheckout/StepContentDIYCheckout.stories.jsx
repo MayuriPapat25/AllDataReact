@@ -5,7 +5,7 @@ import StepContentDIYCheckout from "./index";
 // Simple stub components so Storybook won't break
 const OrderSummaryDIY = () => <div style={{ padding: "1rem", border: "1px dashed #ccc" }}>[OrderSummaryDIY]</div>;
 const PlaceOrderForm = () => <div style={{ padding: "1rem", border: "1px dashed #ccc" }}>[PlaceOrderForm]</div>;
-const BillingInformationEdit = () => <div style={{ padding: "1rem", border: "1px dashed #ccc" }}>[BillingInformationEdit]</div>;
+const BillingInformation = () => <div style={{ padding: "1rem", border: "1px dashed #ccc" }}>[BillingInformation]</div>;
 const TermsConditions = () => <div style={{ padding: "1rem", border: "1px dashed #ccc" }}>[TermsConditions]</div>;
 const OrderConfirmation = () => <div style={{ padding: "1rem", border: "1px dashed #ccc" }}>[OrderConfirmation]</div>;
 
@@ -17,7 +17,7 @@ const withMocks = (Story) => {
       components={{
         OrderSummaryDIY,
         PlaceOrderForm,
-        BillingInformationEdit,
+        BillingInformation,
         TermsConditions,
         OrderConfirmation,
       }}

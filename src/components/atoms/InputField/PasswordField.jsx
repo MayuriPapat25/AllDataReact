@@ -5,6 +5,7 @@ const PasswordField = ({
     label,
     value = "",
     onChange,
+    onBlur,
     error,
     placeholder = "••••••••••",
     helperText,
@@ -70,6 +71,7 @@ const PasswordField = ({
                     type={showPassword ? "text" : "password"}
                     value={value}
                     onChange={handleChange}
+                    onBlur={onBlur}
                     placeholder={placeholder}
                     aria-invalid={Boolean(error || validationError)}
                     aria-describedby={id ? `${id}-error` : undefined}

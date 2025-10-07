@@ -1,5 +1,5 @@
 import React from "react";
-import SelectField from "./SelectField";
+import SelectField from "./index";
 
 export default {
     title: "Atoms/SelectField",

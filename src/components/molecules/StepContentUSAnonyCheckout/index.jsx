@@ -16,6 +16,7 @@ import BillingInfoReview from "../../atoms/BillingInfoReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
+import BillingInformation from "../BillingInformation"
 
 
 const StepContentUSAnonyCheckout = ({
@@ -25,6 +26,9 @@ const StepContentUSAnonyCheckout = ({
     stepConfig = {}
 }) => {
     const [step1Valid, setStep1Valid] = useState(false)
+    const [businessInfoValid, setBusinessInfoValid] = useState(false)
+    const [businessAddressValid, setBusinessAddressValid] = useState(false)
+    const [billingEmailValid, setBillingEmailValid] = useState(false)
 
     const accountData = {
         email: "hinal.parikh@qed42.com",
@@ -83,14 +87,15 @@ const StepContentUSAnonyCheckout = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm variant="authorized"/>
-                                <BusinessAddressForm />
+                                <BusinessInformationForm variant="authorized" onValidationChange={setBusinessInfoValid}/>
+                                <BusinessAddressForm onValidationChange={setBusinessAddressValid} />
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
-                                    <h2 className="text-md">Billing Information</h2>
-                                    <iframe></iframe>
-                                    <BillingEmailForm />
+                                    {/* <h2 className="text-md">Billing Information</h2>
+                                    <iframe>Billing information</iframe> */}
+                                    <BillingInformation />
+                                    <BillingEmailForm onValidationChange={setBillingEmailValid} />
                                     <PhoneSignupForm />
                                 </div>
                             </div>
@@ -160,7 +165,8 @@ const StepContentUSAnonyCheckout = ({
                 showButtons: true,
                 primaryButton: {
                     text: "CONTINUE TO REVIEW",
-                    onClick: onContinue
+                    onClick: onContinue,
+                    disabled: !(businessInfoValid && businessAddressValid && billingEmailValid)
                 },
                 secondaryButton: {
                     text: "BACK",

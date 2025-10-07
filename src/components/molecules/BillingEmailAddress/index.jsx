@@ -1,7 +1,7 @@
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
 
-const BillingEmailForm = () => {
+const BillingEmailForm = ({ onValidationChange }) => {
     const [usePrimaryEmail, setUsePrimaryEmail] = useState(true)
     const [customEmail, setCustomEmail] = useState("")
 
@@ -15,21 +15,23 @@ const BillingEmailForm = () => {
         } else {
             setUsePrimaryEmail(false)
         }
+        onValidationChange?.(value === "primary" ? true : Boolean(customEmail))
     }
 
-    const handleRadioClick = () => {
-        if (usePrimaryEmail) {
-            setUsePrimaryEmail(false)
-        }
-    }
+    // Emit initial validity (primary selected by default)
+    useEffect(() => {
+        onValidationChange?.(usePrimaryEmail ? true : Boolean(customEmail))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
 
     return (
         <div className="w-full space-y-6 pb-8 border-b-2 border-gray-300 ">
             <h2 className="text-md"> Billing Email Address</h2>
 
             <div className="space-y-4">
-                <RadioGroup value={usePrimaryEmail ? "primary" : ""} onValueChange={handleRadioChange} className="space-y-3">
-                    <label className="flex items-center space-x-3 cursor-pointer" onClick={handleRadioClick}>
+                <RadioGroup name="billing-email-choice" value={usePrimaryEmail ? "primary" : ""} onValueChange={handleRadioChange} className="space-y-3">
+                    <label className="flex items-center space-x-3 cursor-pointer">
                         <RadioGroupItem value="primary" />
                         <span className="text-sm text-gray-700">Use my primary email address for billing statements.</span>
                     </label>
@@ -40,7 +42,11 @@ const BillingEmailForm = () => {
                     <input
                         type="email"
                         value={usePrimaryEmail ? primaryEmail : customEmail}
-                        onChange={(e) => setCustomEmail(e.target.value)}
+                        onChange={(e) => {
+                            const val = e.target.value
+                            setCustomEmail(val)
+                            onValidationChange?.(usePrimaryEmail ? true : Boolean(val))
+                        }}
                         disabled={usePrimaryEmail}
                         placeholder={usePrimaryEmail ? "" : "EMAIL ADDRESS FOR BILLING STATEMENTS"}
                         className={`w-full px-4 py-3 text-lg border-2 rounded-md transition-colors ${usePrimaryEmail

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import InputField from "../../atoms/InputField/index" // Updated import path for InputField
 import SelectField from "../../atoms/SelectField" // Updated import path for SelectField
 
@@ -55,7 +55,7 @@ const US_STATES = [
     { value: "WY", label: "Wyoming" },
 ]
 
-const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
+const BusinessAddressForm = ({ onDataChange, variant = "us", onValidationChange }) => {
     const [formData, setFormData] = useState(() => {
         if (variant === "us") {
             return {
@@ -79,7 +79,21 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
         const newData = { ...formData, [field]: value }
         setFormData(newData)
         onDataChange?.(newData)
+        // Simple required validation for US variant
+        const isValid = variant === "us"
+            ? Boolean(newData.streetAddress && newData.city && newData.state && newData.zipCode)
+            : Boolean(newData.streetNumber && newData.city && newData.state && newData.postCode)
+        onValidationChange?.(isValid)
     }
+
+    // Emit initial validation state
+    React.useEffect(() => {
+        const isValid = variant === "us"
+            ? Boolean(formData.streetAddress && formData.city && formData.state && formData.zipCode)
+            : Boolean(formData.streetNumber && formData.city && formData.state && formData.postCode)
+        onValidationChange?.(isValid)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className="space-y-6 mt-8 pb-8 border-b-2 border-gray-300">
@@ -94,7 +108,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <InputField
                             label="Street Address"
                             value={formData.streetAddress}
-                            onChange={(value) => updateField("streetAddress", value)}
+                            onChange={(e) => updateField("streetAddress", e.target.value)}
                             placeholder="Enter street address"
                             className="w-full border-gray-300 "
                         />
@@ -103,7 +117,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                             <InputField
                                 label="Unit, Suite, Apartment, etc."
                                 value={formData.unit}
-                                onChange={(value) => updateField("unit", value)}
+                                onChange={(e) => updateField("unit", e.target.value)}
                                 placeholder="Enter unit, suite, apartment, etc."
                                 className="w-full border-gray-300 "
                             />
@@ -113,7 +127,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <InputField
                             label="City"
                             value={formData.city}
-                            onChange={(value) => updateField("city", value)}
+                            onChange={(e) => updateField("city", e.target.value)}
                             placeholder="Enter city"
                             className="w-full border-gray-300 "
                         />
@@ -121,7 +135,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <SelectField
                             label="State"
                             value={formData.state}
-                            onChange={(value) => updateField("state", value)}
+                            onChange={(e) => updateField("state", e.target.value)}
                             options={US_STATES}
                             placeholder="Select state"
                             className="w-1/2 border-gray-300 "
@@ -130,7 +144,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <InputField
                             label="ZIP Code"
                             value={formData.zipCode}
-                            onChange={(value) => updateField("zipCode", value)}
+                            onChange={(e) => updateField("zipCode", e.target.value)}
                             placeholder="Enter ZIP code"
                             className="w-1/2 border-gray-300 "
                         />
@@ -140,7 +154,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <InputField
                             label="Street Number"
                             value={formData.streetNumber}
-                            onChange={(value) => updateField("streetNumber", value)}
+                            onChange={(e) => updateField("streetNumber", e.target.value)}
                             placeholder="Enter street number"
                             className="w-full border-gray-300 "
                             required
@@ -149,7 +163,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <InputField
                             label="City"
                             value={formData.city}
-                            onChange={(value) => updateField("city", value)}
+                            onChange={(e) => updateField("city", e.target.value)}
                             placeholder="Enter city"
                             className="w-full border-gray-300"
                             required
@@ -158,7 +172,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <SelectField
                             label="State"
                             value={formData.state}
-                            onChange={(value) => updateField("state", value)}
+                            onChange={(e) => updateField("state", e.target.value)}
                             options={US_STATES}
                             placeholder="Select state"
                             className="w-1/2 border-gray-300 "
@@ -168,7 +182,7 @@ const BusinessAddressForm = ({ onDataChange, variant = "us" }) => {
                         <InputField
                             label="Post Code"
                             value={formData.postCode}
-                            onChange={(value) => updateField("postCode", value)}
+                            onChange={(e) => updateField("postCode", e.target.value)}
                             placeholder="Enter post code"
                             className="w-1/2 border-gray-300 "
                             required

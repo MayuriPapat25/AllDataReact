@@ -3,9 +3,10 @@ import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
 import OrderSummaryDIY from "../OrderSummaryDIY"
 import PlaceOrderForm from "../PlaceOrderForm"
-import BillingInformationEdit from "../BillingInformationEdit"
+import BillingInformation from "../BillingInformation"
 import TermsConditions from "../../atoms/TermsCondition"
 import OrderConfirmation from "../OrderConfirmation"
+import BillingFormDoublePayment from "../BillingFormDoublePayment"
 
 const StepContentDIYCheckout = ({
     currentStep,
@@ -14,6 +15,9 @@ const StepContentDIYCheckout = ({
     stepConfig = {}
 }) => {
     const [step1Valid, setStep1Valid] = useState(false)
+    const [agreeTerms, setAgreeTerms] = useState(false)
+    const [selectedCard, setSelectedCard] = useState("")
+    const [paymentType, setPaymentType] = useState("existing")
 
 
 
@@ -24,11 +28,25 @@ const StepContentDIYCheckout = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <h2>BILLING INFORMATION</h2>
-                                <p>You will have time toreview your order before completing your purchase.</p>
-                                {import.meta.env.STORYBOOK
-                                    ? <div>[iframe placeholder]</div>
-                                    : <iframe title="Billing Info" />}
+                                <BillingFormDoublePayment
+                                    header="BILLING INFORMATION"
+                                    subheader
+                                    onPaymentTypeChange={(type) => {
+                                        setPaymentType(type)
+                                        if (type === "existing") {
+                                            setStep1Valid(Boolean(selectedCard))
+                                        } else {
+                                            // Assume new payment iframe will handle details; enable to proceed
+                                            setStep1Valid(true)
+                                        }
+                                    }}
+                                    onCardSelect={(cardId) => {
+                                        setSelectedCard(cardId)
+                                        if (paymentType === "existing") {
+                                            setStep1Valid(Boolean(cardId))
+                                        }
+                                    }}
+                                />
                             </div>
                             <div className="w-1/2">
                                 <OrderSummaryDIY />
@@ -43,8 +61,8 @@ const StepContentDIYCheckout = ({
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <PlaceOrderForm />
-                                <BillingInformationEdit />
-                                <TermsConditions />
+                                <BillingInformation fromReview={true} />
+                                <TermsConditions checked={agreeTerms} onCheckedChange={setAgreeTerms} />
                             </div>
                             <div className="w-1/2">
                                 <OrderSummaryDIY />
@@ -93,7 +111,8 @@ const StepContentDIYCheckout = ({
                 showButtons: true,
                 primaryButton: {
                     text: "COMPLETE PURCHASE",
-                    onClick: onContinue
+                    onClick: onContinue,
+                    disabled: !agreeTerms
                 },
                 secondaryButton: {
                     text: "GO BACK",
