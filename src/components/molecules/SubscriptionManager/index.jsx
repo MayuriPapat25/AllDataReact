@@ -3,6 +3,10 @@ import { useState } from "react";
 import { X, Wrench, Users, Target, Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
 import InputField from "../../atoms/InputField";
+import repairIcon from "../../../assets/images/repair_color.png"
+import { DeleteIcon, MessageIcon } from "../../atoms/Icon/Icon"
+import { ProductName } from "../../atoms/TextIcon/ProductName"
+import { CounterDropdown } from "../../atoms/Dropdown/CounterDropdown"
 
 const SubscriptionManager = () => {
   const [isRemovalModalOpen, setIsRemovalModalOpen] = useState(false);
@@ -78,63 +82,114 @@ const SubscriptionManager = () => {
     });
   };
 
-  return (
-    <div className="max-w-4xl mx-auto p-6 space-y-4">
-      {services.map((service) => (
-        <div
-          key={service.id}
-          className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-lg"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">{service.icon}</div>
-            <span className="font-medium text-gray-900">{service.name}</span>
-          </div>
+  const [cartItems, setCartItems] = useState([
+    { id: "mobile", name: "Mobile", type: "mobile", price: 39.0, accessPoints: 1 },
+    { id: "basic-diagnostics", name: "Basic Diagnostics", type: "diagnostics", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Mobile" },
+    { id: "repair", name: "Repair", type: "repair", price: 179.0, accessPoints: 1 },
+    { id: "community", name: "Community", type: "community", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+    { id: "estimator", name: "Estimator", type: "estimator", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+  ])
 
-          <div className="flex items-center gap-6">
+  const handleAccessPointChange = (itemId, newValue) => {
+    setCartItems(prev => prev.map(item => item.id === itemId ? { ...item, accessPoints: newValue } : item))
+  }
+
+  return (
+    <div className="mx-auto p-6 space-y-4 shadow-lg bg-white">
+      {services.map((item, index) => (
+        <div
+          key={item.id}
+          className={`py-4 px-8 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
+        >
+          {/* Desktop */}
+          <div className="hidden sm:grid items-center gap-4" style={{ gridTemplateColumns: "1fr 144px 1fr 100px" }}>
+            <div className="flex items-center gap-3 text-md">
+              <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
+              <ProductName name={item.name} />
+            </div>
             <div className="text-center">
-              <div className="text-sm text-gray-600 mb-1">Access Points</div>
-              <div className="flex items-center">
-                <button className="w-6 h-8 bg-gray-100 border border-r-0 border-gray-300 rounded-l flex items-center justify-center cursor-not-allowed">
-                  <ChevronUp className="w-3 h-3 text-gray-400" />
-                </button>
-                <div className="w-16 h-8 bg-gray-100 border-t border-b border-gray-300 flex items-center justify-center text-gray-500 cursor-not-allowed">
-                  {service.accessPoints}
-                </div>
-                <button className="w-6 h-8 bg-gray-100 border border-l-0 border-gray-300 rounded-r flex items-center justify-center cursor-not-allowed">
-                  <ChevronDown className="w-3 h-3 text-gray-400" />
-                </button>
+              <CounterDropdown
+                value={item.accessPoints}
+                onChange={(value) => handleAccessPointChange(item.id, value)}
+                className="flex-col"
+                showLabel={true}
+              />
+            </div>
+            <div className="text-right">
+              <div className="font-normal">${item.price?.toFixed(2) ?? "0.00"}</div>
+              <div className="text-sm text-gray-600">
+                {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
               </div>
             </div>
+            <div className="flex justify-end">
+              {/* <DeleteIcon
+                onClick={() => handleRemoveItem(item.id)}
+                className="text-primary hover:text-error cursor-pointer"
+              /> */}
+              {item.includedText && <div className="text-sm text-gray-600">{item.includedText}</div>}
+              {item.hasRemoveButton && (
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={() => setIsRemovalModalOpen(true)}
+                  className="flex items-center text-primary hover:text-error cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4 mr-1" />
+                  Remove
+                </Button>
+              )}
+            </div>
+          </div>
 
-            <div className="w-40 flex items-center justify-start pt-4">
-              {service.includedText && <div className="text-sm text-gray-600">{service.includedText}</div>}
-              {service.hasRemoveButton && (
+          {/* Mobile */}
+          <div className="sm:hidden space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <img src={repairIcon} alt="Repair Color" className="w-[30px]" />
+                <ProductName name={item.name} />
+              </div>
+              {item.includedText && <div className="text-sm text-gray-600">{item.includedText}</div>}
+              {item.hasRemoveButton && (
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setIsRemovalModalOpen(true)}
-                  className="flex items-center gap-2 text-primary border-blue-200 hover:bg-blue-50"
+                  className="flex items-center text-primary hover:text-error cursor-pointer"
                 >
-                  <Trash2 className="w-4 h-4" />
+                  <Trash2 className="w-4 h-4 mr-1" />
                   Remove
                 </Button>
               )}
+            </div>
+            <div className="flex items-center justify-between">
+              <CounterDropdown
+                value={item.accessPoints}
+                onChange={(value) => handleAccessPointChange(item.id, value)}
+                className="flex-col"
+                showLabel={true}
+              />
+              <div className="text-right">
+                <div className="font-normal">${item.price?.toFixed(2) ?? "0.00"}</div>
+                <div className="text-sm text-gray-500 font-light">
+                  {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       ))}
 
       {isRemovalModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex w-[1000px] mx-auto items-center justify-center p-4">
           {/* Modal overlay */}
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCancel} />
 
           {/* Modal content */}
-          <div className="relative bg-white rounded-lg shadow-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               {/* Modal header */}
               <div className="relative mb-4">
-                <h2 className="text-lg font-semibold text-gray-900 pr-8">
+                <h2 className="h3 text-primary pr-8 font-normal" style={{ fontWeight: 500 }}>
                   Requesting to Remove Repair From Subscription
                 </h2>
                 <Button variant="ghost" size="sm" onClick={handleCancel} className="absolute right-0 top-0 p-1 h-auto">
@@ -143,11 +198,11 @@ const SubscriptionManager = () => {
               </div>
 
               <div className="space-y-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-gray-600">
                   This request will not automatically cancel your subscription service(s).
                 </p>
 
-                <p className="text-sm text-gray-600">
+                <p className="text-gray-600">
                   An agent will follow up with you within 24-48 hours* after reviewing the terms of your agreement for
                   eligibility.
                   <br />
@@ -155,12 +210,12 @@ const SubscriptionManager = () => {
                 </p>
 
                 <div className="text-right">
-                  <span className="text-sm text-gray-500">=Required Fields</span>
+                  <span className="text-gray-500">=Required Fields</span>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4 w-[60%] mx-auto">
                   <div>
-                    <label htmlFor="firstName" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="firstName" className="text-gray-700">
                       First Name
                     </label>
                     <InputField
@@ -172,7 +227,7 @@ const SubscriptionManager = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="lastName" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="lastName" className="text-gray-700">
                       Last Name
                     </label>
                     <InputField
@@ -184,7 +239,7 @@ const SubscriptionManager = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="title" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="title" className="text-gray-700">
                       Title
                     </label>
                     <InputField
@@ -196,7 +251,7 @@ const SubscriptionManager = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="phoneNumber" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="phoneNumber" className="text-gray-700">
                       Phone Number
                     </label>
                     <InputField
@@ -208,7 +263,7 @@ const SubscriptionManager = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="text-sm font-medium text-gray-700">
+                    <label htmlFor="email" className="text-gray-700">
                       Email
                     </label>
                     <InputField
@@ -222,15 +277,16 @@ const SubscriptionManager = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-4 w-[80%] mx-auto">
                   <Button
                     variant="outline"
                     onClick={handleCancel}
-                    className="flex-1 text-gray-700 border-gray-300 hover:bg-gray-50 bg-transparent"
+                    className="btn btn-primary w-1/2"
+                    size="sm"
                   >
                     CANCEL
                   </Button>
-                  <Button onClick={handleSubmitRequest} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button variant="outline" size="sm" onClick={handleSubmitRequest} className="btn btn-primary w-1/2">
                     SUBMIT REQUEST
                   </Button>
                 </div>

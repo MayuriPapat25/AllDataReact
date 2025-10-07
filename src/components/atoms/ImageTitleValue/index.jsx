@@ -1,7 +1,7 @@
 const ImageTitleValue = ({ name, accessPoints, monthelyPrice, icon, paymentFrequency, isPromotionalRate, promotionMsg }) => {
 
     return (
-        <div className="bg-white px-7 py-7 shadow-lg mt-1">
+        <div className="bg-white px-7 py-7 shadow-lg bg-white mt-1">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     {/* Icon */}

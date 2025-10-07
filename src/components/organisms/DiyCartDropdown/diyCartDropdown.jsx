@@ -25,7 +25,7 @@ export function DiyCartDropdown({ isOpen, onClose, className }) {
     <div
       className={`absolute right-0 top-full mt-2 z-50 w-[225px] sm:w-80 md:w-96 max-w-[225px] sm:mx-0 ${className}`}
     >
-      <div className="bg-white shadow-lg rounded-lg">
+      <div className="shadow-lg bg-white rounded-lg">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3">
           <span className="text-xs text-gray-500">

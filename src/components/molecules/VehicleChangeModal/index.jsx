@@ -148,7 +148,7 @@ const VehicleChangeModal = ({ isOpen, onClose, currentVehicle }) => {
                     </Button>
 
                     {showYearDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-64 overflow-y-auto">
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg bg-white z-10 max-h-64 overflow-y-auto">
                         <div className="p-2 border-b border-gray-200">
                           <div className="relative">
                             <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
@@ -191,7 +191,7 @@ const VehicleChangeModal = ({ isOpen, onClose, currentVehicle }) => {
                     </Button>
 
                     {showManufacturerDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-64 overflow-y-auto">
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg bg-white z-10 max-h-64 overflow-y-auto">
                         <div className="p-2 border-b border-gray-200">
                           <div className="relative">
                             <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
@@ -234,7 +234,7 @@ const VehicleChangeModal = ({ isOpen, onClose, currentVehicle }) => {
                     </Button>
 
                     {showModelDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-64 overflow-y-auto">
+                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg bg-white z-10 max-h-64 overflow-y-auto">
                         <div className="p-2 border-b border-gray-200">
                           <div className="relative">
                             <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />

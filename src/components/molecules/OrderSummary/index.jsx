@@ -45,7 +45,7 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
             </div> */}
 
             {/* Cart Items */}
-            <div className="mb-6 bg-white shadow-lg">
+            <div className="mb-6 shadow-lg bg-white">
                 {cartItems.map((item, index) => (
                 <div
                     key={item.id}
@@ -64,7 +64,7 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
 
                     {/* Price + Info */}
                     <div className="text-right">
-                        <div className="font-medium">${item.price.toFixed(2)}</div>
+                        <div className="font-medium">${item.price?.toFixed(2) ?? "0.00"}</div>
                         <div className="text-sm text-gray-500">
                         {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
                         </div>
@@ -101,7 +101,7 @@ const OrderSummary = ({ data, className, listClassName, type }) => {
             </div> */}
 
             {/* Pricing Summary */}
-            <div className="mb-6 bg-white shadow-lg">
+            <div className="mb-6 shadow-lg bg-white">
                 <div className="space-y-2">
                 <div className="border-b-2 border-light-smoky-white">
                     <div className="p-4">

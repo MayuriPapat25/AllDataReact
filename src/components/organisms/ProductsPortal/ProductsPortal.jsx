@@ -74,22 +74,20 @@ const ProductsPortal = () => {
 
   return (
     <>
-      <main className="bg-gray-50">
-        <div className="container mx-auto">
-          <h1 className="">Active Products</h1>
-          <ProductCard cards={productCards} />
-        </div>
+      <main className="mb-8">
+        <h1 className="h3 my-4 font-normal text-primary" style={{ fontWeight: 500 }}>Active Products</h1>
+        <ProductCard cards={productCards} />
       </main>
-      <h1 className='text-lg tracking-wide lg:mt-[-0.4375rem] lg:mb-5'>Your Subscription</h1>
-      <div className="mb-6 bg-white shadow-lg general-list">
-        <div className="border-b-2 border-light-smoky-white">
-          <div className="p-4">
+      <h2 className="h3 my-4 font-normal text-primary" style={{ fontWeight: 500 }}>Your Subscription</h2>
+      <div className="mb-6 shadow-lg bg-white general-list">
+        <div className="">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Subscription Term" value="1 Year" />
           </div>
-          <div className="p-4">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Auto Renewal Date" value="09/23/2026" />
           </div>
-          <div className="p-4">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Invoice Frequency" value="Monthly" />
           </div>
         </div>
@@ -98,38 +96,38 @@ const ProductsPortal = () => {
       {/* Access Points Info */}
       <div className="mb-4 flex justify-end">
         <LinkButton
-          size="sm"
           onClick={() => setShowAccessPointsModal(true)}
-          className="flex items-center gap-1 font-normal text-[#282970]"
+          className="flex items-center text-xs"
         >
-          <MessageIcon type="info" className="w-4 h-4 text-[#282970]" />
+          <MessageIcon type="info" className="mr-1" />
           What are Access Points?
         </LinkButton>
       </div>
 
       {/*  Subscription Management */}
-      <div className="mb-6 bg-white shadow-lg">
+      <div className="mb-6 shadow-lg bg-white">
         <SubscriptionManager />
       </div>
 
       {/* Cancel Subscription */}
-      <div className="mb-6 bg-white shadow-lg general-list ">
+      <div className="mb-6 p-6 shadow-lg bg-white general-list ">
         <Button
           variant="ghost"
-          className="w-full justify-start gap-3 h-auto py-3 px-4 text-left font-normal hover:bg-gray-50 flex items-center"
+          className="w-full font-normal flex items-center"
           onClick={() => setIsModalOpen(true)}
+          size='lg'
         >
-          <div className="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300">
-            <Icon type="remove" className="text-xl text-[#1b3e6f]" size={16} />
-          </div>
+          <span className="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300 mr-2">
+            <Icon type="remove" className="text-xl text-primary" />
+          </span>
           <span >Cancel Subscription</span>
         </Button>
         <AccountClosureModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Requesting Account Closure" desc1="This request will not automatically cancel your subscription service(s)." desc2="An agent will follow up with you within 24-48 hours* after reviewing the terms of your agreement for eligibility." requiredMessage="*excluding weekends and holidays" />
       </div>
 
-      <div className="mb-6 bg-white shadow-lg invoice-history-list">
+      <div className="mb-6 shadow-lg bg-white invoice-history-list">
         <div className="border-b-2 border-light-smoky-white">
-          <div className="p-4 flex items-center gap-1">
+          <div className="py-4 px-8 flex items-center gap-1">
             <InfoText
               label="Legal agreements, sales contracts, and order confirmation emails"
               value="View"

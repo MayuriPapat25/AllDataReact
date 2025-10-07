@@ -21,7 +21,8 @@ export function InfoText({ label, value, link, billStatus, className, billStatus
           isFunctionLink ? (
             <button
               onClick={link}
-              className="btn btn-primary cursor-pointer"
+              variants='link'
+              className="cursor-pointer text-primary"
             >
               {value}
             </button>

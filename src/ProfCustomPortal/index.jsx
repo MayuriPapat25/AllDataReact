@@ -70,17 +70,17 @@ export const ProfCustomPortal = () => {
   const renderWithSidebar = (content) => (
     <div className='lg:flex'>
       {/* Sidebar */}
-      <div className="w-full lg:max-w-[30%] customer-portal-sidebar-section">
+      <div className="w-full lg:max-w-[28%] mr-[1%] customer-portal-sidebar-section">
         <AccountSidebar
           sections={currentSidebarData}
           onItemClick={handleItemClick}
           onSectionClick={handleSectionClick}
-          className="shadow-lg"
+          className="shadow-lg bg-white"
         />
       </div>
 
       {/* Content */}
-      <div className="w-full lg:max-w-[70%] customer-portal-summary-section">
+      <div className="w-full lg:max-w-[70%] ml-[1%] customer-portal-summary-section">
         {content}
       </div>
     </div>

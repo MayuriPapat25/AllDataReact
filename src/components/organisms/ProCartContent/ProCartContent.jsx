@@ -56,7 +56,7 @@ export function ProCartContent() {
       <Message type="default" className="mb-3">Default</Message>
 
       {/* Payment Frequency */}
-      <div className="mb-6 bg-white p-4 shadow-lg">
+      <div className="mb-6 bg-white py-4 px-8 shadow-lg bg-white">
         <div className="flex items-center justify-between">
           <label className="text-md text-black">Payment Frequency</label>
           <div className="flex gap-6">
@@ -92,11 +92,11 @@ export function ProCartContent() {
       </div>
 
       {/* Cart Items */}
-      <div className="mb-6 bg-white shadow-custom-sm">
+      <div className="mb-6 shadow-lg bg-white">
         {cartItems.map((item, index) => (
           <div
             key={item.id}
-            className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
+            className={`py-4 px-8 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
           >
             {/* Desktop */}
             <div className="hidden sm:grid items-center gap-4" style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
@@ -113,7 +113,7 @@ export function ProCartContent() {
                 />
               </div>
               <div className="text-right">
-                <div className="font-normal">${item.price.toFixed(2)}</div>
+                <div className="font-normal">${item.price?.toFixed(2) ?? "0.00"}</div>
                 <div className="text-sm text-gray-600">
                   {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
                 </div>
@@ -146,7 +146,7 @@ export function ProCartContent() {
                   showLabel={true}
                 />
                 <div className="text-right">
-                  <div className="font-normal">${item.price.toFixed(2)}</div>
+                  <div className="font-normal">${item.price?.toFixed(2) ?? "0.00"}</div>
                   <div className="text-sm text-gray-500 font-light">
                     {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
                   </div>
@@ -165,25 +165,25 @@ export function ProCartContent() {
       </div>
 
       {/* Pricing Summary */}
-      <div className="mb-6 bg-white shadow-custom-sm">
+      <div className="mb-6 shadow-lg bg-white">
         <div className="space-y-2">
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="py-4 px-8">
               <PriceText amount={218.0} label="Subscription Subtotal" />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="py-4 px-8">
               <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="py-4 px-8">
               <PriceText amount={205.25} label="Total Monthly" />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="py-4 px-8">
               <PriceText amount={205.25} label="Total Due:" isTotal />
               <p className="text-gray-600 text-right mt-1">Taxes Not Included</p>
             </div>
@@ -192,7 +192,7 @@ export function ProCartContent() {
       </div>
 
       {/* Promo Code */}
-      <div className="mb-6 bg-white p-4 flex items-center shadow-custom-sm">
+      <div className="mb-6 bg-white py-4 px-8 flex items-center shadow-lg bg-white">
         <span className="text-md text-black whitespace-nowrap mr-4">
           Add Promo Code
         </span>
@@ -205,8 +205,8 @@ export function ProCartContent() {
       </div>
 
       {/* Subscription Term */}
-      <div className="mb-4 bg-white shadow-custom-sm">
-        <div className="flex items-center justify-between border-b-2 border-light-smoky-white p-4 w-full">
+      <div className="mb-4 shadow-lg bg-white">
+        <div className="flex items-center justify-between border-b-2 border-light-smoky-white py-4 px-8 w-full">
           <label className="text-md text-black">Subscription Term</label>
           <Dropdown
             value={subscriptionTerm}
@@ -219,7 +219,7 @@ export function ProCartContent() {
             className="max-w-[300px] ml-auto mx-0 mr-0"
           />
         </div>
-        <div className="flex items-center justify-between p-4 w-full">
+        <div className="flex items-center justify-between py-4 px-8 w-full">
           <label className="text-black text-md whitespace-nowrap">
             Auto Renewal Date:
           </label>

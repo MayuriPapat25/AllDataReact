@@ -2,7 +2,7 @@ import { InfoText } from "../../atoms/Info/InfoText"
 
 const PaymentFrequency = () => {
     return (
-      <div className="mb-6 bg-white shadow-lg">
+      <div className="mb-6 shadow-lg bg-white">
         <div className="border-b-2 border-light-smoky-white">
           <div className="p-4">
             <InfoText label="Payment Frequency" value="Monthly" />
