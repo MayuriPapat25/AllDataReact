@@ -57,7 +57,7 @@ const SavedPaymentMethods = () => {
 
       <div className="p-0">
         <div
-          className="flex items-center justify-between p-4 cursor-pointer"
+          className="flex items-center justify-between py-4 px-8 cursor-pointer"
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <div className="flex items-center space-x-4">
@@ -82,7 +82,7 @@ const SavedPaymentMethods = () => {
         </div>
 
         {isExpanded && (
-          <div className="border-t border-gray-200 p-4">
+          <div className="border-t border-gray-200 py-4 px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
               <div className="md:col-span-1">
                 <label className="text-sm text-gray-600 mb-2 block">Expiration Date</label>
@@ -136,7 +136,7 @@ const SavedPaymentMethods = () => {
 
 
       <button
-        className="flex items-center space-x-2 text-primary hover:text-blue-700 transition-colors"
+        className="py-4 px-8 flex items-center space-x-2 text-primary hover:text-blue-700 transition-colors"
         onClick={() => setIsAddingNewMethod(!isAddingNewMethod)}
       >
         <div className="w-5 h-5 rounded-full border border-blue-600 flex items-center justify-center">
@@ -146,7 +146,7 @@ const SavedPaymentMethods = () => {
       </button>
 
       {isAddingNewMethod && (
-        <div className="border border-gray-200 rounded-lg bg-white shadow-sm p-4">
+        <div className="border border-gray-200 rounded-lg shadow-lg bg-white py-4 px-8">
 
           {/* Default card check box */}
           <>

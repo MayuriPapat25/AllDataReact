@@ -19,8 +19,8 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
   return (
     <div className={`w-full ${className}`}>
       {/* Desktop Tabs - Hidden on mobile */}
-      <div className="hidden md:block border-b border-gray-200 bg-white">
-        <ul className="horizontal-tabs-list bg-white border-b-2 border-[#faf9f9] flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
+      <div className="hidden md:block">
+        <ul className="horizontal-tabs-list bg-white border-b-2 border-gray-200 flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
           {tabs.map((tab, index) => (
             <li
               key={tab.id}
@@ -38,10 +38,10 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
                   handleTabChange(tab.id);
                 }}
                 className={`
-                  relative block px-2 py-4 text-[1rem] transition-all duration-200 uppercase whitespace-nowrap border-b-2 no-underline hover:no-underline
+                  relative block px-2 py-4 text-base transition-all duration-200 whitespace-nowrap border-b-2 no-underline hover:no-underline
                   ${activeTab === tab.id
                   ? '!text-gray-600 border-orange-500'
-                  : 'text-[#1b3d6e] border-transparent'
+                  : 'text-primary border-transparent'
                   }
                   `}
                 >
@@ -72,7 +72,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
 
         {/* Dropdown Menu */}
         {isDropdownOpen && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg bg-white z-10">
             {tabs.map((tab) => (
               <TabButton
                 key={tab.id}

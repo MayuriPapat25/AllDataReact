@@ -3,7 +3,7 @@ const ProductCard = ({ cards = [] }) => {
 
   function Card({ className = "", onClick, children, ...props }) {
     return (
-      <div className={`bg-white shadow-sm ${className}`} onClick={onClick} {...props}>
+      <div className={`shadow-lg bg-white ${className}`} onClick={onClick} {...props}>
         {children}
       </div>
     );
@@ -17,6 +17,10 @@ const ProductCard = ({ cards = [] }) => {
           className={`
             p-6 cursor-pointer ${card.isDashed ? "border-dashed border-2" : ""}
             bg-white
+            min-h-[220px]
+            flex
+            justify-center
+            items-center
           `}
           onClick={card.onClick}
         >
@@ -33,10 +37,10 @@ const ProductCard = ({ cards = [] }) => {
             </div>
 
             {/* Title */}
-            <h3 className="font-bold text-sm tracking-wide text-gray-900">{card.title}</h3>
+            <h3 className="text-md tracking-wide" style={{ fontWeight: 500 }}>{card.title}</h3>
 
             {/* Subtitle */}
-            {card.subtitle && <p className="text-sm text-primary font-medium">{card.subtitle}</p>}
+            {card.subtitle && <p className="text-md text-primary">{card.subtitle}</p>}
           </div>
         </Card>
       ))}

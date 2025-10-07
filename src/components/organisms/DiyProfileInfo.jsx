@@ -146,7 +146,7 @@ const DiyProfileInfo = () => {
                   </button>
 
                   {isDropdownOpen && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10">
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg bg-white z-10">
                       <input
                         type="text"
                         placeholder=""
