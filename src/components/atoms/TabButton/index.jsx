@@ -47,7 +47,7 @@ export const TabButton = ({
         focus:outline-none whitespace-nowrap border-b-2
         ${isActive
           ? 'text-gray-500 border-orange-500 font-bold'
-          : 'text-[#1b3d6e] border-transparent hover:border-gray-300'
+          : 'text-primary border-transparent hover:border-gray-300'
         }
       `}
     >
