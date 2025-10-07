@@ -96,7 +96,7 @@ export function ProCartContent() {
         {cartItems.map((item, index) => (
           <div
             key={item.id}
-            className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-[#faf9f9]" : ""}`}
+            className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
           >
             {/* Desktop */}
             <div className="hidden sm:grid items-center gap-4" style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
@@ -167,22 +167,22 @@ export function ProCartContent() {
       {/* Pricing Summary */}
       <div className="mb-6 bg-white shadow-custom-sm">
         <div className="space-y-2">
-          <div className="border-b-2 border-[#faf9f9]">
+          <div className="border-b-2 border-light-smoky-white">
             <div className="p-4">
               <PriceText amount={218.0} label="Subscription Subtotal" />
             </div>
           </div>
-          <div className="border-b-2 border-[#faf9f9]">
+          <div className="border-b-2 border-light-smoky-white">
             <div className="p-4">
               <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
             </div>
           </div>
-          <div className="border-b-2 border-[#faf9f9]">
+          <div className="border-b-2 border-light-smoky-white">
             <div className="p-4">
               <PriceText amount={205.25} label="Total Monthly" />
             </div>
           </div>
-          <div className="border-b-2 border-[#faf9f9]">
+          <div className="border-b-2 border-light-smoky-white">
             <div className="p-4">
               <PriceText amount={205.25} label="Total Due:" isTotal />
               <p className="text-gray-600 text-right mt-1">Taxes Not Included</p>
@@ -206,7 +206,7 @@ export function ProCartContent() {
 
       {/* Subscription Term */}
       <div className="mb-4 bg-white shadow-custom-sm">
-        <div className="flex items-center justify-between border-b-2 border-[#faf9f9] p-4 w-full">
+        <div className="flex items-center justify-between border-b-2 border-light-smoky-white p-4 w-full">
           <label className="text-md text-black">Subscription Term</label>
           <Dropdown
             value={subscriptionTerm}

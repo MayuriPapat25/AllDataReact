@@ -146,7 +146,7 @@ const SavedPaymentMethods = () => {
       </button>
 
       {isAddingNewMethod && (
-        <div className="border border-gray-200 rounded-lg bg-white shadow-sm p-4">
+        <div className="border border-gray-200 rounded-lg bg-white shadow-lg p-4">
 
           {/* Default card check box */}
           <>

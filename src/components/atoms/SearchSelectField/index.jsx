@@ -94,7 +94,7 @@ const SearchSelectField = ({ options, value, onChange, placeholder = 'Select...'
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-3 py-2 text-left bg-white border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex items-center justify-between"
+        className="w-full px-3 py-2 text-left bg-white border border-gray-300 rounded shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex items-center justify-between"
       >
         <span className="block truncate text-sm">
           {selectedOption ? selectedOption.label : placeholder}

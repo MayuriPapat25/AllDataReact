@@ -20,7 +20,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
     <div className={`w-full ${className}`}>
       {/* Desktop Tabs - Hidden on mobile */}
       <div className="hidden md:block border-b border-gray-200 bg-white">
-        <ul className="horizontal-tabs-list bg-white border-b-2 border-[#faf9f9] flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
+        <ul className="horizontal-tabs-list bg-white border-b-2 border-light-smoky-white flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
           {tabs.map((tab, index) => (
             <li
               key={tab.id}

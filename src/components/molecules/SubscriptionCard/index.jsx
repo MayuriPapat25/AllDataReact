@@ -11,7 +11,7 @@ export function SubscriptionCard({
     className = "",
 }) {
     return (
-        <div className={`w-full max-w-md mx-auto bg-gray-50 border-gray-200 shadow-sm ${className}`}>
+        <div className={`w-full max-w-md mx-auto bg-gray-50 border-gray-200 shadow-lg ${className}`}>
             <div className="p-6 space-y-4">
                 <ProductInfo title={title} description={description} />
                 <ProductInfo description={accessDuration} />

@@ -3,7 +3,7 @@ const ProductCard = ({ cards = [] }) => {
 
   function Card({ className = "", onClick, children, ...props }) {
     return (
-      <div className={`bg-white shadow-sm ${className}`} onClick={onClick} {...props}>
+      <div className={`bg-white shadow-lg ${className}`} onClick={onClick} {...props}>
         {children}
       </div>
     );

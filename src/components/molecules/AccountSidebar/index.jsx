@@ -55,39 +55,32 @@ const AccountSidebar = ({
             {/* Section Header */}
             <div
               className={`transition-colors duration-150 ${activeSection === sectionIndex
-                ? 'bg-indigo-700'
+                ? 'bg-primary'
                 : 'bg-white hover:bg-gray-50'
                 }`}
             >
-              <button
-                onClick={() => handleSectionClick(section, sectionIndex)}
-                className="w-full text-left px-4 py-3"
-              >
-                <h2 className={`text-sm font-semibold tracking-wide uppercase ${activeSection === sectionIndex
-                  ? 'text-white'
-                  : 'text-gray-600'
-                  }`}>
-                  {section.title}
-                </h2>
-              </button>
+              <h2 className={`text-md text-white uppercase bg-primary p-5 font-normal`} style={{ fontWeight: 400 }}>
+                {section.title}
+              </h2>
             </div>
 
             {/* Section Items */}
             {section.items && section.items.length > 0 && (
-              <div className="bg-gray-50">
+              <div>
                 <nav>
                   {section.items.map((item, itemIndex) => {
                     const itemId = `${sectionIndex}-${itemIndex}`;
                     const isActive = activeItem === itemId || item.isActive;
 
                     return (
-                      <button 
+                      <button
                         key={item.id || itemIndex}
                         onClick={() => handleItemClick(item, sectionIndex, itemIndex)}
-                        className={`w-full text-left block px-6 py-3 text-sm transition-colors duration-150 border-b border-gray-200 ${isActive
-                          ? 'text-gray-900 font-medium bg-white'
-                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                        className={`w-full text-left block px-6 py-3 text-md font-normal duration-150 text-gray-600 border border-light-smoky-white ${isActive
+                          ? ''
+                          : ''
                           }`}
+                        style={{ fontWeight: 400 }}
                       >
                         {item.label}
                       </button>
@@ -105,7 +98,7 @@ const AccountSidebar = ({
         {addressCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-sm w-80"
+            className="bg-white rounded-lg shadow-lg w-80"
           >
             <div className='border-b border-gray-200'>
               <h4 className='p-4'>{section.headerText}</h4>
@@ -120,7 +113,7 @@ const AccountSidebar = ({
         {managerCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-sm w-80"
+            className="bg-white rounded-lg shadow-lg w-80"
           >
             <div className='border-b border-gray-200'>
               <h4 className='p-4'>{section.headerText}</h4>

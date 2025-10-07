@@ -83,7 +83,7 @@ const SubscriptionManager = () => {
       {services.map((service) => (
         <div
           key={service.id}
-          className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+          className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-lg"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">{service.icon}</div>

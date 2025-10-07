@@ -386,7 +386,7 @@ const AccountSettings = () => {
         <h1 className='md:my-6'>Legal Agreements & Contracts</h1>
         <div className="max-w-4x p-6 bg-white">
           <div className="space-y-6">
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <InfoText
                   label="Recent Subscription Contract"
@@ -396,7 +396,7 @@ const AccountSettings = () => {
                 />
               </div>
             </div>
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <InfoText
                   label="Recent Subscription Contract"
@@ -406,7 +406,7 @@ const AccountSettings = () => {
                 />
               </div>
             </div>
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <InfoText
                   label="Payment Notifications"
@@ -424,7 +424,7 @@ const AccountSettings = () => {
         <h1 className='md:my-6'>Automatic Payments</h1>
         <div className="max-w-4xl p-6 bg-white">
           <div className="space-y-6">
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <InfoText
                   label="Automatic Payments"
@@ -432,7 +432,7 @@ const AccountSettings = () => {
                 />
               </div>
             </div>
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <SelectField
                   label="State"
@@ -443,12 +443,12 @@ const AccountSettings = () => {
                 />
               </div>
             </div>
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <PriceText amount={179.00} label="Payment Amount" />
               </div>
             </div>
-            <div className="border-b-2 border-[#faf9f9]">
+            <div className="border-b-2 border-light-smoky-white">
               <div className="p-4">
                 <InfoText
                   label="Payment Frequency"
@@ -472,7 +472,7 @@ const AccountSettings = () => {
       <>
         <h1 className='md:my-6'>Billing Cycle</h1>
         <div className="max-w-4xl p-6 bg-white">
-          <div className="border-b-2 border-[#faf9f9]">
+          <div className="border-b-2 border-light-smoky-white">
             <div className="p-4">
               <InfoText
                 label="Invoice Due Date"
@@ -480,7 +480,7 @@ const AccountSettings = () => {
               />
             </div>
           </div>
-          <div className="border-b-2 border-[#faf9f9]">
+          <div className="border-b-2 border-light-smoky-white">
             <div className="p-4">
               <InfoText
                 label="Current Billing Cycle"

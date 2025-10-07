@@ -11,7 +11,7 @@ export const TabButton = ({
     return (
       <button
         onClick={onClick}
-        className="w-full flex items-center justify-between px-4 py-3 text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full flex items-center justify-between px-4 py-3 text-left bg-white border border-gray-300 rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         <span className="text-gray-900 font-medium">{children}</span>
         <svg

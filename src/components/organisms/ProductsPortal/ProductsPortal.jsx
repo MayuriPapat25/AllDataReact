@@ -81,8 +81,8 @@ const ProductsPortal = () => {
         </div>
       </main>
       <h1 className='text-lg tracking-wide lg:mt-[-0.4375rem] lg:mb-5'>Your Subscription</h1>
-      <div className="mb-6 bg-white shadow-sm general-list">
-        <div className="border-b-2 border-[#faf9f9]">
+      <div className="mb-6 bg-white shadow-lg general-list">
+        <div className="border-b-2 border-light-smoky-white">
           <div className="p-4">
             <InfoText label="Subscription Term" value="1 Year" />
           </div>
@@ -108,12 +108,12 @@ const ProductsPortal = () => {
       </div>
 
       {/*  Subscription Management */}
-      <div className="mb-6 bg-white shadow-sm">
+      <div className="mb-6 bg-white shadow-lg">
         <SubscriptionManager />
       </div>
 
       {/* Cancel Subscription */}
-      <div className="mb-6 bg-white shadow-sm general-list ">
+      <div className="mb-6 bg-white shadow-lg general-list ">
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 h-auto py-3 px-4 text-left font-normal hover:bg-gray-50 flex items-center"
@@ -127,8 +127,8 @@ const ProductsPortal = () => {
         <AccountClosureModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Requesting Account Closure" desc1="This request will not automatically cancel your subscription service(s)." desc2="An agent will follow up with you within 24-48 hours* after reviewing the terms of your agreement for eligibility." requiredMessage="*excluding weekends and holidays" />
       </div>
 
-      <div className="mb-6 bg-white shadow-sm invoice-history-list">
-        <div className="border-b-2 border-[#faf9f9]">
+      <div className="mb-6 bg-white shadow-lg invoice-history-list">
+        <div className="border-b-2 border-light-smoky-white">
           <div className="p-4 flex items-center gap-1">
             <InfoText
               label="Legal agreements, sales contracts, and order confirmation emails"
