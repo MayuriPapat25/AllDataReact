@@ -10,6 +10,7 @@ html, body, #root {
   width: 100%;
   display: block;
   font-size: 14px;
+  background: var(--color-light-smoky-white);
 }
 
 /* Headings */
@@ -56,6 +57,7 @@ b, strong { font-weight: 600; }
 small, .small { font-size: 80%; }
 .link { font-size: 12px; }
 input { font-size: 12px; }
+input:disabled {opacity: 0.5;background-color: var(--color-light-smoky-white);}
 .container { max-width: 1336px;padding: 0 20px;margin: 0 auto; }
 .text-md {font-size: 18px;}
 .text-sm {font-size: 12px;}

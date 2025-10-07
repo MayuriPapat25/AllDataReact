@@ -23,6 +23,7 @@ import {
   ChevronDown, //down Arrow
   ToggleLeft,// toggle yes
   ToggleRight,// toggle no
+  CircleDollarSign
 } from "lucide-react"
 
 export function Icon({ type, className, onClick }) {
@@ -46,6 +47,7 @@ export function Icon({ type, className, onClick }) {
     carFront: CarFront,
     euro: Euro,
     doller: DollarSign,
+    circleDollar: CircleDollarSign,
     downloadFile: FileDown,
     cancelSubscription: CircleMinus,
     downArrow: ChevronDown,

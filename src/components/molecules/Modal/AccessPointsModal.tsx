@@ -28,7 +28,7 @@ export function AccessPointsModal({ isOpen, onClose }: AccessPointsModalProps) {
         <div className="bg-white shadow-xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between p-6">
-            <h2 id="access-points-title" className="text-xl font-semibold text-primary">
+            <h2 id="access-points-title" className="h3 text-primary">
               What Are Access Points?
             </h2>
             <Button

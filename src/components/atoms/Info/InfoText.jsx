@@ -9,7 +9,7 @@ export function InfoText({ label, value, link, billStatus, className, billStatus
     <div className={`flex justify-between flex-col md:flex-row md:items-center w-full ${className}`}>
       <div class="flex items-center space-x-4">
         {/* Label */}
-        <span className="text-md text-gray-600 ml">{label}</span>
+        <span className="text-md ml">{label}</span>
 
         {/* Bill Status */}
         {billStatus && <span className={billStatusClassName}>{billStatus}</span>}
@@ -21,7 +21,8 @@ export function InfoText({ label, value, link, billStatus, className, billStatus
           isFunctionLink ? (
             <button
               onClick={link}
-              className="font-medium text-primary underline hover:text-blue-800 bg-transparent border-none cursor-pointer"
+              variants='link'
+              className="cursor-pointer text-primary"
             >
               {value}
             </button>
@@ -30,7 +31,7 @@ export function InfoText({ label, value, link, billStatus, className, billStatus
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-primary underline hover:text-blue-800"
+              className="font-medium text-primary underline hover:text-primary"
             >
               {value}
             </a>

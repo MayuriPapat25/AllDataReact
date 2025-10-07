@@ -40,54 +40,55 @@ const AccountSidebar = ({
       showDropdown: false,
       productInfo: {
         title: "Ann Watkins",
-        description: "ann.watkins@alldata.com 800-829-8727 Option 4",
+        description: (
+          <>
+            <a href="mailto:ann.watkins@alldata.com" className="text-blue-600 underline">
+              ann.watkins@alldata.com
+            </a><br/>
+            800-829-8727
+          </>
+        ),
         className: "space-y-1",
       },
     },
   ];
 
+
   return (
     <>
-      <div className={`w-80 bg-white border-r border-gray-200 ${className}`}>
+      <div>
         {/* Sections */}
         {sections.map((section, sectionIndex) => (
-          <div key={section.id || sectionIndex} className="mb-0">
+          <div key={section.id || sectionIndex} className={`border-r border-gray-200 mb-8 ${className}`}>
             {/* Section Header */}
             <div
               className={`transition-colors duration-150 ${activeSection === sectionIndex
-                ? 'bg-indigo-700'
+                ? 'bg-primary'
                 : 'bg-white hover:bg-gray-50'
                 }`}
             >
-              <button
-                onClick={() => handleSectionClick(section, sectionIndex)}
-                className="w-full text-left px-4 py-3"
-              >
-                <h2 className={`text-sm font-semibold tracking-wide uppercase ${activeSection === sectionIndex
-                  ? 'text-white'
-                  : 'text-gray-600'
-                  }`}>
-                  {section.title}
-                </h2>
-              </button>
+              <h2 className={`text-md text-white uppercase bg-primary p-5 font-normal`} style={{ fontWeight: 400 }}>
+                {section.title}
+              </h2>
             </div>
 
             {/* Section Items */}
             {section.items && section.items.length > 0 && (
-              <div className="bg-gray-50">
+              <div>
                 <nav>
                   {section.items.map((item, itemIndex) => {
                     const itemId = `${sectionIndex}-${itemIndex}`;
                     const isActive = activeItem === itemId || item.isActive;
 
                     return (
-                      <button 
+                      <button
                         key={item.id || itemIndex}
                         onClick={() => handleItemClick(item, sectionIndex, itemIndex)}
-                        className={`w-full text-left block px-6 py-3 text-sm transition-colors duration-150 border-b border-gray-200 ${isActive
-                          ? 'text-gray-900 font-medium bg-white'
-                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                        className={`w-full text-left block px-6 py-3 text-base font-normal duration-150 text-gray-600 border border-light-smoky-white ${isActive
+                          ? ''
+                          : ''
                           }`}
+                        style={{ fontWeight: 400 }}
                       >
                         {item.label}
                       </button>
@@ -101,14 +102,14 @@ const AccountSidebar = ({
 
       </div>
       {/* address Card */}
-      <div className="mt-12 space-y-8 address-cards">
+      <div className="mb-8 space-y-8 address-cards">
         {addressCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-sm w-80"
+            className="bg-white rounded-lg shadow-lg bg-white"
           >
-            <div className='border-b border-gray-200'>
-              <h4 className='p-4'>{section.headerText}</h4>
+            <div className='border-2 border-light-smoky-white'>
+              <h6 className='text-sm space tracking-wider py-4 px-8 uppercase text-gray-500'>{section.headerText}</h6>
             </div>
             <ProductInfo {...section.productInfo} />
           </div>
@@ -116,14 +117,14 @@ const AccountSidebar = ({
       </div>
 
       {/* manager Card */}
-      <div className="mt-12 space-y-8 address-cards">
+      <div className="space-y-8 address-cards">
         {managerCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-sm w-80"
+            className="bg-white rounded-lg shadow-lg bg-white"
           >
             <div className='border-b border-gray-200'>
-              <h4 className='p-4'>{section.headerText}</h4>
+              <h6 className='text-sm space tracking-wider py-4 px-8 uppercase text-gray-500'>{section.headerText}</h6>
             </div>
             <ProductInfo {...section.productInfo} />
           </div>

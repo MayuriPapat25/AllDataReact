@@ -7,8 +7,8 @@ const UpdateAccoutDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div class="flex w-full align-center mb-4">
-      <h1 class="text-md w-full">Account Information</h1>
+    <div className="flex w-full align-center my-4 lg:mt-0 lg:mb-4">
+      <h1 className="h5 text-primary w-full font-medium" style={{ fontWeight: 500 }}>Account Information</h1>
       <InfoText
         value="Update Account Details"
         link={() => setIsModalOpen(true)}
