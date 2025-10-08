@@ -51,12 +51,12 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
               </div>
 
               {paymentType === "existing" && (
-                <div className="ml-6 mt-3">
+                <div className="ml-6 mt-3 max-w-[40rem]">
                   <SelectField
                     options={existingCards}
                     defaultValue="1"
                     onChange={(e) => onCardSelect?.(e.target.value)}
-                    className="h-12 border-2 border-muted-foreground/30 bg-background text-muted-foreground w-1/2"
+                    className="h-12 border-2 border-muted-foreground/30 bg-background text-muted-foreground"
                   />
                 </div>
               )}

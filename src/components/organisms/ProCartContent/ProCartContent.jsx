@@ -1,6 +1,6 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { RadioButton } from "../../atoms/RadioButton/RadioButton"
-import { ProductIcon } from "../../atoms/Icon/Icon"
 import { ProductName } from "../../atoms/TextIcon/ProductName"
 import { CounterDropdown } from "../../atoms/Dropdown/CounterDropdown"
 import { PriceText } from "../../atoms/Price/PriceText"
@@ -14,6 +14,7 @@ import { Button } from "../../atoms/Buttons/Button"
 import repairIcon from "../../../assets/images/repair_color.png"
 
 export function ProCartContent() {
+  const navigate = useNavigate()
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
   const [subscriptionTerm, setSubscriptionTerm] = useState("12 Months")
   const [promoCode, setPromoCode] = useState("")
@@ -56,7 +57,7 @@ export function ProCartContent() {
       <Message type="default" className="mb-3">Default</Message>
 
       {/* Payment Frequency */}
-      <div className="mb-6 bg-white py-4 px-8 shadow-lg bg-white">
+      <div className="mb-6 bg-white py-4 px-8 shadow-lg">
         <div className="flex items-center justify-between">
           <label className="text-md text-black">Payment Frequency</label>
           <div className="flex gap-6">
@@ -239,6 +240,7 @@ export function ProCartContent() {
         <Button
           variant="outline"
           className="btn-full cursor-pointer btn btn-primary"
+          onClick={() => navigate('/usanonycheckout')}
         >
           CHECKOUT
         </Button>

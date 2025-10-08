@@ -30,14 +30,19 @@ const BillingInformation = ({
 
             </div>
             <div className="space-y-6">
-                <RadioGroup name="payment-method" value="primary" onValueChange={() => { }} className="space-y-3">
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                        <RadioGroupItem value="primary" />
-                        <span className="text-sm text-gray-700">CREDIT OR DEBIT CARD (AUTOMATIC PAYMENT)</span>
-                    </label>
-                </RadioGroup>
-                Billing information iframe
-                <iframe></iframe>
+                {
+                    !fromReview &&
+                    <>
+                        <RadioGroup name="payment-method" value="primary" onValueChange={() => { }} className="space-y-3">
+                            <label className="flex items-center space-x-3 cursor-pointer">
+                                <RadioGroupItem value="primary" />
+                                <span className="text-sm text-gray-700">CREDIT OR DEBIT CARD (AUTOMATIC PAYMENT)</span>
+                            </label>
+                        </RadioGroup>
+                        Billing information iframe
+                        <iframe></iframe>
+                    </>
+                }
                 {
                     fromReview && <InfoField label="Payment Type" value={paymentType} />
                 }

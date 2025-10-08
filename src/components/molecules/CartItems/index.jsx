@@ -5,10 +5,10 @@ import repairIcon from "../../../assets/images/repair_color.png"
 function CartItems({ data }) {
     return (
         <div className="mb-6 shadow-lg bg-white">
-            {cartItems.map((item, index) => (
+            {data.map((item, index) => (
                 <div
                     key={item.id}
-                    className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
+                    className={`p-4 ${index !== data.length - 1 ? "border-b border-light-smoky-white" : ""}`}
                 >
                     {/* Desktop */}
                     <div

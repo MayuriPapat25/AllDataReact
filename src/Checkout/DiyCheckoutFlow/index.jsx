@@ -1,9 +1,10 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import CheckoutSteps from "../../components/molecules/CheckoutSteps"
 import StepContentDIYCheckout from "../../components/molecules/StepContentDIYCheckout";
 
 const DIYCheckout = () => {
-
+    const navigate = useNavigate()
     const [currentStep, setCurrentStep] = useState(1);
 
     const handleContinue = () => {
@@ -15,6 +16,8 @@ const DIYCheckout = () => {
     const handleBack = () => {
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
+        } else {
+            navigate('/diycustomeraccount')
         }
     };
 

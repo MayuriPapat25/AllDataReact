@@ -22,16 +22,16 @@ function App() {
       {/* Header with Navigation */}
       <header className="bg-gray-100 shadow-md p-4 flex gap-6">
         <Link to="/" className="text-blue-600 hover:underline">Home</Link>
+        <Link to='/diycustomeraccount' className="text-blue-600 hover:underline">DIY Customer Account</Link>
+        <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
         <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
         <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
         <Link to="/rep" className="text-blue-600 hover:underline">Rep Initiated Cart</Link>
-        <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
         <Link to='/diycheckout' className="text-blue-600 hover:underline">DIY CHECKOUT</Link>
         <Link to='/usanonycheckout' className="text-blue-600 hover:underline">US Anony Checkout</Link>
         <Link to='/usauthcheckout' className="text-blue-600 hover:underline">US Auth Checkout</Link>
         <Link to='/eucheckout' className="text-blue-600 hover:underline">EU Checkout</Link>
         <Link to='/repinitiatedcheckout' className="text-blue-600 hover:underline">Rep Initiated Checkout</Link>
-        <Link to='/diycustomeraccount' className="text-blue-600 hover:underline">DIY Customer Account</Link>
       </header>
 
       <main className="container">

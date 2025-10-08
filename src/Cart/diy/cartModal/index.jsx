@@ -1,9 +1,11 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem"
 import { Button } from "../../../components/atoms/Buttons/Button"
 import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
 
 export default function CartPage() {
+  const navigate = useNavigate()
   const [region, setRegion] = useState("usa")
   const regionOptions = [
     { value: "usa", label: "USA" },
@@ -49,7 +51,7 @@ export default function CartPage() {
   }
 
   const handleCheckout = () => {
-    console.log("Proceed to checkout")
+    navigate('/diycheckout')
   }
 
   const handleGoHome = () => {
