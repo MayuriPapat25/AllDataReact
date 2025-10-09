@@ -8,109 +8,15 @@ import RefundLimitModal from "../../molecules/RefundLimitModal/index";
 import { Button } from "../../atoms/Buttons/Button";
 import { useNavigate } from "react-router-dom"
 
-const initialSubscriptions = [
-  {
-    id: "1",
-    vehicle: "2020 Audi A3 Sedan (8VM) L4-2.0L Turbo (CZRA)",
-    expiration: "10/30/2025",
-    price: "$19.99 / 1 Month",
-    inCart: true,
-    hasChangedVehicle: false,
-    hasRequestedRefund: false,
-  },
-  {
-    id: "2",
-    vehicle: "2023 Audi A4 Quattro Sedan 45 (8WC) L4-2.0L Turbo (DPAA) MHEV",
-    expiration: "09/29/2026",
-    price: "$19.99 / 1 Month",
-    inCart: false,
-    hasChangedVehicle: false,
-    hasRequestedRefund: false,
-  },
-  {
-    id: "3",
-    vehicle: "2022 Buick Truck Encore FWD L4-1.4L Turbo VIN M",
-    expiration: "09/29/2026",
-    price: "$19.99 / 1 Month",
-    inCart: false,
-    hasChangedVehicle: true,
-    hasRequestedRefund: true,
-  },
-  {
-    id: "4",
-    vehicle: "2026 Cadillac Truck Escalade IQ AWD ELE-Electric Engine",
-    expiration: "09/29/2028",
-    price: "$19.99 / 1 Month",
-    inCart: false,
-    hasChangedVehicle: false,
-    hasRequestedRefund: false,
-  },
-];
-
-const DiySubscriptions = () => {
+const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleChangeVehicle, handleVehicleChangeComplete, handleRefundRequest, handleRefundComplete, selectedVehicle, isRefundModalOpen, isRefundLimitModalOpen, isModalOpen, setIsModalOpen, isLimitModalOpen, setIsLimitModalOpen, setIsRefundModalOpen }) => {
   const navigate = useNavigate()
-
-  const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLimitModalOpen, setIsLimitModalOpen] = useState(false);
-  const [selectedVehicle, setSelectedVehicle] = useState("");
-  const [selectedSubscriptionId, setSelectedSubscriptionId] = useState("");
-  const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
-  const [isRefundLimitModalOpen, setIsRefundLimitModalOpen] = useState(false);
-
-  const handleAddToCart = (id) => {
-    setSubscriptions((prev) => prev.map((sub) => (sub.id === id ? { ...sub, inCart: true } : sub)));
-  };
-
-  const handleChangeVehicle = (vehicle, subscriptionId) => {
-    const subscription = subscriptions.find((sub) => sub.id === subscriptionId);
-
-    if (subscription.hasChangedVehicle) {
-      setIsLimitModalOpen(true);
-    } else {
-      setSelectedVehicle(vehicle);
-      setSelectedSubscriptionId(subscriptionId);
-      setIsModalOpen(true);
-      setSubscriptions(prev =>
-        prev.map(sub =>
-          sub.id === subscriptionId
-            ? { ...sub, hasChangedVehicle: true }
-            : sub
-        )
-      );
-    }
-  };
-
-  const handleVehicleChangeComplete = () => {
-    setSubscriptions((prev) =>
-      prev.map((sub) => (sub.id === selectedSubscriptionId ? { ...sub, hasChangedVehicle: true } : sub)),
-    );
-    setIsModalOpen(false);
-  };
-
-  const handleRefundRequest = (vehicle, subscriptionId) => {
-    const subscription = subscriptions.find((sub) => sub.id === subscriptionId);
-
-    if (subscription.hasRequestedRefund) {
-      setIsRefundLimitModalOpen(true);
-    } else {
-      setSelectedVehicle(vehicle);
-      setSelectedSubscriptionId(subscriptionId);
-      setIsRefundModalOpen(true);
-    }
-  };
-
-  const handleRefundComplete = () => {
-    setSubscriptions((prev) =>
-      prev.map((sub) => (sub.id === selectedSubscriptionId ? { ...sub, hasRequestedRefund: true } : sub)),
-    );
-    setIsRefundModalOpen(false);
-  };
-
-  const cartCount = subscriptions.filter((sub) => sub.inCart).length;
 
   const handleViewCart = () => {
     navigate("/diy-cart")
+  }
+
+  const handleAddMoreVehicle = () => {
+    navigate("/findvehicle")
   }
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
@@ -176,7 +82,7 @@ const DiySubscriptions = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleAddToCart(subscription.id)}
+                      onClick={() => handleAddToCart(subscription)}
                       className="flex items-center gap-1 !text-primary"
                     >
                       <CirclePlus className="w-4 h-4 text-primary" />
@@ -215,6 +121,7 @@ const DiySubscriptions = () => {
         <Button
           variant="outline"
           className="btn btn-secondary"
+          onClick={handleAddMoreVehicle}
         // className="px-6 py-2 border border-border text-foreground hover:bg-muted font-semibold bg-transparent"
         >
           ADD MORE VEHICLES
