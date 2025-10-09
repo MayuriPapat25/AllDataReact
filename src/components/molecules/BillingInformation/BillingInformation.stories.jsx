@@ -1,11 +1,11 @@
-// BillingInformationEdit.stories.jsx
+// BillingInformation.stories.jsx
 import React from "react";
-import BillingInformationEdit from "./index"
+import BillingInformation from "./index"
 import { action } from "storybook/actions"
 
 export default {
-    title: "Forms/BillingInformationEdit",
-    component: BillingInformationEdit,
+    title: "Forms/BillingInformation",
+    component: BillingInformation,
 };
 
 export const Default = {

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { InfoText } from '../../atoms/Info/InfoText';
-import InputField from '../../atoms/InputField/InputFieldWithoutBorder';
+import InputFieldWithoutBorder from '../../atoms/InputField/InputFieldWithoutBorder';
 import SelectField from '../../atoms/SelectField/Inline-selectfield';
 import { PriceText } from '../../atoms/Price/PriceText';
 import SavedPaymentMethods from '../SavedPaymentMethods/SavedPaymentMethods';
-import { Button } from '../../atoms/Buttons/Button';
-import { Icon } from '../../atoms/Icon/Icon';
-import AccountClosureModal from '../../molecules/AccountClosureModal';
 import UpdateAccoutDetails from '../../molecules/UpdateAccoutDetails';
 
 const AccountSettings = () => {
@@ -98,7 +95,7 @@ const AccountSettings = () => {
             <label>Shop Address</label>
             <div className="md:col-span-2 space-y-4">
               {/* Street Address */}
-              <InputField
+              <InputFieldWithoutBorder
                 label="Street Address"
                 id="streetAddress"
                 value={formData.streetAddress}
@@ -110,7 +107,7 @@ const AccountSettings = () => {
               />
 
               {/* Unit, Suite, Apartment */}
-              <InputField
+              <InputFieldWithoutBorder
                 label="Unit, Suite, Apartment, etc."
                 id="unit"
                 value={formData.unit}
@@ -121,7 +118,7 @@ const AccountSettings = () => {
               />
 
               {/* City */}
-              <InputField
+              <InputFieldWithoutBorder
                 label="City"
                 id="city"
                 value={formData.city}
@@ -134,7 +131,7 @@ const AccountSettings = () => {
 
               {/* State and ZIP Code */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InputField
+                <InputFieldWithoutBorder
                   label="State"
                   value={formData.state}
                   onChange={(e) => handleInputChange("state", e.target.value)}
@@ -142,7 +139,7 @@ const AccountSettings = () => {
                   disabled={true}
                 />
 
-                <InputField
+                <InputFieldWithoutBorder
                   label="Zip Code"
                   id="zipCode"
                   value={formData.zipCode}
@@ -177,7 +174,7 @@ const AccountSettings = () => {
               {!formData.billingAddressSame && (
                 <div className="space-y-4">
                   {/* Street Address */}
-                  <InputField
+                  <InputFieldWithoutBorder
                     label="Street Address"
                     id="billingStreetAddress"
                     value={formData.billingStreetAddress || ""}
@@ -189,7 +186,7 @@ const AccountSettings = () => {
                   />
 
                   {/* Unit, Suite, Apartment */}
-                  <InputField
+                  <InputFieldWithoutBorder
                     label="Unit, Suite, Apartment, etc."
                     id="billingUnit"
                     value={formData.billingUnit || ""}
@@ -200,7 +197,7 @@ const AccountSettings = () => {
                   />
 
                   {/* City */}
-                  <InputField
+                  <InputFieldWithoutBorder
                     label="City"
                     id="billingCity"
                     value={formData.billingCity || ""}
@@ -213,7 +210,7 @@ const AccountSettings = () => {
 
                   {/* State and ZIP Code */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <InputField
+                    <InputFieldWithoutBorder
                       label="City"
                       id="billingCity"
                       value={formData.billingCity || ""}
@@ -224,7 +221,7 @@ const AccountSettings = () => {
                       disabled={true}
                     />
 
-                    <InputField
+                    <InputFieldWithoutBorder
                       label="Zip Code"
                       id="billingZipCode"
                       value={formData.billingZipCode || ""}
@@ -261,7 +258,7 @@ const AccountSettings = () => {
               {!formData.mailingAddressSame && (
                 <div className="space-y-4">
                   {/* Street Address */}
-                  <InputField
+                  <InputFieldWithoutBorder
                     label="Street Address"
                     id="billingStreetAddress"
                     value={formData.billingStreetAddress || ""}
@@ -273,7 +270,7 @@ const AccountSettings = () => {
                   />
 
                   {/* Unit, Suite, Apartment */}
-                  <InputField
+                  <InputFieldWithoutBorder
                     label="Unit, Suite, Apartment, etc."
                     id="billingUnit"
                     value={formData.billingUnit || ""}
@@ -284,7 +281,7 @@ const AccountSettings = () => {
                   />
 
                   {/* City */}
-                  <InputField
+                  <InputFieldWithoutBorder
                     label="City"
                     id="billingCity"
                     value={formData.billingCity || ""}
@@ -297,7 +294,7 @@ const AccountSettings = () => {
 
                   {/* State and ZIP Code */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <InputField
+                    <InputFieldWithoutBorder
                       label="City"
                       id="billingCity"
                       value={formData.billingCity || ""}
@@ -308,7 +305,7 @@ const AccountSettings = () => {
                       disabled={true}
                     />
 
-                    <InputField
+                    <InputFieldWithoutBorder
                       label="Zip Code"
                       id="billingZipCode"
                       value={formData.billingZipCode || ""}
@@ -334,7 +331,7 @@ const AccountSettings = () => {
           <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             <label>Account Phone Number</label>
             <div className="md:col-span-2">
-              <InputField
+              <InputFieldWithoutBorder
                 id="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
@@ -349,7 +346,7 @@ const AccountSettings = () => {
           <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             <label>Email Address</label>
             <div className="md:col-span-2">
-              <InputField
+              <InputFieldWithoutBorder
                 id="emailAddress"
                 value={formData.emailAddress}
                 onChange={(e) => handleInputChange("emailAddress", e.target.value)}
@@ -364,7 +361,7 @@ const AccountSettings = () => {
           <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             <label> Business Email Address</label>
             <div className="md:col-span-2">
-              <InputField
+              <InputFieldWithoutBorder
                 id="emailAddress"
                 value={formData.emailAddress}
                 onChange={(e) => handleInputChange("emailAddress", e.target.value)}

@@ -1,72 +1,63 @@
-import AccountCard from './index'
+import React from 'react';
+import AccountCard from './index';
 
 export default {
-    title: 'Atoms/AccountCard',
+    title: 'Components/AccountCard',
     component: AccountCard,
-    args: {
-        title: 'Account Information',
-        className: '',
+    parameters: {
+        docs: {
+            description: {
+                component: 'AccountCard is a reusable card component that displays a title and content. It can be used to group account-related information or any other content blocks.',
+            },
+        },
     },
     argTypes: {
-        title: { control: 'text' },
-        className: { control: 'text' },
+        title: {
+            description: 'The heading text displayed at the top of the card.',
+            control: 'text',
+        },
+        children: {
+            description: 'The content inside the card.',
+            control: 'object',
+        },
+        className: {
+            description: 'Additional custom class names for styling.',
+            control: 'text',
+        },
     },
-}
+};
 
-const SampleContent = () => (
-    <div className="space-y-3">
-        <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Email</span>
-            <span className="text-sm font-medium text-gray-900">user@example.com</span>
+const Template = (args) => <AccountCard {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+    title: 'Account Information',
+    children: (
+        <div>
+            <p>Name: John Doe</p>
+            <p>Email: john.doe@example.com</p>
         </div>
-        <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-600">Phone</span>
-            <span className="text-sm font-medium text-gray-900">(555) 123-4567</span>
+    ),
+};
+Default.parameters = {
+    docs: {
+        storyDescription: 'Default AccountCard displaying basic account info.',
+    },
+};
+
+export const WithCustomClass = Template.bind({});
+WithCustomClass.args = {
+    title: 'Account Settings',
+    className: 'bg-gray-50 border-gray-200',
+    children: (
+        <div>
+            <p>Password: ********</p>
+            <p>Two-Factor Authentication: Enabled</p>
         </div>
-    </div>
-)
-
-export const Default = {
-    render: (args) => (
-        <AccountCard {...args}>
-            <SampleContent />
-        </AccountCard>
     ),
-}
-
-export const WithLongTitle = {
-    args: {
-        title: 'Primary Email Address for General Account Communication',
+};
+WithCustomClass.parameters = {
+    docs: {
+        storyDescription: 'AccountCard with custom background and border color.',
     },
-    render: (args) => (
-        <AccountCard {...args}>
-            <SampleContent />
-        </AccountCard>
-    ),
-}
-
-export const CustomPadding = {
-    args: {
-        className: 'p-8',
-    },
-    render: (args) => (
-        <AccountCard {...args}>
-            <SampleContent />
-        </AccountCard>
-    ),
-}
-
-export const WithCustomChildren = {
-    render: (args) => (
-        <AccountCard {...args}>
-            <div className="grid grid-cols-1 gap-3">
-                <label className="text-sm text-gray-700">Username</label>
-                <input className="border-2 border-gray-300 px-3 py-2" placeholder="Enter username" />
-                <label className="text-sm text-gray-700">Password</label>
-                <input type="password" className="border-2 border-gray-300 px-3 py-2" placeholder="Enter password" />
-            </div>
-        </AccountCard>
-    ),
-}
-
-
+};

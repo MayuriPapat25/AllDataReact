@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
 
-const PaymentInformation = () => {
+const DiyPaymentInfo = () => {
   const [cards, setCards] = useState([
     { id: "1", lastFour: "4448", isPrimary: true },
     { id: "2", lastFour: "1111", isPrimary: false },
@@ -74,4 +74,4 @@ const PaymentInformation = () => {
   );
 };
 
-export default PaymentInformation;
+export default DiyPaymentInfo;

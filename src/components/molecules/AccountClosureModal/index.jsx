@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import InputField from '../../atoms/InputField/InputFieldWithoutBorder';
+import InputFieldWithoutBorder from '../../atoms/InputField/InputFieldWithoutBorder';
 import { Button } from '../../atoms/Buttons/Button';
 
 const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMessage }) => {
@@ -45,7 +45,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
       <div className="relative bg-white rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="h3 text-primary pr-8 font-normal" style={{ fontWeight:500 }}>{title}</h2>
+          <h2 className="h3 text-primary pr-8 font-normal" style={{ fontWeight: 500 }}>{title}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -72,7 +72,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
 
           {/* Form Fields */}
           <div className="space-y-2">
-            <InputField
+            <InputFieldWithoutBorder
               label="First Name"
               id="firstName"
               value={formData.firstName}
@@ -80,7 +80,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
               className="w-full"
             />
 
-            <InputField
+            <InputFieldWithoutBorder
               label="Last Name"
               id="lastName"
               value={formData.lastName}
@@ -88,7 +88,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
               className="w-full"
             />
 
-            <InputField
+            <InputFieldWithoutBorder
               label="Title"
               id="title"
               value={formData.title}
@@ -96,7 +96,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
               className="w-full"
             />
 
-            <InputField
+            <InputFieldWithoutBorder
               label="Phone Number"
               id="phoneNumber"
               value={formData.phoneNumber}
@@ -104,7 +104,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
               className="w-full"
             />
 
-            <InputField
+            <InputFieldWithoutBorder
               label="Email"
               id="email"
               type="email"

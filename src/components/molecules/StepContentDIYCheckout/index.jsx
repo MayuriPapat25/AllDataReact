@@ -1,11 +1,13 @@
 
 import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import OrderSummaryDIY from "../OrderSummaryDIY"
 import PlaceOrderForm from "../PlaceOrderForm"
-import BillingInformationEdit from "../BillingInformationEdit"
+import BillingInformation from "../BillingInformation"
 import TermsConditions from "../../atoms/TermsCondition"
 import OrderConfirmation from "../OrderConfirmation"
+import BillingFormDoublePayment from "../BillingFormDoublePayment"
 
 const StepContentDIYCheckout = ({
     currentStep,
@@ -13,7 +15,11 @@ const StepContentDIYCheckout = ({
     onBack,
     stepConfig = {}
 }) => {
-    const [step1Valid, setStep1Valid] = useState(false)
+    const navigate = useNavigate()
+    const [step1Valid, setStep1Valid] = useState(true) // Start enabled since "existing" + default card is valid
+    const [agreeTerms, setAgreeTerms] = useState(false)
+    const [selectedCard, setSelectedCard] = useState("1") // Default to first card
+    const [paymentType, setPaymentType] = useState("existing")
 
 
 
@@ -24,11 +30,25 @@ const StepContentDIYCheckout = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <h2>BILLING INFORMATION</h2>
-                                <p>You will have time toreview your order before completing your purchase.</p>
-                                {import.meta.env.STORYBOOK
-                                    ? <div>[iframe placeholder]</div>
-                                    : <iframe title="Billing Info" />}
+                                <BillingFormDoublePayment
+                                    header="BILLING INFORMATION"
+                                    subheader
+                                    onPaymentTypeChange={(type) => {
+                                        setPaymentType(type)
+                                        if (type === "existing") {
+                                            setStep1Valid(Boolean(selectedCard))
+                                        } else {
+                                            // Assume new payment iframe will handle details; enable to proceed
+                                            setStep1Valid(true)
+                                        }
+                                    }}
+                                    onCardSelect={(cardId) => {
+                                        setSelectedCard(cardId)
+                                        if (paymentType === "existing") {
+                                            setStep1Valid(Boolean(cardId))
+                                        }
+                                    }}
+                                />
                             </div>
                             <div className="w-1/2">
                                 <OrderSummaryDIY />
@@ -43,8 +63,8 @@ const StepContentDIYCheckout = ({
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <PlaceOrderForm />
-                                <BillingInformationEdit />
-                                <TermsConditions />
+                                <BillingInformation fromReview={true} />
+                                <TermsConditions checked={agreeTerms} onCheckedChange={setAgreeTerms} />
                             </div>
                             <div className="w-1/2">
                                 <OrderSummaryDIY />
@@ -55,8 +75,8 @@ const StepContentDIYCheckout = ({
 
             case 3:
                 return (
-                    <div>
-                        <OrderConfirmation />
+                    <div className="flex flex-col items-center">
+                        <OrderConfirmation orderNumber={'0009020081'} />
                         <OrderSummaryDIY />
                     </div>
                 )
@@ -87,13 +107,14 @@ const StepContentDIYCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "max-w-2xl p-6 flex-start"
+                buttonLayout: "max-w-2xl pt-18 flex-start gap-4 border-t-2 border-gray-300"
             },
             2: {
                 showButtons: true,
                 primaryButton: {
                     text: "COMPLETE PURCHASE",
-                    onClick: onContinue
+                    onClick: onContinue,
+                    disabled: !agreeTerms
                 },
                 secondaryButton: {
                     text: "GO BACK",
@@ -105,7 +126,7 @@ const StepContentDIYCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center lg:justify-start"
+                buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center lg:justify-start border-t-2 border-gray-300"
             },
             3: {
                 showButtons: true,
@@ -115,10 +136,11 @@ const StepContentDIYCheckout = ({
                 },
                 secondaryButton: {
                     text: "MANAGE ACCOUNT",
-                    onClick: onBack,
+                    onClick: () => navigate('/diycustomeraccount'),
                     variant: "outline"
                 },
-                buttonLayout: "flex flex-col sm:flex-row gap-4 mx-auto justify-center"
+                ternaryButton: null,
+                buttonLayout: "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 max-w-2xl pt-18"
             },
         }
 
@@ -137,7 +159,7 @@ const StepContentDIYCheckout = ({
             <div className={`flex ${buttonLayout}`}>
                 <Button
                     onClick={primaryButton.onClick}
-                    // disabled={primaryButton.disabled}
+                    disabled={primaryButton.disabled}
                     className={primaryButton.className || "btn btn-primary mr-2"}
                 >
                     {primaryButton.text}
@@ -151,7 +173,7 @@ const StepContentDIYCheckout = ({
                         {secondaryButton.text}
                     </Button>
                 )}
-                {/* {ternaryButton && (
+                {ternaryButton && (
                     <Button
                         onClick={ternaryButton.onClick}
                         variant={ternaryButton.variant || "outline"}
@@ -159,7 +181,7 @@ const StepContentDIYCheckout = ({
                     >
                         {ternaryButton.text}
                     </Button>
-                )} */}
+                )}
             </div>
         )
     }

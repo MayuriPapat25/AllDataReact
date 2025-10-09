@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { X, Wrench, Users, Target, Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
-import InputField from "../../atoms/InputField/InputFieldWithoutBorder";
+import InputFieldWithoutBorder from "../../atoms/InputField/InputFieldWithoutBorder";
 import repairIcon from "../../../assets/images/repair_color.png"
 import { DeleteIcon, MessageIcon } from "../../atoms/Icon/Icon"
 import { ProductName } from "../../atoms/TextIcon/ProductName"
@@ -218,7 +218,7 @@ const SubscriptionManager = () => {
                     <label htmlFor="firstName" className="text-gray-700">
                       First Name
                     </label>
-                    <InputField
+                    <InputFieldWithoutBorder
                       id="firstName"
                       value={formData.firstName}
                       onChange={(e) => handleInputChange("firstName", e.target.value)}
@@ -230,7 +230,7 @@ const SubscriptionManager = () => {
                     <label htmlFor="lastName" className="text-gray-700">
                       Last Name
                     </label>
-                    <InputField
+                    <InputFieldWithoutBorder
                       id="lastName"
                       value={formData.lastName}
                       onChange={(e) => handleInputChange("lastName", e.target.value)}
@@ -242,7 +242,7 @@ const SubscriptionManager = () => {
                     <label htmlFor="title" className="text-gray-700">
                       Title
                     </label>
-                    <InputField
+                    <InputFieldWithoutBorder
                       id="title"
                       value={formData.title}
                       onChange={(e) => handleInputChange("title", e.target.value)}
@@ -254,7 +254,7 @@ const SubscriptionManager = () => {
                     <label htmlFor="phoneNumber" className="text-gray-700">
                       Phone Number
                     </label>
-                    <InputField
+                    <InputFieldWithoutBorder
                       id="phoneNumber"
                       value={formData.phoneNumber}
                       onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
@@ -266,7 +266,7 @@ const SubscriptionManager = () => {
                     <label htmlFor="email" className="text-gray-700">
                       Email
                     </label>
-                    <InputField
+                    <InputFieldWithoutBorder
                       id="email"
                       type="email"
                       placeholder="example@email.com"

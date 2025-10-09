@@ -3,7 +3,7 @@ import { Tabs } from '../components/molecules/Tabs';
 import BillSummary from '../components/organisms/BillSummary/billSummary';
 import ProductsPortal from '../components/organisms/ProductsPortal/ProductsPortal';
 import AccountSettings from '../components/organisms/AccountSettings/AccountSettings';
-import AccountSidebar from '../components/molecules/AccountSidebar';
+import AccountSidebar from '../components/molecules/AccountSidebar/index';
 
 export const ProfCustomPortal = () => {
   const [activeTab, setActiveTab] = useState('billing');

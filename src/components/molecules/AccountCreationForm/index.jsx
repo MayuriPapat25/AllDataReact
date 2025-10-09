@@ -47,7 +47,7 @@ const AccountCreationForm = ({
         }
     }
 
-    const validateForm = () => {
+    const getValidationErrors = () => {
         const newErrors = {}
 
         if (variant === "full") {
@@ -69,10 +69,16 @@ const AccountCreationForm = ({
 
         if (variant !== "email") {
             if (!formData.username.trim()) newErrors.username = "Username is required"
-            if (variant === "business" && formData.username.length < 6) {
-                newErrors.username = "Login needs to contain at least 6 characters"
+            if (formData.username && formData.username.length < 6) {
+                newErrors.username = "Username must be at least 6 characters"
+            }
+            if (/\s/.test(formData.username)) {
+                newErrors.username = "Username cannot contain spaces"
             }
             if (!formData.password.trim()) newErrors.password = "Password is required"
+            if (formData.password && !isPasswordStrong(formData.password)) {
+                newErrors.password = "Password must be 8+ chars, include uppercase, and 2 of: number, lowercase, symbol"
+            }
             if (!formData.confirmPassword.trim()) newErrors.confirmPassword = "Please confirm your password"
             if (formData.password !== formData.confirmPassword) {
                 newErrors.confirmPassword = "Passwords do not match"
@@ -81,6 +87,11 @@ const AccountCreationForm = ({
 
         if (!formData.agreeToTerms) newErrors.agreeToTerms = "You must agree to the terms and conditions"
 
+        return newErrors
+    }
+
+    const validateForm = () => {
+        const newErrors = getValidationErrors()
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
@@ -123,12 +134,13 @@ const AccountCreationForm = ({
 
     const isPasswordStrong = (password) => {
         if (!password || password.length < 8) return false
-        let types = 0
-        if (/[0-9]/.test(password)) types++
-        if (/[a-z]/.test(password)) types++
-        if (/[A-Z]/.test(password)) types++
-        if (/[!@#$%&? ,*]/.test(password)) types++
-        return types >= 3
+        const hasNumber = /[0-9]/.test(password)
+        const hasLower = /[a-z]/.test(password)
+        const hasUpper = /[A-Z]/.test(password)
+        const hasSymbol = /[!@#$%&? ,*]/.test(password)
+        if (!hasUpper) return false
+        const otherCount = [hasNumber, hasLower, hasSymbol].filter(Boolean).length
+        return otherCount >= 2
     }
 
     const computeIsValid = () => {
@@ -177,6 +189,7 @@ const AccountCreationForm = ({
                                 onChange={(e) => handleInputChange("firstName", e.target.value)}
                                 placeholder="FIRST NAME"
                                 error={errors.firstName}
+                                onBlur={() => setErrors((prev) => ({ ...prev, firstName: getValidationErrors().firstName }))}
                             />
                             <InputField
                                 label="Last Name"
@@ -185,6 +198,7 @@ const AccountCreationForm = ({
                                 onChange={(e) => handleInputChange("lastName", e.target.value)}
                                 placeholder="LAST NAME"
                                 error={errors.lastName}
+                                onBlur={() => setErrors((prev) => ({ ...prev, lastName: getValidationErrors().lastName }))}
                             />
                         </div>
 
@@ -195,6 +209,7 @@ const AccountCreationForm = ({
                             onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
                             placeholder="PHONE NUMBER"
                             error={errors.phoneNumber}
+                            onBlur={() => setErrors((prev) => ({ ...prev, phoneNumber: getValidationErrors().phoneNumber }))}
                         />
                     </>
                 )}
@@ -220,6 +235,7 @@ const AccountCreationForm = ({
                                 ? "Used for Username and General Account Communication"
                                 : undefined
                     }
+                    onBlur={() => setErrors((prev) => ({ ...prev, email: getValidationErrors().email }))}
                 />
 
                 {variant === "full" && (
@@ -231,6 +247,7 @@ const AccountCreationForm = ({
                         onChange={(e) => handleInputChange("confirmEmail", e.target.value)}
                         placeholder="RE-ENTER EMAIL ADDRESS"
                         error={errors.confirmEmail}
+                        onBlur={() => setErrors((prev) => ({ ...prev, confirmEmail: getValidationErrors().confirmEmail }))}
                     />
                 )}
 
@@ -242,6 +259,7 @@ const AccountCreationForm = ({
                         onChange={(e) => handleInputChange("businessPhone", e.target.value)}
                         placeholder="BUSINESS/SHOP PHONE NUMBER"
                         error={errors.businessPhone}
+                        onBlur={() => setErrors((prev) => ({ ...prev, businessPhone: getValidationErrors().businessPhone }))}
                     />
                 )}
 
@@ -253,6 +271,7 @@ const AccountCreationForm = ({
                             value={formData.streetAddress}
                             onChange={(e) => handleInputChange("streetAddress", e.target.value)}
                             error={errors.streetAddress}
+                            onBlur={() => setErrors((prev) => ({ ...prev, streetAddress: getValidationErrors().streetAddress }))}
                         />
 
                         <InputField
@@ -260,6 +279,7 @@ const AccountCreationForm = ({
                             optional
                             value={formData.unit}
                             onChange={(e) => handleInputChange("unit", e.target.value)}
+                            onBlur={() => setErrors((prev) => ({ ...prev }))}
                         />
 
                         <InputField
@@ -268,6 +288,7 @@ const AccountCreationForm = ({
                             value={formData.city}
                             onChange={(e) => handleInputChange("city", e.target.value)}
                             error={errors.city}
+                            onBlur={() => setErrors((prev) => ({ ...prev, city: getValidationErrors().city }))}
                         />
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -279,6 +300,7 @@ const AccountCreationForm = ({
                                     value={formData.state}
                                     onChange={(e) => handleInputChange("state", e.target.value)}
                                     error={errors.state}
+                                    onBlur={() => setErrors((prev) => ({ ...prev, state: getValidationErrors().state }))}
                                 />
                                 <p className="text-sm text-gray-600 mt-1">
                                     Don't see your State/Province?
@@ -296,6 +318,7 @@ const AccountCreationForm = ({
                                 value={formData.zipCode}
                                 onChange={(e) => handleInputChange("zipCode", e.target.value)}
                                 error={errors.zipCode}
+                                onBlur={() => setErrors((prev) => ({ ...prev, zipCode: getValidationErrors().zipCode }))}
                             />
                         </div>
 
@@ -323,7 +346,8 @@ const AccountCreationForm = ({
                             onChange={(e) => handleInputChange("username", e.target.value)}
                             placeholder={variant === "full" ? "USERNAME" : "CREATE A USERNAME"}
                             error={errors.username}
-                            helperText={variant === "business" ? "Login needs to contain at least 6 characters" : undefined}
+                            helperText={"Username must be 6+ characters, no spaces"}
+                            onBlur={() => setErrors((prev) => ({ ...prev, username: getValidationErrors().username }))}
                         />
 
                         <PasswordField
@@ -335,6 +359,7 @@ const AccountCreationForm = ({
                             error={errors.password}
                             required
                             helperText="Password must be at least 8 characters long and include 3 of the following 4 character types: 1 number, 1 lowercase letter, 1 uppercase letter, 1 symbol. Symbols can include: !@#$%&? ,*"
+                            onBlur={() => setErrors((prev) => ({ ...prev, password: getValidationErrors().password }))}
                         />
 
                         <PasswordField
@@ -345,6 +370,7 @@ const AccountCreationForm = ({
                             placeholder="RE-ENTER YOUR PASSWORD"
                             error={errors.confirmPassword}
                             required
+                            onBlur={() => setErrors((prev) => ({ ...prev, confirmPassword: getValidationErrors().confirmPassword }))}
                         />
                     </>
                 )}
