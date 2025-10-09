@@ -155,7 +155,7 @@ const DIYCustomerAccount = () => {
   ];
 
   return (
-    <>
+    <div className='mt-10'>
       <DIYCartHome cartData={cartData} cartCount={cartCount} />
       <h1 className="title text-center mt-20">
         {/* @todo: Get content from Drupal */}
@@ -172,7 +172,7 @@ const DIYCustomerAccount = () => {
           setActiveTab(tabId);
         }}
       />
-    </>
+    </div>
   );
 };
 

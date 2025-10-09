@@ -1,4 +1,5 @@
 import { Button } from "../Buttons/Button"
+import { Icon } from "../Icon/Icon"
 
 export function CounterDropdown({ value, onChange, className = "", showLabel = true }) {
   return (
@@ -15,7 +16,7 @@ export function CounterDropdown({ value, onChange, className = "", showLabel = t
           size="sm"
           className="py-1 text-gray-600 hover:bg-gray-100"
         >
-          -
+          <Icon type="downArrow" className="w-5 h-5" />
         </Button>
         <span className="px-2 py-1 text-sm font-medium min-w-[30px] text-center">{value}</span>
         <Button
@@ -24,7 +25,7 @@ export function CounterDropdown({ value, onChange, className = "", showLabel = t
           size="sm"
           className="py-1 text-gray-600 hover:bg-gray-100"
         >
-          +
+          <Icon type='upArrow' className="w-5 h-5" />
         </Button>
       </div>
     </div>

@@ -7,7 +7,7 @@ import BillingAddressForm from '../BillingAddress'
 import ShippingAddressForm from '../ShippingAddress'
 import BillingEmailForm from "../BillingEmailAddress"
 import PhoneSignupForm from "../PhoneSignUpForm"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
@@ -17,6 +17,7 @@ import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../BillingInformation"
+import AgreementModal from "../AgreementModal"
 
 
 const StepContentUSAnonyCheckout = ({
@@ -29,7 +30,10 @@ const StepContentUSAnonyCheckout = ({
     const [businessInfoValid, setBusinessInfoValid] = useState(false)
     const [businessAddressValid, setBusinessAddressValid] = useState(false)
     const [billingEmailValid, setBillingEmailValid] = useState(false)
-
+    const [isModalOpen, setIsModalOpen] = useState(true);
+    useEffect(() => {
+        setIsModalOpen(true)
+    }, [])
     const accountData = {
         email: "hinal.parikh@qed42.com",
         phoneNumber: "701 617 6368",
@@ -128,6 +132,10 @@ const StepContentUSAnonyCheckout = ({
             case 4:
                 return (
                     <div bg-background p-4 md:p-8>
+                        <AgreementModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                        />
                         <AgreementPage />
                     </div>
                 )

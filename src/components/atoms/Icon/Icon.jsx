@@ -23,7 +23,8 @@ import {
   ChevronDown, //down Arrow
   ToggleLeft,// toggle yes
   ToggleRight,// toggle no
-  CircleDollarSign
+  CircleDollarSign,
+  ChevronUp
 } from "lucide-react"
 
 export function Icon({ type, className, onClick }) {
@@ -54,6 +55,7 @@ export function Icon({ type, className, onClick }) {
     toggleYes: ToggleLeft,
     toggleNo: ToggleRight,
     remove: CircleMinus,
+    upArrow: ChevronUp
   }
 
   const LucideIcon = icons[type] || AlertCircle

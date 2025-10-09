@@ -13,10 +13,12 @@ const PhoneField = forwardRef(
                     </label>
                 )}
 
-                <div className="br-field-left">
-                    {/* {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>} */}
+                <div className={cn(required && "br-field-left")}>
                     {countryCode && (
-                        <h3 className="flex items-center px-3 py-2 border border-r-0 border-input bg-muted rounded-l-md text-sm text-muted-foreground">
+                        <h3 className={cn(
+                            "flex items-center px-3 py-2 border border-r-0 bg-muted rounded-l-md text-sm text-muted-foreground",
+                            error ? "border-error" : "border-gray-300" // Apply red border on error
+                        )}>
                             {countryCode}
                         </h3>
                     )}
@@ -24,11 +26,13 @@ const PhoneField = forwardRef(
                     <input
                         ref={ref}
                         type="tel"
+                        pattern="[0-9]*"
                         className={cn(
-                            "w-full px-3 py-2 border-2 border-gray-300 text-sm",
-                            // "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
+                            "w-full px-3 py-2 text-sm",
+                            error
+                                ? "border-2 border-error focus:border-error" // Red border on error
+                                : "border-2 border-gray-300 focus:border-blue-500", // Default/Focus borders
                             "placeholder:text-muted-foreground",
-                            error && "border-destructive",
                             className,
                         )}
                         onChange={onChange}

@@ -6,7 +6,7 @@ import BusinessAddressForm from '../BusinessAddress'
 import BillingAddressForm from '../BillingAddress'
 import ShippingAddressForm from '../ShippingAddress'
 import BillingEmailForm from "../BillingEmailAddress"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
@@ -15,6 +15,8 @@ import BillingInfoReview from "../../atoms/BillingInfoReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
+import PhoneSignupForm from "../PhoneSignUpForm"
+import AgreementModal from "../AgreementModal"
 
 
 const StepContentRepInitiatedCheckout = ({
@@ -24,7 +26,13 @@ const StepContentRepInitiatedCheckout = ({
     stepConfig = {}
 }) => {
     const [step1Valid, setStep1Valid] = useState(false)
-
+    const [businessInfoValid, setBusinessInfoValid] = useState(false)
+    const [businessAddressValid, setBusinessAddressValid] = useState(false)
+    const [billingEmailValid, setBillingEmailValid] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(true);
+    useEffect(()=>{
+        setIsModalOpen(true)
+    },[])
     const accountData = {
         email: "hinal.parikh@qed42.com",
         phoneNumber: "701 617 6368",
@@ -83,14 +91,15 @@ const StepContentRepInitiatedCheckout = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm variant="authorized"/>
-                                <BusinessAddressForm />
+                                <BusinessInformationForm variant="authorized" onValidationChange={setBusinessInfoValid} />
+                                <BusinessAddressForm onValidationChange={setBusinessAddressValid} />
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
                                     <h2 className="text-md">Billing Information</h2>
                                     <iframe></iframe>
-                                    <BillingEmailForm />
+                                    <BillingEmailForm onValidationChange={setBillingEmailValid} />
+                                    <PhoneSignupForm />
                                 </div>
                             </div>
                             <div className="w-1/2">
@@ -122,7 +131,11 @@ const StepContentRepInitiatedCheckout = ({
             case 4:
                 return (
                     <div bg-background p-4 md:p-8>
-                        <AgreementPage />
+                        <AgreementModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                        />
+                        <AgreementPage setIsModalOpen={setIsModalOpen} />
                     </div>
                 )
 
@@ -151,14 +164,19 @@ const StepContentRepInitiatedCheckout = ({
                     onClick: onContinue,
                     disabled: !step1Valid
                 },
-                secondaryButton: null,
+                secondaryButton: {
+                    text: "CANCEL",
+                    onClick: onBack,
+                    variant: "outline"
+                },
                 buttonLayout: "flex-col sm:flex-row gap-4 pt-6 md:justify-center lg:justify-start"
             },
             2: {
                 showButtons: true,
                 primaryButton: {
                     text: "CONTINUE TO REVIEW",
-                    onClick: onContinue
+                    onClick: onContinue,
+                    disabled: !(businessInfoValid && businessAddressValid && billingEmailValid)
                 },
                 secondaryButton: {
                     text: "BACK",
@@ -213,7 +231,7 @@ const StepContentRepInitiatedCheckout = ({
                 <Button
                     onClick={primaryButton.onClick}
                     disabled={primaryButton.disabled}
-                    className={primaryButton.className || "btn btn-primary"}
+                    className={primaryButton.className || "btn btn-primary text-sm"}
                 >
                     {primaryButton.text}
                 </Button>
@@ -221,7 +239,7 @@ const StepContentRepInitiatedCheckout = ({
                     <Button
                         onClick={secondaryButton.onClick}
                         variant={secondaryButton.variant || "outline"}
-                        className={secondaryButton.className || "btn btn-secondary"}
+                        className={secondaryButton.className || "btn btn-secondary text-sm w-[10rem]"}
                     >
                         {secondaryButton.text}
                     </Button>
