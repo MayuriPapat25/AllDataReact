@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem"
 import { Button } from "../../../components/atoms/Buttons/Button"
 import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
+import { Dropdown } from "../../../components/atoms/Dropdown/Dropdown"
+import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton"
 
 export default function DiyCartPage({ initialCartItems = null }) {
   const navigate = useNavigate()
@@ -64,6 +66,9 @@ export default function DiyCartPage({ initialCartItems = null }) {
     { number: 3, label: "Place your order" }
   ]
 
+  const handleApplyPromo = () => {
+    console.log("Applying promo code:", promoCode)
+  }
   return (
     <div className="mx-auto">
       <CheckoutSteps currentStep={3} steps={steps} />
@@ -71,7 +76,14 @@ export default function DiyCartPage({ initialCartItems = null }) {
       <div className="text-center mb-8">
         <h1 className="mb-6">CART</h1>
       </div>
-
+      <div className="w-80 mx-auto pb-10">
+        <Dropdown
+          label="Region" // no label for inline
+          value={region}
+          onValueChange={setRegion}
+          options={regionOptions}
+        />
+      </div>
       {cartItems.length === 0 ? (
         // ✅ Empty cart UI
         <div className="text-center pt-2 pb-6">
@@ -126,7 +138,18 @@ export default function DiyCartPage({ initialCartItems = null }) {
           {/* Totals + Checkout */}
           <div className="bg-gray-50 mt-6">
             <div className="flex justify-end">
-              <div className="w-full md:w-80">
+              <div className="w-full md:w-[22rem]">
+                <div className="mb-6 py-4 items-center  ">
+                  <span className="text-md text-black whitespace-nowrap mr-4">
+                    Add Promo Code
+                  </span>
+                  <InputWithButton
+                    placeholder="ENTER CODE"
+                    buttonText="APPLY"
+                    onSubmit={handleApplyPromo}
+                    className="flex-1 min-w-0"
+                  />
+                </div>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>Subtotal:</span>
@@ -138,18 +161,18 @@ export default function DiyCartPage({ initialCartItems = null }) {
                   </div>
                 </div>
 
-                <div className="flex sm:flex-row gap-4 mt-6 justify-between">
+                <div className="flex sm:flex-row mt-6 justify-between">
                   <Button
                     onClick={handleAddMoreVehicles}
                     variant="outline"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary text-sm"
                   >
                     ADD MORE VEHICLES
                   </Button>
                   <Button
                     onClick={handleCheckout}
                     variant="outline"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary text-sm w-[10rem]"
                   >
                     CHECKOUT
                   </Button>

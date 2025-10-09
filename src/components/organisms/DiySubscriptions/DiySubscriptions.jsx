@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Car, Plus, RotateCcw, ChevronDown, CarFront, CirclePlus } from "lucide-react";
 import { Link } from "react-router-dom";
-import VehicleChangeModal from "../molecules/VehicleChangeModal";
-import VehicleChangeLimitModal from "../molecules/VehicleChangeLimitModal";
-import RefundRequestModal from "../molecules/RefundRequestModal";
-import RefundLimitModal from "../molecules/RefundLimitModal";
-import { Button } from "../atoms/Buttons/Button";
+import VehicleChangeModal from "../../molecules/VehicleChangeModal/index";
+import VehicleChangeLimitModal from "../../molecules/VehicleChangeLimitModal/index";
+import RefundRequestModal from "../../molecules/RefundRequestModal/index";
+import RefundLimitModal from "../../molecules/RefundLimitModal/index";
+import { Button } from "../../atoms/Buttons/Button";
+import { useNavigate } from "react-router-dom"
 
 const initialSubscriptions = [
   {
@@ -47,6 +48,8 @@ const initialSubscriptions = [
 ];
 
 const DiySubscriptions = () => {
+  const navigate = useNavigate()
+
   const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLimitModalOpen, setIsLimitModalOpen] = useState(false);
@@ -106,6 +109,9 @@ const DiySubscriptions = () => {
 
   const cartCount = subscriptions.filter((sub) => sub.inCart).length;
 
+  const handleViewCart = () => {
+    navigate("/diy-cart")
+  }
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
       <div className="mb-6">
@@ -157,7 +163,7 @@ const DiySubscriptions = () => {
               </td>
               <td className="py-4 lg:px-4">
                 <div className="flex flex-col items-start lg:flex-row lg:items-center gap-3">
-                  <select 
+                  <select
                     name={`subscription-${subscription.id}`}
                     id={`subscription-${subscription.id}`}
                     className="border-2 border-gray-300 h-10 bg-white px-3 py-1.5 text-sm text-foreground w-full lg:w-auto"
@@ -194,17 +200,22 @@ const DiySubscriptions = () => {
       </table>
 
       <div className="flex gap-3 mt-6">
-        <Link to="/diy">
+        {
+          cartCount > 0 &&
           <Button
             variant="outline"
-            className="px-6 py-2 border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold bg-transparent"
+            className="btn btn-primary"
+            onClick={handleViewCart}
+          // className="px-6 py-2 border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold bg-transparent"
           >
             VIEW CART ({cartCount})
           </Button>
-        </Link>
+        }
+
         <Button
           variant="outline"
-          className="px-6 py-2 border border-border text-foreground hover:bg-muted font-semibold bg-transparent"
+          className="btn btn-secondary"
+        // className="px-6 py-2 border border-border text-foreground hover:bg-muted font-semibold bg-transparent"
         >
           ADD MORE VEHICLES
         </Button>

@@ -3,6 +3,7 @@ import DiySubscriptions from '../components/organisms/DiySubscriptions/DiySubscr
 import DiyPaymentInfo from '../components/organisms/DiyPaymentInfo/DiyPaymentInfo';
 import DiyProfileInfo from '../components/organisms/DiyProfileInfo/DiyProfileInfo';
 import { Tabs } from '../components/molecules/Tabs';
+import DIYCartHome from '../Cart/diy';
 
 const DIYCustomerAccount = () => {
 
@@ -27,6 +28,7 @@ const DIYCustomerAccount = () => {
 
   return (
     <>
+      <DIYCartHome />
       <h1 className="title text-center mt-20">
         {/* @todo: Get content from Drupal */}
         <span className="title-first-part">My Account : </span>

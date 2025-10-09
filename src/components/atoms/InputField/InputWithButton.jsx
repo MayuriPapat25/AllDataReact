@@ -50,7 +50,7 @@ export function InputWithButton({
           variant="outline"
           onClick={handleSubmit}
           disabled={disabled || !value.trim()}
-          className="whitespace-nowrap"
+          className="whitespace-nowrap text-sm w-[8rem]"
         >
           {buttonText}
         </Button>

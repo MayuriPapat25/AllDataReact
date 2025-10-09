@@ -122,10 +122,15 @@ const DiyProfileInfo = () => {
               <div className="flex gap-2">
                 <input
                   id="contactNumber"
-                  type="text"
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   placeholder="Contact Number"
                   value={formData.contactNumber}
-                  onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, ''); // remove all non-digits
+                    setFormData({ ...formData, contactNumber: value });
+                  }}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
 
@@ -213,7 +218,8 @@ const DiyProfileInfo = () => {
           <div className="mt-8">
             <button
               onClick={handleSave}
-              className="px-8 py-2 border-2 border-orange-500 text-orange-500 rounded font-semibold hover:bg-orange-50 transition-colors"
+              className="btn btn-primary w-1/4"
+            // className="px-8 py-2 border-2 border-orange-500 text-orange-500 rounded font-semibold hover:bg-orange-50 transition-colors"
             >
               SAVE
             </button>

@@ -21,6 +21,11 @@ const StepContentDIYCheckout = ({
     const [selectedCard, setSelectedCard] = useState("1") // Default to first card
     const [paymentType, setPaymentType] = useState("existing")
 
+    const handleEdit = () => {
+        console.log("Edit button clicked")
+        // Navigate back to step 2 for editing
+        onBack()
+    }
 
 
     const renderStepContent = () => {
@@ -63,7 +68,7 @@ const StepContentDIYCheckout = ({
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <PlaceOrderForm />
-                                <BillingInformation fromReview={true} />
+                                <BillingInformation fromReview={true} onEdit={handleEdit} />
                                 <TermsConditions checked={agreeTerms} onCheckedChange={setAgreeTerms} />
                             </div>
                             <div className="w-1/2">
@@ -177,7 +182,7 @@ const StepContentDIYCheckout = ({
                     <Button
                         onClick={ternaryButton.onClick}
                         variant={ternaryButton.variant || "outline"}
-                        className={ternaryButton.className || "border-2 border-gray-300 text-gray-700 font-medium text-base hover:bg-gray-50 bg-transparent"}
+                        className={ternaryButton.className || "btn btn-secondary mr-2"}
                     >
                         {ternaryButton.text}
                     </Button>
