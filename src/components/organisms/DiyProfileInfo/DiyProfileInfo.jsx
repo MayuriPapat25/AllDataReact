@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import PhoneField from '../../atoms/PhoneNumberField';
+import InputField from '../../atoms/InputField';
+import { Dropdown } from '../../atoms/Dropdown/Dropdown';
 
 const DiyProfileInfo = () => {
   const initialFormData = {
@@ -59,6 +62,23 @@ const DiyProfileInfo = () => {
     setShowSaveButton(false);
   };
 
+
+  const handleInputChange = (field, value) => {
+    const sanitizedEvent = sanitizePhoneInput(e)
+    const updatedValue = sanitizedEvent.target.value
+    setFormData((prev) => ({
+      ...prev,
+      [field]: updatedValue,
+    }))
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: "",
+      }))
+    }
+  }
   return (
     <div className="mx-auto p-8 bg-gray-50 min-h-screen">
       <div className="p-8">
@@ -71,52 +91,35 @@ const DiyProfileInfo = () => {
           </h3>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
-            <div>
-              <label htmlFor="firstName" className="block text-sm text-gray-700 mb-2">
-                First Name
-              </label>
-              <input
-                id="firstName"
-                type="text"
-                value={formData.firstName}
-                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
+            <InputField
+              id="firstName"
+              label="First Name"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange("firstName", e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
 
-            <div>
-              <label htmlFor="lastName" className="block text-sm text-gray-700 mb-2">
-                Last Name
-              </label>
-              <input
-                id="lastName"
-                type="text"
-                value={formData.lastName}
-                onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-              />
-            </div>
+            <InputField
+              id="lastName"
+              label="Last Name"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange("firstName", e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="email" className="block text-sm text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                id="email"
+              <InputField
+                label="Email Address"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                helperText=" Used for ALLDATA Communications including Password Reset. Does not change Username."
               />
-              <p className="text-xs text-gray-500 mt-2">
-                Used for ALLDATA Communications including Password Reset. Does not change Username.
-              </p>
             </div>
-
-            <div>
-              <label htmlFor="contactNumber" className="block text-sm text-gray-700 mb-2">
+            <div className="flex justify-between items-center">
+              {/* <label htmlFor="contactNumber" className="block text-sm text-gray-700 mb-2">
                 Contact Number
               </label>
               <div className="flex gap-2">
@@ -133,55 +136,70 @@ const DiyProfileInfo = () => {
                   }}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
                 />
+              </div> */}
 
-                <div className="relative w-40" ref={dropdownRef}>
-                  <button
-                    type="button"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded bg-white text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-orange-500"
-                  >
-                    <span className={formData.contactType ? 'text-gray-900' : 'text-gray-400'}>
-                      {formData.contactType || '- Select -'}
-                    </span>
-                    {isDropdownOpen ? (
-                      <ChevronUp className="w-4 h-4 text-gray-600" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
-                    )}
-                  </button>
-
-                  {isDropdownOpen && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg bg-white z-10">
-                      <input
-                        type="text"
-                        placeholder=""
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
-                        autoFocus
-                      />
-                      <div className="max-h-40 overflow-y-auto">
-                        {filteredTypes.length > 0 ? (
-                          filteredTypes.map((type) => (
-                            <div
-                              key={type}
-                              onClick={() => handleSelectType(type)}
-                              className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${type === 'Home' ? 'bg-orange-500 text-white hover:bg-orange-600' : ''
-                                }`}
-                            >
-                              {type}
-                            </div>
-                          ))
-                        ) : (
-                          <div className="px-3 py-2 text-gray-400 text-sm">
-                            No results found
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
+              <PhoneField
+                id="contactNumber"
+                label="Contact Number"
+                value={formData.contactNumber}
+                onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                placeholder="Contact Number"
+              />
+              <div className="w-40">
+                <Dropdown
+                  value={searchTerm}
+                  onValueChange={setSearchTerm}
+                  options={filteredTypes}
+                  placeholder="-Select-"
+                />
               </div>
+              {/* <div className="relative w-40" ref={dropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded bg-white text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-orange-500"
+                >
+                  <span className={formData.contactType ? 'text-gray-900' : 'text-gray-400'}>
+                    {formData.contactType || '- Select -'}
+                  </span>
+                  {isDropdownOpen ? (
+                    <ChevronUp className="w-4 h-4 text-gray-600" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-gray-600" />
+                  )}
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-1 border border-gray-300 rounded shadow-lg bg-white z-10">
+                    <input
+                      type="text"
+                      placeholder=""
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
+                      autoFocus
+                    />
+                    <div className="max-h-40 overflow-y-auto">
+                      {filteredTypes.length > 0 ? (
+                        filteredTypes.map((type) => (
+                          <div
+                            key={type}
+                            onClick={() => handleSelectType(type)}
+                            className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${type === 'Home' ? 'bg-orange-500 text-white hover:bg-orange-600' : ''
+                              }`}
+                          >
+                            {type}
+                          </div>
+                        ))
+                      ) : (
+                        <div className="px-3 py-2 text-gray-400 text-sm">
+                          No results found
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div> */}
             </div>
           </div>
         </div>

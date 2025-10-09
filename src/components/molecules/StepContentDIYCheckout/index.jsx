@@ -145,7 +145,7 @@ const StepContentDIYCheckout = ({
                     variant: "outline"
                 },
                 ternaryButton: null,
-                buttonLayout: "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 max-w-2xl pt-18"
+                buttonLayout: "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 max-w-2xl pt-18 btn-half text-sm"
             },
         }
 

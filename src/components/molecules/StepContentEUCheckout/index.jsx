@@ -6,7 +6,7 @@ import BillingAddressForm from '../BillingAddress'
 
 import BillingEmailForm from "../BillingEmailAddress"
 import PhoneSignupForm from "../PhoneSignUpForm"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
@@ -15,6 +15,8 @@ import BillingInfoReview from "../../atoms/BillingInfoReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
+import BillingInformation from "../BillingInformation"
+import AgreementModal from "../AgreementModal"
 
 
 const StepContentEUCheckout = ({
@@ -24,6 +26,11 @@ const StepContentEUCheckout = ({
     stepConfig = {}
 }) => {
     const [step1Valid, setStep1Valid] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(true);
+
+    useEffect(() => {
+        setIsModalOpen(true)
+    }, [])
 
     const accountData = {
         email: "hinal.parikh@qed42.com",
@@ -77,8 +84,9 @@ const StepContentEUCheckout = ({
                                 <BillingAddressForm />
 
                                 <div className="space-y-6">
-                                    <h2 className="text-md">Billing Information</h2>
-                                    <iframe></iframe>
+                                    {/* <h2 className="text-md">Billing Information</h2>
+                                    <iframe></iframe> */}
+                                    <BillingInformation />
                                     <BillingEmailForm />
                                 </div>
                             </div>
@@ -111,6 +119,10 @@ const StepContentEUCheckout = ({
             case 4:
                 return (
                     <div bg-background p-4 md:p-8>
+                        <AgreementModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                        />
                         <AgreementPage />
                     </div>
                 )

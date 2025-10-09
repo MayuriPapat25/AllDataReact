@@ -1,5 +1,6 @@
+import { Button } from "../../atoms/Buttons/Button"
 
-const AgreementPage = () => {
+const AgreementPage = ({ setIsModalOpen }) => {
 
     return (
         <div>
@@ -58,9 +59,13 @@ const AgreementPage = () => {
 
                 {/* Review Agreement Terms Section */}
                 <div className="mb-12">
-                    <button className="h5 text-primary underline font-light" style={{ fontWeight: 400, textDecorationStyle: 'dotted' }}>
+                    <Button
+                        className="h5 text-primary underline font-light"
+                        style={{ fontWeight: 400, textDecorationStyle: 'dotted' }}
+                        onClick={setIsModalOpen}
+                    >
                         Review Agreement Terms
-                    </button>
+                    </Button>
                 </div>
 
                 {/* Legal Text */}
