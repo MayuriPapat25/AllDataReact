@@ -23,8 +23,9 @@ function App() {
         <Link to="/" className="text-blue-600 hover:underline">Home</Link>
         <Link to='/diycustomeraccount' className="text-blue-600 hover:underline">DIY Customer Account</Link>
         <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
-        <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link>
+        {/* <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link> */}
         <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
+        <Link to="/euprofessional" className="text-blue-600 hover:underline">EU Professional Cart</Link>
         <Link to="/rep" className="text-blue-600 hover:underline">Rep Initiated Cart</Link>
         <Link to='/diycheckout' className="text-blue-600 hover:underline">DIY CHECKOUT</Link>
         <Link to='/usanonycheckout' className="text-blue-600 hover:underline">US Anony Checkout</Link>
@@ -39,10 +40,11 @@ function App() {
           <Route path="/" element={<HomePage />} />
 
           {/* DIY Cart page */}
-          <Route path="/diy" element={<DIYCartHome />} />
+          {/* <Route path="/diy" element={<DIYCartHome />} /> */}
 
           {/* Professional Cart page */}
           <Route path="/professional" element={<ProCartHome />} />
+          <Route path="/euprofessional" element={<ProCartHome />} />
           <Route path="/rep" element={<RepCartHome />} />
 
           <Route path="/diy-cart" element={<DiyCartPage />} />

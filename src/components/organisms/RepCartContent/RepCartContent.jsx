@@ -8,8 +8,10 @@ import { AccessPointsModal } from "../../molecules/Modal/AccessPointsModal"
 import { Button } from "../../atoms/Buttons/Button"
 import repairIcon from "../../../assets/images/repair_color.png"
 import PaymentFrequency from "../../molecules/paymentFrequency"
+import { useNavigate } from "react-router-dom"
 
 export function RepCartContent() {
+  const navigate = useNavigate()
   const [promoCode, setPromoCode] = useState("")
   const [showAccessPointsModal, setShowAccessPointsModal] = useState(false)
 
@@ -23,6 +25,10 @@ export function RepCartContent() {
 
   const handleAccessPointChange = (itemId, newValue) => {
     setCartItems(prev => prev.map(item => item.id === itemId ? { ...item, accessPoints: newValue } : item))
+  }
+
+  const handleCheckout = () => {
+    navigate('/repinitiatedcheckout')
   }
 
   return (
@@ -144,6 +150,7 @@ export function RepCartContent() {
           variant="outline"
           style={{ borderColor: "#f75e00", color: "#f75e00" }}
           className="w-full cursor-pointer"
+          onClick={handleCheckout}
         >
           CHECKOUT
         </Button>
