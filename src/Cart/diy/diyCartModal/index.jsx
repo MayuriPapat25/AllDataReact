@@ -4,7 +4,7 @@ import { ProductSingleItem } from "../../../components/molecules/productItem/diy
 import { Button } from "../../../components/atoms/Buttons/Button"
 import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
 
-export default function CartPage() {
+export default function DiyCartPage({ initialCartItems = null }) {
   const navigate = useNavigate()
   const [region, setRegion] = useState("usa")
   const regionOptions = [
@@ -14,7 +14,7 @@ export default function CartPage() {
     { value: "eu", label: "European Union" },
   ]
 
-  const [cartItems, setCartItems] = useState([
+  const [cartItems, setCartItems] = useState(initialCartItems ?? [
     // For testing empty cart, set this array to []
     {
       id: "1",

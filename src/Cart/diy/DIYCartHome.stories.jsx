@@ -1,11 +1,27 @@
-import React from "react";
-import DIYCartHome from "./index";
+import React from 'react'
+import { MemoryRouter } from 'react-router-dom'
+import DIYCartHome from './index'
 
 export default {
-    title: "Pages/DIYCartHome",
+    title: 'Pages/DIYCartHome',
     component: DIYCartHome,
-};
+    decorators: [
+        (Story) => (
+            <MemoryRouter>
+                <Story />
+            </MemoryRouter>
+        ),
+    ],
+    parameters: {
+        docs: {
+            description: {
+                component: 'DIY Cart Home page with header and cart functionality.',
+            },
+        },
+        layout: 'fullscreen',
+    },
+}
 
-// ✅ Default view — page with HeaderWithCart
-export const Default = () => <DIYCartHome />;
-Default.storyName = "Default View";
+export const Default = {
+    args: {},
+}

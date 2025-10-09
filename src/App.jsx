@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
 import "./styles/theme.css"; // Gotham @font-face
 import "./styles/global.css";
 
@@ -7,7 +6,7 @@ import HomePage from "./HomePage";
 import DIYCartHome from "./Cart/diy";
 import ProCartHome from "./Cart/professional/index";
 import RepCartHome from "./Cart/rep";
-import CartPage from "./Cart/diy/cartModal";
+import DiyCartPage from "./Cart/diy/diyCartModal";
 import { ProfCustomPortal } from "./ProfCustomPortal";
 import DIYCheckout from "./Checkout/DiyCheckoutFlow/index";
 import UsAnonyCheckout from "./Checkout/USAnonyCheckout/index";
@@ -46,7 +45,7 @@ function App() {
           <Route path="/professional" element={<ProCartHome />} />
           <Route path="/rep" element={<RepCartHome />} />
 
-          <Route path="/diy-cart" element={<CartPage />} />
+          <Route path="/diy-cart" element={<DiyCartPage />} />
 
           <Route path="/profcustomportal" element={<ProfCustomPortal />} />
           <Route path="/diycheckout" element={<DIYCheckout />} />

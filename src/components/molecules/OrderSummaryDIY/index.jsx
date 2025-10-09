@@ -6,14 +6,12 @@ const OrderSummaryDIY = () => {
             <h2 className="text-md mb-6">ORDER SUMMARY</h2>
             <OrderSummaryCardDIY />
             <div className="space-y-2">
-                {/* <TitleValue title="Subtotal:" value="$19.99" /> */}
                 <div className="flex justify-between items-center mt-1">
                     <span className="text-foreground font-light">Subtotal:</span>
                     <span className="text-muted-foreground font-light">
                         $19.99
                     </span>
                 </div>
-                {/* <TitleValue title="Sales Tax:" value="$1.77" /> */}
                 <div className="flex justify-between items-center mt-1">
                     <span className="text-foreground font-light">Sales Tax:</span>
                     <span className="text-muted-foreground font-light">

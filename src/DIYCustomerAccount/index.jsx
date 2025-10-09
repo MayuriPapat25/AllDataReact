@@ -1,7 +1,7 @@
 import React from 'react';
-import DiySubscriptions from '../components/organisms/DiySubscriptions';
-import DiyPaymentInfo from '../components/organisms/DiyPaymentInfo';
-import DiyProfileInfo from '../components/organisms/DiyProfileInfo';
+import DiySubscriptions from '../components/organisms/DiySubscriptions/DiySubscriptions';
+import DiyPaymentInfo from '../components/organisms/DiyPaymentInfo/DiyPaymentInfo';
+import DiyProfileInfo from '../components/organisms/DiyProfileInfo/DiyProfileInfo';
 import { Tabs } from '../components/molecules/Tabs';
 
 const DIYCustomerAccount = () => {

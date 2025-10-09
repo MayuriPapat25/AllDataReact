@@ -1,7 +1,7 @@
 import { forwardRef } from "react"
 import { cn } from "../../../../utils/utils"
 
-const InputField = forwardRef(
+const InputFieldWithoutBorder = forwardRef(
   ({ label, required, optional, error, helperText, className, id, onChange, type = "text", ...props }, ref) => {
     const describedById = id ? `${id}-error` : undefined
     return (
@@ -43,4 +43,4 @@ const InputField = forwardRef(
   },
 )
 
-export default InputField
+export default InputFieldWithoutBorder
