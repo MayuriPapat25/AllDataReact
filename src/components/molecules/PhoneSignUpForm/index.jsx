@@ -8,7 +8,7 @@ const PhoneSignupForm = ({ onEdit }) => {
         <>
             {
                 phoneNumber === "" ?
-                    <div className="w-full p-6 bg-[#f4f4f4] border-t-2 border-gray-400">
+                    <div className="w-full p-6 bg-[#f4f4f4] border-t-2 border-gray-400 border-b-2">
                         <div className="pt-3">
                             <h2 className="text-2xl font-bold text-gray-900 mb-8 tracking-wide">DON'T MISS OUT ON UPDATES AND OFFERS!</h2>
 

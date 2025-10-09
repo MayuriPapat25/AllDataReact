@@ -43,9 +43,12 @@ const SelectField = forwardRef(
             aria-label={computedAriaLabel}
             aria-invalid={!!error}
             className={cn(
-              "w-full px-3 py-2 border-2 border-gray-300 text-sm appearance-none",
+              "w-full px-3 py-2 appearance-none text-sm",
+              // Applying border-2 for consistency with other fields, and managing default/error state
+              error
+                ? "border-2 border-error focus:border-error" // Red border on error
+                : "border-2 border-gray-300 focus:border-blue-500", // Default/Focus borders
               "focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent",
-              error && "border-destructive",
               className
             )}
             {...props}

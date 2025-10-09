@@ -2,7 +2,7 @@ import { Button } from "../../atoms/Buttons/Button"
 import { Icon } from "../../atoms/Icon/Icon"
 import { ProCartContent } from "../ProCartContent/ProCartContent"
 
-export function ProCartDropdown({ isOpen = true, onClose, variant = "dropdown" }) {
+export function ProCartDropdown({ isOpen = true, onClose, variant = "dropdown", fromEU }) {
   if (variant === "dropdown" && !isOpen) return null
 
   return (
@@ -24,7 +24,7 @@ export function ProCartDropdown({ isOpen = true, onClose, variant = "dropdown" }
               </Button>
             </div>
             <div className="py-4 px-8">
-              <ProCartContent />
+              <ProCartContent fromEU={fromEU} />
             </div>
           </div>
         </div>

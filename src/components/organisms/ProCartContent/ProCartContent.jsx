@@ -13,7 +13,7 @@ import { AccessPointsModal } from "../../molecules/Modal/AccessPointsModal"
 import { Button } from "../../atoms/Buttons/Button"
 import repairIcon from "../../../assets/images/repair_color.png"
 
-export function ProCartContent() {
+export function ProCartContent({ fromEU }) {
   const navigate = useNavigate()
   const [paymentFrequency, setPaymentFrequency] = useState("MONTHLY")
   const [subscriptionTerm, setSubscriptionTerm] = useState("12 Months")
@@ -40,6 +40,15 @@ export function ProCartContent() {
     console.log("Applying promo code:", promoCode)
   }
 
+  const handleCheckout = () => {
+    console.log('fromEU', fromEU)
+    if (!fromEU) {
+      navigate('/usanonycheckout')
+    } else {
+      navigate('/eucheckout')
+
+    }
+  }
   return (
     <div>
       {/* Messages */}
@@ -240,7 +249,7 @@ export function ProCartContent() {
         <Button
           variant="outline"
           className="btn-full cursor-pointer btn btn-primary"
-          onClick={() => navigate('/usanonycheckout')}
+          onClick={handleCheckout}
         >
           CHECKOUT
         </Button>

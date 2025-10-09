@@ -3,7 +3,7 @@ import InputField from "../../atoms/InputField/index"
 import PasswordField from "../../atoms/InputField/PasswordField"
 import PhoneField from "../../atoms/PhoneNumberField"
 import SelectField from "../../atoms/SelectField"
-
+import TermsConditions from '../../atoms/TermsCondition/index'
 const AccountCreationForm = ({
     variant = "full", // "full", "business", or "email"
     onSubmit,
@@ -61,11 +61,11 @@ const AccountCreationForm = ({
             if (!formData.state.trim()) newErrors.state = "State is required"
             if (!formData.zipCode.trim()) newErrors.zipCode = "ZIP code is required"
         } else if (variant === "business") {
-            if (!formData.businessPhone.trim()) newErrors.businessPhone = "Business phone is required"
+            if (!formData.businessPhone.trim()) newErrors.businessPhone = "Please enter at least 10 digits."
         }
 
         // Common validations
-        if (!formData.email.trim()) newErrors.email = "Email is required"
+        if (!formData.email.trim()) newErrors.email = "Please enter a valid emain address."
 
         if (variant !== "email") {
             if (!formData.username.trim()) newErrors.username = "Username is required"
@@ -100,6 +100,9 @@ const AccountCreationForm = ({
         e.preventDefault()
         if (validateForm()) {
             onSubmit?.(formData)
+        } else {
+            // Force validation on submit to show errors
+            getValidationErrors();
         }
     }
 
@@ -346,7 +349,7 @@ const AccountCreationForm = ({
                             onChange={(e) => handleInputChange("username", e.target.value)}
                             placeholder={variant === "full" ? "USERNAME" : "CREATE A USERNAME"}
                             error={errors.username}
-                            helperText={"Username must be 6+ characters, no spaces"}
+                            helperText={"Login needs to contain at least 6 characters"}
                             onBlur={() => setErrors((prev) => ({ ...prev, username: getValidationErrors().username }))}
                         />
 
@@ -375,7 +378,19 @@ const AccountCreationForm = ({
                     </>
                 )}
 
-                <div className="flex items-start space-x-2">
+                <div>
+                    <TermsConditions
+                        id="agreeToTerms" // Use a unique ID or the default "terms"
+                        checked={formData.agreeToTerms}
+                        onCheckedChange={(isChecked) => handleInputChange("agreeToTerms", isChecked)}
+                        companyName="ALLDATA"
+                        className={errors.agreeToTerms ? "border border-red-500 p-2 rounded" : ""} // Optional error styling
+                    />
+                    {errors.agreeToTerms && (
+                        <p className="text-sm text-red-500 mt-1">{errors.agreeToTerms}</p>
+                    )}
+                </div>
+                {/* <div className="flex items-start space-x-2">
                     <input
                         type="checkbox"
                         id="terms"
@@ -407,7 +422,7 @@ const AccountCreationForm = ({
                         )}
                     </div>
                     {errors.agreeToTerms && <p className="text-sm text-error mt-1">{errors.agreeToTerms}</p>}
-                </div>
+                </div> */}
             </form>
         </div>)
 }
