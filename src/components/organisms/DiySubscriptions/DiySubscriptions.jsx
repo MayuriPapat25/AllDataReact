@@ -112,6 +112,7 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
             variant="outline"
             className="btn btn-primary"
             onClick={handleViewCart}
+            size='sm'
           // className="px-6 py-2 border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold bg-transparent"
           >
             VIEW CART ({cartCount})
@@ -122,6 +123,7 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
           variant="outline"
           className="btn btn-secondary"
           onClick={handleAddMoreVehicle}
+          size='sm'
         // className="px-6 py-2 border border-border text-foreground hover:bg-muted font-semibold bg-transparent"
         >
           ADD MORE VEHICLES

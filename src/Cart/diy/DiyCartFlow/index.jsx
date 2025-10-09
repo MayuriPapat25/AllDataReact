@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
-import StepContentDIYCart from "../../../components/molecules/StepContentDiyCart";
+import StepContentDIYCart from "../../../components/molecules/StepContentDIYCart";
 
 const DIYCartFlow = () => {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ const DIYCartFlow = () => {
         if (currentStep > 1) {
             setCurrentStep((prev) => prev - 1);
         } else {
-            //Add back page here for add 
+            //Add back page here for add
             navigate('/')
         }
     };

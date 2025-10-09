@@ -61,14 +61,11 @@
     border-color: var(--btn-primary-border);
     color: var(--btn-primary-text);
 
-    &::before {
-      background-color: var(--btn-primary-hover-bg);
-    }
-
     &:hover,
     &:active {
       color: var(--btn-primary-hover-text);
-      
+      background-color: var(--btn-primary-hover-bg);
+
       &::before {
         @apply h-full;
       }
@@ -81,14 +78,11 @@
     border-color: var(--btn-secondary-border);
     color: var(--btn-secondary-text);
 
-    &::before {
-      background-color: var(--btn-secondary-hover-bg);
-    }
-
     &:hover,
     &:active {
       border-color: var(--btn-secondary-hover-border);
       color: var(--btn-secondary-hover-text);
+      background-color: var(--btn-secondary-hover-bg);
 
       &::before {
         @apply h-full;

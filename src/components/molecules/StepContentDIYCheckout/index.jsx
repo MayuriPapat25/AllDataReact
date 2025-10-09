@@ -166,6 +166,7 @@ const StepContentDIYCheckout = ({
                     onClick={primaryButton.onClick}
                     disabled={primaryButton.disabled}
                     className={primaryButton.className || "btn btn-primary mr-2"}
+                    size="sm"
                 >
                     {primaryButton.text}
                 </Button>
@@ -174,6 +175,7 @@ const StepContentDIYCheckout = ({
                         onClick={secondaryButton.onClick}
                         variant={secondaryButton.variant || "outline"}
                         className={secondaryButton.className || "btn btn-secondary mr-2"}
+                        size="sm"
                     >
                         {secondaryButton.text}
                     </Button>
@@ -183,6 +185,7 @@ const StepContentDIYCheckout = ({
                         onClick={ternaryButton.onClick}
                         variant={ternaryButton.variant || "outline"}
                         className={ternaryButton.className || "btn btn-secondary mr-2"}
+                        size="sm"
                     >
                         {ternaryButton.text}
                     </Button>
