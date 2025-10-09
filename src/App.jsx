@@ -3,7 +3,6 @@ import "./styles/theme.css"; // Gotham @font-face
 import "./styles/global.css";
 
 import HomePage from "./HomePage";
-import DIYCartHome from "./Cart/diy";
 import ProCartHome from "./Cart/professional/index";
 import RepCartHome from "./Cart/rep";
 import DiyCartPage from "./Cart/diy/diyCartModal";
@@ -14,6 +13,7 @@ import UsAuthCheckout from "./Checkout/UsAuthCheckout";
 import EuCheckout from "./Checkout/EuCheckout";
 import RepInitiatedCheckout from "./Checkout/RepInitiatedCheckout";
 import DIYCustomerAccount from "./DIYCustomerAccount";
+import DIYCartFlow from "./Cart/diy/DiyCartFlow";
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
         <Link to='/usauthcheckout' className="text-blue-600 hover:underline">US Auth Checkout</Link>
         <Link to='/eucheckout' className="text-blue-600 hover:underline">EU Checkout</Link>
         <Link to='/repinitiatedcheckout' className="text-blue-600 hover:underline">Rep Initiated Checkout</Link>
+        <Link to='/findvehicle' className="text-blue-600 hover:underline">Find Vehicle</Link>
       </header>
 
       <main className="container">
@@ -56,6 +57,8 @@ function App() {
           <Route path="/eucheckout" element={<EuCheckout />} />
           <Route path="/repinitiatedcheckout" element={<RepInitiatedCheckout />} />
           <Route path="/diycustomeraccount" element={<DIYCustomerAccount />} />
+          <Route path="/findvehicle" element={<DIYCartFlow />} />
+
         </Routes>
       </main>
     </Router>
