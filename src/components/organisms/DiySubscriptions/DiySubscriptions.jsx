@@ -25,7 +25,7 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
         <p className="text-sm text-muted-foreground leading-relaxed text-gray-600">
           Subscription options include: change vehicle, renew vehicle, remove vehicle, or refund request. The
           availability of each option will vary based on the subscription. See{" "}
-          <a href="#" className="text-blue-600 hover:underline">
+          <a href="#" className="test-primary hover:underline">
             Subscription Rules
           </a>{" "}
           for more information. For product access, click on any active subscription below.

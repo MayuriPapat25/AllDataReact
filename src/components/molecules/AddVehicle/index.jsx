@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Search, Loader2 } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
 
 const AddVehicle = ({ currentVehicle, onNextStep }) => {
@@ -64,12 +64,14 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
     setLoading(true);
     setSelectedEngine(engine);
 
-    // Simulate submission delay
+    // Simulate delay
     await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(false);
 
-    // Trigger next step in StepContentDIYCart
-    if (onNextStep) onNextStep();
+    // Redirect to next step
+    if (onNextStep) {
+      onNextStep(); // triggers StepContentDIYCart to move to Step 2
+    }
   };
 
   return (
@@ -217,6 +219,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                 <div key={engine} className="flex items-center gap-3">
                   <div className="flex-1 border border-gray-300 px-4 py-2">{engine}</div>
                   <Button
+                    type="button"
                     onClick={() => handleEngineSelect(engine)}
                     variant="outline"
                     size="sm"
@@ -235,7 +238,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
       {loading && (
         <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
           <div className="text-center">
-            <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-2" />
+            <Loader2 className="w-12 h-[100%] test-primary animate-spin mx-auto mb-2" />
             <p className="text-gray-600">Loading...</p>
           </div>
         </div>

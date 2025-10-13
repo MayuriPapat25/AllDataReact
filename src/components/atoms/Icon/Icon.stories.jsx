@@ -5,7 +5,7 @@ export default {
     component: Icon,
     args: {
         type: 'check',
-        className: 'text-blue-600',
+        className: 'test-primary',
     },
     argTypes: {
         type: {

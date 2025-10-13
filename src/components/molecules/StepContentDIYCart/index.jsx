@@ -2,6 +2,7 @@ import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
 import DIYCartHome from "../../../Cart/diy"
 import AddVehicle from "../AddVehicle"
+import PickYourPlan from "../../molecules/PickYourPlan"
 
 const StepContentDIYCart = ({
   currentStep,
@@ -27,7 +28,7 @@ const StepContentDIYCart = ({
       case 2:
         return (
           <div className="mx-auto w-[90%]">
-            Pick your plan
+            <PickYourPlan />
           </div>
         )
       case 3:
