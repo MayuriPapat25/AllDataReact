@@ -15,7 +15,7 @@
 }
 
 .btn {
-  @apply relative cursor-pointer rounded-none px-3.5 py-2 h-auto inline-block appearance-none shadow-none;
+  @apply relative cursor-pointer rounded-none min-w-[100px] px-3.5 py-2 h-auto inline-block appearance-none shadow-none;
   @apply font-medium text-center overflow-hidden;
   font-family: var(--font-primary);
 

@@ -75,15 +75,6 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
   return (
     <>
       <div className="p-8">
-        <h2 className="text-2xl font-bold mb-4">VEHICLE CHANGE</h2>
-
-        <p className="text-gray-600 mb-6">
-          I am electing to change the <span className="font-semibold text-gray-800">{currentVehicle}</span> to the
-          following vehicle:
-        </p>
-
-        <h3 className="text-center font-bold mb-6">SELECT REPLACEMENT VEHICLE</h3>
-
         <div className="grid grid-cols-3 gap-4 mb-6">
           {/* Vehicle Year */}
           <div>
@@ -91,7 +82,8 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
             <div className="relative">
               <Button
                 onClick={() => setShowYearDropdown(!showYearDropdown)}
-                className="w-full border border-gray-300 rounded px-3 py-2 text-left flex items-center justify-between hover:border-gray-400"
+                size="sm"
+                className="w-full border border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400"
               >
                 <span className={selectedYear ? "text-black" : "text-gray-500"}>
                   {selectedYear || "SELECT YEAR"}
@@ -99,7 +91,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
               </Button>
 
               {showYearDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-64 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 shadow-lg z-10 max-h-64 overflow-y-auto">
                   <div className="p-2 border-b border-gray-200">
                     <div className="relative">
                       <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
@@ -108,7 +100,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                         placeholder="SELECT YEAR"
                         value={yearSearch}
                         onChange={(e) => setYearSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-8 pr-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -116,6 +108,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                     <Button
                       key={year}
                       onClick={() => handleYearSelect(year)}
+                      size="sm"
                       className="w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
                       {year}
@@ -133,7 +126,8 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
               <Button
                 onClick={() => setShowManufacturerDropdown(!showManufacturerDropdown)}
                 disabled={!selectedYear}
-                className="w-full border border-gray-300 rounded px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                size="sm"
+                className="w-full border border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
               >
                 <span className={selectedManufacturer ? "text-black" : "text-gray-500"}>
                   {selectedManufacturer || "SELECT MANUFACTURER"}
@@ -141,7 +135,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
               </Button>
 
               {showManufacturerDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-64 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 shadow-lg z-10 max-h-64 overflow-y-auto">
                   <div className="p-2 border-b border-gray-200">
                     <div className="relative">
                       <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
@@ -150,7 +144,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                         placeholder="SELECT MANUFACTURER"
                         value={manufacturerSearch}
                         onChange={(e) => setManufacturerSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-8 pr-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -158,6 +152,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                     <Button
                       key={mfr}
                       onClick={() => handleManufacturerSelect(mfr)}
+                      size="sm"
                       className="w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
                       {mfr}
@@ -175,7 +170,8 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
               <Button
                 onClick={() => setShowModelDropdown(!showModelDropdown)}
                 disabled={!selectedManufacturer}
-                className="w-full border border-gray-300 rounded px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                size="sm"
+                className="w-full border border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
               >
                 <span className={selectedModel ? "text-black" : "text-gray-500"}>
                   {selectedModel || "SELECT MODEL"}
@@ -183,7 +179,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
               </Button>
 
               {showModelDropdown && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded shadow-lg z-10 max-h-64 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 shadow-lg z-10 max-h-64 overflow-y-auto">
                   <div className="p-2 border-b border-gray-200">
                     <div className="relative">
                       <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
@@ -192,7 +188,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                         placeholder="SELECT MODEL"
                         value={modelSearch}
                         onChange={(e) => setModelSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-8 pr-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
@@ -200,6 +196,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
                     <Button
                       key={model}
                       onClick={() => handleModelSelect(model)}
+                      size="sm"
                       className="w-full text-left px-4 py-2 hover:bg-gray-100"
                     >
                       {model}
@@ -214,16 +211,16 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
         {/* Available Engines */}
         {availableEngines.length > 0 && (
           <div className="mb-6">
-            <h4 className="font-semibold mb-3">Available Engines</h4>
+            <label className="block text-sm font-semibold mb-2">Available Engines</label>
             <div className="space-y-3">
               {availableEngines.map((engine) => (
                 <div key={engine} className="flex items-center gap-3">
-                  <div className="flex-1 border border-gray-300 rounded px-4 py-2">{engine}</div>
+                  <div className="flex-1 border border-gray-300 px-4 py-2">{engine}</div>
                   <Button
                     onClick={() => handleEngineSelect(engine)}
                     variant="outline"
                     size="sm"
-                    className="border-2 border-orange-500 text-orange-500 hover:bg-orange-50 font-semibold"
+                    className="border-2 btn btn-primary text-primary hover:bg-orange-50 font-semibold"
                   >
                     SELECT
                   </Button>
@@ -232,15 +229,11 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
             </div>
           </div>
         )}
-
-        <p className="text-sm text-gray-600 mb-6">
-          This is a one-time change. You will be able to access the replacement vehicle upon submitting this request.
-        </p>
       </div>
 
       {/* Loading Overlay */}
       {loading && (
-        <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
+        <div className="absolute inset-0 bg-white/80 flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-2" />
             <p className="text-gray-600">Loading...</p>

@@ -20,13 +20,13 @@ const StepContentDIYCart = ({
     switch (currentStep) {
       case 1:
         return (
-          <div className="mx-auto flex justify-between gap-8">
+          <div className="mx-auto w-[90%]">
             <AddVehicle onNextStep={goToNextStep} />
           </div>
         )
       case 2:
         return (
-          <div className="mx-auto flex justify-between gap-8">
+          <div className="mx-auto w-[90%]">
             Pick your plan
           </div>
         )
@@ -58,7 +58,7 @@ const StepContentDIYCart = ({
           variant: "outline"
         },
         buttonLayout:
-          "max-w-2xl pt-18 flex-start gap-4 border-t-2 border-gray-300"
+          "flex-start gap-4 justify-center"
       },
       2: {
         showButtons: true,
@@ -69,14 +69,14 @@ const StepContentDIYCart = ({
         },
         secondaryButton: null,
         buttonLayout:
-          "flex-col sm:flex-row gap-4 pt-8 md:justify-center lg:justify-start border-t-2 border-gray-300"
+          "flex-col sm:flex-row gap-4 md:justify-center lg:justify-start"
       },
       3: {
         showButtons: true,
         primaryButton: null,
         secondaryButton: null,
         buttonLayout:
-          "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 max-w-2xl pt-18"
+          "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 pt-18"
       }
     }
 
@@ -98,7 +98,8 @@ const StepContentDIYCart = ({
         <Button
           onClick={primaryButton.onClick}
           disabled={primaryButton.disabled}
-          className={primaryButton.className || "btn btn-primary mr-2"}
+          size="sm"
+          className={primaryButton.className || "btn btn-primary"}
         >
           {primaryButton.text}
         </Button>
@@ -106,7 +107,8 @@ const StepContentDIYCart = ({
           <Button
             onClick={secondaryButton.onClick}
             variant={secondaryButton.variant || "outline"}
-            className={secondaryButton.className || "btn btn-secondary mr-2"}
+            size="sm"
+            className={secondaryButton.className || "btn btn-secondary"}
           >
             {secondaryButton.text}
           </Button>
