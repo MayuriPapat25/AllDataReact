@@ -1,10 +1,11 @@
-import { cn } from "../../../../utils/utils"
+import { cn } from "../../../../utils/utils";
 
-export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className }) {
+export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className, onClick }) {
   return (
     <article
+      onClick={onClick}
       className={cn(
-        "group relative border border-gray-200 bg-card transition-colors duration-200 shadow-lg bg-white",
+        "group relative border border-gray-200 bg-card transition-colors duration-200 shadow-lg bg-white cursor-pointer",
         "outline-none",
         className
       )}
@@ -42,7 +43,7 @@ export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className
         </div>
       </div>
     </article>
-  )
+  );
 }
 
-export default PricingCard
+export default PricingCard;

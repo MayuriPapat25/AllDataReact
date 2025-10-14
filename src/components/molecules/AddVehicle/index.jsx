@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Search, Loader2 } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
 
-const AddVehicle = ({ currentVehicle, onNextStep }) => {
+const AddVehicle = ({ currentVehicle, onNextStep, onContinue }) => {
   const [loading, setLoading] = useState(false);
 
   // Vehicle selection
@@ -68,10 +68,9 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(false);
 
-    // Redirect to next step
-    if (onNextStep) {
-      onNextStep(); // triggers StepContentDIYCart to move to Step 2
-    }
+    // Trigger next step in StepContentDIYCart
+    // if (onNextStep) onNextStep();
+    onContinue();
   };
 
   return (
@@ -80,7 +79,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
         <div className="grid grid-cols-3 gap-4 mb-6">
           {/* Vehicle Year */}
           <div>
-            <label className="block text-sm font-semibold mb-2">Vehicle Year</label>
+            <label className="block text-sm mb-2">Vehicle Year</label>
             <div className="relative">
               <Button
                 onClick={() => setShowYearDropdown(!showYearDropdown)}
@@ -123,7 +122,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
 
           {/* Vehicle Manufacturer */}
           <div>
-            <label className="block text-sm font-semibold mb-2">Vehicle Manufacturer</label>
+            <label className="block text-sm mb-2">Vehicle Manufacturer</label>
             <div className="relative">
               <Button
                 onClick={() => setShowManufacturerDropdown(!showManufacturerDropdown)}
@@ -167,7 +166,7 @@ const AddVehicle = ({ currentVehicle, onNextStep }) => {
 
           {/* Vehicle Model */}
           <div>
-            <label className="block text-sm font-semibold mb-2">Vehicle Model</label>
+            <label className="block text-sm mb-2">Vehicle Model</label>
             <div className="relative">
               <Button
                 onClick={() => setShowModelDropdown(!showModelDropdown)}

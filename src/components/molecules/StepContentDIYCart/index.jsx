@@ -3,13 +3,15 @@ import { useState } from "react"
 import DIYCartHome from "../../../Cart/diy"
 import AddVehicle from "../AddVehicle"
 import PickYourPlan from "../../molecules/PickYourPlan"
+import DiyCartPage from "../../../Cart/diy/diyCartModal"
 
 const StepContentDIYCart = ({
   currentStep,
   setCurrentStep, // ✅ pass this to control step
   onBack,
   onResetVehicle,
-  stepConfig = {}
+  stepConfig = {},
+  onContinue
 }) => {
   const [step1Valid, setStep1Valid] = useState(true)
 
@@ -22,19 +24,19 @@ const StepContentDIYCart = ({
       case 1:
         return (
           <div className="mx-auto w-[90%]">
-            <AddVehicle onNextStep={goToNextStep} />
+            <AddVehicle onNextStep={goToNextStep} onContinue={onContinue} />
           </div>
         )
       case 2:
         return (
           <div className="mx-auto w-[90%]">
-            <PickYourPlan />
+            <PickYourPlan onContinue={onContinue} />
           </div>
         )
       case 3:
         return (
           <div className="flex flex-col items-center">
-            <DIYCartHome />
+            <DiyCartPage />
           </div>
         )
       default:
@@ -70,10 +72,10 @@ const StepContentDIYCart = ({
         },
         secondaryButton: null,
         buttonLayout:
-          "flex-col sm:flex-row gap-4 md:justify-center lg:justify-start"
+          "flex-col sm:flex-row gap-4 justify-center"
       },
       3: {
-        showButtons: true,
+        showButtons: false,
         primaryButton: null,
         secondaryButton: null,
         buttonLayout:
