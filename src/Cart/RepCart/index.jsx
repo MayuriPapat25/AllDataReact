@@ -1,4 +1,4 @@
-import { RepCartDropdown } from "../../components/organisms/RepCartDropdown/repCartDropdown"
+import RepCartDropdown from "../../components/organisms/RepCartDropdown/index"
 
 export default function RepCartHome() {
   return (

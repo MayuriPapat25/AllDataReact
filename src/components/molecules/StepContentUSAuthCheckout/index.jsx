@@ -15,6 +15,7 @@ import BillingInfoReview from "../../atoms/BillingInfoReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
+import BillingInformation from "../BillingInformation"
 
 
 const StepContentUSAuthCheckout = ({
@@ -98,8 +99,9 @@ const StepContentUSAuthCheckout = ({
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
-                                    <h2 className="text-md">Billing Information</h2>
-                                    <iframe></iframe>
+                                    {/* <h2 className="text-md">Billing Information</h2>
+                                    <iframe></iframe> */}
+                                    <BillingInformation />
                                     <BillingEmailForm />
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ import "./styles/global.css";
 
 import HomePage from "./HomePage";
 import ProCartHome from "./Cart/professional/index";
-import RepCartHome from "./Cart/rep";
+import RepCartHome from "./Cart/RepCart/index";
 import DiyCartPage from "./Cart/diy/diyCartModal";
 import { ProfCustomPortal } from "./ProfCustomPortal";
 import DIYCheckout from "./Checkout/DiyCheckoutFlow/index";

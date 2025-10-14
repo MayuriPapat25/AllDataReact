@@ -44,7 +44,7 @@ const DIYCustomerAccount = () => {
       hasRequestedRefund: false,
     },
   ];
-
+  const [activeTab, setActiveTab] = useState('subscriptions');
   const [subscriptions, setSubscriptions] = useState(initialSubscriptions);
   const [cartData, setCartData] = useState([])
   const cartCount = cartData.length > 0 && cartData?.length;
@@ -88,7 +88,6 @@ const DIYCustomerAccount = () => {
       );
     }
   };
-
 
   const handleVehicleChangeComplete = () => {
     setSubscriptions((prev) =>

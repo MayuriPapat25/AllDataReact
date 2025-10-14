@@ -17,6 +17,7 @@ import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import PhoneSignupForm from "../PhoneSignUpForm"
 import AgreementModal from "../AgreementModal"
+import BillingInformation from "../BillingInformation"
 
 
 const StepContentRepInitiatedCheckout = ({
@@ -96,8 +97,9 @@ const StepContentRepInitiatedCheckout = ({
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
-                                    <h2 className="text-md">Billing Information</h2>
-                                    <iframe></iframe>
+                                    {/* <h2 className="text-md">Billing Information</h2>
+                                    <iframe></iframe> */}
+                                     <BillingInformation />
                                     <BillingEmailForm onValidationChange={setBillingEmailValid} />
                                     <PhoneSignupForm />
                                 </div>

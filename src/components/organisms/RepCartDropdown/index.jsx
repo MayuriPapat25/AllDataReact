@@ -1,6 +1,6 @@
 import { RepCartContent } from "../RepCartContent/RepCartContent"
 
-export function RepCartDropdown({ isOpen = true, variant = "dropdown" }) {
+const RepCartDropdown = ({ isOpen = true, variant = "dropdown" }) => {
   if (variant === "dropdown" && !isOpen) return null
   // Full page
   return (
@@ -10,3 +10,5 @@ export function RepCartDropdown({ isOpen = true, variant = "dropdown" }) {
     </div>
   )
 }
+
+export default RepCartDropdown

@@ -5,6 +5,7 @@ import SelectField from '../../atoms/SelectField/Inline-selectfield';
 import { PriceText } from '../../atoms/Price/PriceText';
 import SavedPaymentMethods from '../SavedPaymentMethods/SavedPaymentMethods';
 import UpdateAccoutDetails from '../../molecules/UpdateAccoutDetails';
+import InputField from '../../atoms/InputField';
 
 const AccountSettings = () => {
   const [formData, setFormData] = useState({

@@ -17,15 +17,15 @@ const DiyProfileInfo = () => {
 
   const [formData, setFormData] = useState(initialFormData);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [contactType, setContactType] = useState("home")
   const [showSaveButton, setShowSaveButton] = useState(false);
   const dropdownRef = useRef(null);
 
-  const contactTypes = ['Mobile', 'Home', 'Office'];
-
-  const filteredTypes = contactTypes.filter(type =>
-    type.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const contactTypeOptions = [
+    { value: "home", label: "Home" },
+    { value: "mobile", label: "Mobile" },
+    { value: "office", label: "Office" },
+  ]
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -79,6 +79,13 @@ const DiyProfileInfo = () => {
       }))
     }
   }
+
+  const handleContactTypeChange = (value) => {
+    setContactType(value)
+    if (value !== "home") {
+      setShowSave(true)
+    }
+  }
   return (
     <div className="mx-auto p-8 bg-gray-50 min-h-screen">
       <div className="p-8">
@@ -94,6 +101,7 @@ const DiyProfileInfo = () => {
             <InputField
               id="firstName"
               label="First Name"
+              type="text"
               value={formData.firstName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -102,7 +110,8 @@ const DiyProfileInfo = () => {
             <InputField
               id="lastName"
               label="Last Name"
-              value={formData.firstName}
+              type="text"
+              value={formData.lastName}
               onChange={(e) => handleInputChange("firstName", e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
@@ -119,25 +128,6 @@ const DiyProfileInfo = () => {
               />
             </div>
             <div className="flex justify-between items-center">
-              {/* <label htmlFor="contactNumber" className="block text-sm text-gray-700 mb-2">
-                Contact Number
-              </label>
-              <div className="flex gap-2">
-                <input
-                  id="contactNumber"
-                  type="tel"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  placeholder="Contact Number"
-                  value={formData.contactNumber}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, ''); // remove all non-digits
-                    setFormData({ ...formData, contactNumber: value });
-                  }}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-              </div> */}
-
               <PhoneField
                 id="contactNumber"
                 label="Contact Number"
@@ -147,59 +137,12 @@ const DiyProfileInfo = () => {
               />
               <div className="w-40">
                 <Dropdown
-                  value={searchTerm}
-                  onValueChange={setSearchTerm}
-                  options={filteredTypes}
+                  value={contactType}
+                  onValueChange={handleContactTypeChange}
+                  options={contactTypeOptions}
                   placeholder="-Select-"
                 />
               </div>
-              {/* <div className="relative w-40" ref={dropdownRef}>
-                <button
-                  type="button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded bg-white text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-orange-500"
-                >
-                  <span className={formData.contactType ? 'text-gray-900' : 'text-gray-400'}>
-                    {formData.contactType || '- Select -'}
-                  </span>
-                  {isDropdownOpen ? (
-                    <ChevronUp className="w-4 h-4 text-gray-600" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-600" />
-                  )}
-                </button>
-
-                {isDropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 mt-1 border border-gray-300 rounded shadow-lg bg-white z-10">
-                    <input
-                      type="text"
-                      placeholder=""
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
-                      autoFocus
-                    />
-                    <div className="max-h-40 overflow-y-auto">
-                      {filteredTypes.length > 0 ? (
-                        filteredTypes.map((type) => (
-                          <div
-                            key={type}
-                            onClick={() => handleSelectType(type)}
-                            className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${type === 'Home' ? 'bg-orange-500 text-white hover:bg-orange-600' : ''
-                              }`}
-                          >
-                            {type}
-                          </div>
-                        ))
-                      ) : (
-                        <div className="px-3 py-2 text-gray-400 text-sm">
-                          No results found
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div> */}
             </div>
           </div>
         </div>
@@ -237,7 +180,6 @@ const DiyProfileInfo = () => {
             <button
               onClick={handleSave}
               className="btn btn-primary w-1/4"
-            // className="px-8 py-2 border-2 border-orange-500 text-orange-500 rounded font-semibold hover:bg-orange-50 transition-colors"
             >
               SAVE
             </button>
