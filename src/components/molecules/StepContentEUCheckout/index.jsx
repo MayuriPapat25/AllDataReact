@@ -1,23 +1,20 @@
 
-import { Button } from "../../atoms/Buttons/Button"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
 import BillingAddressForm from '../BillingAddress'
-
 import BillingEmailForm from "../BillingEmailAddress"
-import PhoneSignupForm from "../PhoneSignUpForm"
 import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../atoms/BusinessAddressReview"
-import BillingInfoReview from "../../atoms/BillingInfoReview"
+import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
-
+import { Button } from '../../../shared/ui/Buttons/Button'
+import BillingInfoReview from '../../../shared/ui/BillingInfoReview'
 
 const StepContentEUCheckout = ({
     currentStep,
@@ -106,7 +103,7 @@ const StepContentEUCheckout = ({
                                 <BusinessInfoReview onEdit={handleEdit} />
                                 <BusinessAddressReview onEdit={handleEdit} />
                                 <BillingAddressForm fromReview={true} onEdit={handleEdit} />
-                                <BillingInfoReview />
+                                <BillingInfoReview onEdit={onBack}/>
 
                             </div>
                             <div className="w-1/2">

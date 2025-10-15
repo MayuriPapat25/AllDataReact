@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProductName } from '../../atoms/TextIcon/ProductName'
+import { ProductName } from '../../../shared/ui/TextIcon/ProductName'
 import repairIcon from "../../../assets/images/repair_color.png"
 
 function CartItems({ data }) {

@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import PhoneField from '../../atoms/PhoneNumberField';
-import InputField from '../../atoms/InputField';
-import { Dropdown } from '../../atoms/Dropdown/Dropdown';
+import PhoneField from '../../../shared/ui/PhoneNumberField';
+import InputField from '../../../shared/ui/InputField/index';
+import { Dropdown } from '../../../shared/ui/Dropdown/Dropdown';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 const DiyProfileInfo = () => {
   const initialFormData = {
@@ -177,12 +178,12 @@ const DiyProfileInfo = () => {
         {/* Save Button */}
         {showSaveButton && (
           <div className="mt-8">
-            <button
+            <Button
               onClick={handleSave}
               className="btn btn-primary w-1/4"
             >
               SAVE
-            </button>
+            </Button>
           </div>
         )}
       </div>

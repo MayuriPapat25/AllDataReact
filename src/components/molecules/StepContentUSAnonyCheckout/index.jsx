@@ -1,5 +1,4 @@
 
-import { Button } from "../../atoms/Buttons/Button"
 import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
@@ -11,13 +10,13 @@ import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../atoms/BusinessAddressReview"
-import BillingInfoReview from "../../atoms/BillingInfoReview"
+import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
-import BillingInformation from "../BillingInformation"
+import BillingInformation from "../../../shared/ui/BillingInfoReview"
 import AgreementModal from "../AgreementModal"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 
 const StepContentUSAnonyCheckout = ({

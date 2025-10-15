@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import ProductCard from '../../molecules/ProductCard';
 import { Car, MessageSquare, Plus, SquareArrowOutUpRightIcon } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
-import { InfoText } from '../../atoms/Info/InfoText';
-import { Icon, MessageIcon, ProductIcon } from '../../atoms/Icon/Icon';
-import { Button } from '../../atoms/Buttons/Button';
+import { InfoText } from '../../../shared/ui/Info/InfoText';
+import { Icon, MessageIcon } from '../../../shared/ui/Icon/Icon';
 import AccountClosureModal from '../../molecules/AccountClosureModal';
-import { LinkButton } from '../../atoms/links/linkButton';
+import { LinkButton } from '../../../shared/ui/links/linkButton';
 import { AccessPointsModal } from '../../molecules/Modal/AccessPointsModal';
 import SubscriptionManager from '../../molecules/SubscriptionManager';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 
 const ProductsPortal = () => {

@@ -1,5 +1,4 @@
-import { Button } from "../../atoms/Buttons/Button"
-
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 const LoginForm = ({ onLogin, variant = "alldata" }) => {
     const content = {

@@ -1,7 +1,7 @@
 
-import { Button } from "../../atoms/Buttons/Button"
-import InfoField from "../../atoms/InfoField"
-import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
+import { Button } from "../../../shared/ui/Buttons/Button"
+import InfoField from "../../../shared/ui/InfoField"
+import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
 
 
 

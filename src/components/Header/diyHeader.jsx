@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { DiyCartDropdown } from "../organisms/DiyCartDropdown/diyCartDropdown"
-import { Button } from "../atoms/Buttons/Button"
+import { Button } from "../../shared/ui/Buttons/Button"
 
 export function HeaderWithCart() {
   const [isCartOpen, setIsCartOpen] = useState(false)

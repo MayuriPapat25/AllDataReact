@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { DiyCartDropdown } from "../../components/organisms/DiyCartDropdown/diyCartDropdown"
-import { Button } from "../../components/atoms/Buttons/Button"
+import { Button } from "../../shared/ui/Buttons/Button";
 
 export default function DIYCartHome({ cartData, cartCount }) {
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -12,8 +12,7 @@ export default function DIYCartHome({ cartData, cartCount }) {
           <h1 className="text-xl font-bold">ALLDATA DIY</h1>
 
           <div className="relative">
-            <Button
-              onClick={() => setIsCartOpen(!isCartOpen)}
+            <Button onClick={() => setIsCartOpen(!isCartOpen)}
               variant="ghost"
               size="sm"
               className="relative p-2 rounded"

@@ -1,5 +1,5 @@
 import React, { use, useState } from 'react';
-import { InfoText } from '../../atoms/Info/InfoText';
+import { InfoText } from '../../../shared/ui/Info/InfoText';
 import AccountUpdateModal from '../AccountUpdateModal';
 
 const UpdateAccoutDetails = () => {

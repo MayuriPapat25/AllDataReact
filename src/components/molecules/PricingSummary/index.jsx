@@ -1,5 +1,5 @@
 import React from 'react'
-import { PriceText } from '../../atoms/Price/PriceText'
+import { PriceText } from '../../../shared/ui/Price/PriceText'
 
 function PricingSummary({ data }) {
     return (

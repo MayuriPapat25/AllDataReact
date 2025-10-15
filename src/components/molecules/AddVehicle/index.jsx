@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, Search, Loader2 } from "lucide-react";
-import { Button } from "../../atoms/Buttons/Button";
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const AddVehicle = ({ currentVehicle, onNextStep }) => {
   const [loading, setLoading] = useState(false);

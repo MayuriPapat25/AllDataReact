@@ -1,4 +1,4 @@
-import SelectField from "../../atoms/SelectField"
+import SelectField from "../../../shared/ui/SelectField"
 
 export function SubscriptionTerms({ selectedTerm, onTermChange }) {
   const termOptions = [

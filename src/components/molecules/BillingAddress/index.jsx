@@ -1,6 +1,7 @@
 import { useState } from "react";
-import InputField from "../../atoms/InputField";
-import SelectField from "../../atoms/SelectField";
+import InputField from "../../../shared/ui/InputField/index";
+import SelectField from "../../../shared/ui/SelectField";
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const BillingAddressForm = ({ fromReview, onEdit }) => {
     const [formData, setFormData] = useState({
@@ -121,9 +122,9 @@ const BillingAddressForm = ({ fromReview, onEdit }) => {
                 !fromReview ? <h2 className="text-md mb-4">BILLING ADDRESS</h2>
                     : <div className="flex items-center justify-between mb-4">
                         <h2 className="text-md">BILLING ADDRESS</h2>
-                        <button variant="ghost" size="sm" onClick={onEdit} className="text-primary text-sm font-medium">
+                        <Button variant="ghost" size="sm" onClick={onEdit} className="text-primary text-sm font-medium">
                             EDIT
-                        </button>
+                        </Button>
                     </div>
             }
 

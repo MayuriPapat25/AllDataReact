@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, ChevronDown, Search, Loader2 } from "lucide-react";
-import { Button } from "../../atoms/Buttons/Button";
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const VehicleChangeModal = ({ isOpen, onClose, currentVehicle }) => {
   const [step, setStep] = useState(1);

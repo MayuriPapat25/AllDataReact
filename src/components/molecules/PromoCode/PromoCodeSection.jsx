@@ -1,4 +1,4 @@
-import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton" // updated path
+import { InputWithButton } from "../../../shared/ui/InputField/InputWithButton" // updated path
 
 export function PromoCodeSection({ onApplyPromo }) {
   return (

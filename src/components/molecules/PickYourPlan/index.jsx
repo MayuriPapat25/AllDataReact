@@ -1,4 +1,4 @@
-import PricingCard from "../../atoms/PricingCard"
+import PricingCard from "../../../shared/ui/PricingCard"
 
 export default function Page() {
   return (

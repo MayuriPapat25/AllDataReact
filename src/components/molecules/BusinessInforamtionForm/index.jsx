@@ -1,9 +1,9 @@
 import React from "react"
 import { useState } from "react"
-import InputField from "../../atoms/InputField/index"
-import SelectField from "../../atoms/SelectField"
-import PhoneField from "../../atoms/PhoneNumberField"
-import FileUploadField from "../../atoms/FileUpload"
+import InputField from "../../../shared/ui/InputField/index"
+import SelectField from "../../../shared/ui/SelectField"
+import PhoneField from "../../../shared/ui/PhoneNumberField"
+import FileUploadField from "../../../shared/ui/FileUpload"
 import CustomRadioGroupField from "../../molecules/CustomRadioGroupField"
 
 const phoneTypeOptions = [

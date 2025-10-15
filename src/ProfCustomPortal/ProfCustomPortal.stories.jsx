@@ -1,5 +1,6 @@
 // Mocking the necessary dependencies for the Story
 import React, { useState } from 'react';
+import { Button } from '../shared/ui/Buttons/Button';
 
 // --- MOCK ORGANISM COMPONENTS (Tab Content) ---
 
@@ -41,16 +42,16 @@ const MockAccountSidebar = ({ sections, onItemClick, onSectionClick, className }
             <h3 className="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Navigation</h3>
             {sections.map((section, sectionIndex) => (
                 <div key={section.id} className="mb-4">
-                    <button
+                    <Button
                         onClick={() => onSectionClick(section, sectionIndex)}
                         className="text-lg font-semibold text-gray-700 hover:text-indigo-600 block w-full text-left py-1"
                     >
                         {section.title}
-                    </button>
+                    </Button>
                     <ul className="pl-3 mt-1">
                         {section.items.map((item, itemIndex) => (
                             <li key={item.id} className="my-1">
-                                <button
+                                <Button
                                     onClick={() => handleItemClickInternal(item, sectionIndex, itemIndex)}
                                     className={`text-sm block w-full text-left p-2 rounded-md transition duration-150 ease-in-out
                     ${activeItemId === item.id
@@ -59,7 +60,7 @@ const MockAccountSidebar = ({ sections, onItemClick, onSectionClick, className }
                                         }`}
                                 >
                                     {item.label}
-                                </button>
+                                </Button>
                             </li>
                         ))}
                     </ul>
@@ -88,7 +89,7 @@ const MockTabs = ({ tabs, className, defaultActiveTab, onTabChange }) => {
         <div className={`mock-tabs-container ${className}`}>
             <div className="flex justify-center border-b border-gray-300 mb-8 max-w-7xl mx-auto">
                 {tabs.map((tab) => (
-                    <button
+                    <Button
                         key={tab.id}
                         onClick={() => handleTabClick(tab.id)}
                         className={`px-6 py-3 text-lg font-semibold transition duration-150 ease-in-out border-b-4
@@ -98,7 +99,7 @@ const MockTabs = ({ tabs, className, defaultActiveTab, onTabChange }) => {
                             }`}
                     >
                         {tab.label}
-                    </button>
+                    </Button>
                 ))}
             </div>
             <div className="tab-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

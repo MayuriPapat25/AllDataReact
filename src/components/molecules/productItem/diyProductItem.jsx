@@ -1,6 +1,6 @@
-import { LinkButton } from "../../atoms/links/linkButton"
-import { DeleteIcon } from "../../atoms/Icon/Icon"
-import { Dropdown } from "../../atoms/Dropdown/Dropdown"
+import { LinkButton } from "../../../shared/ui/links/linkButton"
+import { DeleteIcon } from "../../../shared/ui/Icon/Icon"
+import { Dropdown } from "../../../shared/ui/Dropdown/Dropdown"
 
 export function ProductSingleItem({ status, description, expiration, plan, price, onPlanChange, onRemove }) {
   const planOptions = [

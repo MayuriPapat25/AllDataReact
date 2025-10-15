@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from '../../atoms/Buttons/Button';
 import AccountClosureModal from '../AccountClosureModal';
 import { CircleMinus } from 'lucide-react';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 const CancelSubscriptionTrigger = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

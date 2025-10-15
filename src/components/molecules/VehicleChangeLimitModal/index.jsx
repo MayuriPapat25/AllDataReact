@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { X } from "lucide-react";
-import { Button } from '../../atoms/Buttons/Button';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 const VehicleChangeLimitModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;

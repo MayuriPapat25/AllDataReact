@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TabButton } from '../../atoms/TabButton';
+import { TabButton } from '../../../shared/ui/TabButton';
 
 export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]?.id);
@@ -40,27 +40,27 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
                 className={`
                   relative block px-2 py-4 text-base transition-all duration-200 whitespace-nowrap border-b-2 no-underline hover:no-underline
                   ${activeTab === tab.id
-                  ? '!text-gray-600 border-orange-500'
-                  : 'text-primary border-transparent'
+                    ? '!text-gray-600 border-orange-500'
+                    : 'text-primary border-transparent'
                   }
                   `}
-                >
+              >
                 <span className={activeTab === tab.id ? '!font-semibold' : '!font-normal'}>
                   {tab.label}
                 </span>
                 <span className="summary"></span>
                 {activeTab === tab.id && (
                   <span id="active-horizontal-tab" className="sr-only">
-                  (active tab)
+                    (active tab)
                   </span>
                 )}
-                </a>
-              </li>
-              ))}
-            </ul>
-            </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            {/* Mobile Dropdown - Visible only on mobile */}
+      {/* Mobile Dropdown - Visible only on mobile */}
       <div className="md:hidden relative mb-6">
         <TabButton
           variant="dropdown-toggle"

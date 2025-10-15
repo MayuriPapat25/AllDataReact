@@ -1,5 +1,5 @@
-import { cn } from "../../../../utils/utils"
-import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
+import { cn } from "../../../shared/utils/utils"
+import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
 
 const CustomRadioGroupField = ({
     label,

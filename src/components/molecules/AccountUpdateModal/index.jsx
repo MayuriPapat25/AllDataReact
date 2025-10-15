@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import InputField from '../../atoms/InputField';
-import { Button } from '../../atoms/Buttons/Button';
+import InputField from '../../../shared/ui/InputField/index';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 const AccountUpdateModal = ({ isOpen, onClose, title, desc1, desc2 }) => {
 

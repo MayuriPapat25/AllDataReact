@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import DiyProfileInfo from './DiyProfileInfo'; // Assuming DiyProfileInfo is in the same directory
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 // --- Storybook Configuration ---
 
@@ -241,12 +242,12 @@ const DiyProfileInfoMock = ({ initialFormData, initialDropdownOpen = false, init
                 {/* Save Button */}
                 {showSaveButton && (
                     <div className="mt-8">
-                        <button
+                        <Button
                             onClick={handleSave}
                             className="px-8 py-2 border-2 border-orange-500 text-orange-500 rounded font-semibold hover:bg-orange-50 transition-colors"
                         >
                             SAVE
-                        </button>
+                        </Button>
                     </div>
                 )}
             </div>

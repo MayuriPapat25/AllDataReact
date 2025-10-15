@@ -1,7 +1,7 @@
-import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
 import DIYCartHome from "../../../Cart/diy"
 import AddVehicle from "../AddVehicle"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 const StepContentDIYCart = ({
   currentStep,
@@ -85,9 +85,9 @@ const StepContentDIYCart = ({
       showButtons = true,
       primaryButton = { text: "BACK", onClick: onBack },
       secondaryButton =
-        currentStep > 1
-          ? { text: "RESET VEHICLE", onClick: onResetVehicle }
-          : null,
+      currentStep > 1
+        ? { text: "RESET VEHICLE", onClick: onResetVehicle }
+        : null,
       buttonLayout = "flex-col sm:flex-row gap-4 pt-6 lg:ml-30 md:ml-0 sm:ml-0"
     } = finalConfig
 

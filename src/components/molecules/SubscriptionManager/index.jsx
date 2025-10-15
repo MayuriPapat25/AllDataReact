@@ -1,12 +1,11 @@
 
 import { useState } from "react";
 import { X, Wrench, Users, Target, Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
-import { Button } from "../../atoms/Buttons/Button";
-import InputFieldWithoutBorder from "../../atoms/InputField/InputFieldWithoutBorder";
+import InputFieldWithoutBorder from "../../../shared/ui/InputField/InputFieldWithoutBorder";
 import repairIcon from "../../../assets/images/repair_color.png"
-import { DeleteIcon, MessageIcon } from "../../atoms/Icon/Icon"
-import { ProductName } from "../../atoms/TextIcon/ProductName"
-import { CounterDropdown } from "../../atoms/Dropdown/CounterDropdown"
+import { ProductName } from "../../../shared/ui/TextIcon/ProductName"
+import { CounterDropdown } from "../../../shared/ui/Dropdown/CounterDropdown"
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const SubscriptionManager = () => {
   const [isRemovalModalOpen, setIsRemovalModalOpen] = useState(false);

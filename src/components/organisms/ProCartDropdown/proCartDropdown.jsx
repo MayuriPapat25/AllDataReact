@@ -1,5 +1,5 @@
-import { Button } from "../../atoms/Buttons/Button"
-import { Icon } from "../../atoms/Icon/Icon"
+import { Button } from "../../../shared/ui/Buttons/Button"
+import { Icon } from "../../../shared/ui/Icon/Icon"
 import { ProCartContent } from "../ProCartContent/ProCartContent"
 
 export function ProCartDropdown({ isOpen = true, onClose, variant = "dropdown", fromEU }) {

@@ -5,8 +5,8 @@ import VehicleChangeModal from "../../molecules/VehicleChangeModal/index";
 import VehicleChangeLimitModal from "../../molecules/VehicleChangeLimitModal/index";
 import RefundRequestModal from "../../molecules/RefundRequestModal/index";
 import RefundLimitModal from "../../molecules/RefundLimitModal/index";
-import { Button } from "../../atoms/Buttons/Button";
 import { useNavigate } from "react-router-dom"
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleChangeVehicle, handleVehicleChangeComplete, handleRefundRequest, handleRefundComplete, selectedVehicle, isRefundModalOpen, isRefundLimitModalOpen, isModalOpen, setIsModalOpen, isLimitModalOpen, setIsLimitModalOpen, setIsRefundModalOpen }) => {
   const navigate = useNavigate()

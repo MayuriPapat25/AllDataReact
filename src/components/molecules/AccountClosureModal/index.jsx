@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import InputFieldWithoutBorder from '../../atoms/InputField/InputFieldWithoutBorder';
-import { Button } from '../../atoms/Buttons/Button';
+import InputFieldWithoutBorder from '../../../shared/ui/InputField/InputFieldWithoutBorder';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMessage }) => {
   const [formData, setFormData] = useState({
@@ -42,7 +42,7 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
   return (
     <div className="fixed inset-0 z-50 flex w-max-[1000px] mx-auto items-center justify-center p-4">
       <div className="fixed inset-0 bg-black bg-opacity-50"></div>
-      <div className="relative bg-white rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="h3 text-primary pr-8 font-normal" style={{ fontWeight: 500 }}>{title}</h2>

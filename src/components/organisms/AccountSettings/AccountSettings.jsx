@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { InfoText } from '../../atoms/Info/InfoText';
-import InputFieldWithoutBorder from '../../atoms/InputField/InputFieldWithoutBorder';
-import SelectField from '../../atoms/SelectField/Inline-selectfield';
-import { PriceText } from '../../atoms/Price/PriceText';
+import { InfoText } from '../../../shared/ui/Info/InfoText';
+import InputFieldWithoutBorder from '../../../shared/ui/InputField/InputFieldWithoutBorder';
+import SelectField from '../../../shared/ui/SelectField/Inline-selectfield';
+import { PriceText } from '../../../shared/ui/Price/PriceText';
 import SavedPaymentMethods from '../SavedPaymentMethods/SavedPaymentMethods';
 import UpdateAccoutDetails from '../../molecules/UpdateAccoutDetails';
-import InputField from '../../atoms/InputField';
+import InputField from '../../../shared/ui/InputField/index';
 
 const AccountSettings = () => {
   const [formData, setFormData] = useState({

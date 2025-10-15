@@ -1,14 +1,14 @@
 import { useState } from "react"
-import { ProductName } from "../../atoms/TextIcon/ProductName"
-import { CounterDropdown } from "../../atoms/Dropdown/CounterDropdown"
-import { PriceText } from "../../atoms/Price/PriceText"
-import { MessageIcon } from "../../atoms/Icon/Icon"
-import { LinkButton } from "../../atoms/links/linkButton"
+import { ProductName } from "../../../shared/ui/TextIcon/ProductName"
+import { CounterDropdown } from "../../../shared/ui/Dropdown/CounterDropdown"
+import { PriceText } from "../../../shared/ui/Price/PriceText"
+import { MessageIcon } from "../../../shared/ui/Icon/Icon"
+import { LinkButton } from "../../../shared/ui/links/linkButton"
 import { AccessPointsModal } from "../../molecules/Modal/AccessPointsModal"
-import { Button } from "../../atoms/Buttons/Button"
 import repairIcon from "../../../assets/images/repair_color.png"
 import PaymentFrequency from "../../molecules/paymentFrequency"
 import { useNavigate } from "react-router-dom"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 export function RepCartContent() {
   const navigate = useNavigate()

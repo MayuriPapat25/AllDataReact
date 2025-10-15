@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import InputField from "../../atoms/InputField/index"
-import PasswordField from "../../atoms/InputField/PasswordField"
-import PhoneField from "../../atoms/PhoneNumberField"
-import SelectField from "../../atoms/SelectField"
-import TermsConditions from '../../atoms/TermsCondition/index'
+import InputField from "../../../shared/ui/InputField/index"
+import PasswordField from "../../../shared/ui/InputField/PasswordField"
+import PhoneField from "../../../shared/ui/PhoneNumberField"
+import SelectField from "../../../shared/ui/SelectField"
+import TermsConditions from '../../../shared/ui/TermsCondition/index'
+
 const AccountCreationForm = ({
     variant = "full", // "full", "business", or "email"
     onSubmit,

@@ -1,4 +1,4 @@
-import { Button } from "../../atoms/Buttons/Button"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 const AgreementPage = ({ setIsModalOpen }) => {
 

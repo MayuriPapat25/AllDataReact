@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ProductSingleItem } from "../../../components/molecules/productItem/diyProductItem"
-import { Button } from "../../../components/atoms/Buttons/Button"
 import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
-import { Dropdown } from "../../../components/atoms/Dropdown/Dropdown"
-import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton"
+import { Dropdown } from "../../../shared/ui/Dropdown/Dropdown"
+import { InputWithButton } from "../../../shared/ui/InputField/InputWithButton"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 export default function DiyCartPage({ initialCartItems = null }) {
   const navigate = useNavigate()

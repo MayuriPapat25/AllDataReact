@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
-import SelectField from "../../atoms/SelectField"
+import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
+import SelectField from "../../../shared/ui/SelectField"
 
 
 const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, subheader, paymentOptions }) => {

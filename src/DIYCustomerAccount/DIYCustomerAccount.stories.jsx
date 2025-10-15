@@ -53,7 +53,7 @@ const MockTabs = ({ tabs, className, defaultActiveTab, onTabChange }) => {
         <div className={`mock-tabs-container ${className}`}>
             <div className="flex justify-center border-b border-gray-300 mb-8 max-w-4xl mx-auto">
                 {tabs.map((tab) => (
-                    <button
+                    <Button
                         key={tab.id}
                         onClick={() => handleTabClick(tab.id)}
                         className={`px-6 py-3 text-lg font-semibold transition duration-150 ease-in-out border-b-4
@@ -63,7 +63,7 @@ const MockTabs = ({ tabs, className, defaultActiveTab, onTabChange }) => {
                             }`}
                     >
                         {tab.label}
-                    </button>
+                    </Button>
                 ))}
             </div>
             <div className="tab-content max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
