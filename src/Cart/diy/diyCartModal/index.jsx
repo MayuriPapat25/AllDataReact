@@ -71,8 +71,6 @@ export default function DiyCartPage({ initialCartItems = null }) {
   }
   return (
     <div className="mx-auto">
-      <CheckoutSteps currentStep={3} steps={steps} />
-
       <div className="text-center mb-8">
         <h1 className="mb-6">CART</h1>
       </div>
