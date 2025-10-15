@@ -1,10 +1,11 @@
-import { cn } from "@/lib/utils"
+import { cn } from "../../../../utils/utils";
 
-export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className }) {
+export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className, onClick }) {
   return (
     <article
+      onClick={onClick}
       className={cn(
-        "group relative border bg-card transition-colors duration-200",
+        "group relative border border-gray-200 bg-card transition-colors duration-200 shadow-lg bg-white cursor-pointer",
         "outline-none",
         className
       )}
@@ -12,10 +13,9 @@ export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className
       aria-label={title}
       style={{ color: "var(--brand-blue)" }}
     >
-      {/* top 8px accent bar (always visible) */}
       <div
         className="absolute inset-x-0 top-0 h-2"
-        style={{ backgroundColor: "var(--brand-orange)" }}
+        style={{ backgroundColor: "var(--color-secondary)" }}
         aria-hidden="true"
       />
 
@@ -24,26 +24,26 @@ export function PricingCard({ title, price, note = "ONE TIME PAYMENT", className
           "pointer-events-none absolute inset-0 transition-all duration-200",
           "border-0 group-hover:border-[4px] group-focus-visible:border-[4px]"
         )}
-        style={{ borderColor: "var(--brand-orange)" }}
+        style={{ borderColor: "var(--color-secondary)" }}
         aria-hidden="true"
       />
 
       <div className="relative p-6 md:p-8 text-center">
         <div
-          className="pointer-events-none absolute inset-6 md:inset-8 border opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
-          style={{ borderColor: "var(--brand-orange)" }}
+          className="pointer-events-none border border-white group-hover:border-secondary transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 p-4"
           aria-hidden="true"
-        />
-        <h3 className="text-pretty text-xs font-semibold tracking-widest md:text-sm uppercase">
-          {title}
-        </h3>
-        <p className="mt-4 text-4xl md:text-5xl font-extrabold" aria-label={`Price ${price}`}>
-          {price}
-        </p>
-        <p className="mt-6 text-xs font-medium tracking-wider">{note}</p>
+        >
+          <p className="text-base font-medium uppercase text-gray-600">
+            {title}
+          </p>
+          <h3 className="mt-4 h2 md:text-5xl font-bold text-primary" aria-label={`Price ${price}`}>
+            {price}
+          </h3>
+          <p className="mt-6 text-xs font-medium tracking-wider text-primary">{note}</p>
+        </div>
       </div>
     </article>
-  )
+  );
 }
 
-export default PricingCard
+export default PricingCard;

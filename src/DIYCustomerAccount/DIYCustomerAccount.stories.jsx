@@ -19,7 +19,7 @@ const MockDiyProfileInfo = () => (
         <h2 className="text-xl font-semibold text-purple-700 mb-3">Profile Information Panel (Mock)</h2>
         <p>This panel allows the user to update their name, contact information, and account password.</p>
         <div className="mt-4 p-4 bg-white border border-purple-300 rounded-lg font-mono text-sm">
-            User: TestLib TesMath (<button className="text-blue-600 hover:text-blue-800 underline ml-2">Edit Details</button>)
+            User: TestLib TesMath (<button className="test-primary hover:text-blue-800 underline ml-2">Edit Details</button>)
         </div>
     </div>
 );
@@ -29,7 +29,7 @@ const MockDiyPaymentInfo = () => (
         <h2 className="text-xl font-semibold text-pink-700 mb-3">Payment Information Panel (Mock)</h2>
         <p>This panel is for managing saved payment methods and updating billing addresses.</p>
         <div className="mt-4 p-4 bg-white border border-pink-300 rounded-lg font-mono text-sm">
-            Primary Card: MasterCard ending in 9012 (<button className="text-blue-600 hover:text-blue-800 underline ml-2">Change</button>)
+            Primary Card: MasterCard ending in 9012 (<button className="test-primary hover:text-blue-800 underline ml-2">Change</button>)
         </div>
     </div>
 );

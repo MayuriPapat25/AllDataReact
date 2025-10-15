@@ -64,7 +64,7 @@ const MockInfoText = ({ label, value, link }) => (
     <div className="flex justify-between items-center py-1">
         <span className="text-gray-700">{label}</span>
         {link ? (
-            <a href={link} className="text-blue-600 underline text-sm">{value}</a>
+            <a href={link} className="test-primary underline text-sm">{value}</a>
         ) : (
             <span className="text-gray-900 font-medium text-sm">{value}</span>
         )}
@@ -82,7 +82,7 @@ const MockButton = ({ children, onClick, variant, className, size }) => (
     </button>
 );
 const MockLinkButton = ({ children, onClick, className }) => (
-    <button onClick={onClick} className={`${className} text-blue-600 hover:underline text-sm`}>
+    <button onClick={onClick} className={`${className} test-primary hover:underline text-sm`}>
         {children}
     </button>
 );

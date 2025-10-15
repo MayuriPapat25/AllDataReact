@@ -403,7 +403,7 @@ const VehicleChangeModal = ({ isOpen, onClose, currentVehicle }) => {
         {loading && (
           <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
             <div className="text-center">
-              <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-2" />
+              <Loader2 className="w-12 h-12 test-primary animate-spin mx-auto mb-2" />
               <p className="text-gray-600">Loading...</p>
             </div>
           </div>

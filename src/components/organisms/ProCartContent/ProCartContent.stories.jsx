@@ -59,7 +59,7 @@ const MockDeleteIcon = ({ onClick, className }) => (
 );
 const MockMessageIcon = () => <span>ⓘ</span>;
 const MockLinkButton = ({ children, onClick, variant }) => (
-    <button onClick={onClick} className={`text-blue-600 ${variant === 'ghost' ? 'hover:underline' : ''}`}>
+    <button onClick={onClick} className={`test-primary ${variant === 'ghost' ? 'hover:underline' : ''}`}>
         {children}
     </button>
 );
@@ -83,7 +83,7 @@ const MockAccessPointsModal = ({ isOpen, onClose }) => {
 const MockButton = ({ children, onClick, variant, className }) => (
     <button
         onClick={onClick}
-        className={`p-3 rounded font-semibold text-center ${className} ${variant === 'outline' ? 'border border-blue-600 text-blue-600 bg-white' : 'bg-blue-600 text-white'}`}
+        className={`p-3 rounded font-semibold text-center ${className} ${variant === 'outline' ? 'border border-blue-600 test-primary bg-white' : 'bg-blue-600 text-white'}`}
     >
         {children}
     </button>

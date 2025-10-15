@@ -6,7 +6,7 @@ import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
 import { Dropdown } from "../../../components/atoms/Dropdown/Dropdown"
 import { InputWithButton } from "../../../components/atoms/InputField/InputWithButton"
 
-export default function DiyCartPage({ initialCartItems = null }) {
+export default function DiyCartPage({ initialCartItems = null, onContinue }) {
   const navigate = useNavigate()
   const [region, setRegion] = useState("usa")
   const regionOptions = [
@@ -49,7 +49,10 @@ export default function DiyCartPage({ initialCartItems = null }) {
   }
 
   const handleAddMoreVehicles = () => {
-    console.log("Add more vehicles")
+    console.log("Add more vehicles");
+    if (onContinue) {
+      onContinue(1); // Go back to Step 1 ("Find your vehicle")
+    }
   }
 
   const handleCheckout = () => {
@@ -71,8 +74,6 @@ export default function DiyCartPage({ initialCartItems = null }) {
   }
   return (
     <div className="mx-auto">
-      <CheckoutSteps currentStep={3} steps={steps} />
-
       <div className="text-center mb-8">
         <h1 className="mb-6">CART</h1>
       </div>

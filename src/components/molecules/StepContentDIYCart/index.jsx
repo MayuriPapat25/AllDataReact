@@ -2,13 +2,16 @@ import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
 import DIYCartHome from "../../../Cart/diy"
 import AddVehicle from "../AddVehicle"
+import PickYourPlan from "../../molecules/PickYourPlan"
+import DiyCartPage from "../../../Cart/diy/diyCartModal"
 
 const StepContentDIYCart = ({
   currentStep,
   setCurrentStep, // ✅ pass this to control step
   onBack,
   onResetVehicle,
-  stepConfig = {}
+  stepConfig = {},
+  onContinue
 }) => {
   const [step1Valid, setStep1Valid] = useState(true)
 
@@ -20,20 +23,20 @@ const StepContentDIYCart = ({
     switch (currentStep) {
       case 1:
         return (
-          <div className="mx-auto flex justify-between gap-8">
-            <AddVehicle onNextStep={goToNextStep} />
+          <div className="mx-auto w-[90%]">
+            <AddVehicle onContinue={onContinue} />
           </div>
         )
       case 2:
         return (
-          <div className="mx-auto flex justify-between gap-8">
-            Pick your plan
+          <div className="mx-auto w-[90%]">
+            <PickYourPlan onContinue={onContinue} />
           </div>
         )
       case 3:
         return (
           <div className="flex flex-col items-center">
-            <DIYCartHome />
+            <DiyCartPage onContinue={onContinue} />
           </div>
         )
       default:
@@ -58,7 +61,7 @@ const StepContentDIYCart = ({
           variant: "outline"
         },
         buttonLayout:
-          "max-w-2xl pt-18 flex-start gap-4 border-t-2 border-gray-300"
+          "flex-start gap-4 justify-center"
       },
       2: {
         showButtons: true,
@@ -69,14 +72,14 @@ const StepContentDIYCart = ({
         },
         secondaryButton: null,
         buttonLayout:
-          "flex-col sm:flex-row gap-4 pt-8 md:justify-center lg:justify-start border-t-2 border-gray-300"
+          "flex-col sm:flex-row gap-4 justify-center"
       },
       3: {
-        showButtons: true,
+        showButtons: false,
         primaryButton: null,
         secondaryButton: null,
         buttonLayout:
-          "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 max-w-2xl pt-18"
+          "flex flex-col sm:flex-row gap-4 mx-auto justify-between border-t-2 border-gray-300 pt-18"
       }
     }
 
@@ -98,7 +101,8 @@ const StepContentDIYCart = ({
         <Button
           onClick={primaryButton.onClick}
           disabled={primaryButton.disabled}
-          className={primaryButton.className || "btn btn-primary mr-2"}
+          size="sm"
+          className={primaryButton.className || "btn btn-primary"}
         >
           {primaryButton.text}
         </Button>
@@ -106,7 +110,8 @@ const StepContentDIYCart = ({
           <Button
             onClick={secondaryButton.onClick}
             variant={secondaryButton.variant || "outline"}
-            className={secondaryButton.className || "btn btn-secondary mr-2"}
+            size="sm"
+            className={secondaryButton.className || "btn btn-secondary"}
           >
             {secondaryButton.text}
           </Button>

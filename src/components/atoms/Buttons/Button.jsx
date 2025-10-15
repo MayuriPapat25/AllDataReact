@@ -5,7 +5,7 @@ export function Button({
   onClick,
   type = "button",
   variant,
-  size = "md",
+  size = "sm",
   className = "",
   disabled = false,
   ...props

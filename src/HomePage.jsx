@@ -47,6 +47,25 @@ export default function HomePage() {
         helperText="Warning: Reseller Certificate does not qualify for tax exemption."
       />
 
+      <h3>Color variables</h3>
+      <div>
+        <div className="bg-primary">--color-primary: #1b3d6e;</div>
+        <div className="bg-primary-dark">--color-primary-dark: #1d3359;</div>
+        <div className="bg-primary-light">--color-primary-light: #004987;</div>
+        <div className="bg-secondary">--color-secondary: #f16824;</div>
+        <div className="bg-success">--color-success: #28a745;</div>
+        <div className="bg-info">--color-info: #17a2b8;</div>
+        <div className="bg-warning">--color-warning: #ffc107;</div>
+        <div className="bg-danger">--color-danger: #dc3545;</div>
+        <div className="bg-black">--color-black: #000000;</div>
+        <div className="bg-white">--color-white: #ffffff;</div>
+        <div className="bg-light-smoky-white">--color-light-smoky-white: #faf9f9;</div>
+        <div className="bg-dark-smoky-white">--color-dark-smoky-white: #eeebeb;</div>
+        <div className="bg-transparent">--color-transparent: transparent;</div>
+        <div className="bg-error">--color-error: #c80e0b;</div>
+        <div className="bg-gray">--color-gray: #c8c8c8;</div>
+      </div>
+
       <h3>Gray color variation</h3>
       <div className="flex">
         <div>

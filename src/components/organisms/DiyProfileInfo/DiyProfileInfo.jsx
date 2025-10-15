@@ -93,7 +93,7 @@ const DiyProfileInfo = () => {
 
         {/* Contact Information Section */}
         <div className="mb-8">
-          <h3 className="!text-sm text-gray-600 font-semibold mb-6 pb-3 border-b border-gray-200">
+          <h3 className="!text-sm text-gray-600 mb-6 pb-3 border-b border-gray-200">
             Contact Information
           </h3>
 
@@ -127,15 +127,17 @@ const DiyProfileInfo = () => {
                 helperText=" Used for ALLDATA Communications including Password Reset. Does not change Username."
               />
             </div>
-            <div className="flex justify-between items-center">
-              <PhoneField
-                id="contactNumber"
-                label="Contact Number"
-                value={formData.contactNumber}
-                onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                placeholder="Contact Number"
-              />
-              <div className="w-40">
+            <div className="grid grid-cols-3 gap-4">
+              <div className='col-span-2'>
+                <PhoneField
+                  id="contactNumber"
+                  label="Contact Number"
+                  value={formData.contactNumber}
+                  onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                  placeholder="Contact Number"
+                />
+              </div>
+              <div className="pt-8">
                 <Dropdown
                   value={contactType}
                   onValueChange={handleContactTypeChange}
@@ -149,7 +151,7 @@ const DiyProfileInfo = () => {
 
         {/* Login Information Section */}
         <div>
-          <h2 className="text-sm font-semibold mb-6 pb-3 border-b border-gray-200">
+          <h2 className="text-sm text-gray-600 mb-6 pb-3 border-b border-gray-200">
             Login Information
           </h2>
 
@@ -158,7 +160,7 @@ const DiyProfileInfo = () => {
               <label className="block text-sm text-gray-700 mb-2">
                 Username
               </label>
-              <div className="w-full px-4 py-2 bg-gray-50 text-gray-700 rounded">
+              <div className="w-full py-2 bg-gray-50 text-gray-700 rounded">
                 {formData.username}
               </div>
             </div>
@@ -167,7 +169,7 @@ const DiyProfileInfo = () => {
               <label className="block text-sm text-gray-700 mb-2">
                 Password
               </label>
-              <div className="w-full px-4 py-2 bg-gray-50 text-gray-700 rounded">
+              <div className="w-full py-2 bg-gray-50 text-gray-700 rounded">
                 {formData.password}
               </div>
             </div>
