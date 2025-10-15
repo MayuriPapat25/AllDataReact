@@ -24,7 +24,7 @@ const StepContentDIYCart = ({
       case 1:
         return (
           <div className="mx-auto w-[90%]">
-            <AddVehicle onNextStep={goToNextStep} onContinue={onContinue} />
+            <AddVehicle onContinue={onContinue} />
           </div>
         )
       case 2:
@@ -36,7 +36,7 @@ const StepContentDIYCart = ({
       case 3:
         return (
           <div className="flex flex-col items-center">
-            <DiyCartPage />
+            <DiyCartPage onContinue={onContinue} />
           </div>
         )
       default:

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Search, Loader2 } from "lucide-react";
 import { Button } from "../../atoms/Buttons/Button";
 
-const AddVehicle = ({ currentVehicle, onNextStep, onContinue }) => {
+const AddVehicle = ({ currentVehicle, onContinue }) => {
   const [loading, setLoading] = useState(false);
 
   // Vehicle selection
@@ -69,7 +69,6 @@ const AddVehicle = ({ currentVehicle, onNextStep, onContinue }) => {
     setLoading(false);
 
     // Trigger next step in StepContentDIYCart
-    // if (onNextStep) onNextStep();
     onContinue();
   };
 
