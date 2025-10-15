@@ -15,7 +15,7 @@ const RefundLimitModal = ({ isOpen, onClose }) => {
 
         <p className="text-center text-gray-600 mb-8">
           You have reached the maximum limit for vehicle changes or refunds. For further assistance. Please{" "}
-          <a href="#" className="text-blue-600 hover:underline">
+          <a href="#" className="test-primary hover:underline">
             contact support.
           </a>
         </p>

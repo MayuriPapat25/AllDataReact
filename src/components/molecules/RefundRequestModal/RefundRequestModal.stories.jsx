@@ -89,7 +89,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete, initialR
                         <p className="mb-4 text-lg font-medium">Your refund request has been submitted successfully.</p>
                         <p className="text-sm">
                             Refund requests that meet the{" "}
-                            <a href="#" className="text-blue-600 hover:underline font-medium transition-colors">
+                            <a href="#" className="test-primary hover:underline font-medium transition-colors">
                                 Subscription Rules
                             </a>{" "}
                             will be processed automatically. You will receive an email confirmation once your refund has been
@@ -100,7 +100,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete, initialR
                     <div className="flex justify-center">
                         <Button
                             onClick={handleCancel}
-                            className="px-8 py-2 border-2 border-blue-600 text-blue-600 bg-white hover:bg-blue-50 font-semibold shadow-md"
+                            className="px-8 py-2 border-2 border-blue-600 test-primary bg-white hover:bg-blue-50 font-semibold shadow-md"
                         >
                             CLOSE
                         </Button>
@@ -162,7 +162,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete, initialR
                 <div className="mb-6">
                     <p className="text-xs text-gray-600 leading-relaxed bg-gray-50 p-3 rounded-md border border-gray-200">
                         Refund requests that meet the{" "}
-                        <a href="#" className="text-blue-600 hover:underline font-medium transition-colors">
+                        <a href="#" className="test-primary hover:underline font-medium transition-colors">
                             Subscription Rules
                         </a>{" "}
                         will be processed automatically. You will receive an email confirmation once your refund has been processed.

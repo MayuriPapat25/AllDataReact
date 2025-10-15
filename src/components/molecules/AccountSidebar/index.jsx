@@ -42,7 +42,7 @@ const AccountSidebar = ({
         title: "Ann Watkins",
         description: (
           <>
-            <a href="mailto:ann.watkins@alldata.com" className="text-blue-600 underline">
+            <a href="mailto:ann.watkins@alldata.com" className="test-primary underline">
               ann.watkins@alldata.com
             </a><br />
             800-829-8727

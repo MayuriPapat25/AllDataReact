@@ -310,7 +310,7 @@ const AccountCreationForm = ({
                                     Don't see your State/Province?
                                     <br />
                                     Change your Region and reselect Plan{" "}
-                                    <a href="#" className="text-blue-600 underline">
+                                    <a href="#" className="test-primary underline">
                                         HERE
                                     </a>
                                     .
@@ -332,7 +332,7 @@ const AccountCreationForm = ({
                                 id="billingAddress"
                                 checked={formData.useBillingAddress}
                                 onChange={(e) => handleInputChange("useBillingAddress", e.target.checked)}
-                                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 test-primary border-gray-300 rounded focus:ring-blue-500"
                             />
                             <label htmlFor="billingAddress" className="text-sm text-gray-700">
                                 Use for my billing address

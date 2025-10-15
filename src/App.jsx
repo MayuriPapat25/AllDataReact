@@ -20,20 +20,20 @@ function App() {
     <Router>
       {/* Header with Navigation */}
       <header className="bg-gray-100 shadow-md p-4 flex gap-6">
-        <Link to="/" className="text-blue-600 hover:underline">Home</Link>
-        <Link to='/diycustomeraccount' className="text-blue-600 hover:underline">DIY Customer Account</Link>
-        <Link to="/rep" className="text-blue-600 hover:underline">Rep Initiated Cart</Link>
-        <Link to="/professional" className="text-blue-600 hover:underline">Professional Cart</Link>
-        <Link to="/euprofessional" className="text-blue-600 hover:underline">EU Professional Cart</Link>
+        <Link to="/" className="test-primary hover:underline">Home</Link>
+        <Link to='/diycustomeraccount' className="test-primary hover:underline">DIY Customer Account</Link>
+        <Link to="/rep" className="test-primary hover:underline">Rep Initiated Cart</Link>
+        <Link to="/professional" className="test-primary hover:underline">Professional Cart</Link>
+        <Link to="/euprofessional" className="test-primary hover:underline">EU Professional Cart</Link>
 
-        <Link to='/profcustomportal' className="text-blue-600 hover:underline">Prof Custom Portal</Link>
-        {/* <Link to="/diy" className="text-blue-600 hover:underline">DIY Cart</Link> */}
-        <Link to='/diycheckout' className="text-blue-600 hover:underline">DIY CHECKOUT</Link>
-        <Link to='/usanonycheckout' className="text-blue-600 hover:underline">US Anony Checkout</Link>
-        <Link to='/usauthcheckout' className="text-blue-600 hover:underline">US Auth Checkout</Link>
-        <Link to='/eucheckout' className="text-blue-600 hover:underline">EU Checkout</Link>
-        <Link to='/repinitiatedcheckout' className="text-blue-600 hover:underline">Rep Initiated Checkout</Link>
-        <Link to='/findvehicle' className="text-blue-600 hover:underline">Find Vehicle</Link>
+        <Link to='/profcustomportal' className="test-primary hover:underline">Prof Custom Portal</Link>
+        {/* <Link to="/diy" className="test-primary hover:underline">DIY Cart</Link> */}
+        <Link to='/diycheckout' className="test-primary hover:underline">DIY CHECKOUT</Link>
+        <Link to='/usanonycheckout' className="test-primary hover:underline">US Anony Checkout</Link>
+        <Link to='/usauthcheckout' className="test-primary hover:underline">US Auth Checkout</Link>
+        <Link to='/eucheckout' className="test-primary hover:underline">EU Checkout</Link>
+        <Link to='/repinitiatedcheckout' className="test-primary hover:underline">Rep Initiated Checkout</Link>
+        <Link to='/findvehicle' className="test-primary hover:underline">Find Vehicle</Link>
       </header>
 
       <main className="container">

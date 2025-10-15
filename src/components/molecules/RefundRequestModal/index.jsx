@@ -47,7 +47,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete }) => {
             <p className="mb-4">Your refund request has been submitted successfully.</p>
             <p className="text-sm">
               Refund requests that meet the{" "}
-              <a href="#" className="text-blue-600 hover:underline">
+              <a href="#" className="test-primary hover:underline">
                 Subscription Rules
               </a>{" "}
               will be processed automatically. You will receive an email confirmation once your refund has been
@@ -61,7 +61,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete }) => {
                 setShowSuccess(false);
                 onClose();
               }}
-              className="px-8 py-2 border-2 border-blue-600 text-blue-600 bg-white hover:bg-blue-50 font-semibold"
+              className="px-8 py-2 border-2 border-blue-600 test-primary bg-white hover:bg-blue-50 font-semibold"
             >
               CLOSE
             </Button>
@@ -111,7 +111,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete }) => {
         <div className="mb-6">
           <p className="text-xs text-gray-600 leading-relaxed">
             Refund requests that meet the{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            <a href="#" className="test-primary hover:underline">
               Subscription Rules
             </a>{" "}
             will be processed automatically. You will receive an email confirmation once your refund has been processed.
@@ -123,7 +123,7 @@ const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete }) => {
           <Button
             onClick={handleCancel}
             variant="outline"
-            className="px-8 py-2 border-2 border-blue-600 text-blue-600 bg-white hover:bg-blue-50 font-semibold"
+            className="px-8 py-2 border-2 border-blue-600 test-primary bg-white hover:bg-blue-50 font-semibold"
           >
             CANCEL
           </Button>
