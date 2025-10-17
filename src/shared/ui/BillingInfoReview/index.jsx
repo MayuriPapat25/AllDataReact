@@ -17,14 +17,18 @@ const BillingInfoReview = ({
                     EDIT
                 </Button>
             </div>
-
+            <div className="space-y-1 text-gray-500 mb-8">
+                <p className="text-sm text-black">Payment Type</p>
+                <p className="text-sm text-black">Credit Card</p>
+            </div>
             <div className="space-y-1 text-gray-500">
-                <p className="text-sm">{name}</p>
-                <p className="text-sm">{street}</p>
-                <p className="text-sm">
+                <p className="text-sm text-black mb-4">Address</p>
+                <p className="text-sm text-black">{name}</p>
+                <p className="text-sm text-black">{street}</p>
+                <p className="text-sm text-black">
                     {city}, {state} {zipCode}
                 </p>
-                <p className="text-sm">{country}</p>
+                <p className="text-sm text-black">{country}</p>
             </div>
 
         </div>

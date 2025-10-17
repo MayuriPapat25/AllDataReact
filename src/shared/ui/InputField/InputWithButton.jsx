@@ -34,7 +34,7 @@ export function InputWithButton({
   }
 
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
+    <div className={`flex ${className}`}>
       <div className="flex items-center gap-2">
         <TextField
           placeholder={placeholder}
@@ -44,7 +44,7 @@ export function InputWithButton({
             setError("")
           }}
           onKeyDown={handleKeyDown}
-          className="flex-1 min-w-0 border-2"
+          className="border-2"
         />
         <Button
           variant="outline"

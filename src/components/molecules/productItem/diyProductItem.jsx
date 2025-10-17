@@ -10,15 +10,15 @@ export function ProductSingleItem({ status, description, expiration, plan, price
   ]
 
   return (
-    <div className="py-4 border-b border-gray-200 space-y-2 md:space-y-0 md:grid md:grid-cols-12 md:gap-4 items-start md:items-center">
+    <div className="pb-11 pt-10 border-b-4 border-gray-200 space-y-2 md:space-y-0 md:grid md:grid-cols-12 md:gap-4 items-start md:items-center">
       {/* Status */}
-      <div className="hidden md:block md:col-span-1">
-        <strong className="inline-block text-md">{status}</strong>
+      <div className="min-w-24 w-8">
+        <strong className=" text-md">{status}</strong>
       </div>
 
       {/* Name / Description */}
-      <div className="col-span-1 md:col-span-4">
-        <p className="text-md break-words">{description}</p>
+      <div className="col-span-1 md:col-span-4 ">
+        <p className="text-md break-words sub-title">{description}</p>
       </div>
 
       <div className="md:col-span-2 flex items-center">

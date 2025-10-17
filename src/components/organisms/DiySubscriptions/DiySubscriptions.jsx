@@ -19,10 +19,10 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
     navigate("/findvehicle")
   }
   return (
-    <div className="w-full max-w-7xl mx-auto p-6">
+    <div className="px-20 py-0 my-4">
       <div className="mb-6">
-        <h2 className="!text-lg font-bold mb-2 text-foreground">MANAGE SUBSCRIPTIONS</h2>
-        <p className="text-sm text-muted-foreground leading-relaxed text-gray-600">
+        <h2 className="sub-title">MANAGE SUBSCRIPTIONS</h2>
+        <p className=" text-gray-600">
           Subscription options include: change vehicle, renew vehicle, remove vehicle, or refund request. The
           availability of each option will vary based on the subscription. See{" "}
           <a href="#" className="test-primary hover:underline">
@@ -33,24 +33,24 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
       </div>
 
       <table className="w-full">
-        <thead className="hidden lg:table-header-group lg:bg-muted/50  lg:order-b lg:border-border">
+        <thead className="hidden lg:table-header-group lg:bg-muted/50  lg:border-b-4 border-gray-300 lg:border-border">
           <tr className="flex flex-col lg:table-row">
-            <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">
-              <div className="flex items-center gap-1">
+            <th className="text-left py-3 px-4 font-normal text-foreground text-[#54565a]">
+              <div className="flex items-center gap-1 text-base cursor-pointer">
                 Vehicle
                 <ChevronDown className="w-4 h-4" />
               </div>
             </th>
-            <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Expiration</th>
-            <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Renew Subscription</th>
-            <th className="text-left py-3 px-4 font-semibold text-sm text-foreground">Actions</th>
+            <th className="text-left py-3 px-4 font-normal text-foreground text-[#54565a] text-base cursor-pointer">Expiration</th>
+            <th className="text-left py-3 px-4 font-normal text-foreground text-[#54565a] text-base cursor-pointer">Renew Subscription</th>
+            <th className="text-left py-3 px-4 font-normal text-foreground text-[#54565a] text-base cursor-pointer">Actions</th>
           </tr>
         </thead>
         <tbody className="flex flex-col lg:table-header-group">
           {subscriptions.map((subscription, index) => (
             <tr
               key={subscription.id}
-              className={`border-b border-border flex flex-col lg:table-row ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}
+              className={`border-b-4 border-gray-300 border-border flex flex-col lg:table-row ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}
             >
               <td className="py-4 lg:px-4 lg:w-[45%]">
                 <div className="flex flex-col gap-1">
@@ -64,11 +64,15 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
                   </button>
                 </div>
               </td>
-              <td className="py-4 lg:px-4">
+              <td className="py-4 lg:px-4 ml-60">
                 <span className="text-lg font-semibold text-gray-600 text-foreground">{subscription.expiration}</span>
               </td>
-              <td className="py-4 lg:px-4">
-                <div className="flex flex-col items-start lg:flex-row lg:items-center gap-3">
+              <td
+                className="border-l-2 border-gray-300 w-1/5 pl-4"
+              >
+                <div
+                  className="flex  "
+                >
                   <select
                     name={`subscription-${subscription.id}`}
                     id={`subscription-${subscription.id}`}
@@ -91,7 +95,7 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
                   )}
                 </div>
               </td>
-              <td className="py-4 lg:px-4">
+              <td className="py-4">
                 <button
                   onClick={() => handleRefundRequest(subscription.vehicle, subscription.id)}
                   className="flex items-center gap-1 text-primary text-xs uppercase font-semibold cursor-pointer"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Loader2 } from "lucide-react";
+import { Search, Loader2, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "../../../shared/ui/Buttons/Button";
 
 const AddVehicle = ({ currentVehicle, onContinue }) => {
@@ -74,46 +74,57 @@ const AddVehicle = ({ currentVehicle, onContinue }) => {
 
   return (
     <>
-      <div className="p-8">
+      <div className="p-8 max-w-3/4 mx-auto">
         <div className="grid grid-cols-3 gap-4 mb-6">
           {/* Vehicle Year */}
-          <div>
-            <label className="block text-sm mb-2">Vehicle Year</label>
+          <div className="">
+            <label className="block dropdown-title">Vehicle Year</label>
             <div className="relative">
               <Button
                 onClick={() => setShowYearDropdown(!showYearDropdown)}
                 size="sm"
-                className="w-full border border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400"
+                className="w-full border-2 border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400"
               >
                 <span className={selectedYear ? "text-black" : "text-gray-500"}>
                   {selectedYear || "SELECT YEAR"}
                 </span>
+                {showYearDropdown ? (
+                  <ChevronUp className="w-4 h-4 text-gray-600" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-gray-600" />
+                )}
               </Button>
 
               {showYearDropdown && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 shadow-lg z-10 max-h-64 overflow-y-auto">
-                  <div className="p-2 border-b border-gray-200">
+                  <div className="p-2">
                     <div className="relative">
-                      <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
                       <input
                         type="text"
-                        placeholder="SELECT YEAR"
                         value={yearSearch}
                         onChange={(e) => setYearSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-8 pr-3 py-2 border-b-2 border-b-orange-500 border-t border-t-gray-300 border-l border-l-gray-300  border-r border-r-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
-                  {filteredYears.map((year) => (
-                    <Button
-                      key={year}
-                      onClick={() => handleYearSelect(year)}
-                      size="sm"
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      {year}
-                    </Button>
-                  ))}
+                  {
+                    filteredYears.length === 0 ? (
+                      <div className="px-4 py-3 text-gray-500">No Result Found</div>
+                    ) :
+                      <>
+                        <label className="px-4 py-2 text-gray-400">SELECT YEAR</label>
+                        {filteredYears.map((year) => (
+                          <Button
+                            key={year}
+                            onClick={() => handleYearSelect(year)}
+                            size="sm"
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                          >
+                            {year}
+                          </Button>
+                        ))}
+                      </>
+                  }
                 </div>
               )}
             </div>
@@ -121,43 +132,54 @@ const AddVehicle = ({ currentVehicle, onContinue }) => {
 
           {/* Vehicle Manufacturer */}
           <div>
-            <label className="block text-sm mb-2">Vehicle Manufacturer</label>
+            <label className="block text-h6 mb-2 text-[#061b2c] cursor-pointer">Vehicle Manufacturer</label>
             <div className="relative">
               <Button
                 onClick={() => setShowManufacturerDropdown(!showManufacturerDropdown)}
                 disabled={!selectedYear}
                 size="sm"
-                className="w-full border border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                className="w-full border-2 border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
               >
                 <span className={selectedManufacturer ? "text-black" : "text-gray-500"}>
                   {selectedManufacturer || "SELECT MANUFACTURER"}
                 </span>
+                {showManufacturerDropdown ? (
+                  <ChevronUp className="w-4 h-4 text-gray-600" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-gray-600" />
+                )}
               </Button>
 
               {showManufacturerDropdown && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 shadow-lg z-10 max-h-64 overflow-y-auto">
-                  <div className="p-2 border-b border-gray-200">
+                  <div className="p-2 ">
                     <div className="relative">
-                      <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
                       <input
                         type="text"
-                        placeholder="SELECT MANUFACTURER"
                         value={manufacturerSearch}
                         onChange={(e) => setManufacturerSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-8 pr-3 py-2 border-b-2 border-b-orange-500 border-t border-t-gray-300 border-l border-l-gray-300  border-r border-r-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
-                  {filteredManufacturers.map((mfr) => (
-                    <Button
-                      key={mfr}
-                      onClick={() => handleManufacturerSelect(mfr)}
-                      size="sm"
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      {mfr}
-                    </Button>
-                  ))}
+                  {
+                    filteredManufacturers.length === 0 ? (
+                      <div className="px-4 py-3 text-gray-500">No Result Found</div>
+                    ) :
+                      <>
+                        <label className="px-4 py-2 text-gray-400">SELECT MANUFACTURER</label>
+                        {filteredManufacturers.map((mfr) => (
+                          <Button
+                            key={mfr}
+                            onClick={() => handleManufacturerSelect(mfr)}
+                            size="sm"
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                          >
+                            {mfr}
+                          </Button>
+                        ))}
+                      </>
+                  }
                 </div>
               )}
             </div>
@@ -165,43 +187,54 @@ const AddVehicle = ({ currentVehicle, onContinue }) => {
 
           {/* Vehicle Model */}
           <div>
-            <label className="block text-sm mb-2">Vehicle Model</label>
+            <label className="block text-h6 mb-2 text-[#061b2c] cursor-pointer">Vehicle Model</label>
             <div className="relative">
               <Button
                 onClick={() => setShowModelDropdown(!showModelDropdown)}
                 disabled={!selectedManufacturer}
                 size="sm"
-                className="w-full border border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                className="w-full border-2 border-gray-300 px-3 py-2 text-left flex items-center justify-between hover:border-gray-400 disabled:bg-gray-50 disabled:cursor-not-allowed"
               >
                 <span className={selectedModel ? "text-black" : "text-gray-500"}>
                   {selectedModel || "SELECT MODEL"}
                 </span>
+                {showModelDropdown ? (
+                  <ChevronUp className="w-4 h-4 text-gray-600" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-gray-600" />
+                )}
               </Button>
 
               {showModelDropdown && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-300 shadow-lg z-10 max-h-64 overflow-y-auto">
-                  <div className="p-2 border-b border-gray-200">
+                  <div className="p-2">
                     <div className="relative">
-                      <Search className="absolute left-2 top-2.5 w-4 h-4 text-gray-400" />
                       <input
                         type="text"
-                        placeholder="SELECT MODEL"
                         value={modelSearch}
                         onChange={(e) => setModelSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-8 pr-3 py-2 border-b-2 border-b-orange-500 border-t border-t-gray-300 border-l border-l-gray-300  border-r border-r-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
-                  {filteredModels.map((model) => (
-                    <Button
-                      key={model}
-                      onClick={() => handleModelSelect(model)}
-                      size="sm"
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      {model}
-                    </Button>
-                  ))}
+                  {
+                    filteredModels.length === 0 ? (
+                      <div className="px-4 py-3 text-gray-500">No Result Found</div>
+                    ) :
+                      <>
+                        <label className="px-4 py-2 text-gray-400">SELECT MODEL</label>
+                        {filteredModels.map((model) => (
+                          <Button
+                            key={model}
+                            onClick={() => handleModelSelect(model)}
+                            size="sm"
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                          >
+                            {model}
+                          </Button>
+                        ))}
+                      </>
+                  }
                 </div>
               )}
             </div>
@@ -215,7 +248,7 @@ const AddVehicle = ({ currentVehicle, onContinue }) => {
             <div className="space-y-3">
               {availableEngines.map((engine) => (
                 <div key={engine} className="flex items-center gap-3">
-                  <div className="flex-1 border border-gray-300 px-4 py-2">{engine}</div>
+                  <div className="flex-1 border-2 border-gray-300 px-4 py-2">{engine}</div>
                   <Button
                     type="button"
                     onClick={() => handleEngineSelect(engine)}

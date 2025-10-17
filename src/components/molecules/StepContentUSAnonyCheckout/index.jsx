@@ -78,7 +78,7 @@ const StepContentUSAnonyCheckout = ({
                             <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-6"/>
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
-                        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
+                        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
                         <div className="flex items-start mx-auto pl-6">
                             <LoginForm onLogin={handleLogin} variant='alldata' />
                         </div>

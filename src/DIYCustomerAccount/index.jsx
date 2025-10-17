@@ -118,7 +118,7 @@ const DIYCustomerAccount = () => {
   const tabsData = [
     {
       id: 'subscriptions',
-      label: 'Subscriptions',
+      label: 'SUBSCRIPTIONS',
       content: <DiySubscriptions
         subscriptions={subscriptions}
         setSubscriptions={setSubscriptions}
@@ -142,25 +142,25 @@ const DIYCustomerAccount = () => {
     },
     {
       id: 'profile-information',
-      label: 'Profile Information',
+      label: 'PROFILE INFORMATION',
       content: <DiyProfileInfo />
 
     },
     {
       id: 'payment-information',
-      label: 'Payment Information',
+      label: 'PAYMENT INFORMATION',
       content: <DiyPaymentInfo />
     }
   ];
 
   return (
-    <div className='mt-10'>
+    <div className=''>
       <DIYCartHome cartData={cartData} cartCount={cartCount} />
-      <h1 className="title text-center mt-20">
+      <h2 className="title text-center mt-16">
         {/* @todo: Get content from Drupal */}
-        <span className="title-first-part">My Account : </span>
-        <span className="title-username font-normal">TestLib TesMath</span>
-      </h1>
+        <span className="">My Account : </span>
+        <span className="font-normal">TestLib TesMath</span>
+      </h2>
 
       <Tabs
         tabs={tabsData}

@@ -10,7 +10,7 @@ html, body, #root {
   width: 100%;
   display: block;
   font-size: 14px;
-  background: var(--color-light-smoky-white);
+  background: var(--color-white);
 }
 
 /* Headings */
@@ -32,7 +32,7 @@ h3, .h3 { font-size: var(--text-h3); }
 h4, .h4 { font-size: var(--text-h4); }
 h5, .h5 { font-size: var(--text-h5); }
 h6, .h6 { font-size: var(--text-h6); }
-
+p, .p{ font-size: var(--text-h6); }
 /* Paragraph */
 p {
   font-size: var(--text-base);
@@ -58,10 +58,30 @@ small, .small { font-size: 80%; }
 .link { font-size: 12px; }
 input { font-size: 12px; }
 input:disabled {opacity: 0.5;background-color: var(--color-light-smoky-white);}
-.container { max-width: 1336px;padding: 0 20px;margin: 0 auto; }
+.container { 
+  max-width: 100%;
+  /* padding: 0 80px; */
+  margin: 0 auto; 
+}
 .text-md {font-size: 18px;}
 .text-sm {font-size: 12px;}
 .text-xs {font-size: 10px;}
+.bg-light-gray{ background: var(--color-light-smoky-white)}
+.title{
+    font-size: 32px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.53px;
+    text-align: center;
+    color: #000000;
+}
+.sub-title{
+    font-size: 18px;
+    color: #000;
+    font-style: normal;
+    text-transform: uppercase;
+}
 
 /* Shadow utility */
 .shadow-box {
@@ -78,4 +98,10 @@ input:disabled {opacity: 0.5;background-color: var(--color-light-smoky-white);}
   left: -7px;
   height: 40px;
   width: 3px;
+}
+.dropdown-title {
+  margin-bottom: 8px;
+  color:#061b2c ;
+  cursor: pointer;
+  font-size: 16px;
 }

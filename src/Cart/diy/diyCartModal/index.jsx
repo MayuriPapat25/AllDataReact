@@ -49,10 +49,11 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
   }
 
   const handleAddMoreVehicles = () => {
-    console.log("Add more vehicles");
-    if (onContinue) {
-      onContinue(1); // Go back to Step 1 ("Find your vehicle")
-    }
+    navigate("/findvehicle")
+    // console.log("Add more vehicles");
+    // if (onContinue) {
+    //   onContinue(1); // Go back to Step 1 ("Find your vehicle")
+    // }
   }
 
   const handleCheckout = () => {
@@ -73,11 +74,11 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
     console.log("Applying promo code:", promoCode)
   }
   return (
-    <div className="mx-auto">
+    <div className=" bg-white px-10 pb-2.5 mx-auto mt-11">
       <div className="text-center mb-8">
-        <h1 className="mb-6">CART</h1>
+        <h1 className="mb-10">CART</h1>
       </div>
-      <div className="w-80 mx-auto pb-10">
+      <div className="w-96 mb-5 mx-auto">
         <Dropdown
           label="Region" // no label for inline
           value={region}
@@ -88,7 +89,7 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
       {cartItems.length === 0 ? (
         // ✅ Empty cart UI
         <div className="text-center pt-2 pb-6">
-          <h5 className="mb-6 text-center text-md text-gray-600">
+          <h5 className="mb-12 text-center text-md text-gray-600">
             REVIEW ALLDATA DIY SUBSCRIPTIONS
           </h5>
           <p className="text-gray-600 mb-8">
@@ -105,12 +106,12 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
         </div>
       ) : (
         // ✅ Cart items UI
-        <div>
-          <h5 className="text-md mb-6 text-center text-gray-600">
+        <div className="">
+          <h5 className="text-md mb-12 text-center text-gray-600">
             REVIEW ALLDATA DIY SUBSCRIPTIONS
           </h5>
 
-          <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm text-gray-500">
+          <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b-4 border-gray-200 text-sm text-gray-500">
             <div className="col-span-1">Status</div>
             <div className="col-span-4">Description</div>
             <div className="col-span-2">Expiration</div>
@@ -137,7 +138,7 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
           </div>
 
           {/* Totals + Checkout */}
-          <div className="bg-gray-50 mt-6">
+          <div className="mt-6">
             <div className="flex justify-end">
               <div className="w-full md:w-[22rem]">
                 <div className="mb-6 py-4 items-center  ">

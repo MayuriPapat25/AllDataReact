@@ -15,7 +15,7 @@ export function DiyCartDropdown({ isOpen, onClose, className, cartData, cartCoun
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3">
           <span className="text-xs text-gray-500">
-            {cartCount} in cart
+            {cartCount} item in cart
           </span>
           <Button
             onClick={onClose}

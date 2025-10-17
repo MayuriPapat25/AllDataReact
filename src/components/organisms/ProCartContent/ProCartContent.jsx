@@ -66,7 +66,7 @@ export function ProCartContent({ fromEU }) {
       <Message type="default" className="mb-3">Default</Message>
 
       {/* Payment Frequency */}
-      <div className="mb-6 bg-white py-4 px-8 shadow-lg">
+      <div className="mb-4 bg-white py-6 px-10 shadow-lg">
         <div className="flex items-center justify-between">
           <label className="text-md text-black">Payment Frequency</label>
           <div className="flex gap-6">
@@ -106,7 +106,7 @@ export function ProCartContent({ fromEU }) {
         {cartItems.map((item, index) => (
           <div
             key={item.id}
-            className={`py-4 px-8 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
+            className={`py-6 px-10 mb-1 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
           >
             {/* Desktop */}
             <div className="hidden sm:grid items-center gap-4" style={{ gridTemplateColumns: "1fr 144px 1fr 48px" }}>
@@ -178,22 +178,22 @@ export function ProCartContent({ fromEU }) {
       <div className="mb-6 shadow-lg bg-white">
         <div className="space-y-2">
           <div className="border-b-2 border-light-smoky-white">
-            <div className="py-4 px-8">
+            <div className="py-6 px-10 mb-1">
               <PriceText amount={218.0} label="Subscription Subtotal" />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="py-4 px-8">
+            <div className="py-6 px-10 mb-1">
               <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="py-4 px-8">
+            <div className="py-6 px-10 mb-1">
               <PriceText amount={205.25} label="Total Monthly" />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="py-4 px-8">
+            <div className="py-6 px-10 mb-1">
               <PriceText amount={205.25} label="Total Due:" isTotal />
               <p className="text-gray-600 text-right mt-1">Taxes Not Included</p>
             </div>
@@ -202,7 +202,7 @@ export function ProCartContent({ fromEU }) {
       </div>
 
       {/* Promo Code */}
-      <div className="mb-6 bg-white py-4 px-8 flex items-center shadow-lg bg-white">
+      <div className="mb-6 py-6 px-10 flex items-center shadow-lg bg-white justify-between">
         <span className="text-md text-black whitespace-nowrap mr-4">
           Add Promo Code
         </span>
@@ -210,13 +210,13 @@ export function ProCartContent({ fromEU }) {
           placeholder="ENTER CODE"
           buttonText="APPLY"
           onSubmit={handleApplyPromo}
-          className="flex-1 min-w-0"
+          className=""
         />
       </div>
 
       {/* Subscription Term */}
       <div className="mb-4 shadow-lg bg-white">
-        <div className="flex items-center justify-between border-b-2 border-light-smoky-white py-4 px-8 w-full">
+        <div className="flex items-center justify-between border-b-2 border-light-smoky-white py-6 px-10 w-full mb-1">
           <label className="text-md text-black">Subscription Term</label>
           <Dropdown
             value={subscriptionTerm}
@@ -229,7 +229,7 @@ export function ProCartContent({ fromEU }) {
             className="max-w-[300px] ml-auto mx-0 mr-0"
           />
         </div>
-        <div className="flex items-center justify-between py-4 px-8 w-full">
+        <div className="flex items-center justify-between py-6 px-10 w-full">
           <label className="text-black text-md whitespace-nowrap">
             Auto Renewal Date:
           </label>

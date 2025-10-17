@@ -21,7 +21,7 @@ export default function PickYourPlan({ onContinue }) {
   };
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 md:py-16">
+    <main className="mx-auto max-w-6xl px-4 pt-10 md:py-16">
       <header className="mb-8 md:mb-12 text-center">
         <h1
           className="h2 text-balance mb-8"
@@ -48,7 +48,7 @@ export default function PickYourPlan({ onContinue }) {
 
       <section
         aria-label="Pricing options"
-        className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8"
+        className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 mb-2.5 "
       >
         <PricingCard
           title="DIY 1 MONTH SUBSCRIPTION"
@@ -67,7 +67,7 @@ export default function PickYourPlan({ onContinue }) {
         />
       </section>
 
-      <p className="mt-8 text-center font-medium text-sm opacity-70">
+      <p className="mb-5 text-center font-medium text-sm opacity-70">
         *Plans apply to selected vehicle. Entire subscription period billed at
         time of purchase. Promo Codes may be applied during the checkout
         process.

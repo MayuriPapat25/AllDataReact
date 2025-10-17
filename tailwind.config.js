@@ -12,9 +12,9 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "1rem",
+      // padding: "0 80px",
       screens: {
-        DEFAULT: "1336px", // 👈 global max-width for container
+        DEFAULT: "1336px", // 👈 global max-width for container 1362px
       },
     },
     extend: {

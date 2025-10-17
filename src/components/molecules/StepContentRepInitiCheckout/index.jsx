@@ -17,7 +17,7 @@ import AccountCreationForm from "../AccountCreationForm"
 import PhoneSignupForm from "../PhoneSignUpForm"
 import AgreementModal from "../AgreementModal"
 import { Button } from "../../../shared/ui/Buttons/Button"
-
+import BillingInformation from '../BusinessAddress'
 
 const StepContentRepInitiatedCheckout = ({
     currentStep,
