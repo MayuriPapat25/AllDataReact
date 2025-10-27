@@ -1,5 +1,5 @@
-import { Button } from "../../../components/atoms/Buttons/Button" // updated path
-import { Badge } from "../../../components/atoms/Badge/Badge" // updated path
+import { Button } from "../../../shared/ui/Buttons/Button" // updated path
+import { Badge } from "../../../shared/ui/Badge" // updated path
 
 export function CartItem({
   id,
@@ -22,13 +22,12 @@ export function CartItem({
           {badge && (
             <Badge
               variant={badgeVariant}
-              className={`text-xs px-2 py-0.5 rounded ${
-                badge === "MONTHLY"
-                  ? "bg-blue-100 text-blue-800"
-                  : badge === "ANNUALLY"
+              className={`text-xs px-2 py-0.5 rounded ${badge === "MONTHLY"
+                ? "bg-blue-100 text-blue-800"
+                : badge === "ANNUALLY"
                   ? "bg-green-100 text-green-800"
                   : "bg-gray-100 text-gray-800"
-              }`}
+                }`}
             >
               {badge}
             </Badge>

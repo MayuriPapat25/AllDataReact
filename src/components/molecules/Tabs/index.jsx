@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TabButton } from '../../atoms/TabButton';
+import { TabButton } from '../../../shared/ui/TabButton';
 
 export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) => {
   const [activeTab, setActiveTab] = useState(defaultActiveTab || tabs[0]?.id);
@@ -20,7 +20,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
     <div className={`w-full ${className}`}>
       {/* Desktop Tabs - Hidden on mobile */}
       <div className="hidden md:block">
-        <ul className="horizontal-tabs-list bg-white border-b-2 border-gray-200 flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
+        <ul className="horizontal-tabs-list bg-white border-b-2 border-b-light-smoky-white flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
           {tabs.map((tab, index) => (
             <li
               key={tab.id}
@@ -37,30 +37,31 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
                   e.preventDefault();
                   handleTabChange(tab.id);
                 }}
+                style={{ textDecoration: 'none' }}
                 className={`
-                  relative block px-2 py-4 text-base transition-all duration-200 whitespace-nowrap border-b-2 no-underline hover:no-underline
+                  relative block px-2 py-4 text-base transition-all duration-200 whitespace-nowrap border-b-2 no-underline hover:no-underline focus:no-underline active:no-underline !hover:no-underline !focus:no-underline !active:no-underline
                   ${activeTab === tab.id
-                  ? '!text-gray-600 border-orange-500'
-                  : 'text-primary border-transparent'
+                    ? '!text-gray-600 border-secondary border-b-4'
+                    : 'text-primary border-transparent'
                   }
                   `}
-                >
-                <span className={activeTab === tab.id ? '!font-semibold' : '!font-normal'}>
+              >
+                <span className={activeTab === tab.id ? '!font-semibold text-h6' : '!font-normal text-h6'}>
                   {tab.label}
                 </span>
                 <span className="summary"></span>
                 {activeTab === tab.id && (
                   <span id="active-horizontal-tab" className="sr-only">
-                  (active tab)
+                    (active tab)
                   </span>
                 )}
-                </a>
-              </li>
-              ))}
-            </ul>
-            </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            {/* Mobile Dropdown - Visible only on mobile */}
+      {/* Mobile Dropdown - Visible only on mobile */}
       <div className="md:hidden relative mb-6">
         <TabButton
           variant="dropdown-toggle"
@@ -72,7 +73,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
 
         {/* Dropdown Menu */}
         {isDropdownOpen && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg bg-white z-10">
+          <div className="absolute top-full left-0 right-0 mt-1 border border-gray-200 rounded-md shadow-lg bg-white z-10">
             {tabs.map((tab) => (
               <TabButton
                 key={tab.id}

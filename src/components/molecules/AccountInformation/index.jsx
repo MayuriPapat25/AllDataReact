@@ -1,4 +1,4 @@
-import InfoField from "../../atoms/InfoField"
+import InfoField from "../../../shared/ui/InfoField"
 
 const AccountInformation = ({ email, phoneNumber, subscriptionLength }) => {
 

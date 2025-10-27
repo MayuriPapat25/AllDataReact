@@ -1,9 +1,9 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronsDown, ChevronsUp, ChevronUp, Plus, PlusIcon, Search } from "lucide-react";
-import { Button } from "../../atoms/Buttons/Button";
-import InputField from "../../atoms/InputField";
-import SearchSelectField from "../../atoms/SearchSelectField";
+import InputField from "../../../shared/ui/InputField/index";
+import SearchSelectField from "../../../shared/ui/SearchSelectField";
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const SavedPaymentMethods = () => {
   const [isExpanded, setIsExpanded] = useState(true);

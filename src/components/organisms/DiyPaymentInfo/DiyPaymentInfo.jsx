@@ -17,59 +17,61 @@ const DiyPaymentInfo = () => {
   };
 
   return (
-    <div className="w-full mx-auto p-8">
-      <h2 className="!text-lg font-bold mb-2 text-foreground">MY PAYMENT INFORMATION</h2>
-      <p className="text-muted-foreground mb-8">Card Information is added during the checkout process</p>
+    <div className="px-20 py-0 my-4">
+      <div className="py-5">
+        <h2 className="sub-title">MY PAYMENT INFORMATION</h2>
+        <p className="mt-4 text-[#6a6c71]">Card Information is added during the checkout process</p>
 
-      <table className="w-full">
-        <thead>
-          <tr className=" border-b-2 border-b-gray-400">
-            <th className="text-left text-sm font-medium text-muted-foreground py-4 px-1 w-[10%]">Primary</th>
-            <th className="text-left text-sm font-medium text-muted-foreground py-4 px-1 w-[35%]">Card Information</th>
-            <th className="text-left text-sm font-medium text-muted-foreground py-4 px-1">Remove</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cards.map((card) => (
-            <tr key={card.id}>
-              {/* Radio Button */}
-              <td className="py-6">
-                <div className="flex items-center">
-                  <button
-                    onClick={() => handleSelectCard(card.id)}
-                    className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center"
-                    aria-label={`Select card ending in ${card.lastFour}`}
-                  >
-                    {selectedCardId === card.id && <div className="w-3 h-3 rounded-full bg-blue-900" />}
-                  </button>
-                </div>
-              </td>
-
-              {/* Card Information */}
-              <td className="py-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-[#1434CB] text-white px-2 py-1 rounded text-xs font-bold">VISA</div>
-                  <span className="text-sm text-muted-foreground tracking-wide">VISA ENDING IN {card.lastFour}</span>
-                </div>
-              </td>
-
-              {/* Remove Button */}
-              <td className="py-6">
-                {selectedCardId !== card.id && (
-                  <button
-                    onClick={() => handleRemove(card.id)}
-                    className="flex items-center gap-2 text-[#5B4FE9] hover:text-[#4A3FD8] transition-colors rounded px-2 py-1"
-                    aria-label={`Remove card ending in ${card.lastFour}`}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    <span className="text-sm font-medium">REMOVE</span>
-                  </button>
-                )}
-              </td>
+        <table className="w-full">
+          <thead>
+            <tr className=" border-b-2 border-b-gray-350">
+              <th className="text-left text-sm font-medium text-muted-foreground text-[#6a6c71] py-4 px-1 w-[10%]">Primary</th>
+              <th className="text-left text-sm font-medium text-muted-foreground text-[#6a6c71] py-4 px-1 w-[35%]">Card Information</th>
+              <th className="text-left text-sm font-medium text-muted-foreground text-[#6a6c71] py-4 px-1">Remove</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cards.map((card) => (
+              <tr key={card.id} className="mt-2.5 p-1.5">
+                {/* Radio Button */}
+                <td className="p-2.5 w-24">
+                  <div className="flex items-center">
+                    <button
+                      onClick={() => handleSelectCard(card.id)}
+                      className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center"
+                      aria-label={`Select card ending in ${card.lastFour}`}
+                    >
+                      {selectedCardId === card.id && <div className="w-3 h-3 rounded-full bg-blue-900" />}
+                    </button>
+                  </div>
+                </td>
+
+                {/* Card Information */}
+                <td className="py-6">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-[#1434CB] text-white px-2 py-1 rounded text-xs font-bold">VISA</div>
+                    <span className="text-sm text-muted-foreground tracking-wide">VISA ENDING IN {card.lastFour}</span>
+                  </div>
+                </td>
+
+                {/* Remove Button */}
+                <td className="py-6">
+                  {selectedCardId !== card.id && (
+                    <button
+                      onClick={() => handleRemove(card.id)}
+                      className="flex items-center gap-2 text-[#5B4FE9] hover:text-[#4A3FD8] transition-colors rounded px-2 py-1"
+                      aria-label={`Remove card ending in ${card.lastFour}`}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      <span className="text-sm font-medium">REMOVE</span>
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

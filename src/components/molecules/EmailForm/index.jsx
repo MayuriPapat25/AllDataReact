@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react"
-import InputField from "../../atoms/InputField/index"
-import TermsConditions from "../../atoms/TermsCondition"
+import InputField from "../../../shared/ui/InputField/index"
+import TermsConditions from "../../../shared/ui/TermsCondition"
 
 export default function EmailForm() {
     const [email, setEmail] = useState("hinal.parik@qed42.org")

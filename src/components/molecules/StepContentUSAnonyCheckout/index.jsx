@@ -1,5 +1,4 @@
 
-import { Button } from "../../atoms/Buttons/Button"
 import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
@@ -11,13 +10,14 @@ import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../atoms/BusinessAddressReview"
-import BillingInfoReview from "../../atoms/BillingInfoReview"
+import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
+import { Button } from "../../../shared/ui/Buttons/Button"
+import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 
 
 const StepContentUSAnonyCheckout = ({
@@ -79,7 +79,7 @@ const StepContentUSAnonyCheckout = ({
                             <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-6"/>
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
-                        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
+                        <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
                         <div className="flex items-start mx-auto pl-6">
                             <LoginForm onLogin={handleLogin} variant='alldata' />
                         </div>
@@ -142,7 +142,7 @@ const StepContentUSAnonyCheckout = ({
 
             case 5:
                 return (
-                    <div className="min-h-screen bg-gray-50 py-12 ">
+                    <div className="min-h-screen py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
                         <OrderSummary data={variant3Data} type="variant3" />
 
@@ -247,7 +247,7 @@ const StepContentUSAnonyCheckout = ({
     }
 
     return (
-        <div className="mx-auto">
+        <div className="mx-auto max-w-[1336px] pt-11 py-5 pb-2.5">
             {renderStepContent()}
             <div className="">
                 {getStepButtons()}

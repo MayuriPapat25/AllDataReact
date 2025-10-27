@@ -1,19 +1,21 @@
 import { useState } from "react"
 import { DiyCartDropdown } from "../../components/organisms/DiyCartDropdown/diyCartDropdown"
-import { Button } from "../../components/atoms/Buttons/Button"
+import { Button } from "../../shared/ui/Buttons/Button";
 
 export default function DIYCartHome({ cartData, cartCount }) {
   const [isCartOpen, setIsCartOpen] = useState(false)
 
+  const handleCartClick = () => {
+    cartCount > 0 && setIsCartOpen(!isCartOpen)
+  }
   return (
     <div>
       <header className="bg-gray-100 border-b">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-10 py-10 flex justify-between items-center">
           <h1 className="text-xl font-bold">ALLDATA DIY</h1>
 
           <div className="relative">
-            <Button
-              onClick={() => setIsCartOpen(!isCartOpen)}
+            <Button onClick={handleCartClick}
               variant="ghost"
               size="sm"
               className="relative p-2 rounded"
@@ -35,7 +37,7 @@ export default function DIYCartHome({ cartData, cartCount }) {
               </svg>
               {
                 cartCount > 0 &&
-                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute top-0 right-0 bg-orange-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartCount}
                 </span>
               }

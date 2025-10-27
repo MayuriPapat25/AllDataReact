@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
-import { Button } from "../../atoms/Buttons/Button"
-import { Icon } from "../../atoms/Icon/Icon"
+import { Button } from "../../../shared/ui/Buttons/Button"
+import { Icon } from "../../../shared/ui/Icon/Icon"
 
 type AccessPointsModalProps = {
   isOpen: boolean

@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import PhoneField from '../../atoms/PhoneNumberField';
-import InputField from '../../atoms/InputField';
-import { Dropdown } from '../../atoms/Dropdown/Dropdown';
+import PhoneField from '../../../shared/ui/PhoneNumberField';
+import InputField from '../../../shared/ui/InputField/index';
+import { Dropdown } from '../../../shared/ui/Dropdown/Dropdown';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 const DiyProfileInfo = () => {
   const initialFormData = {
@@ -62,13 +63,10 @@ const DiyProfileInfo = () => {
     setShowSaveButton(false);
   };
 
-
   const handleInputChange = (field, value) => {
-    const sanitizedEvent = sanitizePhoneInput(e)
-    const updatedValue = sanitizedEvent.target.value
     setFormData((prev) => ({
       ...prev,
-      [field]: updatedValue,
+      [field]: value,
     }))
 
     // Clear error when user starts typing
@@ -80,96 +78,97 @@ const DiyProfileInfo = () => {
     }
   }
 
-  const handleContactTypeChange = (value) => {
-    setContactType(value)
-    if (value !== "home") {
-      setShowSave(true)
-    }
-  }
+
+  // const handleContactTypeChange = (value) => {
+  //   setContactType(value)
+  //   if (value !== "home") {
+  //     setShowSave(true)
+  //   }
+  // }
   return (
-    <div className="mx-auto p-8 bg-gray-50 min-h-screen">
-      <div className="p-8">
-        <h2 className="!text-lg font-bold mb-2 text-foreground">MY PROFILE</h2>
+    <div className="px-20 py-0 my-4">
+      <div className="py-5">
+        <h2 className="sub-title">MY PROFILE</h2>
 
         {/* Contact Information Section */}
         <div className="mb-8">
-          <h3 className="!text-sm text-gray-600 mb-6 pb-3 border-b border-gray-200">
+          <h3 className="text-sm text-gray-600 mb-2 px-0 py-3.5 font-normal ">
             Contact Information
           </h3>
-
-          <div className="grid lg:grid-cols-2 gap-6 mb-6">
-            <InputField
-              id="firstName"
-              label="First Name"
-              type="text"
-              value={formData.firstName}
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-
-            <InputField
-              id="lastName"
-              label="Last Name"
-              type="text"
-              value={formData.lastName}
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-6">
-            <div>
+          <div className="border-t-4 border-gray-200">
+            <div className="grid lg:grid-cols-2 gap-6 mb-6 mt-6">
               <InputField
-                label="Email Address"
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-                helperText=" Used for ALLDATA Communications including Password Reset. Does not change Username."
+                id="firstName"
+                label="First Name"
+                type="text"
+                value={formData.firstName}
+                onChange={(e) => handleInputChange("firstName", e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+
+              <InputField
+                id="lastName"
+                label="Last Name"
+                type="text"
+                value={formData.lastName}
+                onChange={(e) => handleInputChange("lastName", e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
-            <div className="grid grid-cols-3 gap-4">
-              <div className='col-span-2'>
-                <PhoneField
-                  id="contactNumber"
-                  label="Contact Number"
-                  value={formData.contactNumber}
-                  onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                  placeholder="Contact Number"
+
+            <div className="grid lg:grid-cols-2 gap-6">
+              <div>
+                <InputField
+                  label="Email Address"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  helperText=" Used for ALLDATA Communications including Password Reset. Does not change Username."
                 />
               </div>
-              <div className="pt-8">
-                <Dropdown
-                  value={contactType}
-                  onValueChange={handleContactTypeChange}
-                  options={contactTypeOptions}
-                  placeholder="-Select-"
-                />
+              <div className="grid grid-cols-3 gap-4">
+                <div className='col-span-2'>
+                  <PhoneField
+                    id="contactNumber"
+                    label="Contact Number"
+                    value={formData.contactNumber}
+                    onChange={(e) => handleInputChange("contactNumber", e.target.value)}
+                    placeholder="Contact Number"
+                  />
+                </div>
+                <div className="pt-8">
+                  <Dropdown
+                    value={contactType}
+                    onValueChange={handleSelectType}
+                    options={contactTypeOptions}
+                    placeholder="-Select-"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-
         {/* Login Information Section */}
         <div>
-          <h2 className="text-sm text-gray-600 mb-6 pb-3 border-b border-gray-200">
+          <h2 className="text-sm text-gray-600 mb-6 pb-3 border-b-4 border-gray-200">
             Login Information
           </h2>
 
-          <div className="grid lg:grid-cols-2 gap-6">
-            <div>
+          <div className="flex gap-6 my-5">
+            <div className="w-1/4">
               <label className="block text-sm text-gray-700 mb-2">
                 Username
               </label>
-              <div className="w-full py-2 bg-gray-50 text-gray-700 rounded">
-                {formData.username}
-              </div>
+              <label className="py-2  text-gray-500 rounded">
+                {formData.email}
+              </label>
             </div>
 
-            <div>
+            <div className="w-1/4">
               <label className="block text-sm text-gray-700 mb-2">
                 Password
               </label>
-              <div className="w-full py-2 bg-gray-50 text-gray-700 rounded">
+              <div className="py-2  text-gray-500 rounded">
                 {formData.password}
               </div>
             </div>
@@ -179,12 +178,12 @@ const DiyProfileInfo = () => {
         {/* Save Button */}
         {showSaveButton && (
           <div className="mt-8">
-            <button
+            <Button
               onClick={handleSave}
               className="btn btn-primary w-1/4"
             >
               SAVE
-            </button>
+            </Button>
           </div>
         )}
       </div>

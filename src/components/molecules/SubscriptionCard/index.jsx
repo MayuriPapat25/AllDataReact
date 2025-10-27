@@ -1,5 +1,5 @@
-import { PriceDisplay } from "../../atoms/PriceDisplay"
-import { ProductInfo } from "../../atoms/ProductInfo"
+import { PriceDisplay } from "../../../shared/ui/PriceDisplay"
+import { ProductInfo } from "../../../shared/ui/ProductInfo"
 
 
 export function SubscriptionCard({

@@ -1,8 +1,8 @@
-import InputField from "./components/atoms/InputField";
-import PhoneField from "./components/atoms/PhoneNumberField";
-import SelectField from "./components/atoms/SelectField";
+import InputField from "./shared/ui/InputField/index";
+import PhoneField from "./shared/ui/PhoneNumberField";
+import SelectField from "./shared/ui/SelectField";
 
-import FormFileUpload from './components/atoms/FileUpload'
+import FormFileUpload from './shared/ui/FileUpload'
 
 export default function HomePage() {
   const handleInputChange = (field, value) => {

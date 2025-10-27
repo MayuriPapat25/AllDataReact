@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { InfoText } from '../../atoms/Info/InfoText';
-import InputFieldWithoutBorder from '../../atoms/InputField/InputFieldWithoutBorder';
-import SelectField from '../../atoms/SelectField/Inline-selectfield';
-import { PriceText } from '../../atoms/Price/PriceText';
+import { InfoText } from '../../../shared/ui/Info/InfoText';
+import InputFieldWithoutBorder from '../../../shared/ui/InputField/InputFieldWithoutBorder';
+import SelectField from '../../../shared/ui/SelectField/Inline-selectfield';
+import { PriceText } from '../../../shared/ui/Price/PriceText';
 import SavedPaymentMethods from '../SavedPaymentMethods/SavedPaymentMethods';
 import UpdateAccoutDetails from '../../molecules/UpdateAccoutDetails';
-import InputField from '../../atoms/InputField';
+import InputField from '../../../shared/ui/InputField/index';
 
 const AccountSettings = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +62,7 @@ const AccountSettings = () => {
       <div className="shadow-lg bg-white">
         <div className="space-y-6">
           {/* Company Name - Read Only */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white items-center flex justify-between">
             <label>Company Name</label>
             <div className="md:col-span-2">
               <span className="text-gray-900">{formData.companyName}</span>
@@ -70,7 +70,7 @@ const AccountSettings = () => {
           </div>
 
           {/* Status - Read Only */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-center">
             <label>Status</label>
             <div className="md:col-span-2">
               <span className="text-gray-900">{formData.status}</span>
@@ -78,9 +78,9 @@ const AccountSettings = () => {
           </div>
 
           {/* Shop Name */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label>Shop Name</label>
-            <div className="md:col-span-2">
+            <div className="md:col-span-2 space-y-4">
               <InputField
                 id="shopName"
                 value={formData.shopName}
@@ -92,7 +92,7 @@ const AccountSettings = () => {
           </div>
 
           {/* Shop Address */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label>Shop Address</label>
             <div className="md:col-span-2 space-y-4">
               {/* Street Address */}
@@ -155,7 +155,7 @@ const AccountSettings = () => {
           </div>
 
           {/* Billing Address */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label>Billing Address</label>
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
@@ -239,7 +239,7 @@ const AccountSettings = () => {
           </div>
 
           {/* Mailing Address */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label>Mailing Address</label>
             <div className="md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
@@ -329,7 +329,7 @@ const AccountSettings = () => {
       <div className='shadow-lg bg-white'>
         <div className="space-y-6">
           {/* Account Phone No */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label>Account Phone Number</label>
             <div className="md:col-span-2">
               <InputFieldWithoutBorder
@@ -344,7 +344,7 @@ const AccountSettings = () => {
             </div>
           </div>
           {/* Email Add */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label>Email Address</label>
             <div className="md:col-span-2">
               <InputFieldWithoutBorder
@@ -359,7 +359,7 @@ const AccountSettings = () => {
             </div>
           </div>
           {/* Business Email Add */}
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+          <div className="py-4 px-8 border-b-2 border-light-smoky-white flex justify-between items-start">
             <label> Business Email Address</label>
             <div className="md:col-span-2">
               <InputFieldWithoutBorder

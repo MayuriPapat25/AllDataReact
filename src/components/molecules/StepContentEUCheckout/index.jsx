@@ -1,23 +1,20 @@
 
-import { Button } from "../../atoms/Buttons/Button"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
 import BillingAddressForm from '../BillingAddress'
-
 import BillingEmailForm from "../BillingEmailAddress"
-import PhoneSignupForm from "../PhoneSignUpForm"
 import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../atoms/BusinessAddressReview"
-import BillingInfoReview from "../../atoms/BillingInfoReview"
+import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
-
+import { Button } from '../../../shared/ui/Buttons/Button'
+import BillingInfoReview from '../../../shared/ui/BillingInfoReview'
 
 const StepContentEUCheckout = ({
     currentStep,
@@ -67,10 +64,8 @@ const StepContentEUCheckout = ({
         switch (currentStep) {
             case 1:
                 return (
-                    <div className="mx-auto relative max-w-3xl">
-                        <div>
+                    <div className="flex justify-center">
                             <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
-                        </div>
                     </div>
                 )
 
@@ -106,7 +101,7 @@ const StepContentEUCheckout = ({
                                 <BusinessInfoReview onEdit={handleEdit} />
                                 <BusinessAddressReview onEdit={handleEdit} />
                                 <BillingAddressForm fromReview={true} onEdit={handleEdit} />
-                                <BillingInfoReview />
+                                <BillingInfoReview onEdit={onBack}/>
 
                             </div>
                             <div className="w-1/2">
@@ -129,7 +124,7 @@ const StepContentEUCheckout = ({
 
             case 5:
                 return (
-                    <div className="min-h-screen bg-gray-50 py-12 ">
+                    <div className="min-h-screen py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
                         <OrderSummary data={variant2Data} type="variant2" />
 
@@ -158,7 +153,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex mx-auto max-w-3xl"
+                buttonLayout: "flex mx-auto ml-80"
             },
             2: {
                 showButtons: true,
@@ -237,7 +232,7 @@ const StepContentEUCheckout = ({
     }
 
     return (
-        <div>
+        <div className="mx-auto max-w-7xl ">
             {renderStepContent()}
             {getStepButtons()}
         </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import { Button } from '../../atoms/Buttons/Button';
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 
 const RefundRequestModal = ({ isOpen, onClose, vehicleInfo, onComplete }) => {

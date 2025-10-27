@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import ProductCard from '../../molecules/ProductCard';
 import { Car, MessageSquare, Plus, SquareArrowOutUpRightIcon } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
-import { InfoText } from '../../atoms/Info/InfoText';
-import { Icon, MessageIcon, ProductIcon } from '../../atoms/Icon/Icon';
-import { Button } from '../../atoms/Buttons/Button';
+import { InfoText } from '../../../shared/ui/Info/InfoText';
+import { Icon, MessageIcon } from '../../../shared/ui/Icon/Icon';
 import AccountClosureModal from '../../molecules/AccountClosureModal';
-import { LinkButton } from '../../atoms/links/linkButton';
+import { LinkButton } from '../../../shared/ui/links/linkButton';
 import { AccessPointsModal } from '../../molecules/Modal/AccessPointsModal';
 import SubscriptionManager from '../../molecules/SubscriptionManager';
+import { Button } from '../../../shared/ui/Buttons/Button';
 
 
 const ProductsPortal = () => {
@@ -75,19 +75,19 @@ const ProductsPortal = () => {
   return (
     <>
       <main className="mb-8">
-        <h1 className="h3 my-4 font-normal text-primary" style={{ fontWeight: 500 }}>Active Products</h1>
+        <h1 className="h3 mb-4 font-normal text-primary" style={{ fontWeight: 500 }}>Active Products</h1>
         <ProductCard cards={productCards} />
       </main>
       <h2 className="h3 my-4 font-normal text-primary" style={{ fontWeight: 500 }}>Your Subscription</h2>
       <div className="mb-6 shadow-lg bg-white general-list">
         <div className="">
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Subscription Term" value="1 Year" />
           </div>
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Auto Renewal Date" value="09/23/2026" />
           </div>
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Invoice Frequency" value="Monthly" />
           </div>
         </div>

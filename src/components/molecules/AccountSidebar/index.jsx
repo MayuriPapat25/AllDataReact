@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProductInfo } from '../../atoms/ProductInfo';
+import { ProductInfo } from '../../../shared/ui/ProductInfo';
 
 const AccountSidebar = ({
   className = '',
@@ -44,7 +44,7 @@ const AccountSidebar = ({
           <>
             <a href="mailto:ann.watkins@alldata.com" className="test-primary underline">
               ann.watkins@alldata.com
-            </a><br/>
+            </a><br />
             800-829-8727
           </>
         ),
@@ -84,7 +84,7 @@ const AccountSidebar = ({
                       <button
                         key={item.id || itemIndex}
                         onClick={() => handleItemClick(item, sectionIndex, itemIndex)}
-                        className={`w-full text-left block px-6 py-3 text-base font-normal duration-150 text-gray-600 border border-light-smoky-white ${isActive
+                        className={`w-full text-left block pl-16 pr-6 py-6 text-base font-normal duration-150 text-gray-600 border border-light-smoky-white ${isActive
                           ? ''
                           : ''
                           }`}
@@ -106,7 +106,7 @@ const AccountSidebar = ({
         {addressCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-lg bg-white"
+            className="bg-white rounded-lg shadow-lg"
           >
             <div className='border-2 border-light-smoky-white'>
               <h6 className='text-sm space tracking-wider py-4 px-8 uppercase text-gray-500'>{section.headerText}</h6>
@@ -121,7 +121,7 @@ const AccountSidebar = ({
         {managerCard.map((section, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-lg bg-white"
+            className="bg-white rounded-lg shadow-lg"
           >
             <div className='border-b border-gray-200'>
               <h6 className='text-sm space tracking-wider py-4 px-8 uppercase text-gray-500'>{section.headerText}</h6>

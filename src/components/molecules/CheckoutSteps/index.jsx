@@ -1,8 +1,8 @@
-import { cn } from "../../../../utils/utils"
+import { cn } from "../../../shared/utils/utils"
 
 const CheckoutSteps = ({ currentStep, steps }) => {
     return (
-        <div className="w-full max-w-4xl mx-auto px-4 py-8">
+        <div className="w-full mx-auto pb-16 pt-10">
             <div className="overflow-x-auto">
                 <div className="flex items-start justify-center relative min-w-[600px] md:min-w-0 gap-4 md:gap-8 lg:gap-12">
                     {steps.length > 0 && steps.map((step, index) => {

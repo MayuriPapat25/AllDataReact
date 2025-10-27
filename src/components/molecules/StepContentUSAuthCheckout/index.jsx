@@ -1,5 +1,4 @@
 
-import { Button } from "../../atoms/Buttons/Button"
 import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
 import BusinessAddressForm from '../BusinessAddress'
@@ -10,13 +9,13 @@ import { useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../atoms/BusinessAddressReview"
-import BillingInfoReview from "../../atoms/BillingInfoReview"
+import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
-import BillingInformation from "../BillingInformation"
-
+import BillingInformation from "../../molecules//BillingInformation/"
+import { Button } from "../../../shared/ui/Buttons/Button"
+import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 
 const StepContentUSAuthCheckout = ({
     currentStep,
@@ -243,7 +242,7 @@ const StepContentUSAuthCheckout = ({
     }
 
     return (
-        <div className="mx-auto">
+        <div className="mx-auto max-w-[1336px] pt-11 py-5 pb-2.5">
             {renderStepContent()}
             {getStepButtons()}
         </div>

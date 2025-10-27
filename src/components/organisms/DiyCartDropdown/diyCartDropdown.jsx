@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
-import { Button } from "../../atoms/Buttons/Button"
-import { Icon } from "../../atoms/Icon/Icon"
+import { Icon } from "../../../shared/ui/Icon/Icon"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 export function DiyCartDropdown({ isOpen, onClose, className, cartData, cartCount }) {
 
@@ -15,7 +15,7 @@ export function DiyCartDropdown({ isOpen, onClose, className, cartData, cartCoun
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3">
           <span className="text-xs text-gray-500">
-            {cartCount} in cart
+            {cartCount} item in cart
           </span>
           <Button
             onClick={onClose}

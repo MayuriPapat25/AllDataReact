@@ -1,13 +1,13 @@
 
-import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import OrderSummaryDIY from "../OrderSummaryDIY"
 import PlaceOrderForm from "../PlaceOrderForm"
-import BillingInformation from "../BillingInformation"
-import TermsConditions from "../../atoms/TermsCondition"
+import BillingInformation from "../../../shared/ui/BillingInfoReview"
+import TermsConditions from "../../../shared/ui/TermsCondition"
 import OrderConfirmation from "../OrderConfirmation"
 import BillingFormDoublePayment from "../BillingFormDoublePayment"
+import { Button } from "../../../shared/ui/Buttons/Button"
 
 const StepContentDIYCheckout = ({
     currentStep,

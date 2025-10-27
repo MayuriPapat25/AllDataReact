@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { X, ChevronDown, Search, Loader2 } from "lucide-react";
-import { Button } from "../../atoms/Buttons/Button";
+import { X } from "lucide-react";
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const AgreementModal = ({ isOpen, onClose }) => {
 

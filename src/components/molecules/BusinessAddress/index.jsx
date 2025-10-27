@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import InputField from "../../atoms/InputField/index" // Updated import path for InputField
-import SelectField from "../../atoms/SelectField" // Updated import path for SelectField
+import InputField from "../../../shared/ui/InputField/index" // Updated import path for InputField
+import SelectField from "../../../shared/ui/SelectField" // Updated import path for SelectField
 
 const US_STATES = [
     { value: "AL", label: "Alabama" },

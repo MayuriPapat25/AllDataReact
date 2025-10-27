@@ -1,7 +1,6 @@
-import { Button } from "../../atoms/Buttons/Button"
 import { useState } from "react"
-import DIYCartHome from "../../../Cart/diy"
 import AddVehicle from "../AddVehicle"
+import { Button } from "../../../shared/ui/Buttons/Button"
 import PickYourPlan from "../../molecules/PickYourPlan"
 import DiyCartPage from "../../../Cart/diy/diyCartModal"
 
@@ -23,15 +22,15 @@ const StepContentDIYCart = ({
     switch (currentStep) {
       case 1:
         return (
-          <div className="mx-auto w-[90%]">
+          <div>
             <AddVehicle onContinue={onContinue} />
-          </div>
+          </div >
         )
       case 2:
         return (
-          <div className="mx-auto w-[90%]">
+          <div>
             <PickYourPlan onContinue={onContinue} />
-          </div>
+          </div >
         )
       case 3:
         return (
@@ -88,9 +87,9 @@ const StepContentDIYCart = ({
       showButtons = true,
       primaryButton = { text: "BACK", onClick: onBack },
       secondaryButton =
-        currentStep > 1
-          ? { text: "RESET VEHICLE", onClick: onResetVehicle }
-          : null,
+      currentStep > 1
+        ? { text: "RESET VEHICLE", onClick: onResetVehicle }
+        : null,
       buttonLayout = "flex-col sm:flex-row gap-4 pt-6 lg:ml-30 md:ml-0 sm:ml-0"
     } = finalConfig
 
@@ -102,7 +101,7 @@ const StepContentDIYCart = ({
           onClick={primaryButton.onClick}
           disabled={primaryButton.disabled}
           size="sm"
-          className={primaryButton.className || "btn btn-primary"}
+          className={primaryButton.className || "btn btn-secondary"}
         >
           {primaryButton.text}
         </Button>

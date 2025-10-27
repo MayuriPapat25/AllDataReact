@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
+import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
 
 const BillingEmailForm = ({ onValidationChange }) => {
     const [usePrimaryEmail, setUsePrimaryEmail] = useState(true)

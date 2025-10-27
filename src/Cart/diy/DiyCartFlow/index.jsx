@@ -2,10 +2,13 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
 import StepContentDIYCart from "../../../components/molecules/StepContentDIYCart";
+import { useLocation } from 'react-router-dom';
 
 const DIYCartFlow = () => {
+    const location = useLocation();
+    const initialStep = (location.pathname === '/diy-cart') ? 3 : 1;
     const navigate = useNavigate()
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(initialStep);
 
     const handleContinue = () => {
         if (currentStep < 3) {

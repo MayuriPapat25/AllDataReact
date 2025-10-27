@@ -1,4 +1,5 @@
-import InfoField from "../../atoms/InfoField"
+import { Button } from "../../../shared/ui/Buttons/Button"
+import InfoField from "../../../shared/ui/InfoField"
 
 const BusinessInfoReview = ({
     businessData = {
@@ -20,13 +21,13 @@ const BusinessInfoReview = ({
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
                 <h2 className="text-md">BUSINESS INFORMATION</h2>
                 {onEdit && (
-                    <button
+                    <Button
                         variant="outline"
                         onClick={onEdit}
                         className="text-primary text-sm font-medium"
                     >
                         EDIT
-                    </button>
+                    </Button>
                 )}
             </div>
 

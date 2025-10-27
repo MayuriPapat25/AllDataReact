@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { ProCartDropdown } from "../organisms/ProCartDropdown/proCartDropdown"
-import { Button } from "../atoms/Buttons/Button"
+import { Button } from "../../shared/ui/Buttons/Button"
+import { ProCartDropdown } from "../organisms/ProCartDropdown/ProCartDropdown"
 
 export default function ProHeader() {
   const [isCartOpen, setIsCartOpen] = useState(false)

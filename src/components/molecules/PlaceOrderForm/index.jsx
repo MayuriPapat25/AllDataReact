@@ -1,8 +1,8 @@
-import InfoField from "../../atoms/InfoField"
+import InfoField from "../../../shared/ui/InfoField"
 
 const PlaceOrderForm = () => {
     return (
-        <div className="max-w-2xl">
+        <div className="max-w-2xl pt-11">
             <div className="mb-8">
                 <h1 className="h2 font-bold text-black mb-2">PLACE ORDER</h1>
                 <h2 className="text-md mb-6">ACCOUNT INFORMATION</h2>

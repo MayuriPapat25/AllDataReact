@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { RadioGroup, RadioGroupItem } from "../../atoms/RadioButtonGroup"
-import SelectField from "../../atoms/SelectField"
+import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
+import SelectField from "../../../shared/ui/SelectField"
 
 
 const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, subheader, paymentOptions }) => {
@@ -13,13 +13,12 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
   ]
 
   const handlePaymentTypeChange = (value) => {
-    const type = value
-    setPaymentType(type)
-    onPaymentTypeChange?.(type)
+    setPaymentType(value)
+    onPaymentTypeChange?.(value)
   }
 
   return (
-    <div className="w-full mr-10 pt-8">
+    <div className="w-full mr-10 pt-11">
       <div className="pb-4">
         {
           header && <h1 className="text-2xl font-bold text-gray-900">{header}</h1>
@@ -48,7 +47,7 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
                 </label>
               </div>
 
-              {paymentType === "existing" && (
+              {(paymentType === "existing" || paymentType === "new") && (
                 <div className="ml-6 mt-3 max-w-[40rem]">
                   <SelectField
                     options={existingCards}
@@ -75,7 +74,10 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
               {paymentType === "new" && (
                 <div className="ml-6 mt-3 h-12  bg-background">
                   New Payment Iframe
-                  <iframe ></iframe>
+                  <iframe
+                    title="New Payment Iframe"
+                    className="w-full h-48"
+                  />
                 </div>
               )}
             </div>
