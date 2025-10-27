@@ -195,7 +195,7 @@ const StepContentDIYCheckout = ({
     }
 
     return (
-        <div className="mx-auto">
+        <div className="mx-auto max-w-[1336px] pt-11 py-5 pb-2.5">
             {renderStepContent()}
             {getStepButtons()}
         </div>
