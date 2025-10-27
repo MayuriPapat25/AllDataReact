@@ -14,9 +14,10 @@ import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
-import BillingInformation from "../../../shared/ui/BillingInfoReview"
+import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
 import { Button } from "../../../shared/ui/Buttons/Button"
+import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 
 
 const StepContentUSAnonyCheckout = ({
@@ -141,7 +142,7 @@ const StepContentUSAnonyCheckout = ({
 
             case 5:
                 return (
-                    <div className="min-h-screen bg-gray-50 py-12 ">
+                    <div className="min-h-screen py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
                         <OrderSummary data={variant3Data} type="variant3" />
 
@@ -246,7 +247,7 @@ const StepContentUSAnonyCheckout = ({
     }
 
     return (
-        <div className="mx-auto">
+        <div className="mx-auto max-w-[1336px] pt-11 py-5 pb-2.5">
             {renderStepContent()}
             <div className="">
                 {getStepButtons()}

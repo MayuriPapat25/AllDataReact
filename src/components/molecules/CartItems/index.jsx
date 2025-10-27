@@ -8,12 +8,12 @@ function CartItems({ data }) {
             {data.map((item, index) => (
                 <div
                     key={item.id}
-                    className={`p-4 ${index !== data.length - 1 ? "border-b border-light-smoky-white" : ""}`}
+                    className={`px-6 py-8 ${index !== data.length - 1 ? "border-b border-light-smoky-white" : ""}`}
                 >
                     {/* Desktop */}
                     <div
                         className="hidden sm:grid items-center gap-4"
-                        style={{ gridTemplateColumns: "1fr 144px 1fr" }} // removed delete column
+                        style={{ gridTemplateColumns: "1fr 144px" }} // removed delete column
                     >
                         {/* Product Info */}
                         <div className="flex items-center gap-3">

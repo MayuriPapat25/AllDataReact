@@ -7,8 +7,11 @@ import RefundRequestModal from "../../molecules/RefundRequestModal/index";
 import RefundLimitModal from "../../molecules/RefundLimitModal/index";
 import { useNavigate } from "react-router-dom"
 import { Button } from "../../../shared/ui/Buttons/Button";
+import { useMemo } from "react";
 
 const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleChangeVehicle, handleVehicleChangeComplete, handleRefundRequest, handleRefundComplete, selectedVehicle, isRefundModalOpen, isRefundLimitModalOpen, isModalOpen, setIsModalOpen, isLimitModalOpen, setIsLimitModalOpen, setIsRefundModalOpen }) => {
+  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' }); // Default sort by 'id'
+
   const navigate = useNavigate()
 
   const handleViewCart = () => {
@@ -18,6 +21,38 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
   const handleAddMoreVehicle = () => {
     navigate("/findvehicle")
   }
+
+  // 3. Function to handle sort request
+  const requestSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  // 4. useMemo to perform sorting logic
+  const sortedSubscriptions = useMemo(() => {
+    // Create a mutable copy of the subscriptions prop
+    let sortableItems = [...subscriptions];
+    if (sortConfig.key !== null) {
+      sortableItems.sort((a, b) => {
+        // Compare values based on the sort key (e.g., 'vehicle')
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+
+        if (aValue < bValue) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0; // values are equal
+      });
+    }
+    return sortableItems;
+  }, [subscriptions, sortConfig]);
+
   return (
     <div className="px-20 py-0 my-4">
       <div className="mb-6">
@@ -33,12 +68,14 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
       </div>
 
       <table className="w-full">
-        <thead className="hidden lg:table-header-group lg:bg-muted/50  lg:border-b-4 border-gray-300 lg:border-border">
+        <thead className="hidden lg:table-header-group lg:bg-muted/50  lg:border-b-4 border-b-gray-300 lg:border-border">
           <tr className="flex flex-col lg:table-row">
             <th className="text-left py-3 px-4 font-normal text-foreground text-[#54565a]">
               <div className="flex items-center gap-1 text-base cursor-pointer">
                 Vehicle
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown
+                  className={`w-4 h-4 ${sortConfig.key === 'vehicle' && sortConfig.direction === 'desc' ? 'rotate-180' : ''}`} // Dynamic Arrow 
+                />
               </div>
             </th>
             <th className="text-left py-3 px-4 font-normal text-foreground text-[#54565a] text-base cursor-pointer">Expiration</th>
@@ -47,7 +84,7 @@ const DiySubscriptions = ({ subscriptions, cartCount, handleAddToCart, handleCha
           </tr>
         </thead>
         <tbody className="flex flex-col lg:table-header-group">
-          {subscriptions.map((subscription, index) => (
+          {sortedSubscriptions.map((subscription, index) => (
             <tr
               key={subscription.id}
               className={`border-b-4 border-gray-300 border-border flex flex-col lg:table-row ${index % 2 === 0 ? "bg-background" : "bg-muted/20"}`}

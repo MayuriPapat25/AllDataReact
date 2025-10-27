@@ -36,7 +36,7 @@ const SelectField = forwardRef(
           </label>
         )}
 
-        <div className={cn("relative flex items-center w-full", wrapperClass)}>
+        <div className={cn("relative flex items-center w-full", wrapperClass, required && "br-field-left")}>
           <select
             id={selectId}
             ref={ref}

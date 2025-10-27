@@ -75,19 +75,19 @@ const ProductsPortal = () => {
   return (
     <>
       <main className="mb-8">
-        <h1 className="h3 my-4 font-normal text-primary" style={{ fontWeight: 500 }}>Active Products</h1>
+        <h1 className="h3 mb-4 font-normal text-primary" style={{ fontWeight: 500 }}>Active Products</h1>
         <ProductCard cards={productCards} />
       </main>
       <h2 className="h3 my-4 font-normal text-primary" style={{ fontWeight: 500 }}>Your Subscription</h2>
       <div className="mb-6 shadow-lg bg-white general-list">
         <div className="">
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Subscription Term" value="1 Year" />
           </div>
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Auto Renewal Date" value="09/23/2026" />
           </div>
-          <div className="py-4 px-8 border-b-2 border-light-smoky-white">
+          <div className="py-6 px-8 border-b-2 border-light-smoky-white">
             <InfoText label="Invoice Frequency" value="Monthly" />
           </div>
         </div>

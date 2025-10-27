@@ -9,7 +9,7 @@ const AgreementPage = ({ setIsModalOpen }) => {
                 <div className="mb-8">
                     <h1 className="text-md mb-6">AGREEMENT</h1>
 
-                    <p className="mb-6 text-gray-500">
+                    <p className=" text-gray-500">
                         To complete your order, follow these steps to review and sign the terms of your agreement:
                     </p>
 
@@ -60,7 +60,7 @@ const AgreementPage = ({ setIsModalOpen }) => {
                 {/* Review Agreement Terms Section */}
                 <div className="mb-12">
                     <Button
-                        className="h5 text-primary underline font-light"
+                        className="text-primary underline font-light"
                         style={{ fontWeight: 400, textDecorationStyle: 'dotted' }}
                         onClick={setIsModalOpen}
                     >

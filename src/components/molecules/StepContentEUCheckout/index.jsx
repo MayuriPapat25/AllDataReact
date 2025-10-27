@@ -64,10 +64,8 @@ const StepContentEUCheckout = ({
         switch (currentStep) {
             case 1:
                 return (
-                    <div className="mx-auto relative max-w-3xl">
-                        <div>
+                    <div className="flex justify-center">
                             <AccountCreationForm variant="email" onValidationChange={setStep1Valid} className="mb-12" />
-                        </div>
                     </div>
                 )
 
@@ -126,7 +124,7 @@ const StepContentEUCheckout = ({
 
             case 5:
                 return (
-                    <div className="min-h-screen bg-gray-50 py-12 ">
+                    <div className="min-h-screen py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
                         <OrderSummary data={variant2Data} type="variant2" />
 
@@ -155,7 +153,7 @@ const StepContentEUCheckout = ({
                     onClick: onBack,
                     variant: "outline"
                 },
-                buttonLayout: "flex mx-auto max-w-3xl"
+                buttonLayout: "flex mx-auto ml-80"
             },
             2: {
                 showButtons: true,
@@ -234,7 +232,7 @@ const StepContentEUCheckout = ({
     }
 
     return (
-        <div>
+        <div className="mx-auto max-w-7xl ">
             {renderStepContent()}
             {getStepButtons()}
         </div>

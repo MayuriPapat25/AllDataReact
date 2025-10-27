@@ -68,7 +68,7 @@ export const ProfCustomPortal = () => {
 
   // Generic layout wrapper with sidebar
   const renderWithSidebar = (content) => (
-    <div className='lg:flex'>
+    <div className='lg:flex mx-32'>
       {/* Sidebar */}
       <div className="w-full lg:max-w-[28%] mr-[1%] customer-portal-sidebar-section">
         <AccountSidebar

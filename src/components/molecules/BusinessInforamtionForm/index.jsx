@@ -185,6 +185,7 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                     value={formData.businessName}
                     onChange={(e) => handleInputChange("businessName", e.target.value)}
                     error={errors.businessName}
+                    required={variant === "standard"}
                 />
 
                 {/* Standard variant: Phone Number and Type */}
@@ -195,6 +196,7 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                             value={formData.phoneNumber}
                             onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
                             error={errors.phoneNumber}
+                            required={variant === "standard"}
                         />
                         <SelectField
                             label="Business Phone Type"
@@ -203,6 +205,7 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                             onChange={(e) => handleInputChange("phoneType", e.target.value)}
                             error={errors.phoneType}
                             className="w-full"
+                            required={variant === "standard"}
                         />
                     </div>
                 )}
@@ -214,12 +217,14 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                         value={formData.firstName}
                         onChange={(e) => handleInputChange("firstName", e.target.value)}
                         error={errors.firstName}
+                        required={variant === "standard"}
                     />
                     <InputField
                         label={variant === "authorized" ? "Authorized Signer Last Name" : "Last Name"}
                         value={formData.lastName}
                         onChange={(e) => handleInputChange("lastName", e.target.value)}
                         error={errors.lastName}
+                        required={variant === "standard"}
                     />
                 </div>
 
@@ -230,7 +235,8 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                     value={formData.jobTitle}
                     onChange={(e) => handleInputChange("jobTitle", e.target.value)}
                     error={errors.jobTitle}
-                    className="w-1/2 border-gray-300 "
+                    className="w-full border-gray-300 "
+                    required={variant === "standard"}
                 />
 
                 {/* Authorized variant: Email Address */}
@@ -253,6 +259,7 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                         onChange={(e) => handleInputChange("shopType", e.target.value)}
                         error={errors.shopType}
                         className="w-full border-gray-300 "
+                        required={variant === "standard"}
                     />
                     {variant === "authorized" && (
                         <SelectField

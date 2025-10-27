@@ -391,39 +391,6 @@ const AccountCreationForm = ({
                         <p className="text-sm text-red-500 mt-1">{errors.agreeToTerms}</p>
                     )}
                 </div>
-                {/* <div className="flex items-start space-x-2">
-                    <input
-                        type="checkbox"
-                        id="terms"
-                        checked={formData.agreeToTerms}
-                        onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
-                        className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 mt-1"
-                    />
-                    <div htmlFor="terms" className="text-sm text-gray-700 leading-relaxed">
-                        {variant === "email" ? (
-                            <>
-                                I agree to opt-in to receive emails from ALLDATA. We respect your privacy. Learn more about ALLDATA's{" "}
-                                <a href="#" className="text-primary">
-                                    Privacy Policy
-                                </a>
-                                .
-                            </>
-                        ) : (
-                            <>
-                                I agree to ALLDATA's{" "}
-                                <a href="#" className="text-primary">
-                                    Terms & Conditions
-                                </a>{" "}
-                                and opt-in to receive emails from ALLDATA. We respect your privacy. Learn more about ALLDATA's{" "}
-                                <a href="#" className="text-primary">
-                                    Privacy Policy
-                                </a>
-                                .
-                            </>
-                        )}
-                    </div>
-                    {errors.agreeToTerms && <p className="text-sm text-error mt-1">{errors.agreeToTerms}</p>}
-                </div> */}
             </form>
         </div>)
 }

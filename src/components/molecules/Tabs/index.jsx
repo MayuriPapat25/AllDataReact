@@ -20,7 +20,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
     <div className={`w-full ${className}`}>
       {/* Desktop Tabs - Hidden on mobile */}
       <div className="hidden md:block">
-        <ul className="horizontal-tabs-list bg-white border-b-2 borde-light-smoky-white flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
+        <ul className="horizontal-tabs-list bg-white border-b-2 border-b-light-smoky-white flex items-center px-[15%] m-0 border-0 list-none w-full h-auto clear-both justify-center" data-horizontal-tabs-list="">
           {tabs.map((tab, index) => (
             <li
               key={tab.id}
@@ -41,7 +41,7 @@ export const Tabs = ({ tabs, defaultActiveTab, onTabChange, className = "" }) =>
                 className={`
                   relative block px-2 py-4 text-base transition-all duration-200 whitespace-nowrap border-b-2 no-underline hover:no-underline focus:no-underline active:no-underline !hover:no-underline !focus:no-underline !active:no-underline
                   ${activeTab === tab.id
-                    ? '!text-gray-600 border-orange-500 border-b-4'
+                    ? '!text-gray-600 border-secondary border-b-4'
                     : 'text-primary border-transparent'
                   }
                   `}

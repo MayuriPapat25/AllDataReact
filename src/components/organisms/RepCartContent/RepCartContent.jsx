@@ -53,17 +53,17 @@ export function RepCartContent() {
         {cartItems.map((item, index) => (
           <div
             key={item.id}
-            className={`p-4 ${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
+            className={`${index !== cartItems.length - 1 ? "border-b border-light-smoky-white" : ""}`}
           >
             {/* Desktop */}
             <div
-              className="hidden sm:grid items-center gap-4"
-              style={{ gridTemplateColumns: "1fr 144px 1fr" }} // removed delete column
+              className="hidden sm:grid items-center gap-4 p-6"
+              style={{ gridTemplateColumns: "1fr 144px 144px" }} // removed delete column
             >
               {/* Product Info */}
               <div className="flex items-center gap-3">
                 <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
-                <ProductName name={item.name} />
+                <ProductName name={item.name} className="text-base" />
               </div>
 
               {/* Counter */}
@@ -115,23 +115,23 @@ export function RepCartContent() {
       <div className="mb-6 shadow-lg bg-white">
         <div className="space-y-2">
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="px-6 py-8">
               <PriceText amount={218.0} label="Subscription Subtotal" />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="px-6 py-8">
               <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
+            <div className="px-6 py-8">
               <PriceText amount={205.25} label="Total Monthly" />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
-            <div className="p-4">
-              <PriceText amount={205.25} label="Total Due:" isTotal />
+            <div className="px-6 py-8">
+              <PriceText amount={205.25} label="Total Due Today:" isTotal />
             </div>
           </div>
         </div>
@@ -140,16 +140,15 @@ export function RepCartContent() {
       {/* Footer */}
       <div className="space-y-3">
         <p className="text-gray-600 mb-6">
-          *Promotional rate. All rates subject to applicable sales taxes. Taxes applied at checkout.
+          *All rates subject to applicable sales taxes
         </p>
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 pb-5">
         <Button
           variant="outline"
-          style={{ borderColor: "#f75e00", color: "#f75e00" }}
-          className="w-full cursor-pointer"
+          className="btn btn-primary text-sm"
           onClick={handleCheckout}
         >
           CHECKOUT

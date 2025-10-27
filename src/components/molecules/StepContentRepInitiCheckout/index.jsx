@@ -17,7 +17,7 @@ import AccountCreationForm from "../AccountCreationForm"
 import PhoneSignupForm from "../PhoneSignUpForm"
 import AgreementModal from "../AgreementModal"
 import { Button } from "../../../shared/ui/Buttons/Button"
-import BillingInformation from '../BusinessAddress'
+import BillingInformation from '../BillingInformation/index'
 
 const StepContentRepInitiatedCheckout = ({
     currentStep,
@@ -74,7 +74,7 @@ const StepContentRepInitiatedCheckout = ({
         switch (currentStep) {
             case 1:
                 return (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mx-auto relative">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative">
                         <div>
                             <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-6"/>
                         </div>
@@ -91,8 +91,8 @@ const StepContentRepInitiatedCheckout = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm variant="authorized" onValidationChange={setBusinessInfoValid} />
-                                <BusinessAddressForm onValidationChange={setBusinessAddressValid} />
+                                <BusinessInformationForm variant="standard" onValidationChange={setBusinessInfoValid} />
+                                <BusinessAddressForm onValidationChange={setBusinessAddressValid} variant="international" />
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
@@ -250,7 +250,7 @@ const StepContentRepInitiatedCheckout = ({
     }
 
     return (
-        <div className="mx-auto">
+        <div className="mx-auto max-w-[1336px] pt-11 py-5 pb-2.5">
             {renderStepContent()}
             <div className="">
                 {getStepButtons()}
