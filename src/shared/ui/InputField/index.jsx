@@ -3,7 +3,7 @@ import { cn } from "../../../shared/utils/utils"
 
 
 const InputField = forwardRef(
-  ({ label, required, optional, error, helperText, className, id, onChange, type = "text", ...props }, ref) => {
+  ({ label, required, optional, error, helperText, errorText, className, id, onChange, type = "text", placeholder, ...props }, ref) => {
     const describedById = id ? `${id}-error` : undefined
     // Determine the border class based on error state
     const borderClasses = error
@@ -21,9 +21,9 @@ const InputField = forwardRef(
         )}
 
         <div className={cn(required && "br-field-left")}>
-          {/* {required && <span className="mr-1 text-muted-foreground text-green-600">|</span>} */}
           <input
             ref={ref}
+            placeholder={placeholder}
             id={id}
             type={type}
             className={cn(
@@ -38,12 +38,11 @@ const InputField = forwardRef(
             onChange={onChange}
           />
         </div>
-        {error && (
-          <p id={describedById} className={cn("text-sm min-h-[1.25rem]", error ? "text-error" : "text-transparent")}>
-            {error || "_"}
-          </p>
+        {error ? (
+          <p className="text-xs mt-1 text-red-500">{errorText}</p>
+        ) : (
+          <p className="text-xs mt-1 text-gray-500">{helperText}</p>
         )}
-        {helperText && <div className="text-xs text-gray-500 leading-relaxed">{helperText}</div>}
       </div>
     )
   },

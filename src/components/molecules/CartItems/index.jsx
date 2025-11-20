@@ -3,6 +3,7 @@ import { ProductName } from '../../../shared/ui/TextIcon/ProductName'
 import repairIcon from "../../../assets/images/repair_color.png"
 
 function CartItems({ data }) {
+    console.log('data', data)
     return (
         <div className="mb-6 shadow-lg bg-white">
             {data.map((item, index) => (
@@ -18,12 +19,17 @@ function CartItems({ data }) {
                         {/* Product Info */}
                         <div className="flex items-center gap-3">
                             <img src={repairIcon} alt="Repair Color" className="w-[40px]" />
-                            <ProductName name={item.name} />
+                            <div>
+                                <ProductName name={item.name} />
+                                <div className="text-sm text-gray-500">
+                                    Access Points: {item?.accessPoints}
+                                </div>
+                            </div>
                         </div>
 
                         {/* Price + Info */}
                         <div className="text-right">
-                            <div className="font-medium">${item.price?.toFixed(2) ?? "0.00"}</div>
+                            <div className="font-medium">${item.monthlyPrice ?? "0.00"}</div>
                             <div className="text-sm text-gray-500">
                                 {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
                             </div>

@@ -11,6 +11,7 @@ const PasswordField = ({
     placeholder = "••••••••••",
     helperText,
     className = "",
+    errorText,
     required = false,
 }) => {
     const [showPassword, setShowPassword] = useState(false)
@@ -78,13 +79,10 @@ const PasswordField = ({
                     className={`px-3 py-2 text-base border-2 pr-12 w-full ${error || validationError ? "border-error focus:border-error" : "border-gray-300 focus:border-blue-500"}`}
                 />
             </div>
-            {error && (
-                <p id={id ? `${id}-error` : undefined} className="text-sm text-error">
-                    {error}
-                </p>
-            )}
-            {helperText && (
-                <div className={`text-xs leading-relaxed ${validationError ? "text-error" : "text-gray-500"}`}>{helperText}</div>
+            {error ? (
+                <p className="text-xs mt-1 text-red-500">{errorText}</p>
+            ) : (
+                <p className="text-xs mt-1 text-gray-500">{helperText}</p>
             )}
         </div>
     )

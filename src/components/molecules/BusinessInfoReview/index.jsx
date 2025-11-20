@@ -22,7 +22,7 @@ const BusinessInfoReview = ({
                 <h2 className="text-md">BUSINESS INFORMATION</h2>
                 {onEdit && (
                     <Button
-                        variant="outline"
+                        // variant="outline"
                         onClick={onEdit}
                         className="text-primary text-sm font-medium"
                     >

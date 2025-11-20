@@ -6,6 +6,7 @@ import repairIcon from "../../../assets/images/repair_color.png"
 import { ProductName } from "../../../shared/ui/TextIcon/ProductName"
 import { CounterDropdown } from "../../../shared/ui/Dropdown/CounterDropdown"
 import { Button } from "../../../shared/ui/Buttons/Button";
+import { translations } from "../../../shared/translations";
 
 const SubscriptionManager = () => {
   const [isRemovalModalOpen, setIsRemovalModalOpen] = useState(false);
@@ -134,7 +135,7 @@ const SubscriptionManager = () => {
                   className="flex items-center text-primary hover:text-error cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
-                  Remove
+                  {translations?.remove}
                 </Button>
               )}
             </div>
@@ -156,7 +157,7 @@ const SubscriptionManager = () => {
                   className="flex items-center text-primary hover:text-error cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4 mr-1" />
-                  Remove
+                  {translations?.remove}
                 </Button>
               )}
             </div>
@@ -166,6 +167,7 @@ const SubscriptionManager = () => {
                 onChange={(value) => handleAccessPointChange(item.id, value)}
                 className="flex-col"
                 showLabel={true}
+                disabled={item.price <= 0}
               />
               <div className="text-right">
                 <div className="font-normal">${item.price?.toFixed(2) ?? "0.00"}</div>
@@ -184,12 +186,12 @@ const SubscriptionManager = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCancel} />
 
           {/* Modal content */}
-          <div className="relative bg-white rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
+          <div className="relative rounded-lg shadow-lg bg-white w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               {/* Modal header */}
               <div className="relative mb-4">
                 <h2 className="h3 text-primary pr-8 font-normal" style={{ fontWeight: 500 }}>
-                  Requesting to Remove Repair From Subscription
+                  {translations?.request_to_remove_repair_subscription}
                 </h2>
                 <Button variant="ghost" size="sm" onClick={handleCancel} className="absolute right-0 top-0 p-1 h-auto">
                   <X className="w-5 h-5" />
@@ -198,24 +200,23 @@ const SubscriptionManager = () => {
 
               <div className="space-y-4">
                 <p className="text-gray-600">
-                  This request will not automatically cancel your subscription service(s).
+                  {translations?.request_not_automatically_cancel_subscription}
                 </p>
 
                 <p className="text-gray-600">
-                  An agent will follow up with you within 24-48 hours* after reviewing the terms of your agreement for
-                  eligibility.
+                  {translations?.agent_follow_up}
                   <br />
-                  *excluding weekends and holidays
+                  *{translations?.exclude_weekend_holiday}
                 </p>
 
                 <div className="text-right">
-                  <span className="text-gray-500">=Required Fields</span>
+                  <span className="text-gray-500">={translations?.required_fields}</span>
                 </div>
 
                 <div className="space-y-4 w-[60%] mx-auto">
                   <div>
                     <label htmlFor="firstName" className="text-gray-700">
-                      First Name
+                      {translations?.first_name}
                     </label>
                     <InputFieldWithoutBorder
                       id="firstName"
@@ -227,7 +228,7 @@ const SubscriptionManager = () => {
 
                   <div>
                     <label htmlFor="lastName" className="text-gray-700">
-                      Last Name
+                      {translations?.last_name}
                     </label>
                     <InputFieldWithoutBorder
                       id="lastName"
@@ -239,7 +240,7 @@ const SubscriptionManager = () => {
 
                   <div>
                     <label htmlFor="title" className="text-gray-700">
-                      Title
+                      {translations?.title}
                     </label>
                     <InputFieldWithoutBorder
                       id="title"
@@ -251,7 +252,7 @@ const SubscriptionManager = () => {
 
                   <div>
                     <label htmlFor="phoneNumber" className="text-gray-700">
-                      Phone Number
+                      {translations?.phone_number}
                     </label>
                     <InputFieldWithoutBorder
                       id="phoneNumber"
@@ -263,7 +264,7 @@ const SubscriptionManager = () => {
 
                   <div>
                     <label htmlFor="email" className="text-gray-700">
-                      Email
+                      {translations?.email}
                     </label>
                     <InputFieldWithoutBorder
                       id="email"
@@ -283,10 +284,10 @@ const SubscriptionManager = () => {
                     className="btn btn-primary w-1/2"
                     size="sm"
                   >
-                    CANCEL
+                    {translations?.cancel}
                   </Button>
                   <Button variant="outline" size="sm" onClick={handleSubmitRequest} className="btn btn-primary w-1/2">
-                    SUBMIT REQUEST
+                    {translations?.submit_request}
                   </Button>
                 </div>
               </div>

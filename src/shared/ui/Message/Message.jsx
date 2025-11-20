@@ -51,7 +51,7 @@ export const Message = ({ type, children, className = "" }) => {
 
   return (
     <div
-      className={cn("flex items-start gap-3 p-4 rounded-b-md border-t-[4px]", getMessageStyles(), className)}
+      className={cn("flex items-start gap-3 p-4 rounded-b-md border-t-4", getMessageStyles(), className)}
       style={getBorderStyle()}
     >
       <Icon type={type} className={cn("w-5 h-5 mt-0.5", getIconColor())} />

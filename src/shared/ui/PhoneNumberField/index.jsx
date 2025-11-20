@@ -1,15 +1,42 @@
 
 import { forwardRef } from "react"
 import { cn } from "../../utils/utils"
+import { translations } from "../../translations";
+
+const formatPhoneNumber = (value) => {
+    if (!value) return value;
+    const digits = value.replace(/\D/g, ""); // remove non-numeric
+    const length = digits.length;
+
+    if (length < 4) return digits;
+    if (length < 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+};
 
 const PhoneField = forwardRef(
-    ({ label, required, optional, error, countryCode, className, onChange, ...props }, ref) => {
+    ({ label,
+        required,
+        value,
+        onChange,
+        error,
+        errorText,
+        helperText,
+        optional,
+        countryCode,
+        className,
+        ...props }, ref) => {
+
+        const handleInputChange = (e) => {
+            const formatted = formatPhoneNumber(e.target.value);
+            onChange({ ...e, target: { ...e.target, value: formatted } });
+        };
+
         return (
             <div className="space-y-2">
                 {label && (
                     <label className="block text-display-sm-medium text-muted-foreground">
                         {label}
-                        {optional && <span className="ml-2 text-xs text-muted-foreground">Optional</span>}
+                        {optional && <span className="ml-2 text-xs text-muted-foreground">{translations?.optional}</span>}
                     </label>
                 )}
 
@@ -26,6 +53,8 @@ const PhoneField = forwardRef(
                     <input
                         ref={ref}
                         type="tel"
+                        value={value}
+                        maxLength={12}
                         pattern="[0-9]*"
                         className={cn(
                             "w-full px-3 py-2 text-sm",
@@ -35,11 +64,15 @@ const PhoneField = forwardRef(
                             "placeholder:text-muted-foreground",
                             className,
                         )}
-                        onChange={onChange}
+                        onChange={handleInputChange}
                         {...props}
                     />
                 </div>
-                {error && <p className="text-sm text-error">{error}</p>}
+                {error ? (
+                    <p className="text-xs mt-1 text-red-500">{errorText}</p>
+                ) : (
+                    <p className="text-xs mt-1 text-gray-500">{helperText}</p>
+                )}
             </div>
         )
     },

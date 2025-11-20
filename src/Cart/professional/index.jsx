@@ -1,9 +1,8 @@
 import ProHeader from "../../components/Header/proHeader";
-import { ProCartDropdown } from "../../components/organisms/ProCartDropdown/proCartDropdown";
+import { ProCartDropdown } from "../../components/organisms/ProCartDropdown/ProCartDropdown";
 import "../../styles/button.css"
 
 const ProCartHome = ({ fromEU }) => {
-  console.log('fromEU', fromEU)
   return (
     <div className="min-h-screen bg-gray-50">
       <ProHeader />

@@ -8,55 +8,31 @@ export function InputWithButton({
   onSubmit,
   disabled = false,
   className = "",
+  handleKeyDown,
+  value,
+  handlePromoCodeField
 }) {
-  const [value, setValue] = useState("")
-  const [error, setError] = useState("")
-
-  const handleSubmit = () => {
-    if (!value.trim()) return
-
-    if (value.trim().toLowerCase() === "promocode") {
-      // ✅ Valid promocode
-      onSubmit(value.trim())
-      setValue("")
-      setError("")
-    } else {
-      // ❌ Invalid promocode
-      setError("Clear or Apply Promocode before continuing.")
-    }
-  }
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-      handleSubmit()
-    }
-  }
 
   return (
-    <div className={`flex ${className}`}>
-      <div className="flex items-center gap-2">
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="flex items-center gap-2  ">
         <TextField
           placeholder={placeholder}
           value={value}
-          onChange={(val) => {
-            setValue(val)   // `val` is already the string
-            setError("")
-          }}
+          onChange={handlePromoCodeField}
           onKeyDown={handleKeyDown}
           className="border-2"
         />
         <Button
           variant="outline"
-          onClick={handleSubmit}
+          onClick={onSubmit}
           disabled={disabled || !value.trim()}
-          className="whitespace-nowrap text-sm w-[8rem]"
+          className="btn mb-2"
         >
           {buttonText}
         </Button>
       </div>
 
-      {error && <span className="text-sm text-error">{error}</span>}
     </div>
   )
 }

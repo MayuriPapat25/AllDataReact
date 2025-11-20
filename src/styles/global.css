@@ -96,7 +96,7 @@ input:disabled {opacity: 0.5;background-color: var(--color-light-smoky-white);}
   display: inline-block;
   position: absolute;
   left: -7px;
-  height: 40px;
+  height: 35px;
   width: 3px;
 }
 .dropdown-title {

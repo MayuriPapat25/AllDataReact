@@ -3,7 +3,7 @@ import { useState } from "react"
 import InputField from "../../../shared/ui/InputField/index"
 import SelectField from "../../../shared/ui/SelectField"
 import PhoneField from "../../../shared/ui/PhoneNumberField"
-import FileUploadField from "../../../shared/ui/FileUpload"
+import FileUpload from "../../../shared/ui/FileUpload"
 import CustomRadioGroupField from "../../molecules/CustomRadioGroupField"
 
 const phoneTypeOptions = [
@@ -297,7 +297,7 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
 
                         {/* Tax Exempt Certificate Upload */}
                         {formData.taxExemptStatus === "exempt" && (
-                            <FileUploadField
+                            <FileUpload
                                 label="Please Upload Your Tax Exempt Certificate Here"
                                 accept=".pdf,.jpg,.jpeg,.png"
                                 onChange={(e) => handleInputChange("taxExemptCertificate", e.target.files?.[0] || null)}
