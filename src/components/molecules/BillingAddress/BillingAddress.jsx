@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import DynamicForm from "../../../shared/ui/DynamicForm"; // adjust path if your file lives elsewhere
+import DynamicForm from "../../../shared/ui/DynamicForm";
 import { useDispatch, useSelector } from "react-redux";
-import { setBillingAddress, clearBillingAddress } from "../../../store/store";
+import { setBillingAddress } from "../../../store/store";
 import { translations } from "../../../shared/translations";
+import { billingAddressFields } from "../../../shared/constants/billingAddressFields";
 
 const BillingAddress = ({
   initialSameAsBusiness = true,
@@ -12,6 +13,10 @@ const BillingAddress = ({
   onValidationChange = () => { },
 }) => {
   const dispatch = useDispatch();
+
+  const businessAddress = useSelector((s) =>
+    s.form?.businessAddress ?? s.business?.businessAddress ?? s.billing?.businessAddress ?? null
+  );
 
   const persistedFromSlices = useSelector((s) =>
     s.billing?.billingAddress ?? s.form?.billingAddress ?? s.form?.billing?.billingAddress ?? null
@@ -25,18 +30,17 @@ const BillingAddress = ({
     return "editing";
   });
 
-  // create a controlled react-hook-form instance in the parent
   const methods = useForm({
-    mode: "onChange",          // run validation on change
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: persistedFromSlices || initialBillingData || {
       firstName: "",
       lastName: "",
-      street: "",
+      streetAddress: "",
       unit: "",
       city: "",
       state: "",
-      zip: "",
+      zipCode: "",
     },
   });
 
@@ -51,91 +55,207 @@ const BillingAddress = ({
     formState,
   } = methods;
 
-  const [isFormValid, setIsFormValid] = useState(Boolean(formState.isValid));
+  const REQUIRED_FIELDS = useMemo(() => ["firstName", "lastName", "streetAddress", "city", "state", "zipCode"], []);
+
+
+  const normalizeBusinessToBilling = useCallback((b) => {
+    if (!b) return null;
+
+    const firstName =
+      b.firstName ??
+      b.contactFirstName ??
+      b.contact_name_first ??
+      (typeof b.contactName === "string" ? b.contactName.split(" ")[0] : "") ??
+      "";
+    const lastName =
+      b.lastName ??
+      b.contactLastName ??
+      b.contact_name_last ??
+      (typeof b.contactName === "string" ? b.contactName.split(" ").slice(1).join(" ") : "") ??
+      "";
+
+    const streetAddress =
+      b.streetAddress ?? b.street ?? b.address ?? b.deliveryAddress ?? b.deliveryAddress1 ?? "";
+    const unit = b.unit ?? b.addressLine2 ?? b.address2 ?? b.deliveryAddress2 ?? "";
+    const city = b.city ?? b.town ?? b.locality ?? "";
+    const state = b.state ?? b.region ?? b.stateCode ?? "";
+    const zipCode = b.zipCode ?? b.zip ?? b.postalCode ?? b.postcode ?? "";
+
+    return {
+      firstName: firstName || "",
+      lastName: lastName || "",
+      streetAddress,
+      unit,
+      city,
+      state,
+      zipCode,
+    };
+  }, []);
+
+  // ensure businessAddress is copied to billing when the section is "same" on mount/visit
+  useEffect(() => {
+    if (forceEditOnMount) return;
+    // Only act when mode is 'same' (checkbox selected)
+    if (mode !== "same") return;
+
+    // Nothing to copy if we don't have a business address
+    if (!businessAddress) return;
+
+    // Map businessAddress to billing shape (reuse your normalizer)
+    const mapped = normalizeBusinessToBilling(businessAddress);
+    if (!mapped) return;
+
+    // If persisted billing (from store) already exists, check if it matches mapped;
+    // If it does, no-op. If not present or different, persist mapped.
+    const alreadyPersisted = persistedFromSlices;
+    const equalish = (a, b) => {
+      if (!a || !b) return false;
+      // shallow compare relevant keys we care about
+      return (
+        (a.firstName ?? "") === (b.firstName ?? "") &&
+        (a.lastName ?? "") === (b.lastName ?? "") &&
+        (a.streetAddress ?? a.street ?? "") === (b.streetAddress ?? b.street ?? "") &&
+        (a.city ?? "") === (b.city ?? "") &&
+        (a.state ?? "") === (b.state ?? "") &&
+        (a.zipCode ?? a.zip ?? "") === (b.zipCode ?? b.zip ?? "")
+      );
+    };
+
+    if (alreadyPersisted && equalish(alreadyPersisted, mapped)) {
+      // already stored — but ensure local state reflects it
+      if (!billingData) {
+        setBillingData(alreadyPersisted);
+      }
+      return;
+    }
+
+    const mappedWithNames = {
+      firstName: mapped.firstName ?? "",
+      lastName: mapped.lastName ?? "",
+      streetAddress: mapped.streetAddress ?? "",
+      unit: mapped.unit ?? "",
+      city: mapped.city ?? "",
+      state: mapped.state ?? "",
+      zipCode: mapped.zipCode ?? "",
+    };
+
+    // Persist mapped billing address and update local state
+    dispatch(setBillingAddress(mappedWithNames));
+    setBillingData(mappedWithNames);
+
+    // Keep the mode as 'same' and notify parent it's valid
+    setMode("same");
+    if (typeof onValidationChange === "function") onValidationChange(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, businessAddress, persistedFromSlices, forceEditOnMount, normalizeBusinessToBilling, billingData, dispatch, onValidationChange]);
+
+  // Compute validity only for required fields (ignores "unit").
+  const computeRequiredFieldsValid = useCallback(() => {
+    try {
+      const vals = typeof getValues === "function" ? getValues() : {};
+      const allFilled = REQUIRED_FIELDS.every((k) => {
+        const v = vals?.[k];
+        if (v === null || v === undefined) return false;
+        if (typeof v === "string") return v.trim().length > 0;
+        return Boolean(v);
+      });
+      setIsFormValid(Boolean(allFilled));
+      return Promise.resolve(Boolean(allFilled));
+    } catch (err) {
+      setIsFormValid(false);
+      return Promise.resolve(false);
+    }
+  }, [getValues, REQUIRED_FIELDS]);
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     setBillingData(persistedFromSlices ?? initialBillingData ?? null);
   }, [persistedFromSlices, initialBillingData]);
 
-  const fields = useMemo(() => [
-    { name: "firstName", label: "First Name", type: "text" },
-    { name: "lastName", label: "Last Name", type: "text" },
-    { name: "street", label: "Street Address", type: "autocomplete", helperText: "Please enter at least 4 characters." },
-    { name: "unit", label: "Unit, Suite, Apartment, etc.", type: "text", optional: true },
-    { name: "city", label: "City", type: "text", helperText: "Please enter at least 3 characters." },
-    {
-      name: "state", label: "State", type: "select", options: [
-        { value: "", label: "Select" },
-        { value: "CA", label: "California" },
-        { value: "NY", label: "New York" },
-      ]
-    },
-    { name: "zip", label: "ZIP Code", type: "text", helperText: "Please enter at least 5 characters." },
-  ], []);
+  const fields = useMemo(() => billingAddressFields, []);
 
   useEffect(() => {
-    setIsFormValid(Boolean(formState.isValid));
-  }, [formState.isValid]);
+    const sub = watch(() => {
+      computeRequiredFieldsValid();
+    });
+    return () => sub.unsubscribe();
+  }, [watch, computeRequiredFieldsValid])
+
+  useEffect(() => {
+    const subscription = watch((_, { name }) => {
+      // If one of required fields changed, recompute
+      if (!name) {
+        computeRequiredFieldsValid();
+        return;
+      }
+      if (REQUIRED_FIELDS.includes(name)) {
+        computeRequiredFieldsValid();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, computeRequiredFieldsValid, REQUIRED_FIELDS]);
 
   const startEditing = useCallback(
     (useExisting = true) => {
       const source = useExisting ? (billingData || persistedFromSlices || initialBillingData) : null;
       if (source) {
         reset(source);
+      } else {
+        // ensure form has a blank structure
+        reset({
+          firstName: "",
+          lastName: "",
+          streetAddress: "",
+          unit: "",
+          city: "",
+          state: "",
+          zipCode: "",
+        });
       }
       setMode("editing");
       if (typeof onValidationChange === "function") onValidationChange(false);
 
-      // re-run validation in next microtask so RHF has applied reset values
       Promise.resolve().then(() => {
-        if (typeof trigger === "function") trigger();
+        computeRequiredFieldsValid();
       });
-    }, [billingData, persistedFromSlices, initialBillingData, reset, trigger, onValidationChange]);
+    }, [billingData, persistedFromSlices, initialBillingData, reset, computeRequiredFieldsValid, onValidationChange]);
 
   useEffect(() => {
     if (!forceEditOnMount) return;
 
-    // Choose the best available data to prefill
     const dataToPrefill = initialBillingData ?? persistedFromSlices ?? billingData ?? null;
 
     if (dataToPrefill) {
       setBillingData(dataToPrefill);
       reset(dataToPrefill);
-      setMode("editing");
 
-      Promise.resolve()
-        .then(() => {
-          if (typeof trigger === "function") {
-            return trigger(); // returns boolean: true if valid
-          }
-          return false;
-        })
-        .then((valid) => {
-          setIsFormValid(Boolean(valid));
-        })
-        .catch(() => {
-          setIsFormValid(false);
-        });
+      // ✅ Show readonly block (with Edit button) instead of the Update form
+      setMode("readonly");
+      setIsFormValid(true);
+
+      if (typeof onValidationChange === "function") {
+        onValidationChange(true);
+      }
     } else {
+      // Fallback: no data, keep previous behavior (empty editing form)
       reset({
         firstName: "",
         lastName: "",
-        street: "",
+        streetAddress: "",
         unit: "",
         city: "",
         state: "",
-        zip: "",
+        zipCode: "",
       });
+      setMode("editing");
+
+      Promise.resolve()
+        .then(() => computeRequiredFieldsValid())
+        .then((valid) => setIsFormValid(Boolean(valid)))
+        .catch(() => setIsFormValid(false));
     }
-
-    setMode("editing");
-
-    Promise.resolve().then(() => {
-      if (typeof trigger === "function") {
-        trigger().then((valid) => setIsFormValid(Boolean(valid))).catch(() => setIsFormValid(false));
-      }
-    });
-  }, [forceEditOnMount, persistedFromSlices, initialBillingData, reset, trigger, billingData]);
+  }, [forceEditOnMount, persistedFromSlices, initialBillingData, reset, computeRequiredFieldsValid, billingData, onValidationChange]);
 
   // Notify parent when this section becomes effectively valid/invalid
   useEffect(() => {
@@ -143,35 +263,75 @@ const BillingAddress = ({
       if (typeof onValidationChange === "function") onValidationChange(true);
       return;
     }
+
     if (mode === "readonly" && (billingData || persistedFromSlices || initialBillingData)) {
       if (typeof onValidationChange === "function") onValidationChange(true);
       return;
     }
+
     if (mode === "editing") {
-      if (typeof onValidationChange === "function") onValidationChange(false);
+      try {
+        const result = computeRequiredFieldsValid();
+
+        // If result is a Promise, await it; otherwise use it directly
+        if (result && typeof result.then === "function") {
+          result
+            .then((valid) => {
+              if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+            })
+            .catch(() => {
+              if (typeof onValidationChange === "function") onValidationChange(false);
+            });
+        } else {
+          if (typeof onValidationChange === "function") onValidationChange(Boolean(result));
+        }
+      } catch (err) {
+        if (typeof onValidationChange === "function") onValidationChange(false);
+      }
     }
-  }, [mode, billingData, persistedFromSlices, initialBillingData, onValidationChange]);
+  }, [mode, billingData, persistedFromSlices, initialBillingData, onValidationChange, computeRequiredFieldsValid]);
+
 
   // Handler when user toggles the checkbox
   const onCheckboxChange = (checked) => {
     if (checked) {
-      setMode("same");
-      if (typeof onValidationChange === "function") onValidationChange(true);
+      // user requested "same as business" => copy businessAddress into billing
+      if (businessAddress) {
+        const mapped = normalizeBusinessToBilling(businessAddress);
+        // persist to redux and local state
+        dispatch(setBillingAddress(mapped));
+        setBillingData(mapped);
+        setMode("same");
+        if (typeof onValidationChange === "function") onValidationChange(true);
+      } else {
+        // no business address available — start editing (or optionally show message)
+        startEditing(false);
+      }
     } else {
+      // user unchecked => start editing using existing data if present
       startEditing(true);
     }
   };
 
   const onValidate = (data) => {
-    dispatch(setBillingAddress(data));
-    setBillingData(data);
+    const payload = {
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      streetAddress: data.streetAddress ?? "",
+      unit: data.unit ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      zipCode: data.zipCode ?? "",
+    };
+    dispatch(setBillingAddress(payload));
+    setBillingData(payload);
     setMode("readonly");
     if (typeof onValidationChange === "function") onValidationChange(true);
   };
 
   const submitUpdateSafely = async () => {
     try {
-      const valid = await (typeof trigger === "function" ? trigger() : Promise.resolve(false));
+      const valid = await computeRequiredFieldsValid();
       setIsFormValid(Boolean(valid));
 
       await new Promise((r) => setTimeout(r, 30));
@@ -192,8 +352,16 @@ const BillingAddress = ({
 
         // If we have something useful, persist it as fallback
         if (values && Object.keys(values).length > 0) {
-          // make sure the RHF instance reflects these values too
-          try { reset(values); } catch (e) { /* ignore */ }
+          const payload = {
+            firstName: values.firstName ?? "",
+            lastName: values.lastName ?? "",
+            streetAddress: values.streetAddress ?? values.street ?? "",
+            unit: values.unit ?? "",
+            city: values.city ?? "",
+            state: values.state ?? "",
+            zipCode: values.zipCode ?? values.zip ?? "",
+          };
+          try { reset(payload); } catch (e) { /* ignore */ }
 
           // persist to redux
           dispatch(setBillingAddress(values));
@@ -213,9 +381,18 @@ const BillingAddress = ({
 
   // Update action when editing an already validated form
   const onUpdate = (data) => {
-    reset(data);
-    dispatch(setBillingAddress(data));
-    setBillingData(data);
+    const payload = {
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      streetAddress: data.streetAddress ?? "",
+      unit: data.unit ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      zipCode: data.zipCode ?? "",
+    };
+    reset(payload);
+    dispatch(setBillingAddress(payload));
+    setBillingData(payload);
     setMode("readonly");
     if (typeof onValidationChange === "function") {
       onValidationChange(true);
@@ -228,9 +405,9 @@ const BillingAddress = ({
     const parts = [];
     const name = [data.firstName, data.lastName].filter(Boolean).join(" ");
     if (name) parts.push(name);
-    if (data.street) parts.push(data.street);
+    if (data.streetAddress) parts.push(data.streetAddress);
     if (data.unit) parts.push(data.unit);
-    const cityLine = [data.city, data.state, data.zip].filter(Boolean).join(", ");
+    const cityLine = [data.city, data.state, data.zipCode].filter(Boolean).join(", ");
     if (cityLine) parts.push(cityLine);
     return parts.join("\n");
   };
@@ -242,16 +419,14 @@ const BillingAddress = ({
       billingData,
       forceEditOnMount,
       mode,
+      businessAddress,
     });
-  }, [persistedFromSlices, initialBillingData, billingData, forceEditOnMount, mode]);
+  }, [persistedFromSlices, initialBillingData, billingData, forceEditOnMount, mode, businessAddress]);
 
-
-  console.log('billingData', billingData)
-  console.log('persistedFromSlices', persistedFromSlices)
   // Render different UIs by mode
   return (
-    <section className="max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{translations?.billing_address}</h2>
+    <div className="max-w-2xl pb-8">
+      <h2 className="text-md mb-4">{translations?.billing_address}</h2>
 
       {/* CASE: mode === 'same' (selected checkbox) */}
       {mode === "same" && (
@@ -259,11 +434,11 @@ const BillingAddress = ({
           <label className="inline-flex items-center space-x-3">
             <input
               type="checkbox"
-              checked={true}
+              checked={mode === "same"}
               onChange={(e) => onCheckboxChange(e.target.checked)}
               className="w-5 h-5 accent-orange-600 border-gray-400"
             />
-            <span className="text-lg text-gray-600">My billing address is the same as my business address.</span>
+            <span className="text-lg text-gray-600">{translations?.billing_address_same_business_address}</span>
           </label>
 
           <hr className="mt-6 border-t-2 border-gray-300" />
@@ -276,11 +451,11 @@ const BillingAddress = ({
           <label className="inline-flex items-center space-x-3 mb-6">
             <input
               type="checkbox"
-              checked={false}
+              checked={mode === "same"}
               onChange={(e) => onCheckboxChange(e.target.checked)}
               className="w-5 h-5 accent-orange-600 border-gray-400"
             />
-            <span className="text-lg text-gray-600">My billing address is the same as my business address.</span>
+            <span className="text-lg text-gray-600">{translations?.billing_address_same_business_address}</span>
           </label>
 
           {/* DynamicForm receives parent-controlled form methods so we can submit / validate */}
@@ -293,9 +468,11 @@ const BillingAddress = ({
             setValue={setValue}
             handleSubmit={handleSubmit}
             onValidationChange={(v) => {
-              const valid = typeof v === "boolean" ? v : Boolean(formState.isValid);
-              onValidationChange(Boolean(valid));
-              setIsFormValid(Boolean(valid));
+              computeRequiredFieldsValid().then((valid) => {
+                if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+              }).catch(() => {
+                if (typeof onValidationChange === "function") onValidationChange(false);
+              });
             }}
             onSave={(data) => {
               dispatch(setBillingAddress(data));
@@ -351,12 +528,12 @@ const BillingAddress = ({
               onClick={() => startEditing(true)}
               className="text-sm text-gray-600 hover:text-gray-800"
             >
-              EDIT
+              {translations?.edit}
             </button>
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 };
 

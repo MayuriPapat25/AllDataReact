@@ -1,100 +1,35 @@
-
 // BusinessAddressValidation.jsx
 import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import DynamicForm from "../../../shared/ui/DynamicForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setBusinessAddress } from "../../../store/store"; // adjust path
+import { translations } from "../../../shared/translations";
+import { businessAddressFields } from "../../../shared/constants/businessAddressFields";
+import { US_STATES } from '../../../shared/constants/US_STATES';
 
-// US States list in the format SelectField expects
-const US_STATES = [
-  { value: "AL", label: "Alabama" },
-  { value: "AK", label: "Alaska" },
-  { value: "AZ", label: "Arizona" },
-  { value: "AR", label: "Arkansas" },
-  { value: "CA", label: "California" },
-  { value: "CO", label: "Colorado" },
-  { value: "CT", label: "Connecticut" },
-  { value: "DE", label: "Delaware" },
-  { value: "FL", label: "Florida" },
-  { value: "GA", label: "Georgia" },
-  { value: "HI", label: "Hawaii" },
-  { value: "ID", label: "Idaho" },
-  { value: "IL", label: "Illinois" },
-  { value: "IN", label: "Indiana" },
-  { value: "IA", label: "Iowa" },
-  { value: "KS", label: "Kansas" },
-  { value: "KY", label: "Kentucky" },
-  { value: "LA", label: "Louisiana" },
-  { value: "ME", label: "Maine" },
-  { value: "MD", label: "Maryland" },
-  { value: "MA", label: "Massachusetts" },
-  { value: "MI", label: "Michigan" },
-  { value: "MN", label: "Minnesota" },
-  { value: "MS", label: "Mississippi" },
-  { value: "MO", label: "Missouri" },
-  { value: "MT", label: "Montana" },
-  { value: "NE", label: "Nebraska" },
-  { value: "NV", label: "Nevada" },
-  { value: "NH", label: "New Hampshire" },
-  { value: "NJ", label: "New Jersey" },
-  { value: "NM", label: "New Mexico" },
-  { value: "NY", label: "New York" },
-  { value: "NC", label: "North Carolina" },
-  { value: "ND", label: "North Dakota" },
-  { value: "OH", label: "Ohio" },
-  { value: "OK", label: "Oklahoma" },
-  { value: "OR", label: "Oregon" },
-  { value: "PA", label: "Pennsylvania" },
-  { value: "RI", label: "Rhode Island" },
-  { value: "SC", label: "South Carolina" },
-  { value: "SD", label: "South Dakota" },
-  { value: "TN", label: "Tennessee" },
-  { value: "TX", label: "Texas" },
-  { value: "UT", label: "Utah" },
-  { value: "VT", label: "Vermont" },
-  { value: "VA", label: "Virginia" },
-  { value: "WA", label: "Washington" },
-  { value: "WV", label: "West Virginia" },
-  { value: "WI", label: "Wisconsin" },
-  { value: "WY", label: "Wyoming" },
-];
-
-const addressFields = [
-  // If you already have fields defined elsewhere, import them and use.
-  // This is an example shape that DynamicForm should understand.
-  { name: "street", label: "Street Address", type: "autocomplete", placeholder: "Enter street address", rules: { required: true } },
-  { name: "unit", label: "Unit, Suite, etc.", type: "text", rules: {}, optional: true },
-  { name: "city", label: "City", type: "text", rules: { required: true } },
-  {
-    name: "state", label: "State", type: "select", options: US_STATES, rules: { required: true }
-  },
-  { name: "zip", label: "Zip code", type: "text", rules: { required: true, pattern: /^[0-9\- ]{3,12}$/ } },
-  // { name: "country", label: "Country", type: "text", rules: {}, defaultValue: "United States" },
-];
-
-const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = () => { }, onValidationChange = () => { } }) => {
+const BusinessAddressValidation = ({
+  initialData = {},
+  className = "",
+  onSave = () => { },
+  onValidationChange = () => { }
+}) => {
   const dispatch = useDispatch();
-
-  // fallback to store if parent didn't provide initialData
   const storeAddress = useSelector((s) => s.form?.businessAddress) ?? {};
   const startingValues = (initialData && Object.keys(initialData).length) ? initialData : storeAddress;
 
-  // readonly toggles between validated view and edit form
-  // Always start with form (not readonly) - user must click Validate to show readonly
   const [readonly, setReadonly] = useState(false);
-  // track whether the address was previously validated
   const validatedRef = useRef(false);
 
   // react-hook-form setup
   const form = useForm({
     mode: "onBlur",
     defaultValues: {
-      street: "",
+      streetAddress: "",
       unit: "",
       city: "",
       state: "",
-      zip: "",
+      zipCode: "",
       // country: "United States",
       ...startingValues,
     },
@@ -102,32 +37,62 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
 
   const { control, watch, trigger, getValues, setValue, handleSubmit, reset } = form;
 
-  // If parent initialData changes meaningfully, reset the form (but avoid feedback loop)
-  // Note: We reset form values but keep readonly=false so user can edit
+  const watched = watch(["streetAddress", "city", "state", "zipCode"]);
+  const isAllRequiredPresent = (() => {
+    const [streetAddress, city, state, zipCode] = watched || [];
+    const okStreetAddress = streetAddress && String(streetAddress).trim() !== "";
+    const okCity = city && String(city).trim() !== "";
+    const okState = state && String(state).trim() !== "";
+    const okZipCode = zipCode && String(zipCode).trim() !== "";
+    return okStreetAddress && okCity && okState && okZipCode;
+  })();
+
   useEffect(() => {
     const incoming = (initialData && Object.keys(initialData).length) ? initialData : storeAddress;
     if (incoming && Object.keys(incoming).length) {
       reset({
-        street: incoming.street || "",
+        streetAddress: incoming.streetAddress ?? incoming.street ?? "",
         unit: incoming.unit || "",
-        city: incoming.city || "",
-        state: incoming.state || "",
-        zip: incoming.zip || "",
-        // country: incoming.country || "United States",
+        city: incoming.city ?? incoming.cityName ?? "",
+        state: incoming.state ?? incoming.stateCode ?? "",
+        zipCode: incoming.zipCode ?? incoming.zip ?? "",
       });
-      // Pre-fill form but don't auto-set readonly - user must validate manually
-      // The form will always start in edit mode, regardless of whether initialData exists
+
+      if (incoming && (incoming.street || incoming.streetAddress)) {
+        validatedRef.current = true;
+        setReadonly(true);
+        onValidationChange(true);
+      }
     } else {
-      // no incoming data -> ensure we are in edit mode
       validatedRef.current = false;
       setReadonly(false);
     }
-  }, [initialData, storeAddress, reset]);
+  }, [initialData, storeAddress, reset, onValidationChange]);
+
+  const getStateLabel = (code) => {
+    if (!code) return "";
+    const found = US_STATES.find((s) => s.value === code);
+    return found ? found.label : "";
+  };
+
+  // centralize dispatch so we always save both code and label
+  const saveAddressToStore = (data) => {
+    const stateLabel = getStateLabel(data.state);
+    const payload = {
+      streetAddress: data.streetAddress || "",
+      unit: data.unit || "",
+      city: data.city || "",
+      state: data.state || "",
+      zipCode: data.zipCode || "",
+      stateName: stateLabel,
+    };
+    dispatch(setBusinessAddress(payload));
+    return payload;
+  };
 
   // Validate + save handler for "Validate" button (used on first save)
   const handleValidate = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    // trigger validation for all fields
     const ok = await trigger();
     if (!ok) {
       onValidationChange(false);
@@ -135,14 +100,12 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
     }
 
     const data = getValues();
-    // dispatch to store
-    dispatch(setBusinessAddress(data));
-    // mark validated and show readonly
+    const payload = saveAddressToStore(data);
+
     validatedRef.current = true;
     setReadonly(true);
-    // callbacks to parent
     onValidationChange(true);
-    onSave(data);
+    onSave(payload);
   };
 
   // Update handler for the "UPDATE" button (when editing a validated address)
@@ -154,10 +117,10 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
       return;
     }
     const data = getValues();
-    dispatch(setBusinessAddress(data));
+    const payload = saveAddressToStore(data);
     setReadonly(true);
     onValidationChange(true);
-    onSave(data);
+    onSave(payload);
   };
 
   const handleEditClick = () => {
@@ -169,10 +132,10 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
   const renderForm = () => {
     return (
       <form className={`max-w-2xl pt-6 pb-8 border-b-2 border-gray-300 ${className}`} onSubmit={handleValidate}>
-        <h2 className="text-md mb-4">Business Address</h2>
+        <h2 className="text-md mb-4">{translations?.business_address}</h2>
 
         <DynamicForm
-          fields={addressFields}
+          fields={businessAddressFields}
           control={control}
           watch={watch}
           trigger={trigger}
@@ -180,7 +143,6 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
           setValue={setValue}
           handleSubmit={handleSubmit}
           onValidationChange={onValidationChange}
-        // onSave not used here because we control save via Validate/Update buttons
         />
 
         <div className="mt-4">
@@ -188,14 +150,16 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
             <button
               type="button"
               onClick={handleUpdate}
-              className="bg-green-600 text-white px-5 py-3 rounded-md hover:bg-green-700"
+              disabled={!isAllRequiredPresent}
+              className={`px-5 py-3 rounded-md ${isAllRequiredPresent ? "bg-green-600 text-white hover:bg-green-700" : "bg-green-600 text-white opacity-50 cursor-not-allowed"}`}
             >
               UPDATE
             </button>
           ) : (
             <button
               type="submit"
-              className="bg-blue-600 text-white px-5 py-3 rounded-md hover:bg-blue-700"
+              disabled={!isAllRequiredPresent}
+              className={`px-5 py-3 rounded-md ${isAllRequiredPresent ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-blue-600 text-white opacity-50 cursor-not-allowed"}`}
             >
               Validate
             </button>
@@ -209,30 +173,33 @@ const BusinessAddressValidation = ({ initialData = {}, className = "", onSave = 
     // Get current form values instead of startingValues for readonly display
     const currentValues = getValues();
     const vals = {
-      street: currentValues.street || "",
+      streetAddress: currentValues.streetAddress || currentValues.street || "",
       unit: currentValues.unit || "",
       city: currentValues.city || "",
       state: currentValues.state || "",
-      zip: currentValues.zip || "",
+      zipCode: currentValues.zipCode || currentValues.zip || "",
       // country: currentValues.country || "United States",
     };
 
-    const line1 = vals.street + (vals.unit ? `, ${vals.unit}` : "");
-    const line2 = [vals.city, vals.state, vals.zip].filter(Boolean).join(", ");
+    const storeStateName = storeAddress?.stateName;
+    const stateLabel = storeStateName || getStateLabel(vals.state);
+
+    const line1 = vals.streetAddress + (vals.unit ? `, ${vals.unit}` : "");
+    const line2 = [vals.city, stateLabel, vals.zipCode].filter(Boolean).join(", ");
 
     return (
       <div className={`max-w-2xl bg-card pb-8 border-b-2 border-gray-300 ${className}`}>
         <div className="flex justify-between items-start">
-          <h2 className="text-md mb-4">Business Address</h2>
+          <h2 className="text-md mb-4">{translations?.business_address}</h2>
           <button onClick={handleEditClick} className="text-sm font-medium text-gray-600 hover:underline">
-            EDIT
+            {translations?.edit}
           </button>
         </div>
 
         <div className="text-gray-700 text-lg leading-7">
           <div>{line1 || <span className="text-gray-400">—</span>}</div>
           <div>{line2 || <span className="text-gray-400">—</span>}</div>
-          {/* <div>{vals.country}</div> */}
+          <div>{translations?.country_name || vals.country || "United States"}</div>
         </div>
       </div>
     );

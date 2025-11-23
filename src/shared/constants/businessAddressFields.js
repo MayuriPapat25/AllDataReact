@@ -1,4 +1,5 @@
-import { translations } from "../../../shared/translations";
+import { translations } from '../translations';
+import { US_STATES } from './US_STATES';
 
 // businessAddressFields.js
 export const businessAddressFields = [
@@ -29,18 +30,7 @@ export const businessAddressFields = [
     label: "State",
     type: "select",
     required: true,
-    options: [
-      { value: "alabama", label: "Alabama" },
-      { value: "alaska", label: "Alaska" },
-      { value: "arizona", label: "Arizona" },
-      { value: "arkansas", label: "Arkansas" },
-      { value: "california", label: "California" },
-      { value: "colorado", label: "Colorado" },
-      { value: "connecticut", label: "Connecticut" },
-      { value: "florida", label: "Florida" },
-      { value: "georgia", label: "Georgia" },
-      // ...add more states as needed
-    ],
+    options: US_STATES,
     validation: { required: translations?.state_required },
   },
   {

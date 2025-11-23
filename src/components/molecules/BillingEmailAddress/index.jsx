@@ -3,7 +3,7 @@ import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
 import { translations } from '../../../shared/translations'
 
 const BillingEmailForm = ({ onValidationChange }) => {
-  const [radioValue, setRadioValue] = useState(null)
+  const [radioValue, setRadioValue] = useState("primary")
   const [customEmail, setCustomEmail] = useState("")
 
   // Sample primary email address

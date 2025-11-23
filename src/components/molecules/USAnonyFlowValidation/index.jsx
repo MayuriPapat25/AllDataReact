@@ -24,6 +24,8 @@ import AccountCreation from "../AccountCreationForm/AccountCreation"
 import { useSelector, useDispatch } from "react-redux";
 import { setAccountCreation, clearAccountCreation } from "../../../store/store"
 import { computeIsValid } from "../../../shared/utils/validation"
+import BillingAddressReview from "../../../shared/ui/BillingAddressReview";
+import ShippingAddressReview from "../../../shared/ui/ShippingAddressReview";
 
 
 const USAnonyFlowValidation = ({
@@ -177,6 +179,9 @@ const USAnonyFlowValidation = ({
 
 
     const businessAddress = useSelector(state => state.form.businessAddress) ?? {};
+    const businessInformation = useSelector(state => state.form.businessInfo) ?? {};
+    const billingAddress = useSelector(state => state.form.billingAddress)
+    const shippingAddress = useSelector(state => state.form.shippingAddress)
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -230,12 +235,12 @@ const USAnonyFlowValidation = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <AccountInformation  {...accountData} />
-                                <BusinessInfoReview onEdit={handleEdit} />
-                                <BusinessAddressReview onEdit={handleEdit} />
-                                <BillingAddressForm fromReview={true} onEdit={handleEdit} />
-                                <ShippingAddressForm fromReview={true} onEdit={handleEdit} />
-                                <BillingInfoReview onEdit={handleEdit} />
+                                <AccountInformation accountData={savedAccount} subscriptionTerm={subscriptionTerm }/>
+                                <BusinessInfoReview  phoneNumber={savedAccount?.phone} />
+                                <BusinessAddressReview />
+                                <BillingAddressReview  />
+                                <ShippingAddressReview  />
+                                <BillingInfoReview  />
                             </div>
                             <div className="w-1/2">
                                 <OrderSummary data={orderSummaryData} type="variant3" />
@@ -306,14 +311,14 @@ const USAnonyFlowValidation = ({
                 primaryButton: {
                     text: "CONTINUE TO TERMS",
                     onClick: onContinue,
-                    disabled: !(
-                        businessInfoValid &&
-                        businessAddressValid &&
-                        billingEmailValid &&
-                        billingAddressValid &&
-                        shippingAddressValid &&
-                        billingInfoValid 
-                    ),
+                    // disabled: !(
+                    //     businessInfoValid &&
+                    //     businessAddressValid &&
+                    //     billingEmailValid &&
+                    //     billingAddressValid &&
+                    //     shippingAddressValid &&
+                    //     billingInfoValid 
+                    // ),
                 },
                 secondaryButton: {
                     text: "BACK",

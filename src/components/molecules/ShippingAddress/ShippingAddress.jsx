@@ -2,11 +2,10 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import DynamicForm from "../../../shared/ui/DynamicForm"; // adjust path if your file lives elsewhere
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setShippingAddress,
-  clearShippingAddress,
-} from "../../../store/store";
+import { setShippingAddress } from "../../../store/store";
 import { translations } from "../../../shared/translations";
+import { shippingAddressFields } from './shippingAddressFields';
+
 
 const ShippingAddressForm = ({
   initialSameAsBusiness = true,
@@ -14,8 +13,12 @@ const ShippingAddressForm = ({
   initialShippingData = null,
   onValidationChange = () => { },
 }) => {
-
   const dispatch = useDispatch();
+
+  // business address in store (try a couple common paths)
+  const businessAddress = useSelector((s) =>
+    s.form?.businessAddress ?? s.business?.businessAddress ?? s.shipping?.businessAddress ?? null
+  );
 
   const persistedFromSlices = useSelector((s) =>
     s.shipping?.shippingAddress ?? s.form?.shippingAddress ?? s.form?.shipping?.shippingAddress ?? null
@@ -36,11 +39,11 @@ const ShippingAddressForm = ({
     defaultValues: persistedFromSlices || initialShippingData || {
       firstName: "",
       lastName: "",
-      street: "",
+      streetAddress: "",
       unit: "",
       city: "",
       state: "",
-      zip: "",
+      zipCode: "",
     },
   });
 
@@ -55,45 +58,169 @@ const ShippingAddressForm = ({
     formState,
   } = methods;
 
-  const [isFormValid, setIsFormValid] = useState(Boolean(formState.isValid));
+  const REQUIRED_FIELDS = useMemo(() => ["firstName", "lastName", "streetAddress", "city", "state", "zipCode"], []);
+
+  // Map businessAddress shape to shipping form shape (best-effort)
+  const normalizeBusinessToShipping = useCallback((b) => {
+    if (!b) return null;
+
+    const firstName =
+      b.firstName ??
+      b.contactFirstName ??
+      b.contact_name_first ??
+      (typeof b.contactName === "string" ? b.contactName.split(" ")[0] : "") ??
+      "";
+    const lastName =
+      b.lastName ??
+      b.contactLastName ??
+      b.contact_name_last ??
+      (typeof b.contactName === "string" ? b.contactName.split(" ").slice(1).join(" ") : "") ??
+      "";
+
+    const streetAddress =
+      b.streetAddress ?? b.street ?? b.address ?? b.deliveryAddress ?? b.deliveryAddress1 ?? "";
+    const unit = b.unit ?? b.addressLine2 ?? b.address2 ?? b.deliveryAddress2 ?? "";
+    const city = b.city ?? b.town ?? b.locality ?? "";
+    const state = b.state ?? b.region ?? b.stateCode ?? "";
+    const zipCode = b.zipCode ?? b.zip ?? b.postalCode ?? b.postcode ?? "";
+
+    return {
+      firstName,
+      lastName,
+      streetAddress,
+      unit,
+      city,
+      state,
+      zipCode,
+    };
+  }, []);
+
+  // ensure businessAddress is copied to shipping when the section is "same" on mount/visit
+  useEffect(() => {
+    if (forceEditOnMount) return;
+    // Only act when mode is 'same' (checkbox selected)
+    if (mode !== "same") return;
+
+    // Nothing to copy if we don't have a business address
+    if (!businessAddress) return;
+
+    // Map businessAddress to shipping shape (reuse your normalizer)
+    const mapped = normalizeBusinessToShipping(businessAddress);
+    if (!mapped) return;
+
+    // If persisted shipping (from store) already exists, check if it matches mapped;
+    // If it does, no-op. If not present or different, persist mapped.
+    const alreadyPersisted = persistedFromSlices;
+    const equalish = (a, b) => {
+      if (!a || !b) return false;
+      // shallow compare relevant keys we care about
+      return (
+        (a.firstName ?? "") === (b.firstName ?? "") &&
+        (a.lastName ?? "") === (b.lastName ?? "") &&
+        (a.streetAddress ?? a.street ?? "") === (b.streetAddress ?? b.street ?? "") &&
+        (a.city ?? "") === (b.city ?? "") &&
+        (a.state ?? "") === (b.state ?? "") &&
+        (a.zipCode ?? a.zip ?? "") === (b.zipCode ?? b.zip ?? "")
+      );
+    };
+
+    if (alreadyPersisted && equalish(alreadyPersisted, mapped)) {
+      // already stored — but ensure local state reflects it
+      if (!shippingData) {
+        setShippingData(alreadyPersisted);
+      }
+      return;
+    }
+
+    const mappedWithNames = {
+      firstName: mapped.firstName ?? "",
+      lastName: mapped.lastName ?? "",
+      streetAddress: mapped.streetAddress ?? "",
+      unit: mapped.unit ?? "",
+      city: mapped.city ?? "",
+      state: mapped.state ?? "",
+      zipCode: mapped.zipCode ?? "",
+    };
+
+    // Persist mapped shipping address and update local state
+    dispatch(setShippingAddress(mappedWithNames));
+    setShippingData(mappedWithNames);
+    setMode("same");
+    if (typeof onValidationChange === "function") onValidationChange(true);
+  }, [mode, businessAddress, persistedFromSlices, forceEditOnMount, normalizeBusinessToShipping, shippingData, dispatch, onValidationChange]);
+
+
+  // Compute validity only for required fields (ignores "unit").
+  const computeRequiredFieldsValid = useCallback(() => {
+    try {
+      const vals = typeof getValues === "function" ? getValues() : {};
+      const allFilled = REQUIRED_FIELDS.every((k) => {
+        const v = vals?.[k];
+        if (v === null || v === undefined) return false;
+        if (typeof v === "string") return v.trim().length > 0;
+        return Boolean(v);
+      });
+      setIsFormValid(Boolean(allFilled));
+      return Promise.resolve(Boolean(allFilled));
+    } catch (err) {
+      setIsFormValid(false);
+      return Promise.resolve(false);
+    }
+  }, [getValues, REQUIRED_FIELDS]);
+
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     setShippingData(persistedFromSlices ?? initialShippingData ?? null);
   }, [persistedFromSlices, initialShippingData]);
 
-  const fields = useMemo(() => [
-    { name: "firstName", label: "First Name", type: "text" },
-    { name: "lastName", label: "Last Name", type: "text" },
-    { name: "street", label: "Street Address", type: "autocomplete", helperText: "Please enter at least 4 characters." },
-    { name: "unit", label: "Unit, Suite, Apartment, etc.", type: "text", optional: true },
-    { name: "city", label: "City", type: "text", helperText: "Please enter at least 3 characters." },
-    {
-      name: "state", label: "State", type: "select", options: [
-        { value: "", label: "Select" },
-        { value: "CA", label: "California" },
-        { value: "NY", label: "New York" },
-      ]
-    },
-    { name: "zip", label: "ZIP Code", type: "text", helperText: "Please enter at least 5 characters." },
-  ], []);
+  const fields = useMemo(() => shippingAddressFields, []);
 
   useEffect(() => {
-    setIsFormValid(Boolean(formState.isValid));
-  }, [formState.isValid]);
+    const sub = watch(() => {
+      computeRequiredFieldsValid();
+    });
+    return () => sub.unsubscribe();
+  }, [watch, computeRequiredFieldsValid])
+
+  useEffect(() => {
+    const subscription = watch((_, { name }) => {
+      // If one of required fields changed, recompute
+      if (!name) {
+        computeRequiredFieldsValid();
+        return;
+      }
+      if (REQUIRED_FIELDS.includes(name)) {
+        computeRequiredFieldsValid();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, computeRequiredFieldsValid, REQUIRED_FIELDS]);
 
   const startEditing = useCallback(
     (useExisting = true) => {
       const source = useExisting ? (shippingData || persistedFromSlices || initialShippingData) : null;
       if (source) {
         reset(source);
+      } else {
+        // ensure form has a blank structure
+        reset({
+          firstName: "",
+          lastName: "",
+          streetAddress: "",
+          unit: "",
+          city: "",
+          state: "",
+          zipCode: "",
+        });
       }
       setMode("editing");
       if (typeof onValidationChange === "function") onValidationChange(false);
 
       Promise.resolve().then(() => {
-        if (typeof trigger === "function") trigger();
+        computeRequiredFieldsValid();
       });
-    }, [shippingData, persistedFromSlices, initialShippingData, reset, trigger, onValidationChange]);
+    }, [shippingData, persistedFromSlices, initialShippingData, reset, computeRequiredFieldsValid, onValidationChange]);
 
   useEffect(() => {
     if (!forceEditOnMount) return;
@@ -103,41 +230,34 @@ const ShippingAddressForm = ({
     if (dataToPrefill) {
       setShippingData(dataToPrefill);
       reset(dataToPrefill);
-      setMode("editing");
 
-      Promise.resolve()
-        .then(() => {
-          if (typeof trigger === "function") {
-            return trigger();
-          }
-          return false;
-        })
-        .then((valid) => {
-          setIsFormValid(Boolean(valid));
-        })
-        .catch(() => {
-          setIsFormValid(false);
-        });
+      // ✅ Show readonly block (with Edit button) instead of the Update form
+      setMode("readonly");
+      setIsFormValid(true);
+
+      if (typeof onValidationChange === "function") {
+        onValidationChange(true);
+      }
     } else {
+      // Fallback: no data, keep previous behavior (empty editing form)
       reset({
         firstName: "",
         lastName: "",
-        street: "",
+        streetAddress: "",
         unit: "",
         city: "",
         state: "",
-        zip: "",
+        zipCode: "",
       });
+      setMode("editing");
+
+      Promise.resolve()
+        .then(() => computeRequiredFieldsValid())
+        .then((valid) => setIsFormValid(Boolean(valid)))
+        .catch(() => setIsFormValid(false));
     }
-    setMode("editing");
 
-    Promise.resolve().then(() => {
-      if (typeof trigger === "function") {
-        trigger().then((valid) => setIsFormValid(Boolean(valid))).catch(() => setIsFormValid(false));
-      }
-    });
-
-  }, [forceEditOnMount, persistedFromSlices, initialShippingData, reset, trigger, shippingData]);
+  }, [forceEditOnMount, persistedFromSlices, initialShippingData, reset, computeRequiredFieldsValid, shippingData, onValidationChange]);
 
   useEffect(() => {
     if (mode === "same") {
@@ -149,29 +269,66 @@ const ShippingAddressForm = ({
       return;
     }
     if (mode === "editing") {
-      if (typeof onValidationChange === "function") onValidationChange(false);
+      try {
+        const result = computeRequiredFieldsValid();
+
+        // If result is a Promise, await it; otherwise use it directly
+        if (result && typeof result.then === "function") {
+          result
+            .then((valid) => {
+              if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+            })
+            .catch(() => {
+              if (typeof onValidationChange === "function") onValidationChange(false);
+            });
+        } else {
+          if (typeof onValidationChange === "function") onValidationChange(Boolean(result));
+        }
+      } catch (err) {
+        if (typeof onValidationChange === "function") onValidationChange(false);
+      }
     }
-  }, [mode, shippingData, persistedFromSlices, initialShippingData, onValidationChange]);
+  }, [mode, shippingData, persistedFromSlices, initialShippingData, onValidationChange, computeRequiredFieldsValid]);
 
   const onCheckboxChange = (checked) => {
     if (checked) {
-      setMode("same");
-      if (typeof onValidationChange === "function") onValidationChange(true);
+      // user requested "same as business" => copy businessAddress into shipping
+      if (businessAddress) {
+        const mapped = normalizeBusinessToShipping(businessAddress);
+        // persist to redux and local state
+        dispatch(setShippingAddress(mapped));
+        setShippingData(mapped);
+        setMode("same");
+        if (typeof onValidationChange === "function") onValidationChange(true);
+      } else {
+        // no business address available — start editing (or optionally show message)
+        startEditing(false);
+      }
     } else {
+      // user unchecked => start editing using existing data if present
       startEditing(true);
     }
   };
 
   const onValidate = (data) => {
-    dispatch(setShippingAddress(data));
-    setShippingData(data);
+    const payload = {
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      streetAddress: data.streetAddress ?? "",
+      unit: data.unit ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      zipCode: data.zipCode ?? "",
+    };
+    dispatch(setShippingAddress(payload));
+    setShippingpayload(payload);
     setMode("readonly");
     if (typeof onValidationChange === "function") onValidationChange(true);
   };
 
   const submitUpdateSafely = async () => {
     try {
-      const valid = await (typeof trigger === "function" ? trigger() : Promise.resolve(false));
+      const valid = await computeRequiredFieldsValid();
       setIsFormValid(Boolean(valid));
 
       await new Promise((r) => setTimeout(r, 30));
@@ -190,7 +347,16 @@ const ShippingAddressForm = ({
         }
 
         if (values && Object.keys(values).length > 0) {
-          try { reset(values); } catch (e) { /* ignore */ }
+          const payload = {
+            firstName: values.firstName ?? "",
+            lastName: values.lastName ?? "",
+            streetAddress: values.streetAddress ?? values.street ?? "",
+            unit: values.unit ?? "",
+            city: values.city ?? "",
+            state: values.state ?? "",
+            zipCode: values.zipCode ?? values.zip ?? "",
+          };
+          try { reset(payload); } catch (e) { /* ignore */ }
 
           dispatch(setShippingAddress(values));
           setShippingData(values);
@@ -207,9 +373,18 @@ const ShippingAddressForm = ({
   };
 
   const onUpdate = (data) => {
-    reset(data);
-    dispatch(setShippingAddress(data));
-    setShippingData(data);
+    const payload = {
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      streetAddress: data.streetAddress ?? "",
+      unit: data.unit ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      zipCode: data.zipCode ?? "",
+    };
+    reset(payload);
+    dispatch(setShippingAddress(payload));
+    setShippingData(payload);
     setMode("readonly");
     if (typeof onValidationChange === "function") {
       onValidationChange(true);
@@ -221,9 +396,9 @@ const ShippingAddressForm = ({
     const parts = [];
     const name = [data.firstName, data.lastName].filter(Boolean).join(" ");
     if (name) parts.push(name);
-    if (data.street) parts.push(data.street);
+    if (data.streetAddress) parts.push(data.streetAddress);
     if (data.unit) parts.push(data.unit);
-    const cityLine = [data.city, data.state, data.zip].filter(Boolean).join(", ");
+    const cityLine = [data.city, data.state, data.zipCode].filter(Boolean).join(", ");
     if (cityLine) parts.push(cityLine);
     return parts.join("\n");
   };
@@ -235,14 +410,15 @@ const ShippingAddressForm = ({
       shippingData,
       forceEditOnMount,
       mode,
+      businessAddress,
     });
-  }, [persistedFromSlices, initialShippingData, shippingData, forceEditOnMount, mode]);
+  }, [persistedFromSlices, initialShippingData, shippingData, forceEditOnMount, mode, businessAddress]);
 
   console.log('persistedFromSlices', persistedFromSlices)
   console.log('shippingData', shippingData)
   return (
-    <section className="max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{translations?.shipping_address}</h2>
+    <section className="max-w-2xl pb-8">
+      <h2 className="text-md mb-4">{translations?.shipping_address}</h2>
 
       {/* CASE: mode === 'same' (selected checkbox) */}
       {mode === "same" && (
@@ -250,11 +426,11 @@ const ShippingAddressForm = ({
           <label className="inline-flex items-center space-x-3">
             <input
               type="checkbox"
-              checked={true}
+              checked={mode === "same"}
               onChange={(e) => onCheckboxChange(e.target.checked)}
               className="w-5 h-5 accent-orange-600 border-gray-400"
             />
-            <span className="text-lg text-gray-600">My shipping address is the same as my business address.</span>
+            <span className="text-lg text-gray-600">{translations?.shipping_address_same_business_address}</span>
           </label>
 
           <hr className="mt-6 border-t-2 border-gray-300" />
@@ -267,11 +443,11 @@ const ShippingAddressForm = ({
           <label className="inline-flex items-center space-x-3 mb-6">
             <input
               type="checkbox"
-              checked={false}
+              checked={mode === "same"}
               onChange={(e) => onCheckboxChange(e.target.checked)}
               className="w-5 h-5 accent-orange-600 border-gray-400"
             />
-            <span className="text-lg text-gray-600">My shipping address is the same as my business address.</span>
+            <span className="text-lg text-gray-600">{translations?.shipping_address_same_business_address}</span>
           </label>
 
           {/* DynamicForm receives parent-controlled form methods so we can submit / validate */}
@@ -284,10 +460,11 @@ const ShippingAddressForm = ({
             setValue={setValue}
             handleSubmit={handleSubmit}
             onValidationChange={(v) => {
-              // keep parent informed if needed
-              const valid = typeof v === "boolean" ? v : Boolean(formState.isValid);
-              onValidationChange(Boolean(valid));
-              setIsFormValid(Boolean(valid));
+              computeRequiredFieldsValid().then((valid) => {
+                if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+              }).catch(() => {
+                if (typeof onValidationChange === "function") onValidationChange(false);
+              });
             }}
             onSave={(data) => {
               dispatch(setShippingAddress(data));
@@ -346,7 +523,7 @@ const ShippingAddressForm = ({
               onClick={() => startEditing(true)}
               className="text-sm text-gray-600 hover:text-gray-800"
             >
-              EDIT
+              {translations?.edit}
             </button>
           </div>
         </div>

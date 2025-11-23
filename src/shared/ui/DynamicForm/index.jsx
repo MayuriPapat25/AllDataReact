@@ -7,17 +7,26 @@ import { fieldComponents, getValidationRules, handleWatchEffect } from "../../ut
 import { computeIsValid } from "../../utils/validation";
 import { safeStringify } from "../../utils/utils";
 
+
+const deepClone = (obj) => {
+  try {
+    // structuredClone if available
+    // eslint-disable-next-line no-undef
+    if (typeof structuredClone === "function") return structuredClone(obj);
+  } catch (e) { /* ignore */ }
+  return obj ? JSON.parse(JSON.stringify(obj)) : obj;
+};
+
 const DynamicForm = ({
   fields = [],
   onValidationChange,
   onChange,
   defaultValues = {},
-  initialData = null, // Accept initialData as alias for defaultValues
+  initialData = null,
   onSave = () => { },
   className = "",
   showValidateButton = false,
   validateLabel = "Validate",
-  // optional external form methods (when parent lifts form up)
   control: externalControl,
   watch: externalWatch,
   trigger: externalTrigger,
@@ -27,10 +36,8 @@ const DynamicForm = ({
 }) => {
   const dispatch = useDispatch();
 
-  // Use initialData if provided, otherwise use defaultValues
-  const formDefaultValues = initialData !== null ? initialData : defaultValues;
+  const formDefaultValues = deepClone(initialData !== null ? initialData : defaultValues);
 
-  // If parent didn't pass form methods, create our own
   const localForm = (!externalControl)
     ? useForm({ mode: "onBlur", defaultValues: formDefaultValues })
     : null;
@@ -42,7 +49,7 @@ const DynamicForm = ({
   const getValues = externalGetValues || (localForm && localForm.getValues);
   const setValue = externalSetValue || (localForm && localForm.setValue);
   const reset = localForm ? localForm.reset : null;
-  const errors = localForm ? localForm.formState.errors : {}; // errors available only for local form
+  const errors = localForm ? localForm.formState.errors : {};
   const formState = localForm ? localForm.formState : {};
 
   // Track previous initialData to detect changes - use a ref that resets on mount
@@ -62,7 +69,6 @@ const DynamicForm = ({
       // Always reset on mount if we have data, or if data changed
       if (hasInitialData || hasDefaultValues) {
         if (prevInitialDataRef.current === null || initialDataChanged) {
-          console.log('DynamicForm - Resetting form with:', formDefaultValues);
           reset(formDefaultValues);
           prevInitialDataRef.current = initialData;
 
@@ -85,8 +91,8 @@ const DynamicForm = ({
 
   // If we own the form, we can persist on submit (keeps backward compatibility)
   const onSubmitLocal = (data) => {
-    dispatch(setFormData(data));
-    onSave(data);
+    const payload = deepClone(data);
+    if (onSave) onSave(payload);
   };
 
   useEffect(() => {
@@ -183,7 +189,7 @@ const DynamicForm = ({
                         // inform parent with whole form values (important!)
                         if (onChange && typeof getValues === "function") {
                           try {
-                            const allVals = getValues();
+                            const allVals = deepClone(getValues());
                             onChange(allVals);
                           } catch (e) {
                             // fallback: if getValues isn't available, pass a minimal object

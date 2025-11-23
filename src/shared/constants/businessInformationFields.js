@@ -1,4 +1,4 @@
-import { translations } from "../../../shared/translations";
+import { translations } from "../translations";
 
 // businessInformationFields.js
 export const businessInformationFields = [
@@ -84,8 +84,8 @@ export const businessInformationFields = [
     type: "radio",
     required: true,
     options: [
-      { value: "not-exempt", label: "MY BUSINESS IS NOT TAX EXEMPT" },
-      { value: "exempt", label: "MY BUSINESS IS TAX EXEMPT" },
+      { value: "My business is not tax exempt", label: "MY BUSINESS IS NOT TAX EXEMPT" },
+      { value: "My business is tax exempt", label: "MY BUSINESS IS TAX EXEMPT" },
     ],
     validation: { required: translations?.select_tax_exampt_status },
   },

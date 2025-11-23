@@ -1,6 +1,6 @@
 import React from "react";
 import DynamicForm from "../../../shared/ui/DynamicForm";
-import { businessAddressFields } from "./businessAddressFields";
+import { businessAddressFields } from "../../../shared/constants/businessAddressFields";
 import { translations } from "../../../shared/translations";
 
 const BusinessAddress = ({ onValidationChange }) => {
