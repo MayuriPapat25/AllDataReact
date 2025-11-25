@@ -42,7 +42,6 @@ const ShippingAddressReview = ({
   };
 
   const handleSave = (savedData) => {
-    console.log('[ShippingAddressReview] saving ->', savedData);
     // make a deep clone to avoid accidental shared references
     const payload = JSON.parse(JSON.stringify(savedData || {}));
     dispatch(setShippingAddress(payload));
@@ -63,8 +62,6 @@ const ShippingAddressReview = ({
     );
   }, [ShippingAddress, BusinessAddress]);
 
-
-  console.log('ShippingAddress review', ShippingAddress)
   return (
     <div className="max-w-2xl border-b-2 border-gray-300 pb-8">
       {/* Header */}

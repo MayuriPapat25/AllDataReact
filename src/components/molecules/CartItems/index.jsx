@@ -4,7 +4,7 @@ import repairIcon from "../../../assets/images/repair_color.png"
 import { translations } from '../../../shared/translations'
 
 function CartItems({ data }) {
-    console.log('data', data)
+
     return (
         <div className="mb-6 shadow-lg bg-white">
             {data.map((item, index) => (

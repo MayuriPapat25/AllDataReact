@@ -12,7 +12,7 @@ const BusinessAddressReview = ({
 }) => {
   const dispatch = useDispatch();
   const BusinessAddress = useSelector(state => state.form.businessAddress) ?? {};
-  console.log('BusinessAddress', BusinessAddress)
+
   const [isEditing, setIsEditing] = useState(false);
   const [formInitialData, setFormInitialData] = useState(BusinessAddress);
 

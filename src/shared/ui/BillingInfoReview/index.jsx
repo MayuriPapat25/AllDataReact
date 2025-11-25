@@ -21,7 +21,6 @@ const BillingInfoReview = ({
         setMode("readonly");
     };
 
-    console.log('ShippingAddress review', ShippingAddress)
     return (
         <div className="border-b-2 border-gray-300 pb-8 max-w-2xl">
             <div className="flex items-center justify-between mb-4">

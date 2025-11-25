@@ -2,7 +2,7 @@ import { translations } from "../../../shared/translations"
 import InfoField from "../../../shared/ui/InfoField"
 
 const AccountInformation = ({ accountData, subscriptionTerm }) => {
-    console.log('accountData', accountData)
+
     return (
         <div className="w-full max-w-2xl border-b-2 border-gray-300 pb-8">
             <h2 className="text-md mb-4">{translations?.account_information}</h2>

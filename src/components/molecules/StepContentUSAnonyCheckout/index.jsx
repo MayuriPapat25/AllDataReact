@@ -34,7 +34,6 @@ const StepContentUSAnonyCheckout = ({
 
     // read saved account values
     const savedAccount = useSelector((state) => state.form?.accountCreation) ?? {};
-  console.log('savedAccount', savedAccount)
     // called whenever DynamicForm values change (you can debounce this if needed)
   const handleAccountFormChange = (values) => {
     if (!values) return;
@@ -121,14 +120,6 @@ const StepContentUSAnonyCheckout = ({
     useEffect(() => {
         setStep1Valid(formValid && agreeToTerms);
     }, [formValid, agreeToTerms]);
-
-    useEffect(() => {
-    console.log({
-        businessInfoValid,
-        businessAddressValid,
-        billingEmailValid
-    });
-    }, [businessInfoValid, businessAddressValid, billingEmailValid]);
 
     const businessInfo = useSelector(state => state.form.businessAddress);
 

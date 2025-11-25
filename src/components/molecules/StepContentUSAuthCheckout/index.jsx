@@ -75,14 +75,6 @@ const StepContentUSAuthCheckout = ({
         setStep1Valid(formValid && agreeToTerms);
     }, [formValid, agreeToTerms]);
 
-    useEffect(() => {
-        console.log({
-            businessInfoValid,
-            businessAddressValid,
-            billingEmailValid
-        });
-    }, [businessInfoValid, businessAddressValid, billingEmailValid]);
-
     const renderStepContent = () => {
         switch (currentStep) {
             case 1:
