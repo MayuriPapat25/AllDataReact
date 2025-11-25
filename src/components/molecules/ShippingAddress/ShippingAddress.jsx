@@ -4,7 +4,7 @@ import DynamicForm from "../../../shared/ui/DynamicForm"; // adjust path if your
 import { useDispatch, useSelector } from "react-redux";
 import { setShippingAddress } from "../../../store/store";
 import { translations } from "../../../shared/translations";
-import { shippingAddressFields } from './shippingAddressFields';
+import { shippingAddressFields } from '../../../shared/constants/shippingAddressFields';
 
 
 const ShippingAddressForm = ({

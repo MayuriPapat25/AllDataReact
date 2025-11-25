@@ -1,5 +1,5 @@
-import { US_STATES } from "../../../shared/constants/US_STATES";
-import { translations } from "../../../shared/translations";
+import { US_STATES } from "./US_STATES";
+import { translations } from "../translations";
 
 export const shippingAddressFields = [
   // 1. First Name & Last Name in one row

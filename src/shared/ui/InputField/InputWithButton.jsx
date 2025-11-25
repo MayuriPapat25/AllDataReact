@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { TextField } from "./TextField"
 import { Button } from "../Buttons/Button"
 
@@ -6,11 +5,11 @@ export function InputWithButton({
   placeholder = "",
   buttonText,
   onSubmit,
-  disabled = false,
+  disabled,
   className = "",
   handleKeyDown,
   value,
-  handlePromoCodeField
+  handlePromoCodeField,
 }) {
 
   return (
@@ -22,6 +21,7 @@ export function InputWithButton({
           onChange={handlePromoCodeField}
           onKeyDown={handleKeyDown}
           className="border-2"
+          disabled={disabled}
         />
         <Button
           variant="outline"

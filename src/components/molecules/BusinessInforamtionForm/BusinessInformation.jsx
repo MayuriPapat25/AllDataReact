@@ -76,7 +76,7 @@ const BusinessInformation = ({ onValidationChange, initialData = {} }) => {
       prevInitialJSON.current = currentJSON;
     }
     // Note: intentionally do NOT watch storeData here to avoid feedback loop
-  }, [initialData, storeData, reset /* no storeData dependency */]);
+  }, [initialData, storeData, reset]);
 
   // preserve your existing validation watcher
   useEffect(() => {

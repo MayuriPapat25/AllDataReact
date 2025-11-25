@@ -1,6 +1,7 @@
 import React from 'react'
 import { ProductName } from '../../../shared/ui/TextIcon/ProductName'
 import repairIcon from "../../../assets/images/repair_color.png"
+import { translations } from '../../../shared/translations'
 
 function CartItems({ data }) {
     console.log('data', data)
@@ -31,7 +32,7 @@ function CartItems({ data }) {
                         <div className="text-right">
                             <div className="font-medium">${item.monthlyPrice ?? "0.00"}</div>
                             <div className="text-sm text-gray-500">
-                                {item.isIncluded ? `Included with ${item.includedWith}` : "Monthly"}
+                                {item.isIncluded ? `${translations?.included_with} ${item.includedWith}` : `${translations?.monthly}`}
                             </div>
                         </div>
                     </div>

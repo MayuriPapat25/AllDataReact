@@ -105,23 +105,11 @@ const USAnonyFlowValidation = ({
         }
     }, [currentStep, dispatch]);
 
-    const accountData = {
-        email: "hinal.parikh@qed42.com",
-        phoneNumber: "701 617 6368",
-        subscriptionLength: "12 Months",
-    }
-
-    const { cartItems, paymentFrequency, subscriptionTerm, autoRenewalDate } = useSelector((state) => state.cart);
+    const { cartItems, paymentFrequency, subscriptionTerm, autoRenewalDate, promoCode } = useSelector((state) => state.cart);
     const subscriptionSubtotal = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-    const totalMonthly = subscriptionSubtotal;
-    const totalDueToday = totalMonthly; // adjust if you add discounts later
-
-
-    const handleEdit = () => {
-        console.log("Edit button clicked")
-        // Navigate back to step 2 for editing
-        onBack()
-    }
+    const discount = promoCode ? +(subscriptionSubtotal * 0.10).toFixed(2) : 0;
+    const totalMonthly = subscriptionSubtotal - discount;
+    const totalDueToday = totalMonthly;
 
     const handleLogin = () => {
         console.log(`Login clicked for ${currentVariant} variant`)
@@ -145,6 +133,7 @@ const USAnonyFlowValidation = ({
         totalMonthly: `${totalMonthly.toFixed(2)}`,
         totalDueToday: `${totalDueToday.toFixed(2)}`,
         isPromotionalRate: false,
+        discount:`${discount}`
     };
 
     const headerContent = {
@@ -154,34 +143,7 @@ const USAnonyFlowValidation = ({
     const [agreeToTerms, setAgreeToTerms] = useState(false);
     const [formValid, setFormValid] = useState(false);
 
-    useEffect(() => {
-        console.log('parent formValid, agreeToTerms', formValid, agreeToTerms);
-        setStep1Valid(formValid && agreeToTerms);
-    }, [formValid, agreeToTerms]);
-
-    useEffect(() => {
-    console.log({
-        businessInfoValid,
-        businessAddressValid,
-        billingEmailValid,
-        billingAddressValid,
-        shippingAddressValid,
-        billingInfoValid,
-        
-    });
-    }, [businessInfoValid,
-        businessAddressValid,
-        billingEmailValid,
-        billingAddressValid,
-        shippingAddressValid,
-        billingInfoValid,
-        ]);
-
-
     const businessAddress = useSelector(state => state.form.businessAddress) ?? {};
-    const businessInformation = useSelector(state => state.form.businessInfo) ?? {};
-    const billingAddress = useSelector(state => state.form.billingAddress)
-    const shippingAddress = useSelector(state => state.form.shippingAddress)
 
     const renderStepContent = () => {
         switch (currentStep) {

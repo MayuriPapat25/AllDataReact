@@ -27,7 +27,7 @@ import { addMonthsAndFormat, getTestId } from '../../../shared/utils/utils'
 import { translations } from '../../../shared/translations'
 import FullPageSpinner from "../../../shared/ui/FullPageSpinner";
 
-export function ProCartContent({ fromEU }) {
+export function ProCartContent({ }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const testBase = "pro-cart";
@@ -45,7 +45,10 @@ export function ProCartContent({ fromEU }) {
   const [showFrequencyWarning, setShowFrequencyWarning] = useState(false)
   const [error, setError] = useState("")
   const [value, setValue] = useState("")
+  const [promoSuccess, setPromoSuccess] = useState("")
   const [isUpdatingAccessPoints, setIsUpdatingAccessPoints] = useState(false)
+  const isPromoApplied = !!promoCode;
+  const hasPendingPromoInput = !!value && !promoCode;
 
   // Initialize default cart on first render if empty
   useEffect(() => {
@@ -70,8 +73,17 @@ export function ProCartContent({ fromEU }) {
 
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!promoCode) {
+      setError("");
+      setPromoSuccess("");
+      setValue("");
+    }
+  }, [promoCode]);
+
   const subscriptionSubtotal = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
-  const totalMonthly = subscriptionSubtotal;
+  const discount = promoCode ? +(subscriptionSubtotal * 0.10).toFixed(2) : 0;
+  const totalMonthly = subscriptionSubtotal - discount;
   const totalDueToday = totalMonthly;
 
   const handleAccessPointChange = (itemId, newValue) => {
@@ -161,30 +173,26 @@ export function ProCartContent({ fromEU }) {
   }
 
   const handleCheckout = () => {
-    if (!fromEU) {
-      navigate('/usanonycheckout')
-    } else {
-      navigate('/eucheckout')
-
-    }
+    navigate('/usanonycheckout')
   }
 
   // Called when user clicks Apply (or presses Enter)
   const handleApplyPromo = () => {
-    const trimmed = value.trim()
-    if (!trimmed) {
-      // nothing to apply — silently return (or you could set a different message)
-      return
-    }
+    if (promoCode) return;
 
-    if (trimmed.toLowerCase() === "promocode") {
+    const trimmed = (value || "").trim();
+    if (!trimmed) return;
+
+    if (trimmed.toUpperCase() === "REPAIR10") {
       // Valid promocode — save to store (adjust if your real logic differs)
-      dispatch(setPromoCode(trimmed))
+      dispatch(setPromoCode("REPAIR10"))
       setValue("")
       setError("")
+      setPromoSuccess("One promo code allowed per product. To apply a new discount, remove the current one.");
     } else {
       // When Apply is clicked and the code is wrong — show the message requested
       setError("Promo code name invalid")
+      setPromoSuccess("");
     }
   }
 
@@ -195,15 +203,16 @@ export function ProCartContent({ fromEU }) {
     }
   }
 
-
   const handlePromoCodeField = (val) => {
-    setValue(val)   // `val` is already the string
-    // Show warning message when user starts typing something new
-    if (val.trim().length > 0 && !promoCode) {
-      setError("Clear or Apply Promo Code before continuing.")
-    } else if (val.trim().length === 0) {
-      setError("") // Clear when input is cleared
-    }
+    if (promoCode) return;
+
+    setValue(val || "");
+    setError("");
+    setPromoSuccess("");
+  }
+
+  const handleRemovePromo = () => {
+    dispatch(setPromoCode(null));
   }
 
   return (
@@ -384,18 +393,36 @@ export function ProCartContent({ fromEU }) {
               />
             </div>
           </div>
-          {
-            promoCode && <div className="border-b-2 border-light-smoky-white">
-              <div className="py-6 px-10 mb-1">
-                <PriceText
-                  amount={-12.75}
-                  label={translations?.bundle_discount}
-                  isDiscount
-                  data-testid={getTestId(testBase, translations?.price_discount)}
-                />
+          {promoCode && (
+            <div className="border-b-2 border-light-smoky-white">
+              <div className="py-6 px-10 mb-1 flex items-center justify-between">
+                {/* Left: Discount + code */}
+                <div>
+                  <div className="text-md text-black">
+                    {translations?.bundle_discount || "Discount"}
+                  </div>
+                  <div className="text-xs text-gray-600 mt-1 uppercase tracking-wide">
+                    {promoCode}
+                  </div>
+                </div>
+
+                {/* Right: amount + delete icon */}
+                <div className="flex items-center gap-4">
+                  <div
+                    className="text-md text-black"
+                    data-testid={getTestId(testBase, translations?.price_discount)}
+                  >
+                    -${discount.toFixed(2)}
+                  </div>
+                  <DeleteIcon
+                    className="text-primary hover:text-error cursor-pointer"
+                    data-testid={getTestId(testBase, "promo-delete")}
+                    onClick={handleRemovePromo}
+                  />
+                </div>
               </div>
             </div>
-          }
+          )}
 
           <div className="border-b-2 border-light-smoky-white">
             <div className="py-6 px-10 mb-1">
@@ -423,27 +450,58 @@ export function ProCartContent({ fromEU }) {
       </div>
 
       {/* Promo Code */}
-      <div className="mb-6 py-6 px-10 flex items-center shadow-lg bg-white justify-between"
+      <div
+        className={`mb-6 shadow-lg bg-white ${hasPendingPromoInput ? "border-2 border-error" : ""
+          }`}
         data-testid={getTestId(testBase, 'promo')}
       >
-        <span
-          className="text-md text-black whitespace-nowrap mr-4"
-          data-testid={getTestId(testBase, 'label-promo-code')}
-        >
-          {translations?.add_promo_code}
-        </span>
-        <InputWithButton
-          data-testid={getTestId(testBase, 'input-promo')}
-          placeholder={translations?.enter_code}
-          buttonText={translations?.apply}
-          value={value}
-          onSubmit={handleApplyPromo}
-          handlePromoCodeField={handlePromoCodeField}
-          handleKeyDown={handleKeyDown}
-        />
-      </div>
-      {error && <span className="text-sm text-error pb-6" data-testid={getTestId(testBase, 'error')}>{error}</span>}
+        <div className="py-6 px-10 flex items-center justify-between">
+          <span
+            className="text-md text-black whitespace-nowrap mr-4"
+            data-testid={getTestId(testBase, 'label-promo-code')}
+          >
+            {translations?.add_promo_code}
+          </span>
+          <InputWithButton
+            data-testid={getTestId(testBase, 'input-promo')}
+            placeholder={translations?.enter_code}
+            buttonText={translations?.apply}
+            value={value}
+            onSubmit={handleApplyPromo}
+            handlePromoCodeField={handlePromoCodeField}
+            handleKeyDown={handleKeyDown}
+            disabled={isPromoApplied}
+          />
+        </div>
+        {/* pending message while typing */}
 
+      </div>
+      {hasPendingPromoInput && !error && !promoSuccess && (
+        <p
+          className="pb-4 text-sm text-error"
+          data-testid={getTestId(testBase, "promo-pending")}
+        >
+          Clear or Apply Promo Code before continuing.
+        </p>
+      )}
+
+      {/* invalid code / success messages */}
+      {error && (
+        <p
+          className="pb-4 text-sm text-error"
+          data-testid={getTestId(testBase, "error")}
+        >
+          {error}
+        </p>
+      )}
+      {promoSuccess && (
+        <span
+          className="text-sm text-error pb-6 block"
+          data-testid={getTestId(testBase, 'promo-success')}
+        >
+          {promoSuccess}
+        </span>
+      )}
       {/* Subscription Term */}
       <div className="mb-4 shadow-lg bg-white" data-testid={getTestId(testBase, 'subscription-term')}>
         <div className="flex items-center justify-between border-b-2 border-light-smoky-white py-6 px-10 w-full mb-1">

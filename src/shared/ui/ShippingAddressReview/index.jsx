@@ -4,7 +4,7 @@ import { translations } from "../../translations"
 import { Button } from "../Buttons/Button"
 import { setShippingAddress } from "../../../store/store";
 import DynamicForm from "../DynamicForm";
-import { shippingAddressFields } from "../../../components/molecules/ShippingAddress/shippingAddressFields";
+import { shippingAddressFields } from "../../constants/shippingAddressFields";
 import { useMemo } from "react";
 
 const clone = (obj) => {
