@@ -1,3 +1,4 @@
+import { translations } from "../../translations"
 
 const TermsConditions = ({
     id = "terms",
@@ -18,15 +19,14 @@ const TermsConditions = ({
                 className="mt-1 h-4 w-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
             />
             <label htmlFor={id} className="text-gray-600 leading-relaxed cursor-pointer">
-                I agree to {companyName}'s{" "}
+                {translations?.agree_to}{" "}
                 <a href={termsUrl} className="text-primary hover:underline font-medium">
-                    Terms & Conditions
+                    {translations?.terms_condition}
                 </a>{" "}
-                and opt-in to receive emails from {companyName}. We respect your privacy. Learn more about {companyName}'s{" "}
+                {translations?.opt_in_receive_email} {translations?.respect_privacy} {translations?.learn_more}
                 <a href={privacyUrl} className="text-primary hover:underline font-medium">
-                    Privacy Policy
+                    {translations?.privacy_policy}.
                 </a>
-                .
             </label>
         </div>
     )

@@ -1,9 +1,7 @@
 
 import LoginForm from "../LoinForm"
-import BusinessInformationForm from '../BusinessInforamtionForm'
-import BusinessAddressForm from '../BusinessAddress'
-import BillingAddressForm from '../BillingAddress'
-import ShippingAddressForm from '../ShippingAddress'
+import BillingAddressForm from '../BillingAddress/BillingAddress';
+import ShippingAddressForm from '../ShippingAddress/ShippingAddress'
 import BillingEmailForm from "../BillingEmailAddress"
 import { useState } from "react"
 import OrderSummary from "../OrderSummary"
@@ -16,6 +14,11 @@ import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../../molecules//BillingInformation/"
 import { Button } from "../../../shared/ui/Buttons/Button"
 import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
+import { useEffect } from "react"
+import AgreementModal from "../AgreementModal"
+import FormHeader from "../../../shared/ui/FormHeader"
+import DynamicForm from "../../../shared/ui/DynamicForm"
+import TermsConditions from "../../../shared/ui/TermsCondition"
 
 const StepContentUSAuthCheckout = ({
     currentStep,
@@ -42,18 +45,6 @@ const StepContentUSAuthCheckout = ({
         // Add your login logic here
     }
 
-    const variant4Data = {
-        paymentFrequency: "MONTHLY",
-        subscriptionTerm: "12 MONTHS",
-        autoRenewalDate: "10.09.2026",
-        services: [{ name: "ALLDATA REPAIR", accessPoints: 1, monthlyPrice: "€145,00", icon: "/repair-icon.png" }],
-        subscriptionSubtotal: "€145,00",
-        totalMonthly: "€145,00",
-        totalDueToday: "€145,00",
-        isPromotionalRate: true,
-    }
-
-
     const variant3Data = {
         paymentFrequency: "MONTHLY",
         subscriptionTerm: "12 MONTHS",
@@ -71,6 +62,18 @@ const StepContentUSAuthCheckout = ({
         isPromotionalRate: false,
     }
 
+    const [isModalOpen, setIsModalOpen] = useState(true);
+
+    useEffect(() => {
+        setIsModalOpen(true)
+    }, [])
+
+    const [agreeToTerms, setAgreeToTerms] = useState(false);
+    const [formValid, setFormValid] = useState(false);
+
+    useEffect(() => {
+        setStep1Valid(formValid && agreeToTerms);
+    }, [formValid, agreeToTerms]);
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -78,7 +81,15 @@ const StepContentUSAuthCheckout = ({
                 return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mx-auto relative">
                         <div>
-                            <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-6"/>
+                            <FormHeader headerContent={headerContent} />
+                            <div>
+                                <DynamicForm fields={accountCreationField} onValidationChange={setFormValid} />
+                                <TermsConditions
+                                    id="agreeToTerms"
+                                    companyName="ALLDATA"
+                                    onCheckedChange={(checked) => setAgreeToTerms(checked)}
+                                />
+                            </div>
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
                         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
@@ -98,9 +109,7 @@ const StepContentUSAuthCheckout = ({
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
-                                    {/* <h2 className="text-md">Billing Information</h2>
-                                    <iframe></iframe> */}
-                                    <BillingInformation />
+                                    <BillingInformation fromAuth={true}/>
                                     <BillingEmailForm />
                                 </div>
                             </div>
@@ -132,14 +141,18 @@ const StepContentUSAuthCheckout = ({
 
             case 4:
                 return (
-                    <div bg-background p-4 md:p-8>
-                        <AgreementPage />
+                     <div bg-background p-4 md:p-8>
+                        <AgreementModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                        />
+                        <AgreementPage setIsModalOpen={setIsModalOpen} />
                     </div>
                 )
 
             case 5:
                 return (
-                    <div className="min-h-screen bg-gray-50 py-12 ">
+                    <div className="min-h-screen  py-12 ">
                         <OrderConfirmation orderNumber="009015101" loginUrl="myalldata.com" />
                         <OrderSummary data={variant3Data} type="variant3" />
                     </div>

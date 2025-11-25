@@ -5,6 +5,7 @@ import CheckoutSteps from "../../../components/molecules/CheckoutSteps"
 import { Dropdown } from "../../../shared/ui/Dropdown/Dropdown"
 import { InputWithButton } from "../../../shared/ui/InputField/InputWithButton"
 import { Button } from "../../../shared/ui/Buttons/Button"
+import { translations } from "../../../shared/translations"
 
 export default function DiyCartPage({ initialCartItems = null, onContinue }) {
   const navigate = useNavigate()
@@ -35,6 +36,8 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
       price: 29.99,
     },
   ])
+
+  const [value, setValue] = useState("")
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0)
 
@@ -73,10 +76,29 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
   const handleApplyPromo = () => {
     console.log("Applying promo code:", promoCode)
   }
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      handleApplyPromo()
+    }
+  }
+
+
+  const handlePromoCodeField = (val) => {
+    setValue(val)   // `val` is already the string
+    // Show warning message when user starts typing something new
+    if (val.trim().length > 0 && !promoCode) {
+      setError("Clear or Apply Promo Code before continuing.")
+    } else if (val.trim().length === 0) {
+      setError("") // Clear when input is cleared
+    }
+  }
   return (
     <div className=" bg-white px-10 pb-2.5 mx-auto mt-11">
       <div className="text-center mb-8">
-        <h1 className="mb-10">CART</h1>
+        <h1 className="mb-10">{translations?.cart}</h1>
       </div>
       <div className="w-96 mb-5 mx-auto">
         <Dropdown
@@ -90,17 +112,17 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
         // ✅ Empty cart UI
         <div className="text-center pt-2 pb-6">
           <h5 className="mb-12 text-center text-md text-gray-600">
-            REVIEW ALLDATA DIY SUBSCRIPTIONS
+            {translations?.review_diy_subsc}
           </h5>
           <p className="text-gray-600 mb-8">
-            There are no items in your cart.
+            {translations?.no_items_in_cart}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button onClick={handleGoHome} variant="outline" size="md">
-              ALLDATA DIY Home
+              `${translations?.alldata_diy}${translations?.home}`
             </Button>
             <Button onClick={handleAddMoreVehicles} variant="outline" size="md">
-              Add More Vehicles
+              {translations?.add_more_vehicles}
             </Button>
           </div>
         </div>
@@ -108,15 +130,15 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
         // ✅ Cart items UI
         <div className="">
           <h5 className="text-md mb-12 text-center text-gray-600">
-            REVIEW ALLDATA DIY SUBSCRIPTIONS
+            {translations?.review_diy_subsc}
           </h5>
 
           <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b-4 border-gray-200 text-sm text-gray-500">
-            <div className="col-span-1">Status</div>
-            <div className="col-span-4">Description</div>
-            <div className="col-span-2">Expiration</div>
-            <div className="col-span-2">Plan</div>
-            <div className="col-span-2">Price</div>
+            <div className="col-span-1">{translations?.status}</div>
+            <div className="col-span-4">{translations?.description}</div>
+            <div className="col-span-2">{translations?.expiration}</div>
+            <div className="col-span-2">{translations?.plan}</div>
+            <div className="col-span-2">{translations?.price}</div>
             <div className="col-span-1"></div>
           </div>
 
@@ -134,31 +156,34 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
           ))}
 
           <div className="mt-4 text-xs text-gray-500">
-            Status may change upon account login. Taxes will be applied during the checkout process.
+            `${translations?.status_change_account_login}4{translations?.tax_applied_checkout_process}`
           </div>
 
           {/* Totals + Checkout */}
           <div className="mt-6">
             <div className="flex justify-end">
-              <div className="w-full md:w-[22rem]">
+              <div className="w-full md:w-88">
                 <div className="mb-6 py-4 items-center  ">
                   <span className="text-md text-black whitespace-nowrap mr-4">
-                    Add Promo Code
+                    {translations?.add_promo_code}
                   </span>
                   <InputWithButton
-                    placeholder="ENTER CODE"
-                    buttonText="APPLY"
+                    placeholder={translations?.enter_code}
+                    buttonText={translations?.apply}
                     onSubmit={handleApplyPromo}
+                    value={value}
                     className="flex-1 min-w-0"
+                    handlePromoCodeField={handlePromoCodeField}
+                    handleKeyDown={handleKeyDown}
                   />
                 </div>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Subtotal:</span>
+                    <span>{translations?.subtotal}:</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-h4 font-medium text-primary pt-2">
-                    <span>Total:</span>
+                    <span>{translations?.total}:</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                 </div>
@@ -169,14 +194,14 @@ export default function DiyCartPage({ initialCartItems = null, onContinue }) {
                     variant="outline"
                     className="btn btn-secondary text-sm"
                   >
-                    ADD MORE VEHICLES
+                    {translations?.add_more_vehicles}
                   </Button>
                   <Button
                     onClick={handleCheckout}
                     variant="outline"
                     className="btn btn-secondary text-sm w-[10rem]"
                   >
-                    CHECKOUT
+                    {translations?.checkout}
                   </Button>
                 </div>
               </div>

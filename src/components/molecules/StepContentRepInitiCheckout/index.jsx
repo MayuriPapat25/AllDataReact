@@ -1,9 +1,9 @@
 
 import LoginForm from "../LoinForm"
 import BusinessInformationForm from '../BusinessInforamtionForm'
-import BusinessAddressForm from '../BusinessAddress'
-import BillingAddressForm from '../BillingAddress'
-import ShippingAddressForm from '../ShippingAddress'
+import BusinessAddress from '../BusinessAddress/BusinessAddress'
+import BillingAddressForm from '../BillingAddress/BillingAddress';
+import ShippingAddressForm from '../ShippingAddress/ShippingAddress'
 import BillingEmailForm from "../BillingEmailAddress"
 import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
@@ -18,6 +18,12 @@ import PhoneSignupForm from "../PhoneSignUpForm"
 import AgreementModal from "../AgreementModal"
 import { Button } from "../../../shared/ui/Buttons/Button"
 import BillingInformation from '../BillingInformation/index'
+import FormHeader from "../../../shared/ui/FormHeader"
+import DynamicForm from "../../../shared/ui/DynamicForm"
+import TermsConditions from "../../../shared/ui/TermsCondition"
+import { translations } from "../../../shared/translations"
+import { accountCreationField } from "../AccountCreationForm/accountCreationField"
+import BusinessInformation from "../BusinessInforamtionForm/BusinessInformation"
 
 const StepContentRepInitiatedCheckout = ({
     currentStep,
@@ -69,6 +75,19 @@ const StepContentRepInitiatedCheckout = ({
         isPromotionalRate: true,
     }
 
+    const headerContent = {
+        title: translations?.create_new_account,
+        description: "If you are purchasing a new subscription, please create an account below to complete purchase.",
+    }
+    
+    const [agreeToTerms, setAgreeToTerms] = useState(false);
+
+    const [formValid, setFormValid] = useState(false);
+
+    useEffect(() => {
+        setStep1Valid(formValid && agreeToTerms);
+    }, [formValid, agreeToTerms]);
+
 
     const renderStepContent = () => {
         switch (currentStep) {
@@ -76,7 +95,15 @@ const StepContentRepInitiatedCheckout = ({
                 return (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative">
                         <div>
-                            <AccountCreationForm variant="business" onValidationChange={setStep1Valid} className="mb-6"/>
+                            <FormHeader headerContent={headerContent} />
+                            <div>
+                                <DynamicForm fields={accountCreationField} onValidationChange={setFormValid} />
+                                <TermsConditions
+                                    id="agreeToTerms"
+                                    companyName="ALLDATA"
+                                    onCheckedChange={(checked) => setAgreeToTerms(checked)}
+                                />
+                            </div>
                         </div>
                         {/* Vertical divider - hidden on mobile, visible on desktop */}
                         <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 transform -translate-x-1/2 h-1/2"></div>
@@ -91,8 +118,8 @@ const StepContentRepInitiatedCheckout = ({
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformationForm variant="standard" onValidationChange={setBusinessInfoValid} />
-                                <BusinessAddressForm onValidationChange={setBusinessAddressValid} variant="international" />
+                                <BusinessInformation variant="standard" onValidationChange={setBusinessInfoValid} />
+                                <BusinessAddress onValidationChange={setBusinessAddressValid} variant="international" />
                                 <BillingAddressForm />
                                 <ShippingAddressForm />
                                 <div className="space-y-6">
@@ -131,7 +158,7 @@ const StepContentRepInitiatedCheckout = ({
 
             case 4:
                 return (
-                    <div bg-background p-4 md:p-8>
+                     <div bg-background p-4 md:p-8>
                         <AgreementModal
                             isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}

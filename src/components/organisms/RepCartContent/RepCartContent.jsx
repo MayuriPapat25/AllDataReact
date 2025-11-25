@@ -9,11 +9,13 @@ import repairIcon from "../../../assets/images/repair_color.png"
 import PaymentFrequency from "../../molecules/paymentFrequency"
 import { useNavigate } from "react-router-dom"
 import { Button } from "../../../shared/ui/Buttons/Button"
+import { translations } from "../../../shared/translations"
 
 export function RepCartContent() {
   const navigate = useNavigate()
   const [promoCode, setPromoCode] = useState("")
   const [showAccessPointsModal, setShowAccessPointsModal] = useState(false)
+  const [showMaxLimitMessage, setShowMaxLimitMessage] = useState(false)
 
   const [cartItems, setCartItems] = useState([
     { id: "mobile", name: "Mobile", type: "mobile", price: 39.0, accessPoints: 1 },
@@ -44,7 +46,7 @@ export function RepCartContent() {
           className="flex items-center text-xs"
         >
           <MessageIcon type="info" className="mr-1" />
-          What are Access Points?
+          {translations?.what_access_points}
         </LinkButton>
       </div>
 
@@ -71,7 +73,10 @@ export function RepCartContent() {
                 <CounterDropdown
                   value={item.accessPoints}
                   onChange={(value) => handleAccessPointChange(item.id, value)}
-                  showLabel={false}
+                  showLabel={true}
+                  className="flex-col"
+                  disabled={item.price <= 0} // 🔹 disable if price <= 0
+                  onMaxLimitReached={setShowMaxLimitMessage}
                 />
               </div>
 
@@ -116,22 +121,22 @@ export function RepCartContent() {
         <div className="space-y-2">
           <div className="border-b-2 border-light-smoky-white">
             <div className="px-6 py-8">
-              <PriceText amount={218.0} label="Subscription Subtotal" />
+              <PriceText amount={218.0} label={translations?.subscription_subtotal} />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
             <div className="px-6 py-8">
-              <PriceText amount={-12.75} label="Bundle Discount" isDiscount />
+              <PriceText amount={-12.75} label={translations?.bundle_discount} isDiscount />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
             <div className="px-6 py-8">
-              <PriceText amount={205.25} label="Total Monthly" />
+              <PriceText amount={205.25} label={translations?.total_monthly} />
             </div>
           </div>
           <div className="border-b-2 border-light-smoky-white">
             <div className="px-6 py-8">
-              <PriceText amount={205.25} label="Total Due Today:" isTotal />
+              <PriceText amount={205.25} label={translations?.total_due_today} isTotal />
             </div>
           </div>
         </div>
@@ -140,7 +145,7 @@ export function RepCartContent() {
       {/* Footer */}
       <div className="space-y-3">
         <p className="text-gray-600 mb-6">
-          *All rates subject to applicable sales taxes
+          *{translations?.all_rates_sales_tax}
         </p>
       </div>
 
@@ -151,7 +156,7 @@ export function RepCartContent() {
           className="btn btn-primary text-sm"
           onClick={handleCheckout}
         >
-          CHECKOUT
+          {translations?.checkout}
         </Button>
       </div>
 

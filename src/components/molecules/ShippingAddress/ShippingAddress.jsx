@@ -1,0 +1,535 @@
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import DynamicForm from "../../../shared/ui/DynamicForm"; // adjust path if your file lives elsewhere
+import { useDispatch, useSelector } from "react-redux";
+import { setShippingAddress } from "../../../store/store";
+import { translations } from "../../../shared/translations";
+import { shippingAddressFields } from '../../../shared/constants/shippingAddressFields';
+
+
+const ShippingAddressForm = ({
+  initialSameAsBusiness = true,
+  forceEditOnMount = false,
+  initialShippingData = null,
+  onValidationChange = () => { },
+}) => {
+  const dispatch = useDispatch();
+
+  // business address in store (try a couple common paths)
+  const businessAddress = useSelector((s) =>
+    s.form?.businessAddress ?? s.business?.businessAddress ?? s.shipping?.businessAddress ?? null
+  );
+
+  const persistedFromSlices = useSelector((s) =>
+    s.shipping?.shippingAddress ?? s.form?.shippingAddress ?? s.form?.shipping?.shippingAddress ?? null
+  );
+
+  const [shippingData, setShippingData] = useState(persistedFromSlices ?? initialShippingData ?? null);
+
+  const [mode, setMode] = useState(() => {
+    if (initialSameAsBusiness) return "same";
+    if (persistedFromSlices || initialShippingData) return "readonly";
+    return "editing";
+  });
+
+
+  const methods = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: persistedFromSlices || initialShippingData || {
+      firstName: "",
+      lastName: "",
+      streetAddress: "",
+      unit: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    },
+  });
+
+  const {
+    handleSubmit,
+    reset,
+    control,
+    watch,
+    trigger,
+    getValues,
+    setValue,
+    formState,
+  } = methods;
+
+  const REQUIRED_FIELDS = useMemo(() => ["firstName", "lastName", "streetAddress", "city", "state", "zipCode"], []);
+
+  // Map businessAddress shape to shipping form shape (best-effort)
+  const normalizeBusinessToShipping = useCallback((b) => {
+    if (!b) return null;
+
+    const firstName =
+      b.firstName ??
+      b.contactFirstName ??
+      b.contact_name_first ??
+      (typeof b.contactName === "string" ? b.contactName.split(" ")[0] : "") ??
+      "";
+    const lastName =
+      b.lastName ??
+      b.contactLastName ??
+      b.contact_name_last ??
+      (typeof b.contactName === "string" ? b.contactName.split(" ").slice(1).join(" ") : "") ??
+      "";
+
+    const streetAddress =
+      b.streetAddress ?? b.street ?? b.address ?? b.deliveryAddress ?? b.deliveryAddress1 ?? "";
+    const unit = b.unit ?? b.addressLine2 ?? b.address2 ?? b.deliveryAddress2 ?? "";
+    const city = b.city ?? b.town ?? b.locality ?? "";
+    const state = b.state ?? b.region ?? b.stateCode ?? "";
+    const zipCode = b.zipCode ?? b.zip ?? b.postalCode ?? b.postcode ?? "";
+
+    return {
+      firstName,
+      lastName,
+      streetAddress,
+      unit,
+      city,
+      state,
+      zipCode,
+    };
+  }, []);
+
+  // ensure businessAddress is copied to shipping when the section is "same" on mount/visit
+  useEffect(() => {
+    if (forceEditOnMount) return;
+    // Only act when mode is 'same' (checkbox selected)
+    if (mode !== "same") return;
+
+    // Nothing to copy if we don't have a business address
+    if (!businessAddress) return;
+
+    // Map businessAddress to shipping shape (reuse your normalizer)
+    const mapped = normalizeBusinessToShipping(businessAddress);
+    if (!mapped) return;
+
+    // If persisted shipping (from store) already exists, check if it matches mapped;
+    // If it does, no-op. If not present or different, persist mapped.
+    const alreadyPersisted = persistedFromSlices;
+    const equalish = (a, b) => {
+      if (!a || !b) return false;
+      // shallow compare relevant keys we care about
+      return (
+        (a.firstName ?? "") === (b.firstName ?? "") &&
+        (a.lastName ?? "") === (b.lastName ?? "") &&
+        (a.streetAddress ?? a.street ?? "") === (b.streetAddress ?? b.street ?? "") &&
+        (a.city ?? "") === (b.city ?? "") &&
+        (a.state ?? "") === (b.state ?? "") &&
+        (a.zipCode ?? a.zip ?? "") === (b.zipCode ?? b.zip ?? "")
+      );
+    };
+
+    if (alreadyPersisted && equalish(alreadyPersisted, mapped)) {
+      // already stored — but ensure local state reflects it
+      if (!shippingData) {
+        setShippingData(alreadyPersisted);
+      }
+      return;
+    }
+
+    const mappedWithNames = {
+      firstName: mapped.firstName ?? "",
+      lastName: mapped.lastName ?? "",
+      streetAddress: mapped.streetAddress ?? "",
+      unit: mapped.unit ?? "",
+      city: mapped.city ?? "",
+      state: mapped.state ?? "",
+      zipCode: mapped.zipCode ?? "",
+    };
+
+    // Persist mapped shipping address and update local state
+    dispatch(setShippingAddress(mappedWithNames));
+    setShippingData(mappedWithNames);
+    setMode("same");
+    if (typeof onValidationChange === "function") onValidationChange(true);
+  }, [mode, businessAddress, persistedFromSlices, forceEditOnMount, normalizeBusinessToShipping, shippingData, dispatch, onValidationChange]);
+
+
+  // Compute validity only for required fields (ignores "unit").
+  const computeRequiredFieldsValid = useCallback(() => {
+    try {
+      const vals = typeof getValues === "function" ? getValues() : {};
+      const allFilled = REQUIRED_FIELDS.every((k) => {
+        const v = vals?.[k];
+        if (v === null || v === undefined) return false;
+        if (typeof v === "string") return v.trim().length > 0;
+        return Boolean(v);
+      });
+      setIsFormValid(Boolean(allFilled));
+      return Promise.resolve(Boolean(allFilled));
+    } catch (err) {
+      setIsFormValid(false);
+      return Promise.resolve(false);
+    }
+  }, [getValues, REQUIRED_FIELDS]);
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    setShippingData(persistedFromSlices ?? initialShippingData ?? null);
+  }, [persistedFromSlices, initialShippingData]);
+
+  const fields = useMemo(() => shippingAddressFields, []);
+
+  useEffect(() => {
+    const sub = watch(() => {
+      computeRequiredFieldsValid();
+    });
+    return () => sub.unsubscribe();
+  }, [watch, computeRequiredFieldsValid])
+
+  useEffect(() => {
+    const subscription = watch((_, { name }) => {
+      // If one of required fields changed, recompute
+      if (!name) {
+        computeRequiredFieldsValid();
+        return;
+      }
+      if (REQUIRED_FIELDS.includes(name)) {
+        computeRequiredFieldsValid();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, computeRequiredFieldsValid, REQUIRED_FIELDS]);
+
+  const startEditing = useCallback(
+    (useExisting = true) => {
+      const source = useExisting ? (shippingData || persistedFromSlices || initialShippingData) : null;
+      if (source) {
+        reset(source);
+      } else {
+        // ensure form has a blank structure
+        reset({
+          firstName: "",
+          lastName: "",
+          streetAddress: "",
+          unit: "",
+          city: "",
+          state: "",
+          zipCode: "",
+        });
+      }
+      setMode("editing");
+      if (typeof onValidationChange === "function") onValidationChange(false);
+
+      Promise.resolve().then(() => {
+        computeRequiredFieldsValid();
+      });
+    }, [shippingData, persistedFromSlices, initialShippingData, reset, computeRequiredFieldsValid, onValidationChange]);
+
+  useEffect(() => {
+    if (!forceEditOnMount) return;
+
+    const dataToPrefill = initialShippingData ?? persistedFromSlices ?? shippingData ?? null;
+
+    if (dataToPrefill) {
+      setShippingData(dataToPrefill);
+      reset(dataToPrefill);
+
+      // ✅ Show readonly block (with Edit button) instead of the Update form
+      setMode("readonly");
+      setIsFormValid(true);
+
+      if (typeof onValidationChange === "function") {
+        onValidationChange(true);
+      }
+    } else {
+      // Fallback: no data, keep previous behavior (empty editing form)
+      reset({
+        firstName: "",
+        lastName: "",
+        streetAddress: "",
+        unit: "",
+        city: "",
+        state: "",
+        zipCode: "",
+      });
+      setMode("editing");
+
+      Promise.resolve()
+        .then(() => computeRequiredFieldsValid())
+        .then((valid) => setIsFormValid(Boolean(valid)))
+        .catch(() => setIsFormValid(false));
+    }
+
+  }, [forceEditOnMount, persistedFromSlices, initialShippingData, reset, computeRequiredFieldsValid, shippingData, onValidationChange]);
+
+  useEffect(() => {
+    if (mode === "same") {
+      if (typeof onValidationChange === "function") onValidationChange(true);
+      return;
+    }
+    if (mode === "readonly" && (shippingData || persistedFromSlices || initialShippingData)) {
+      if (typeof onValidationChange === "function") onValidationChange(true);
+      return;
+    }
+    if (mode === "editing") {
+      try {
+        const result = computeRequiredFieldsValid();
+
+        // If result is a Promise, await it; otherwise use it directly
+        if (result && typeof result.then === "function") {
+          result
+            .then((valid) => {
+              if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+            })
+            .catch(() => {
+              if (typeof onValidationChange === "function") onValidationChange(false);
+            });
+        } else {
+          if (typeof onValidationChange === "function") onValidationChange(Boolean(result));
+        }
+      } catch (err) {
+        if (typeof onValidationChange === "function") onValidationChange(false);
+      }
+    }
+  }, [mode, shippingData, persistedFromSlices, initialShippingData, onValidationChange, computeRequiredFieldsValid]);
+
+  const onCheckboxChange = (checked) => {
+    if (checked) {
+      // user requested "same as business" => copy businessAddress into shipping
+      if (businessAddress) {
+        const mapped = normalizeBusinessToShipping(businessAddress);
+        // persist to redux and local state
+        dispatch(setShippingAddress(mapped));
+        setShippingData(mapped);
+        setMode("same");
+        if (typeof onValidationChange === "function") onValidationChange(true);
+      } else {
+        // no business address available — start editing (or optionally show message)
+        startEditing(false);
+      }
+    } else {
+      // user unchecked => start editing using existing data if present
+      startEditing(true);
+    }
+  };
+
+  const onValidate = (data) => {
+    const payload = {
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      streetAddress: data.streetAddress ?? "",
+      unit: data.unit ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      zipCode: data.zipCode ?? "",
+    };
+    dispatch(setShippingAddress(payload));
+    setShippingpayload(payload);
+    setMode("readonly");
+    if (typeof onValidationChange === "function") onValidationChange(true);
+  };
+
+  const submitUpdateSafely = async () => {
+    try {
+      const valid = await computeRequiredFieldsValid();
+      setIsFormValid(Boolean(valid));
+
+      await new Promise((r) => setTimeout(r, 30));
+
+      try {
+        await handleSubmit(onUpdate)();
+      } catch (err) {
+      }
+
+      if (mode === "editing") {
+        let values = null;
+        try {
+          values = typeof getValues === "function" ? getValues() : null;
+        } catch (err) {
+          values = null;
+        }
+
+        if (values && Object.keys(values).length > 0) {
+          const payload = {
+            firstName: values.firstName ?? "",
+            lastName: values.lastName ?? "",
+            streetAddress: values.streetAddress ?? values.street ?? "",
+            unit: values.unit ?? "",
+            city: values.city ?? "",
+            state: values.state ?? "",
+            zipCode: values.zipCode ?? values.zip ?? "",
+          };
+          try { reset(payload); } catch (e) { /* ignore */ }
+
+          dispatch(setShippingAddress(values));
+          setShippingData(values);
+          setMode("readonly");
+
+          if (typeof onValidationChange === "function") onValidationChange(true);
+
+          return;
+        }
+      }
+    } catch (err) {
+      console.error("submitUpdateSafely: unexpected error", err);
+    }
+  };
+
+  const onUpdate = (data) => {
+    const payload = {
+      firstName: data.firstName ?? "",
+      lastName: data.lastName ?? "",
+      streetAddress: data.streetAddress ?? "",
+      unit: data.unit ?? "",
+      city: data.city ?? "",
+      state: data.state ?? "",
+      zipCode: data.zipCode ?? "",
+    };
+    reset(payload);
+    dispatch(setShippingAddress(payload));
+    setShippingData(payload);
+    setMode("readonly");
+    if (typeof onValidationChange === "function") {
+      onValidationChange(true);
+    }
+  };
+
+  const formatAddress = (data) => {
+    if (!data) return "";
+    const parts = [];
+    const name = [data.firstName, data.lastName].filter(Boolean).join(" ");
+    if (name) parts.push(name);
+    if (data.streetAddress) parts.push(data.streetAddress);
+    if (data.unit) parts.push(data.unit);
+    const cityLine = [data.city, data.state, data.zipCode].filter(Boolean).join(", ");
+    if (cityLine) parts.push(cityLine);
+    return parts.join("\n");
+  };
+
+  useEffect(() => {
+    console.debug("Shipping debug:", {
+      persistedFromSlices,
+      initialShippingData,
+      shippingData,
+      forceEditOnMount,
+      mode,
+      businessAddress,
+    });
+  }, [persistedFromSlices, initialShippingData, shippingData, forceEditOnMount, mode, businessAddress]);
+
+  console.log('persistedFromSlices', persistedFromSlices)
+  console.log('shippingData', shippingData)
+  return (
+    <section className="max-w-2xl pb-8">
+      <h2 className="text-md mb-4">{translations?.shipping_address}</h2>
+
+      {/* CASE: mode === 'same' (selected checkbox) */}
+      {mode === "same" && (
+        <div>
+          <label className="inline-flex items-center space-x-3">
+            <input
+              type="checkbox"
+              checked={mode === "same"}
+              onChange={(e) => onCheckboxChange(e.target.checked)}
+              className="w-5 h-5 accent-orange-600 border-gray-400"
+            />
+            <span className="text-lg text-gray-600">{translations?.shipping_address_same_business_address}</span>
+          </label>
+
+          <hr className="mt-6 border-t-2 border-gray-300" />
+        </div>
+      )}
+
+      {/* CASE: mode === 'editing' (show form with Validate or Update) */}
+      {mode === "editing" && (
+        <div>
+          <label className="inline-flex items-center space-x-3 mb-6">
+            <input
+              type="checkbox"
+              checked={mode === "same"}
+              onChange={(e) => onCheckboxChange(e.target.checked)}
+              className="w-5 h-5 accent-orange-600 border-gray-400"
+            />
+            <span className="text-lg text-gray-600">{translations?.shipping_address_same_business_address}</span>
+          </label>
+
+          {/* DynamicForm receives parent-controlled form methods so we can submit / validate */}
+          <DynamicForm
+            fields={fields}
+            control={control}
+            watch={watch}
+            trigger={trigger}
+            getValues={getValues}
+            setValue={setValue}
+            handleSubmit={handleSubmit}
+            onValidationChange={(v) => {
+              computeRequiredFieldsValid().then((valid) => {
+                if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+              }).catch(() => {
+                if (typeof onValidationChange === "function") onValidationChange(false);
+              });
+            }}
+            onSave={(data) => {
+              dispatch(setShippingAddress(data));
+              setShippingData(data);
+              setMode("readonly");
+              if (typeof onValidationChange === "function") onValidationChange(true);
+            }}
+            initialData={shippingData ?? persistedFromSlices ?? initialShippingData ?? undefined}
+            showValidateButton={false}
+          />
+
+          <div className="mt-4 pb-6 border-b-2 border-gray-300">
+            {/* Use handleSubmit to validate and submit programmatically */}
+            {!shippingData && !persistedFromSlices && (
+              <button
+                type="button"
+                onClick={handleSubmit(onValidate)}
+                disabled={!isFormValid}
+                className={`px-5 py-3 rounded-md ${isFormValid
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  }`}
+              >
+                Validate
+              </button>
+            )}
+
+            {/* If we already had shippingData (editing an existing validated address), show Update instead */}
+            {(shippingData || persistedFromSlices) && (
+              <button
+                type="button"
+                onClick={submitUpdateSafely}
+                disabled={!isFormValid}
+                className={`ml-3 px-4 py-3 rounded-md ${isFormValid
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  }`}
+              >
+                Update
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* CASE: mode === 'readonly' (show formatted readonly address with Edit button) */}
+      {mode === "readonly" && (
+        <div className="flex justify-between items-start border-b-2 border-gray-300 pb-6">
+          <div className="whitespace-pre-line text-gray-700 text-lg">
+            {formatAddress(shippingData ?? persistedFromSlices ?? initialShippingData)}
+          </div>
+
+          <div>
+            <button
+              type="button"
+              onClick={() => startEditing(true)}
+              className="text-sm text-gray-600 hover:text-gray-800"
+            >
+              {translations?.edit}
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default ShippingAddressForm;

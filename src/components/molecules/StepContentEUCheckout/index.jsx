@@ -118,7 +118,7 @@ const StepContentEUCheckout = ({
                             isOpen={isModalOpen}
                             onClose={() => setIsModalOpen(false)}
                         />
-                        <AgreementPage />
+                        <AgreementPage setIsModalOpen={setIsModalOpen} />
                     </div>
                 )
 
