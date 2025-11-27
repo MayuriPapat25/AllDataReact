@@ -245,10 +245,14 @@ const USAnonyFlowValidation = ({
                 primaryButton: {
                     text: "CONTINUE TO COMPANY & BILLING",
                     onClick: () => {
-                        accountRef.current?.saveNow();
-                        onContinue();
-                    },
-                    disabled: !step1Valid
+                          accountRef.current?.saveNow?.();
+                          if (formValid && agreeToTerms) {
+                                onContinue();
+                              } else {
+                              console.log("Form not valid yet", { formValid, agreeToTerms });
+                              }
+                  },
+                    disabled: !(formValid && agreeToTerms)
                 },
                 secondaryButton: null,
                 buttonLayout: "flex-col sm:flex-row gap-4 pt-6 md:justify-center lg:justify-start"

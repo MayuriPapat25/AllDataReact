@@ -32,6 +32,11 @@ const BusinessInfoReview = ({ phoneNumber }) => {
         setIsEditing(false);
     };
 
+    const taxExemptDisplay =
+        businessData.taxExemptStatus === true
+            ? "My business is tax exempt"
+            : "My business is not tax exempt";
+
     return (
         <div className="max-w-2xl border-b-2 border-gray-300 pb-8">
             {/* Header */}
@@ -84,7 +89,20 @@ const BusinessInfoReview = ({ phoneNumber }) => {
 
                     <InfoField label="Ownership Type" value={businessData.ownershipType} />
 
-                    <InfoField label="Tax Exempt Status" value={businessData.taxExemptStatus} />
+                    <InfoField label="Tax Exempt Status" value={
+                        businessData.taxExemptStatus === true
+                            ? "My business is tax exempt"
+                            : "My business is not tax exempt"
+                    } />
+                    {
+                        taxExemptDisplay == " My business is tax exempt" &&
+                        <>
+                            <InfoField label={translations?.tax_exempt_certificate} value={businessData?.taxExemptCertificate?.name} />
+                            <p className="text-xs">Warning: Reseller Certificate does not qualify for tax exemption.</p>
+                            <InfoField label={translations?.tax_id_number} value={businessData?.taxIdNumber} />
+                        </>
+                    }
+
                 </div>
             )}
         </div>

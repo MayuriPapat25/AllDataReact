@@ -308,16 +308,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
                     </>
                 )}
 
-                {/* VAT */}
-                {/* <VatField
-                    label="VAT"
-                    optional
-                    placeholder="ENTER VAT ID"
-                    value={formData.vat}
-                    onChange={(e) => handleInputChange("vat", e.target.value)}
-                    error={errors.vat}
-                /> */}
-
                 {/* Standard variant: Purchase Order Reference Number */}
                 {variant === "standard" && (
                     <InputField

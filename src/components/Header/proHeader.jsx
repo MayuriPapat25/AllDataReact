@@ -1,9 +1,49 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "../../shared/ui/Buttons/Button"
 import { ProCartDropdown } from "../organisms/ProCartDropdown/ProCartDropdown"
+import { setAutoRenewalDate, setCartItems } from "../../store/store";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function ProHeader() {
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  // Initialize default cart on first render if empty
+  useEffect(() => {
+    if (!cartItems || cartItems.length === 0) {
+      dispatch(
+        setCartItems([
+          { id: "mobile", name: "Mobile", type: "mobile", price: 39.0, accessPoints: 1, },
+          { id: "basic-diagnostics", name: "Basic Diagnostics", type: "diagnostics", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Mobile" },
+          { id: "repair", name: "Repair", type: "repair", price: 179.0, accessPoints: 1 },
+          { id: "community", name: "Community", type: "community", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+          { id: "estimator", name: "Estimator", type: "estimator", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
+        ])
+      );
+    } else {
+      const needsBase = (cartItems || []).some(it => it.basePrice === undefined);
+      if (needsBase) {
+        const withBase = (cartItems || []).map(it => ({ ...it, basePrice: it.basePrice ?? it.price ?? 0 }));
+        dispatch(setCartItems(withBase));
+      }
+    }
+    dispatch(setAutoRenewalDate("09/09/2026"));
+
+  }, []);
+
+  const groupedProducts = (cartItems || []).reduce((acc, item) => {
+    if (item.isIncluded && item.includedWith) {
+      const key = item.includedWith.toLowerCase();
+      if (!acc[key]) acc[key] = true;
+    } else {
+      const key = item.name.toLowerCase();
+      if (!acc[key]) acc[key] = true;
+    }
+    return acc;
+  }, {});
+
+  const productCount = Object.keys(groupedProducts).length;
 
   return (
     <header className="bg-gray-100 border-b">
@@ -34,9 +74,14 @@ export default function ProHeader() {
           </svg>
 
           {/* Cart Badge */}
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            2
-          </span>
+
+          {
+            productCount > 0 &&
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {productCount}
+            </span>
+          }
+
         </Button>
       </div>
 

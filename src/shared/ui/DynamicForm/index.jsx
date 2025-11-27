@@ -204,6 +204,7 @@ const DynamicForm = ({
                       type={field.type}
                       optional={field?.optional}
                       disabled={isDisabled}
+                      validation={field?.validation}
                     />
                   )
                 }}

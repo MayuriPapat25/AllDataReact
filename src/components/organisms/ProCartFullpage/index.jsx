@@ -10,7 +10,4 @@ const ProCartFullpage = () => {
     )
 }
 
-
-
 export default ProCartFullpage
-

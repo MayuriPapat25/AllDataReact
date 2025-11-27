@@ -6,7 +6,6 @@ import FormFileUpload from './shared/ui/FileUpload'
 
 export default function HomePage() {
   const handleInputChange = (field, value) => {
-    console.log("field, value", field, value);
   };
 
   return (

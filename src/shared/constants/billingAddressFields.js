@@ -51,7 +51,14 @@ export const billingAddressFields = [
     name: "zipCode",
     label: translations?.zip_code,
     type: "text",
-    minLength: 5,
-    helperText: translations?.zip_code_helper_text,
-  },
+    required: true,
+    validation: {
+      required: translations?.zip_code_required,
+      maxLength: 5,
+      pattern: {
+        value: /^\d{5}$/,
+        message: translations?.enter_valid_zip_code,
+      }
+    }
+  }
 ];

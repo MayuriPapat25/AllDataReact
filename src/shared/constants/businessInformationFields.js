@@ -84,8 +84,8 @@ export const businessInformationFields = [
     type: "radio",
     required: true,
     options: [
-      { value: "My business is not tax exempt", label: "MY BUSINESS IS NOT TAX EXEMPT" },
-      { value: "My business is tax exempt", label: "MY BUSINESS IS TAX EXEMPT" },
+      { value: "not-exempt", label: "MY BUSINESS IS NOT TAX EXEMPT" },
+      { value: "exempt", label: "MY BUSINESS IS TAX EXEMPT" },
     ],
     validation: { required: translations?.select_tax_exampt_status },
   },
@@ -93,8 +93,14 @@ export const businessInformationFields = [
     name: "taxIdNumber",
     label: translations?.tax_id_number,
     type: "text",
+    required: false,
     conditional: { field: "taxExemptStatus", equals: "exempt" },
     validation: {
+      maxLength: 9,
+       pattern: {
+        value: /^\d{9}$/,
+        message: translations?.enter_valid_zip_code,
+      },
       validate: (value, { taxExemptStatus }) =>
         taxExemptStatus !== "exempt" || value?.trim()
           ? true
