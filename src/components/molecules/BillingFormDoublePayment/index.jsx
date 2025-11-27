@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
 import SelectField from "../../../shared/ui/SelectField"
+import { translations } from "../../../shared/translations"
 
 
-const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, subheader, paymentOptions }) => {
+const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, paymentOptions }) => {
   const [paymentType, setPaymentType] = useState("existing")
 
   const existingCards = [
@@ -20,19 +21,15 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
   return (
     <div className="w-full mr-10 pt-11">
       <div className="pb-4">
-        {
-          header && <h1 className="text-2xl font-bold text-gray-900">{header}</h1>
-        }
-        {
-          subheader &&
-          <p className="text-sm text-gray-600 mt-2">
-            You will have time to review your order before completing your purchase.
-          </p>
-        }
+        <h1 className="text-2xl font-bold text-gray-900">{translations?.billing_information}</h1>
+        <p className="text-sm text-gray-600 mt-2">
+          {translations?.review_order_before_purchase}
+        </p>
       </div>
+
       <div className="space-y-6">
         <div>
-          <h2 className="text-lg font-semibold text-foreground mb-4 tracking-wide">PAYMENT TYPE</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4 tracking-wide">{translations?.payment_type}</h2>
 
           <RadioGroup value={paymentType} onValueChange={handlePaymentTypeChange} className="space-y-4">
             <div className="space-y-3">
@@ -43,12 +40,12 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
                   onClick={() => handlePaymentTypeChange("existing")}
                   className="text-muted-foreground font-medium tracking-wide cursor-pointer"
                 >
-                  USE PAYMENT METHOD ON FILE
+                  {translations?.payment_method_file}
                 </label>
               </div>
 
               {(paymentType === "existing" || paymentType === "new") && (
-                <div className="ml-6 mt-3 max-w-[40rem]">
+                <div className="ml-6 mt-3 max-w-160">
                   <SelectField
                     options={existingCards}
                     defaultValue="1"
@@ -67,7 +64,7 @@ const BillingFormDoublePayment = ({ onPaymentTypeChange, onCardSelect, header, s
                   onClick={() => handlePaymentTypeChange("new")}
                   className="text-muted-foreground font-medium tracking-wide cursor-pointer"
                 >
-                  ADD NEW PAYMENT TYPE
+                  {translations?.add_new_payment_type}
                 </label>
               </div>
 

@@ -6,7 +6,8 @@ import {
   setPaymentFrequency,
   setSubscriptionTerm,
   setPromoCode,
-  setAutoRenewalDate
+  setAutoRenewalDate,
+  resetCart
 } from "../../../store/store";
 
 import { useState, useEffect } from "react"
@@ -27,7 +28,7 @@ import { addMonthsAndFormat, getTestId } from '../../../shared/utils/utils'
 import { translations } from '../../../shared/translations'
 import FullPageSpinner from "../../../shared/ui/FullPageSpinner";
 
-export function ProCartContent({ }) {
+export function ProCartContent({ onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const testBase = "pro-cart";
@@ -50,28 +51,6 @@ export function ProCartContent({ }) {
   const isPromoApplied = !!promoCode;
   const hasPendingPromoInput = !!value && !promoCode;
 
-  // Initialize default cart on first render if empty
-  useEffect(() => {
-    if (!cartItems || cartItems.length === 0) {
-      dispatch(
-        setCartItems([
-          { id: "mobile", name: "Mobile", type: "mobile", price: 39.0, accessPoints: 1, },
-          { id: "basic-diagnostics", name: "Basic Diagnostics", type: "diagnostics", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Mobile" },
-          { id: "repair", name: "Repair", type: "repair", price: 179.0, accessPoints: 1 },
-          { id: "community", name: "Community", type: "community", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
-          { id: "estimator", name: "Estimator", type: "estimator", price: 0.0, accessPoints: 1, isIncluded: true, includedWith: "Repair" },
-        ])
-      );
-    } else {
-      const needsBase = (cartItems || []).some(it => it.basePrice === undefined);
-      if (needsBase) {
-        const withBase = (cartItems || []).map(it => ({ ...it, basePrice: it.basePrice ?? it.price ?? 0 }));
-        dispatch(setCartItems(withBase));
-      }
-    }
-    dispatch(setAutoRenewalDate("09/09/2026"));
-
-  }, [dispatch]);
 
   useEffect(() => {
     if (!promoCode) {
@@ -213,6 +192,20 @@ export function ProCartContent({ }) {
 
   const handleRemovePromo = () => {
     dispatch(setPromoCode(null));
+  }
+
+  const handleRemoveAddedProducts = () => {
+    // clear cart in store so header badge shows 0 immediately
+    // use resetCart if your reducer supports it; fallback to setCartItems([])
+    if (typeof dispatch === "function") {
+      // prefer resetCart if available
+      try {
+        dispatch(resetCart());
+      } catch (e) {
+        dispatch(setCartItems([]));
+      }
+    }
+    onClose();
   }
 
   return (
@@ -374,7 +367,7 @@ export function ProCartContent({ }) {
         <LinkButton
           size="sm"
           className="text-xs"
-          onClick={() => console.log("Remove added products")}
+          onClick={handleRemoveAddedProducts}
           data-testid={getTestId(testBase, 'link-remove')}
         >
           {translations?.remove_added_products}

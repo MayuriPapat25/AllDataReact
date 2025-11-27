@@ -40,10 +40,11 @@ export const businessAddressFields = [
     required: true,
     validation: {
       required: translations?.zip_code_required,
+      maxLength: 5,
       pattern: {
-        value: /^\d{5}(-\d{4})?$/,
+        value: /^\d{5}$/,
         message: translations?.enter_valid_zip_code,
-      },
-    },
+      }
+    }
   },
 ];

@@ -24,7 +24,7 @@ export function ProCartDropdown({ isOpen = true, onClose, variant = "dropdown", 
               </Button>
             </div>
             <div className="py-4 px-8">
-              <ProCartContent fromEU={fromEU} />
+              <ProCartContent fromEU={fromEU} onClose={onClose} />
             </div>
           </div>
         </div>

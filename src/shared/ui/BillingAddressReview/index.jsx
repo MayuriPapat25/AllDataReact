@@ -8,7 +8,7 @@ import DynamicForm from "../DynamicForm";
 import { useMemo } from "react";
 
 const BillingAddressReview = ({
-  // country = "United States",
+  country = "United States",
 }) => {
   const dispatch = useDispatch();
 
@@ -102,7 +102,7 @@ const BillingAddressReview = ({
               <p className="text-sm">
                 {BillingAddress?.city}, {BillingAddress?.state} {BillingAddress?.zipCode}
               </p>
-              {/* <p className="text-sm">{country}</p> */}
+              <p className="text-sm">{country}</p>
             </div>
           )}
         </>

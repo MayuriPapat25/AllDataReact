@@ -356,5 +356,6 @@ export const translations = {
  "warning_reseller_certificate_not_qualify":"Warning: Reseller Certificate does not qualify for tax exemption.",
  "total_due_today":"Total Due Today:",
  "request_not_automatically_cancel_subscription" : "This request will not automatically cancel your subscription service(s).",
- "request_to_remove_repair_subscription":" Requesting to Remove Repair From Subscription"
+ "request_to_remove_repair_subscription":" Requesting to Remove Repair From Subscription",
+ "tax_exempt_certificate":"Tax Exempt Certificate"
 }

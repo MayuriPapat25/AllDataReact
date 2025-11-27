@@ -3,13 +3,20 @@ import { cn } from "../../../shared/utils/utils"
 
 
 const InputField = forwardRef(
-  ({ label, required, optional, error, helperText, errorText, className, id, onChange, type = "text", placeholder, ...props }, ref) => {
+  ({ label, required, optional, error, helperText, errorText, className, id, onChange, type = "text", placeholder, validation = {}, ...props }, ref) => {
     const describedById = id ? `${id}-error` : undefined
+    // Extract validation rules
+    const {
+      pattern,
+      maxLength,
+      minLength,
+      required: requiredRule,
+      ...otherValidationRules
+    } = validation
     // Determine the border class based on error state
     const borderClasses = error
       ? "border-2 border-error focus:border-error" // Red border on error and focus
       : "border-2 border-gray-300 focus:border-blue-500" // Default/Focus borders
-
 
     return (
       <div className="space-y-2">
@@ -34,6 +41,12 @@ const InputField = forwardRef(
             )}
             aria-invalid={Boolean(error)}
             aria-describedby={describedById}
+            pattern={pattern?.value ? pattern.value.source : undefined}
+            title={pattern?.message || undefined}
+            maxLength={maxLength}
+            minLength={minLength}
+            required={Boolean(requiredRule)}
+            {...otherValidationRules}
             {...props}
             onChange={onChange}
           />

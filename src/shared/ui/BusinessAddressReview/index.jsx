@@ -73,7 +73,7 @@ const BusinessAddressReview = ({
         <div className="max-w-2xl space-y-1 text-gray-500">
           <p className="text-sm">{BusinessAddress?.streetAddress}</p>
           <p className="text-sm">
-            {BusinessAddress?.city}, {BusinessAddress?.state} {BusinessAddress?.zip}
+            {BusinessAddress?.city}, {BusinessAddress?.state} {BusinessAddress?.zipCode}
           </p>
           <p className="text-sm">{country}</p>
         </div>

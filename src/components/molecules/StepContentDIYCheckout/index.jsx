@@ -36,8 +36,6 @@ const StepContentDIYCheckout = ({
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
                                 <BillingFormDoublePayment
-                                    header="BILLING INFORMATION"
-                                    subheader
                                     onPaymentTypeChange={(type) => {
                                         setPaymentType(type)
                                         if (type === "existing") {
