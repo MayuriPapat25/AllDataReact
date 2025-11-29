@@ -60,7 +60,6 @@ const SubscriptionManager = () => {
   };
 
   const handleSubmitRequest = () => {
-    console.log("Submitting removal request:", formData);
     setIsRemovalModalOpen(false);
     setFormData({
       firstName: "",

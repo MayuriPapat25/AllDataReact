@@ -167,7 +167,6 @@ const DIYCustomerAccount = () => {
         className='mt-10'
         defaultActiveTab="subscriptions"
         onTabChange={(tabId) => {
-          console.log('Active tab:', tabId);
           setActiveTab(tabId);
         }}
       />

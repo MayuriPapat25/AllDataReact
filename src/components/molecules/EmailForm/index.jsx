@@ -9,7 +9,6 @@ export default function EmailForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("Form submitted:", { email, agreedToEmails })
     }
 
     return (

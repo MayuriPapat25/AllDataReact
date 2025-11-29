@@ -37,7 +37,6 @@ export function DiyCartDropdown({ isOpen, onClose, className, cartData, cartCoun
           ) : (
             <div className="space-y-3">
               {cartData.map((item) => {
-                console.log("item", item)
                 return (
 
                   <div key={item.id} className="py-1">

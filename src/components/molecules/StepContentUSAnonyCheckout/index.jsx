@@ -6,13 +6,12 @@ import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
+import BusinessAddressReview from "../BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
 import { Button } from "../../../shared/ui/Buttons/Button"
-import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 import BusinessInformation from '../BusinessInforamtionForm/BusinessInformation'
 import BusinessAddress from '../BusinessAddress/BusinessAddress'
 import BillingAddressForm from '../BillingAddress/BillingAddress';
@@ -21,6 +20,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { translations } from "../../../shared/translations"
 import AccountCreation from "../AccountCreationForm/AccountCreation"
 import { setAccountCreation, clearAccountCreation } from "../../../store/store"; // adjust import path
+import BillingInfoReview from "../BillingInfoReview";
 
 
 const StepContentUSAnonyCheckout = ({
@@ -81,7 +81,6 @@ const StepContentUSAnonyCheckout = ({
 
 
     const handleEdit = () => {
-        console.log("Edit button clicked")
         // Navigate back to step 2 for editing
         onBack()
     }

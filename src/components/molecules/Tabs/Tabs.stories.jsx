@@ -38,7 +38,6 @@ const Template = (args) => {
             defaultActiveTab={activeTab}
             onTabChange={(tabId) => {
                 setActiveTab(tabId);
-                console.log("Tab changed to:", tabId);
             }}
         />
     );

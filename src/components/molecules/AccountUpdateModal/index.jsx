@@ -32,7 +32,6 @@ const AccountUpdateModal = ({ isOpen, onClose, title, desc1, desc2 }) => {
 
   const handleSubmit = () => {
     // Handle form submission logic here
-    console.log("Form submitted:", formData);
     onClose();
   };
 

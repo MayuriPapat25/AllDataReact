@@ -9,8 +9,6 @@ import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
-import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
@@ -24,6 +22,8 @@ import TermsConditions from "../../../shared/ui/TermsCondition"
 import { translations } from "../../../shared/translations"
 import { accountCreationField } from "../AccountCreationForm/accountCreationField"
 import BusinessInformation from "../BusinessInforamtionForm/BusinessInformation"
+import BillingInfoReview from "../BillingInfoReview";
+import BusinessAddressReview from "../BusinessAddressReview";
 
 const StepContentRepInitiatedCheckout = ({
     currentStep,
@@ -46,7 +46,6 @@ const StepContentRepInitiatedCheckout = ({
     }
 
     const handleEdit = () => {
-        console.log("Edit button clicked")
         // Navigate back to step 2 for editing
         onBack()
     }

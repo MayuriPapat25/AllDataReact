@@ -90,6 +90,138 @@ const BusinessAddressValidation = ({
     return payload;
   };
 
+  const parseAddressComponents = (placeResult) => {
+    // Accept either:
+    //  - a place result with .address_components (Google)
+    //  - an object { city, state, zipCode }
+    //  - a simple object with keys like locality, administrative_area_level_1, postal_code
+    if (!placeResult) return null;
+
+    // If user supplied direct fields:
+    if ("city" in placeResult || "state" in placeResult || "zipCode" in placeResult) {
+      return {
+        city: placeResult.city || placeResult.locality || "",
+        state: placeResult.state || placeResult.stateCode || placeResult.administrative_area_level_1 || "",
+        zipCode: placeResult.zipCode || placeResult.postal_code || ""
+      };
+    }
+
+    // If Google-like address_components:
+    if (Array.isArray(placeResult.address_components)) {
+      const comps = {};
+      placeResult.address_components.forEach((c) => {
+        if (c.types.includes("locality")) comps.city = c.long_name;
+        if (c.types.includes("postal_town") && !comps.city) comps.city = c.long_name;
+        if (c.types.includes("administrative_area_level_1")) comps.state = c.short_name || c.long_name;
+        if (c.types.includes("postal_code")) comps.zipCode = c.long_name;
+        // some addresses have postal_code_suffix; ignore for now
+      });
+      return {
+        city: comps.city || "",
+        state: comps.state || "",
+        zipCode: comps.zipCode || ""
+      };
+    }
+
+    // Unknown shape
+    return null;
+  }
+
+  const geocodePlaceId = (placeId) => {
+    return new Promise((resolve, reject) => {
+      if (!window?.google?.maps?.Geocoder) {
+        reject(new Error("Google Maps JS API not loaded (window.google.maps.Geocoder missing)."));
+        return;
+      }
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ placeId }, (results, status) => {
+        if (status === "OK" && results && results[0]) {
+          resolve(results[0]);
+        } else {
+          reject(new Error(`Geocode failed: ${status}`));
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    // watch returns current value; index 0 is streetAddress
+    const currentStreet = getValues("streetAddress");
+    // If nothing selected -> do nothing
+    if (!currentStreet) return;
+
+    (async () => {
+      try {
+        // Case A: if the autocomplete returns an object (Google place result or custom object)
+        if (typeof currentStreet === "object") {
+          // If this object exposes place_id, try to geocode to get full address components
+          if (currentStreet.place_id || currentStreet.placeId) {
+            try {
+              const placeId = currentStreet.place_id || currentStreet.placeId;
+              const placeResult = await geocodePlaceId(placeId);
+              const parsed = parseAddressComponents(placeResult);
+              if (parsed) {
+                if (parsed.city) setValue("city", parsed.city, { shouldDirty: true });
+                if (parsed.state) setValue("state", parsed.state, { shouldDirty: true });
+                if (parsed.zipCode) setValue("zipCode", parsed.zipCode, { shouldDirty: true });
+              }
+              // Also set streetAddress text if available
+              const streetText = placeResult.formatted_address || currentStreet.description || currentStreet.formatted_address;
+              if (streetText) setValue("streetAddress", streetText, { shouldDirty: true });
+            } catch (err) {
+              // geocode failed — try to parse existing object
+              const parsed = parseAddressComponents(currentStreet);
+              if (parsed) {
+                if (parsed.city) setValue("city", parsed.city, { shouldDirty: true });
+                if (parsed.state) setValue("state", parsed.state, { shouldDirty: true });
+                if (parsed.zipCode) setValue("zipCode", parsed.zipCode, { shouldDirty: true });
+              }
+            }
+            return;
+          }
+
+          // If object already contains address_components-like data or plain fields, parse directly:
+          const parsedDirect = parseAddressComponents(currentStreet);
+          if (parsedDirect) {
+            if (parsedDirect.city) setValue("city", parsedDirect.city, { shouldDirty: true });
+            if (parsedDirect.state) setValue("state", parsedDirect.state, { shouldDirty: true });
+            if (parsedDirect.zipCode) setValue("zipCode", parsedDirect.zipCode, { shouldDirty: true });
+          } else {
+            // Fallback: if object has a formatted string, set street text only
+            if (currentStreet.description || currentStreet.formatted_address) {
+              setValue("streetAddress", currentStreet.description || currentStreet.formatted_address, { shouldDirty: true });
+            }
+          }
+        } else if (typeof currentStreet === "string") {
+          // Case B: the autocomplete returns a placeId string (some implementations do that) or plain text.
+          // Try to detect a placeId pattern (place ids usually start with "ChI" for google but not guaranteed).
+          // We attempt geocode if window.google present and string looks like an id (or if it's safe to call).
+          const maybePlaceId = currentStreet;
+          if (window?.google?.maps && maybePlaceId.length > 5 && !/\s/.test(maybePlaceId)) {
+            // attempt geocode by placeId
+            try {
+              const placeResult = await geocodePlaceId(maybePlaceId);
+              const parsed = parseAddressComponents(placeResult);
+              if (parsed) {
+                if (parsed.city) setValue("city", parsed.city, { shouldDirty: true });
+                if (parsed.state) setValue("state", parsed.state, { shouldDirty: true });
+                if (parsed.zipCode) setValue("zipCode", parsed.zipCode, { shouldDirty: true });
+              }
+              const streetText = placeResult.formatted_address;
+              if (streetText) setValue("streetAddress", streetText, { shouldDirty: true });
+            } catch (err) {
+              // If geocode failed (or currentStreet is just typed text), do nothing.
+            }
+          }
+        }
+      } catch (err) {
+        // swallow — autofill is best-effort
+        // console.debug("autofill error", err);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("streetAddress")]); // re-run when streetAddress changes
+
   // Validate + save handler for "Validate" button (used on first save)
   const handleValidate = async (e) => {
     if (e && e.preventDefault) e.preventDefault();

@@ -58,7 +58,6 @@ const DiyProfileInfo = () => {
   };
 
   const handleSave = () => {
-    console.log('Form saved:', formData);
     alert('Profile saved successfully!');
     setShowSaveButton(false);
   };

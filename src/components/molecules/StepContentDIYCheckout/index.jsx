@@ -3,11 +3,11 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import OrderSummaryDIY from "../OrderSummaryDIY"
 import PlaceOrderForm from "../PlaceOrderForm"
-import BillingInformation from "../../../shared/ui/BillingInfoReview"
 import TermsConditions from "../../../shared/ui/TermsCondition"
 import OrderConfirmation from "../OrderConfirmation"
 import BillingFormDoublePayment from "../BillingFormDoublePayment"
 import { Button } from "../../../shared/ui/Buttons/Button"
+import BillingInformation from "../BillingInformation"
 
 const StepContentDIYCheckout = ({
     currentStep,
@@ -22,7 +22,6 @@ const StepContentDIYCheckout = ({
     const [paymentType, setPaymentType] = useState("existing")
 
     const handleEdit = () => {
-        console.log("Edit button clicked")
         // Navigate back to step 2 for editing
         onBack()
     }

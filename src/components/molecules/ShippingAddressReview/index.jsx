@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
-import { translations } from "../../translations"
-import { Button } from "../Buttons/Button"
 import { setShippingAddress } from "../../../store/store";
-import DynamicForm from "../DynamicForm";
-import { shippingAddressFields } from "../../constants/shippingAddressFields";
 import { useMemo } from "react";
+import { translations } from "../../../shared/translations";
+import { Button } from "../../../shared/ui/Buttons/Button";
+import DynamicForm from "../../../shared/ui/DynamicForm";
+import { shippingAddressFields } from "../../../shared/constants/shippingAddressFields";
 
 const clone = (obj) => {
   // use structuredClone if available (preserves more types), fallback to JSON deep copy

@@ -7,14 +7,14 @@ import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
 import { Button } from '../../../shared/ui/Buttons/Button'
-import BillingInfoReview from '../../../shared/ui/BillingInfoReview'
+import BusinessAddressReview from '../BusinessAddressReview'
+import BillingInfoReview from '../BillingInfoReview'
 
 const StepContentEUCheckout = ({
     currentStep,
@@ -55,7 +55,6 @@ const StepContentEUCheckout = ({
     }
 
     const handleEdit = () => {
-        console.log("Edit button clicked")
         // Navigate back to step 2 for editing
         onBack()
     }
@@ -102,7 +101,6 @@ const StepContentEUCheckout = ({
                                 <BusinessAddressReview onEdit={handleEdit} />
                                 <BillingAddressForm fromReview={true} onEdit={handleEdit} />
                                 <BillingInfoReview onEdit={onBack}/>
-
                             </div>
                             <div className="w-1/2">
                                 <OrderSummary data={variant2Data} type="variant2" />

@@ -92,6 +92,76 @@ const BillingAddress = ({
     };
   }, []);
 
+  const normalizeBillingShape = (b) => {
+    if (!b) return null;
+    return {
+      firstName: (b.firstName ?? b.contactFirstName ?? b.contact_name_first ?? (typeof b.contactName === "string" ? b.contactName.split(" ")[0] : "") ?? "") || "",
+      lastName: (b.lastName ?? b.contactLastName ?? b.contact_name_last ?? (typeof b.contactName === "string" ? b.contactName.split(" ").slice(1).join(" ") : "") ?? "") || "",
+      streetAddress: b.streetAddress ?? b.street ?? b.address ?? b.deliveryAddress ?? b.deliveryAddress1 ?? "",
+      unit: b.unit ?? b.addressLine2 ?? b.address2 ?? b.deliveryAddress2 ?? "",
+      city: b.city ?? b.town ?? b.locality ?? "",
+      state: b.state ?? b.region ?? b.stateCode ?? "",
+      zipCode: b.zipCode ?? b.zip ?? b.postalCode ?? b.postcode ?? "",
+    };
+  };
+
+  const shallowEq = (a, b) => {
+    if (!a || !b) return false;
+    return (
+      (a.firstName ?? "") === (b.firstName ?? "") &&
+      (a.lastName ?? "") === (b.lastName ?? "") &&
+      (a.streetAddress ?? "") === (b.streetAddress ?? "") &&
+      (a.unit ?? "") === (b.unit ?? "") &&
+      (a.city ?? "") === (b.city ?? "") &&
+      (a.state ?? "") === (b.state ?? "") &&
+      (a.zipCode ?? "") === (b.zipCode ?? "")
+    );
+  };
+
+  useEffect(() => {
+    // Prefer persistedFromSlices (redux) if present
+    const persisted = persistedFromSlices ?? null;
+    // compute normalized business mapping
+    const mappedBusiness = normalizeBusinessToBilling(businessAddress);
+    const normalizedBusiness = normalizeBillingShape(mappedBusiness);
+    const normalizedPersisted = normalizeBillingShape(persisted);
+    // 1) If persisted matches business -> treat as "same"
+    if (persisted) {
+      if (normalizedBusiness && normalizedPersisted && shallowEq(normalizedBusiness, normalizedPersisted)) {
+        setBillingData(normalizedBusiness);
+        // ensure the form state also reflects the mapped business
+        try { reset(normalizedBusiness); } catch (e) {/* ignore if not ready */ }
+        setMode("same");
+        if (typeof onValidationChange === "function") onValidationChange(true);
+        return;
+      }
+
+      // 2) If we have a persisted billing (but not same as business) -> readonly
+
+      setBillingData(persisted);
+      try { reset(persisted); } catch (e) { }
+      setMode("readonly");
+      if (typeof onValidationChange === "function") onValidationChange(true);
+      return;
+    }
+
+    // 3) No persisted billing -> if business exists and initialSameAsBusiness was true then set same
+    if (businessAddress && initialSameAsBusiness) {
+      const mapped = normalizeBusinessToBilling(businessAddress);
+      setBillingData(mapped);
+      try { reset(mapped); } catch (e) { }
+      setMode("same");
+      if (typeof onValidationChange === "function") onValidationChange(true);
+      return;
+    }
+
+    // 4) fallback -> editing
+    setMode("editing");
+    if (typeof onValidationChange === "function") onValidationChange(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [businessAddress, persistedFromSlices, initialSameAsBusiness]);
+
+
   // ensure businessAddress is copied to billing when the section is "same" on mount/visit
   useEffect(() => {
     if (forceEditOnMount) return;
@@ -224,6 +294,11 @@ const BillingAddress = ({
   useEffect(() => {
     if (!forceEditOnMount) return;
 
+    if (mode === "same") {
+      console.log('forceEditOnMount: preserving mode "same"');
+      return;
+    }
+
     const dataToPrefill = initialBillingData ?? persistedFromSlices ?? billingData ?? null;
 
     if (dataToPrefill) {
@@ -292,23 +367,18 @@ const BillingAddress = ({
   }, [mode, billingData, persistedFromSlices, initialBillingData, onValidationChange, computeRequiredFieldsValid]);
 
 
-  // Handler when user toggles the checkbox
   const onCheckboxChange = (checked) => {
     if (checked) {
-      // user requested "same as business" => copy businessAddress into billing
       if (businessAddress) {
         const mapped = normalizeBusinessToBilling(businessAddress);
-        // persist to redux and local state
         dispatch(setBillingAddress(mapped));
         setBillingData(mapped);
         setMode("same");
         if (typeof onValidationChange === "function") onValidationChange(true);
       } else {
-        // no business address available — start editing (or optionally show message)
         startEditing(false);
       }
     } else {
-      // user unchecked => start editing using existing data if present
       startEditing(true);
     }
   };

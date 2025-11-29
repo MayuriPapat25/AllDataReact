@@ -84,7 +84,6 @@ const DiyProfileInfoMock = ({ initialFormData, initialDropdownOpen = false, init
     };
 
     const handleSave = () => {
-        console.log('Form saved:', formData);
         // NOTE: In a production app, replace alert() with a modal notification.
         alert('Profile saved successfully!');
         setShowSaveButton(false);
@@ -93,11 +92,11 @@ const DiyProfileInfoMock = ({ initialFormData, initialDropdownOpen = false, init
     return (
         <div className="mx-auto p-8 bg-gray-50 min-h-screen">
             <div className="p-8">
-                <h2 className="!text-lg font-bold mb-2 text-foreground">MY PROFILE</h2>
+                <h2 className="text-lg! font-bold mb-2 text-foreground">MY PROFILE</h2>
 
                 {/* Contact Information Section */}
                 <div className="mb-8">
-                    <h3 className="!text-sm text-gray-600 font-semibold mb-6 pb-3 border-b border-gray-200">
+                    <h3 className="text-sm! text-gray-600 font-semibold mb-6 pb-3 border-b border-gray-200">
                         Contact Information
                     </h3>
 

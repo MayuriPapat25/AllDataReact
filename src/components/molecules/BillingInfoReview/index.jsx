@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux"
-import { translations } from "../../translations"
-import { Button } from "../Buttons/Button"
 import billingForm from '../../../assets/images/billingform.png'
+import { translations } from "../../../shared/translations";
+import { Button } from "../../../shared/ui/Buttons/Button";
 
 const BillingInfoReview = ({
     country = "United States",

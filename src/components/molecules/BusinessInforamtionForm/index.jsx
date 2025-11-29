@@ -158,7 +158,6 @@ const BusinessInformationForm = ({ variant = "standard", onSubmit, onValidationC
         setErrors(validationErrors)
 
         if (Object.keys(validationErrors).length === 0) {
-            console.log("Form submitted successfully:", formData)
             onSubmit?.(formData)
         }
     }

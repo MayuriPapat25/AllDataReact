@@ -8,13 +8,12 @@ import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
+import BusinessAddressReview from "../BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import BillingInformation from "../BillingInformation"
 import AgreementModal from "../AgreementModal"
 import { Button } from "../../../shared/ui/Buttons/Button"
-import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 import BusinessInformation from '../BusinessInforamtionForm/BusinessInformation'
 import BillingAddress from '../BillingAddress/BillingAddress';
 import ShippingAddress from "../ShippingAddress/ShippingAddress"
@@ -22,10 +21,11 @@ import { translations } from "../../../shared/translations"
 import BusinessAddressValidation from "../BusinessAddressValidation"
 import AccountCreation from "../AccountCreationForm/AccountCreation"
 import { useSelector, useDispatch } from "react-redux";
-import { setAccountCreation, clearAccountCreation } from "../../../store/store"
+import { setAccountCreation, clearAccountCreation, clearBillingAddress, clearShippingAddress } from "../../../store/store"
 import { computeIsValid } from "../../../shared/utils/validation"
-import BillingAddressReview from "../../../shared/ui/BillingAddressReview";
-import ShippingAddressReview from "../../../shared/ui/ShippingAddressReview";
+import BillingAddressReview from "../BillingAddressReview";
+import ShippingAddressReview from "../ShippingAddressReview";
+import BillingInfoReview from "../BillingInfoReview";
 
 
 const USAnonyFlowValidation = ({
@@ -37,6 +37,8 @@ const USAnonyFlowValidation = ({
     const dispatch = useDispatch();
     const accountRef = useRef(null);
     const prevStepRef = useRef(null);
+    const billingRef = useRef(null); 
+    const shippingRef = useRef(null);
 
     useEffect(() => {
         // prevStepRef.current contains the *previous* value of currentStep
@@ -144,7 +146,9 @@ const USAnonyFlowValidation = ({
     const [formValid, setFormValid] = useState(false);
 
     const businessAddress = useSelector(state => state.form.businessAddress) ?? {};
-
+    const billingAddress = useSelector(state => state.form.billingAddress) ?? {};
+    const shippingAddress = useSelector(state => state.form.shippingAddress) ?? {};
+    
     const renderStepContent = () => {
         switch (currentStep) {
             case 1:
@@ -177,8 +181,8 @@ const USAnonyFlowValidation = ({
                                 onSave={(vals) => {
                                     console.log("address saved", vals);
                                 }} />
-                                <BillingAddress onValidationChange={setBillingAddressValid} forceEditOnMount={returnedFromReview} />
-                                <ShippingAddress onValidationChange={setShippingAddressValid} forceEditOnMount={returnedFromReview} />
+                                <BillingAddress ref={billingRef}  onValidationChange={setBillingAddressValid} forceEditOnMount={returnedFromReview} />
+                                <ShippingAddress ref={shippingRef}  onValidationChange={setShippingAddressValid} forceEditOnMount={returnedFromReview} />
                                 <div className="space-y-6">
                                     <BillingInformation onValidationChange={setBusinessInfoValid}/>
                                     <BillingEmailForm onValidationChange={setBillingEmailValid} />
@@ -273,19 +277,47 @@ const USAnonyFlowValidation = ({
                 primaryButton: {
                     text: "CONTINUE TO TERMS",
                     onClick: onContinue,
-                    // disabled: !(
-                    //     businessInfoValid &&
-                    //     businessAddressValid &&
-                    //     billingEmailValid &&
-                    //     billingAddressValid &&
-                    //     shippingAddressValid &&
-                    //     billingInfoValid 
-                    // ),
                 },
                 secondaryButton: {
                     text: "BACK",
-                    onClick: onBack,
-                    variant: "outline"
+                    onClick: () => {
+                        // compare business & billing address
+                        const keysToCompare = [
+                            "streetAddress",
+                            "city",
+                            "state",
+                            "zip",
+                            "country",
+                        ];
+
+                        const isBillingSameAsBusiness =
+                            businessAddress &&
+                            billingAddress &&
+                            keysToCompare.every(
+                                (key) =>
+                                    (businessAddress?.[key] || "") ===
+                                    (billingAddress?.[key] || "")
+                            );
+                        if (isBillingSameAsBusiness) {
+                            // only clear if billing is same as business
+                            dispatch(clearBillingAddress(null));
+                        }
+                        const isShippingSameAsBusiness =
+                            businessAddress &&
+                            shippingAddress &&
+                            keysToCompare.every(
+                                (key) =>
+                                    (businessAddress?.[key] || "") ===
+                                    (shippingAddress?.[key] || "")
+                            );
+                        if (isShippingSameAsBusiness) {
+                            // only clear if billing is same as business
+                            dispatch(clearShippingAddress(null));
+                        }
+
+                        onBack();
+                    },
+                    variant: "outline",
                 },
                 buttonLayout: "flex-col sm:flex-row gap-4 pt-8 md:justify-center mt-8 lg:justify-start"
             },

@@ -17,7 +17,6 @@ const AccountClosureModal = ({ isOpen, onClose, title, desc1, desc2, requiredMes
   };
 
   const handleSubmitRequest = () => {
-    console.log("Submitting removal request:", formData);
     setFormData({
       firstName: "",
       lastName: "",

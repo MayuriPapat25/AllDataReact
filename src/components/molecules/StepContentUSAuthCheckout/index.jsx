@@ -7,18 +7,18 @@ import { useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
-import BusinessAddressReview from "../../../shared/ui/BusinessAddressReview"
 import AgreementPage from "../../molecules/AgreementPage"
 import OrderConfirmation from "../OrderConfirmation"
 import AccountCreationForm from "../AccountCreationForm"
 import BillingInformation from "../../molecules//BillingInformation/"
 import { Button } from "../../../shared/ui/Buttons/Button"
-import BillingInfoReview from "../../../shared/ui/BillingInfoReview"
 import { useEffect } from "react"
 import AgreementModal from "../AgreementModal"
 import FormHeader from "../../../shared/ui/FormHeader"
 import DynamicForm from "../../../shared/ui/DynamicForm"
 import TermsConditions from "../../../shared/ui/TermsCondition"
+import BillingInfoReview from "../BillingInfoReview";
+import BusinessAddressReview from "../BusinessAddressReview";
 
 const StepContentUSAuthCheckout = ({
     currentStep,
@@ -35,7 +35,6 @@ const StepContentUSAuthCheckout = ({
     }
 
     const handleEdit = () => {
-        console.log("Edit button clicked")
         // Navigate back to step 2 for editing
         onBack()
     }
