@@ -12,7 +12,8 @@ const BusinessAddressValidation = ({
   initialData = {},
   className = "",
   onSave = () => { },
-  onValidationChange = () => { }
+  onValidationChange = () => { },
+  fakeDelayMs = 1500,
 }) => {
   const dispatch = useDispatch();
   const storeAddress = useSelector((s) => s.form?.businessAddress) ?? {};
@@ -20,6 +21,7 @@ const BusinessAddressValidation = ({
 
   const [readonly, setReadonly] = useState(false);
   const validatedRef = useRef(false);
+  const [loading, setLoading] = useState(false);
 
   // react-hook-form setup
   const form = useForm({
@@ -38,6 +40,7 @@ const BusinessAddressValidation = ({
   const { control, watch, trigger, getValues, setValue, handleSubmit, reset } = form;
 
   const watched = watch(["streetAddress", "city", "state", "zipCode"]);
+
   const isAllRequiredPresent = (() => {
     const [streetAddress, city, state, zipCode] = watched || [];
     const okStreetAddress = streetAddress && String(streetAddress).trim() !== "";
@@ -85,9 +88,11 @@ const BusinessAddressValidation = ({
       state: data.state || "",
       zipCode: data.zipCode || "",
       stateName: stateLabel,
+      ...(storeAddress || {}),
     };
-    dispatch(setBusinessAddress(payload));
-    return payload;
+    const merged = { ...storeAddress, ...payload };
+    dispatch(setBusinessAddress(merged));
+    return merged;
   };
 
   const parseAddressComponents = (placeResult) => {
@@ -222,6 +227,8 @@ const BusinessAddressValidation = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("streetAddress")]); // re-run when streetAddress changes
 
+  const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
+
   // Validate + save handler for "Validate" button (used on first save)
   const handleValidate = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
@@ -230,14 +237,26 @@ const BusinessAddressValidation = ({
       onValidationChange(false);
       return;
     }
+    setLoading(true);
+    try {
+      // perform any actual saving
+      const data = getValues();
+      const payload = saveAddressToStore(data);
 
-    const data = getValues();
-    const payload = saveAddressToStore(data);
+      // optional artificial wait so user sees loader
+      await maybeDelay(fakeDelayMs);
 
-    validatedRef.current = true;
-    setReadonly(true);
-    onValidationChange(true);
-    onSave(payload);
+      validatedRef.current = true;
+      setReadonly(true);
+      onValidationChange(true);
+      onSave(payload);
+    } catch (err) {
+      // handle/report errors if needed
+      onValidationChange(false);
+      // optionally rethrow or log
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Update handler for the "UPDATE" button (when editing a validated address)
@@ -248,11 +267,22 @@ const BusinessAddressValidation = ({
       onValidationChange(false);
       return;
     }
-    const data = getValues();
-    const payload = saveAddressToStore(data);
-    setReadonly(true);
-    onValidationChange(true);
-    onSave(payload);
+    setLoading(true);
+    try {
+      const data = getValues();
+      const payload = saveAddressToStore(data);
+
+      // optional artificial wait so user sees loader
+      await maybeDelay(fakeDelayMs);
+
+      setReadonly(true);
+      onValidationChange(true);
+      onSave(payload);
+    } catch (err) {
+      onValidationChange(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleEditClick = () => {
@@ -337,7 +367,23 @@ const BusinessAddressValidation = ({
     );
   };
 
-  return readonly ? renderReadonly() : renderForm();
+
+  return (
+    <>
+      {readonly ? renderReadonly() : renderForm()}
+
+      {/* Full-page loader overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-40">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Spinner */}
+            <div className="w-16 h-16 rounded-full border-4 border-t-transparent border-black animate-spin" />
+            <div className="text-white text-lg font-medium">Saving...</div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default BusinessAddressValidation;

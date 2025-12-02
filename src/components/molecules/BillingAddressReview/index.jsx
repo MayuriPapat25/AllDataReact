@@ -9,6 +9,7 @@ import { useMemo } from "react";
 
 const BillingAddressReview = ({
   country = "United States",
+  fakeDelayMs = 1500,
 }) => {
   const dispatch = useDispatch();
 
@@ -17,6 +18,9 @@ const BillingAddressReview = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [formInitialData, setFormInitialData] = useState(BillingAddress);
+  const [loading, setLoading] = useState(false);
+
+  const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
 
   useEffect(() => {
     setFormInitialData(BillingAddress);
@@ -27,14 +31,27 @@ const BillingAddressReview = ({
     setIsEditing(true);
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    setFormInitialData(BillingAddress);
+  const handleCancel = async () => {
+    setLoading(true);
+    try {
+      setIsEditing(false);
+      setFormInitialData(BillingAddress);
+      await maybeDelay(fakeDelayMs);
+    } finally {
+      setLoading(false)
+    }
   };
 
-  const handleSave = (savedData) => {
-    dispatch(setBillingAddress(JSON.parse(JSON.stringify(savedData || {}))));
-    setIsEditing(false);
+
+  const handleSave = async (savedData) => {
+    setLoading(true);
+    try {
+      dispatch(setBillingAddress(JSON.parse(JSON.stringify(savedData || {}))));
+      setIsEditing(false);
+      await maybeDelay(fakeDelayMs);
+    } finally {
+      setLoading(false)
+    }
   };
 
   const isSameAsBusiness = useMemo(() => {
@@ -104,6 +121,16 @@ const BillingAddressReview = ({
             </div>
           )}
         </>
+      )}
+
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-40">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Spinner */}
+            <div className="w-16 h-16 rounded-full border-4 border-t-transparent border-black animate-spin" />
+            <div className="text-white text-lg font-medium">Saving...</div>
+          </div>
+        </div>
       )}
     </div>
   )

@@ -55,21 +55,21 @@ const FileUpload = ({ label, onChange, accept = ".png,.jpg,.jpeg,.pdf", helperTe
                     />
 
                 </div>) :
-                (
-                    <div >
-                        <p className="text-sm mb-2 font-medium">{fileName}</p>
+                (<>
+                    <div className="flex mt-2 items-center">
+                        <p className="text-md mb-2 font-medium">{fileName}</p>
                         <button
                             type="button"
                             onClick={handleRemove}
-                            className="btn btn-primary"
+                            className="ml-10"
                         >
                             {translations?.remove}
                         </button>
-                        <p className="text-xs text-gray-500 mt-1">
-                            {translations?.warning_reseller_certificate_not_qualify}
-                        </p>
                     </div>
-                )}
+                    <p className="text-xs text-gray-500 mt-1 ">
+                        {translations?.warning_reseller_certificate_not_qualify}
+                    </p>
+                </>)}
             {helperText && !fileName && (
                 <div className="text-xs text-gray-500 leading-relaxed">{helperText}</div>
             )}

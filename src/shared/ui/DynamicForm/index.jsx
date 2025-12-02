@@ -161,12 +161,58 @@ const DynamicForm = ({
                 control={control}
                 rules={validationRules}
                 render={({ field: fieldProps, fieldState: { error, isTouched, isDirty } }) => {
-                  const { onChange: fieldOnChange, onBlur, value } = fieldProps;
-                  const FieldComponent = fieldComponents[field.type];
-                  if (!FieldComponent) return null;
-
-                  // Only show error if field has been touched/blurred
+                  const { onChange: fieldOnChange, onBlur, value, name: fieldName } = fieldProps;
                   const shouldShowError = (isTouched || isDirty) && !!error;
+
+                  // --- SPECIAL CASE: radio group ---
+                  if (field.type === "radio") {
+                    // Defensive fallback for options
+                    const options = Array.isArray(field.options) ? field.options : [];
+
+                    return (
+                      <div className="mb-4">
+                        <div className="text-sm mb-2" id={`${field.name}-label`}>
+                          {field.label}
+                          {field.required ? " *" : ""}
+                        </div>
+
+                        <div role="radiogroup" aria-labelledby={`${field.name}-label`}>
+                          {options.map((opt) => {
+                            // create stable id so label htmlFor works
+                            const id = `${field.name}__${opt.value}`;
+
+                            return (
+                              <label
+                                key={opt.value}
+                                htmlFor={id}
+                                className="flex items-center gap-2 cursor-pointer mb-2"
+                              >
+                                <input
+                                  id={id}
+                                  name={fieldName}
+                                  type="radio"
+                                  value={opt.value}
+                                  checked={String(value) === String(opt.value)}
+                                  onChange={() => fieldOnChange(opt.value)}
+                                  onBlur={onBlur}
+                                // keep uncontrolled props controlled by RHF via checked/onChange
+                                />
+                                <span>{opt.label}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
+
+                        {shouldShowError && (
+                          <p className="text-xs text-red-600 mt-1">{error?.message}</p>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  // --- DEFAULT PATH: use your fieldComponents (InputField etc.) ---
+                  const Component = fieldComponents[field.type] || InputField;
+                  if (!Component) return null;
 
                   return (
                     <Component
@@ -175,24 +221,18 @@ const DynamicForm = ({
                       options={field.options}
                       placeholder={field.placeholder}
                       required={field.required}
-                      value={value || ""}
+                      value={value ?? ""}
                       onChange={(valOrEvent) => {
-                        // normalize: if an event came, extract target.value
                         const actualValue =
                           valOrEvent && valOrEvent.target !== undefined
-                            ? (valOrEvent.target.value)
+                            ? valOrEvent.target.value
                             : valOrEvent;
-
-                        // inform RHF of the new value
                         fieldOnChange(actualValue);
-
-                        // inform parent with whole form values (important!)
                         if (onChange && typeof getValues === "function") {
                           try {
                             const allVals = deepClone(getValues());
                             onChange(allVals);
                           } catch (e) {
-                            // fallback: if getValues isn't available, pass a minimal object
                             onChange({ [field.name]: actualValue });
                           }
                         }
@@ -203,9 +243,12 @@ const DynamicForm = ({
                       helperText={field.helperText}
                       type={field.type}
                       optional={field?.optional}
-                      disabled={isDisabled}
+                      disabled={(field.name === "billingEmail" && watch && watch("usePrimaryEmail") === "primary") || field.disabled}
+                      inputMode={field.inputMode}
+                      maxLength={field.maxLength}
+                      onKeyPress={field.onKeyPress}
                     />
-                  )
+                  );
                 }}
               />
             </div>

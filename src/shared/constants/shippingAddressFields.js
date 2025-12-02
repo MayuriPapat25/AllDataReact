@@ -47,11 +47,24 @@ export const shippingAddressFields = [
   },
 
   // 6. ZIP Code
-  {
+ {
     name: "zipCode",
     label: translations?.zip_code,
     type: "text",
-    minLength: 5,
-    helperText: translations?.zip_code_helper_text,
-  },
+    required: true,
+    inputMode: "numeric",
+    maxLength: 5,
+    onKeyPress: (e) => {
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    },
+    validation: {
+      required: translations?.zip_code_required,
+      pattern: {
+        value: /^[0-9]{5}$/,
+        message: translations?.enter_valid_zip_code,
+      },
+    },
+  }
 ];

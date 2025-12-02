@@ -15,30 +15,58 @@ const BillingInformation = ({
     postalCode: "12532",
     country: "United State",
   },
-  onValidationChange
+  onValidationChange,
+  fakeDelayMs = 1500,
 }) => {
   const [mode, setMode] = useState("initial");
   const [paymentMethod, setPaymentMethod] = useState("primary");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleValidate = () => {
-    if (typeof onValidationChange === "function") {
-      onValidationChange(true);
+  const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
+
+  const handleValidate = async () => {
+    setIsLoading(true);
+    try {
+      if (typeof onValidationChange === "function") {
+        onValidationChange(true);
+        await maybeDelay(fakeDelayMs);
+      }
+      setMode("readonly");
+    } finally {
+      setIsLoading(false);
     }
-    setMode("readonly");
+
   };
 
   const handleEdit = () => {
     setMode("editing");
   };
 
-  const handleUpdate = () => {
-    // if needed later: emit updated info to parent
-    setMode("readonly");
+  const handleUpdate = async () => {
+    setIsLoading(true);
+    try {
+      // if needed later: emit updated info to parent
+      setMode("readonly");
+      await maybeDelay(fakeDelayMs);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
 
   return (
     <div className="w-full max-w-2xl">
+
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-40">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Spinner */}
+            <div className="w-16 h-16 rounded-full border-4 border-t-transparent border-black animate-spin" />
+            <div className="text-black text-lg font-medium">Saving...</div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-row items-center justify-between space-y-0 pb-4">
         <h2 className="text-md">{translations?.billing_information}</h2>
         {mode === "readonly" && (

@@ -46,14 +46,13 @@ const useDebouncedCallback = (fn, delay = 300) => {
   return { call: wrapped, flushNow, getLastArgs: () => lastArgs.current }
 };
 
-// helper to remove sensitive fields before saving to store during intermediate navigation
-const stripSensitive = (values = {}, preserveSensitive = false) => {
-  if (!values || typeof values !== 'object') return values || {};
-  if (preserveSensitive) return { ...values };
+const stripSensitive = (values = {}) => {
+  if (!values || typeof values !== 'object') return {};
   const copy = { ...values };
+
   delete copy.password;
   delete copy.confirmPassword;
-  delete copy.agreeToTerms; // we don't persist T&C during intermediate saves
+
   return copy;
 }
 
@@ -127,42 +126,40 @@ const AccountCreation = forwardRef(({
       // also call debounced.flushNow to be safe
       debounced.flushNow();
     },
-    // optional: return current savedAccount
     getSaved: () => savedAccount,
+    isStepValidNow: () => {
+      const vals = lastValuesRef.current || {};
+      const pass = (vals.password || "").trim();
+      const confirm = (vals.confirmPassword || "").trim();
+
+      const bothFilled = pass.length > 0 && confirm.length > 0;
+      const match = pass === confirm;
+
+      return bothFilled && match && Boolean(localAgree);
+    }
   }), [debounced, savedAccount, onFormChange, dispatch]);
 
   const handleValidationChange = (isValidFromForm, valuesFromForm = null) => {
-    // If values were passed (preferred), use them
-    if (valuesFromForm) {
-      const pass = valuesFromForm.password;
-      const confirm = valuesFromForm.confirmPassword;
-      const bothFilled = !!(pass && pass.length > 0 && confirm && confirm.length > 0);
-      const match = pass === confirm;
-      const finalValid = Boolean(isValidFromForm) && bothFilled && match;
+    // pick the freshest synchronous snapshot of values:
+    // prefer valuesFromForm (Directly from DynamicForm), otherwise immediate lastValuesRef.current
+    const vals = (valuesFromForm && typeof valuesFromForm === 'object')
+      ? valuesFromForm
+      : (lastValuesRef.current || {});
 
-      setLocalFormValid((prev) => {
-        if (prev === finalValid) return prev;
-        setFormValid(finalValid);
-        return finalValid;
-      });
-      return;
-    }
+    // ensure we examine current strings (defensive)
+    const pass = vals.password || "";
+    const confirm = vals.confirmPassword || "";
 
-    // Fallback: give one micro tick for lastValuesRef to be updated by onChange (if it runs just before)
-    setTimeout(() => {
-      const vals = lastValuesRef.current || {};
-      const pass = vals.password;
-      const confirm = vals.confirmPassword;
-      const bothFilled = !!(pass && pass.length > 0 && confirm && confirm.length > 0);
-      const match = pass === confirm;
-      const finalValid = Boolean(isValidFromForm) && bothFilled && match;
+    const bothFilled = pass.length > 0 && confirm.length > 0;
+    const match = pass === confirm;
 
-      setLocalFormValid((prev) => {
-        if (prev === finalValid) return prev;
-        setFormValid(finalValid);
-        return finalValid;
-      });
-    }, 0);
+    const finalValid = Boolean(isValidFromForm) && bothFilled && match && Boolean(localAgree);
+
+    setLocalFormValid((prev) => {
+      if (prev === finalValid) return prev;
+      setFormValid(finalValid);
+      return finalValid;
+    });
   };
 
   const handleCheckedChange = (checkedVal) => {
@@ -172,6 +169,7 @@ const AccountCreation = forwardRef(({
       setAgreeToTerms(checkedVal);
       // optionally persist this change to parent/store
       if (onFormChange) onFormChange({ ...lastValuesRef.current, agreeToTerms: checkedVal });
+      handleValidationChange(false, lastValuesRef.current || formInitialData);
       return checkedVal;
     });
   };
@@ -185,6 +183,43 @@ const AccountCreation = forwardRef(({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [derivedChecked]);
 
+
+  useEffect(() => {
+    // Prefer lastValuesRef (user already typed), otherwise use formInitialData
+    const initialVals = (lastValuesRef.current && Object.keys(lastValuesRef.current).length)
+      ? lastValuesRef.current
+      : formInitialData;
+
+    // Run validation check once on mount to initialize parent state.
+    // Using isValidFromForm = false here is fine because parent will be updated by
+    // DynamicForm's onValidationChange when it reports true. This call guarantees
+    // the parent remains disabled until all required pieces are present (including T&C).
+    handleValidationChange(false, initialVals);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run once on mount
+
+  // Ensure parent remains disabled when persisted data does not include password/confirm
+  useEffect(() => {
+    // If there's no savedAccount at all, keep parent disabled — AccountCreation will update when user types.
+    if (!savedAccount || Object.keys(savedAccount).length === 0) {
+      setFormValid(false);
+      return;
+    }
+
+    const hasPassword = Boolean(savedAccount.password && savedAccount.confirmPassword);
+
+    if (!hasPassword) {
+      // Persisted snapshot is missing password/confirm — keep Continue disabled until user fills them
+      setFormValid(false);
+      return;
+    }
+
+    // If password/confirm were persisted (rare, only if saveNow(true) was used),
+    // run a validation pass so parent can be set to true if everything else is valid.
+    // We pass isValidFromForm = true to let handleValidationChange evaluate pass/match and T&C.
+    handleValidationChange(true, savedAccount);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [savedAccount]);
 
   return (
     <div>

@@ -11,6 +11,7 @@ const BillingAddress = ({
   forceEditOnMount = false,
   initialBillingData = null,
   onValidationChange = () => { },
+  fakeDelayMs = 1500,
 }) => {
   const dispatch = useDispatch();
 
@@ -29,6 +30,8 @@ const BillingAddress = ({
     if (persistedFromSlices || initialBillingData) return "readonly";
     return "editing";
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm({
     mode: "onChange",
@@ -295,7 +298,7 @@ const BillingAddress = ({
     if (!forceEditOnMount) return;
 
     if (mode === "same") {
-      console.log('forceEditOnMount: preserving mode "same"');
+      // console.log('forceEditOnMount: preserving mode "same"');
       return;
     }
 
@@ -379,31 +382,76 @@ const BillingAddress = ({
         startEditing(false);
       }
     } else {
+      // user unchecked => start editing using existing data if present
       startEditing(true);
+      const keysToCompare = [
+        "streetAddress",
+        "city",
+        "state",
+        "zip",
+        "country",
+      ];
+
+      const isShippingSameAsBusiness =
+        businessAddress &&
+        persistedFromSlices &&
+        keysToCompare.every(
+          (key) =>
+            (businessAddress?.[key] || "") ===
+            (persistedFromSlices?.[key] || "")
+        );
+
+      if (isShippingSameAsBusiness) {
+        reset({
+          firstName: "",
+          lastName: "",
+          streetAddress: "",
+          unit: "",
+          city: "",
+          state: "",
+          zipCode: "",
+        });
+        dispatch(clearShippingAddress(null));
+      }
     }
   };
 
-  const onValidate = (data) => {
-    const payload = {
-      firstName: data.firstName ?? "",
-      lastName: data.lastName ?? "",
-      streetAddress: data.streetAddress ?? "",
-      unit: data.unit ?? "",
-      city: data.city ?? "",
-      state: data.state ?? "",
-      zipCode: data.zipCode ?? "",
-    };
-    dispatch(setBillingAddress(payload));
-    setBillingData(payload);
-    setMode("readonly");
-    if (typeof onValidationChange === "function") onValidationChange(true);
+  const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
+
+  const onValidate = async (data) => {
+    setIsLoading(true);
+    try {
+      const payload = {
+        firstName: data.firstName ?? "",
+        lastName: data.lastName ?? "",
+        streetAddress: data.streetAddress ?? "",
+        unit: data.unit ?? "",
+        city: data.city ?? "",
+        state: data.state ?? "",
+        zipCode: data.zipCode ?? "",
+      };
+      await maybeDelay(fakeDelayMs);
+      dispatch(setBillingAddress(payload));
+      setBillingData(payload);
+      setMode("readonly");
+      if (typeof onValidationChange === "function") onValidationChange(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const submitUpdateSafely = async () => {
+    setIsLoading(true);
     try {
-      const valid = await computeRequiredFieldsValid();
-      setIsFormValid(Boolean(valid));
+      try {
+        const valid = await computeRequiredFieldsValid();
+        setIsFormValid(Boolean(valid));
+        await maybeDelay(fakeDelayMs);
+      } catch (err) {
+        setIsFormValid(false);
+      }
 
+      // small debounce to allow form state to settle
       await new Promise((r) => setTimeout(r, 30));
 
       try {
@@ -420,7 +468,6 @@ const BillingAddress = ({
           values = null;
         }
 
-        // If we have something useful, persist it as fallback
         if (values && Object.keys(values).length > 0) {
           const payload = {
             firstName: values.firstName ?? "",
@@ -431,14 +478,17 @@ const BillingAddress = ({
             state: values.state ?? "",
             zipCode: values.zipCode ?? values.zip ?? "",
           };
-          try { reset(payload); } catch (e) { /* ignore */ }
+          try {
+            reset(payload);
+          } catch (e) {
+            /* ignore */
+          }
 
           // persist to redux
           dispatch(setBillingAddress(values));
           setBillingData(values);
           setMode("readonly");
 
-          // notify parent
           if (typeof onValidationChange === "function") onValidationChange(true);
 
           return;
@@ -446,6 +496,8 @@ const BillingAddress = ({
       }
     } catch (err) {
       console.error("submitUpdateSafely: unexpected error", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -482,21 +534,31 @@ const BillingAddress = ({
     return parts.join("\n");
   };
 
-  useEffect(() => {
-    console.debug("BillingAddress debug:", {
-      persistedFromSlices,
-      initialBillingData,
-      billingData,
-      forceEditOnMount,
-      mode,
-      businessAddress,
-    });
-  }, [persistedFromSlices, initialBillingData, billingData, forceEditOnMount, mode, businessAddress]);
+  // useEffect(() => {
+  //   console.debug("BillingAddress debug:", {
+  //     persistedFromSlices,
+  //     initialBillingData,
+  //     billingData,
+  //     forceEditOnMount,
+  //     mode,
+  //     businessAddress,
+  //   });
+  // }, [persistedFromSlices, initialBillingData, billingData, forceEditOnMount, mode, businessAddress]);
 
   // Render different UIs by mode
   return (
     <div className="max-w-2xl pb-8">
       <h2 className="text-md mb-4">{translations?.billing_address}</h2>
+
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-40">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Spinner */}
+            <div className="w-16 h-16 rounded-full border-4 border-t-transparent border-black animate-spin" />
+            <div className="text-black text-lg font-medium">Saving...</div>
+          </div>
+        </div>
+      )}
 
       {/* CASE: mode === 'same' (selected checkbox) */}
       {mode === "same" && (

@@ -8,6 +8,7 @@ import { businessAddressFields } from "../../../shared/constants/businessAddress
 
 const BusinessAddressReview = ({
   country = "United States",
+  fakeDelayMs = 1500,
 }) => {
   const dispatch = useDispatch();
   const BusinessAddress = useSelector(state => state.form.businessAddress) ?? {};
@@ -16,10 +17,13 @@ const BusinessAddressReview = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [formInitialData, setFormInitialData] = useState(BusinessAddress);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setFormInitialData(BusinessAddress);
   }, [BusinessAddress]);
+
+  const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
 
   const handleEditClick = () => {
     setFormInitialData(BusinessAddress);
@@ -43,50 +47,51 @@ const BusinessAddressReview = ({
     );
   };
 
-  // const handleSave = (savedData) => {
-  //   dispatch(setBusinessAddress(savedData));
-  //   setIsEditing(false);
-  // };
+  const handleSave = async (savedData) => {
+    setLoading(true);
+    try {
+      // savedData is the new business address
+      const newBusiness = JSON.parse(JSON.stringify(savedData || {}));
+      dispatch(setBusinessAddress(newBusiness));
+      setIsEditing(false);
 
-  const handleSave = (savedData) => {
-    // savedData is the new business address
-    const newBusiness = JSON.parse(JSON.stringify(savedData || {}));
-    dispatch(setBusinessAddress(newBusiness));
-    setIsEditing(false);
+      // get current billing/shipping from selectors (already available via useSelector earlier)
+      const currBilling = BillingAddress;   // use useSelector to read
+      const currShipping = ShippingAddress; // use useSelector to read
 
-    // get current billing/shipping from selectors (already available via useSelector earlier)
-    const currBilling = BillingAddress;   // use useSelector to read
-    const currShipping = ShippingAddress; // use useSelector to read
+      const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
 
-    const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
-
-    const isEqual = (a, b) => {
-      if (!a || !b) return false;
-      return (
-        normalize(a.streetAddress) === normalize(b.streetAddress) &&
-        normalize(a.city) === normalize(b.city) &&
-        normalize(a.state) === normalize(b.state) &&
-        (a.zipCode ?? "").toString().trim() === (b.zipCode ?? "").toString().trim()
-      );
-    };
-
-    // If billing was same as previous business address, update billing to new business address
-    if (isEqual(currBilling, formInitialData /* old business address */)) {
-      // create payload shaped like billing address (repeat name fields if needed)
-      const billingPayload = {
-        ...currBilling,
-        ...savedData
+      const isEqual = (a, b) => {
+        if (!a || !b) return false;
+        return (
+          normalize(a.streetAddress) === normalize(b.streetAddress) &&
+          normalize(a.city) === normalize(b.city) &&
+          normalize(a.state) === normalize(b.state) &&
+          (a.zipCode ?? "").toString().trim() === (b.zipCode ?? "").toString().trim()
+        );
       };
-      dispatch(setBillingAddress(JSON.parse(JSON.stringify(billingPayload))));
-    }
 
-    // same for shipping
-    if (isEqual(currShipping, formInitialData /* old business address */)) {
-      const shippingPayload = {
-        ...currShipping,
-        ...savedData
-      };
-      dispatch(setShippingAddress(JSON.parse(JSON.stringify(shippingPayload))));
+      // If billing was same as previous business address, update billing to new business address
+      if (isEqual(currBilling, formInitialData /* old business address */)) {
+        // create payload shaped like billing address (repeat name fields if needed)
+        const billingPayload = {
+          ...currBilling,
+          ...savedData
+        };
+        dispatch(setBillingAddress(JSON.parse(JSON.stringify(billingPayload))));
+      }
+
+      // same for shipping
+      if (isEqual(currShipping, formInitialData /* old business address */)) {
+        const shippingPayload = {
+          ...currShipping,
+          ...savedData
+        };
+        dispatch(setShippingAddress(JSON.parse(JSON.stringify(shippingPayload))));
+      }
+      await maybeDelay(fakeDelayMs);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -130,6 +135,17 @@ const BusinessAddressReview = ({
             {BusinessAddress?.city}, {BusinessAddress?.state} {BusinessAddress?.zipCode}
           </p>
           <p className="text-sm">{country}</p>
+        </div>
+      )}
+
+
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-40">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Spinner */}
+            <div className="w-16 h-16 rounded-full border-4 border-t-transparent border-black animate-spin" />
+            <div className="text-white text-lg font-medium">Saving...</div>
+          </div>
         </div>
       )}
     </div>

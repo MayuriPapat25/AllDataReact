@@ -79,17 +79,30 @@ const USAnonyFlowValidation = ({
 
     // Validate saved account data when returning to step 1
     useEffect(() => {
-        if (currentStep === 1 && savedAccount && Object.keys(savedAccount).length > 0) {
-            // Use the validation utility to check if saved data is valid
-            const isFormValid = computeIsValid(savedAccount, "account");
-            
-            if (isFormValid) {
-                setFormValid(true);
-            }
-        } else if (currentStep === 1 && (!savedAccount || Object.keys(savedAccount).length === 0)) {
-            // Reset form validation if no saved data
+        if (currentStep !== 1) return;
+
+        if (!savedAccount || Object.keys(savedAccount).length === 0) {
+            // no saved data - ensure continue is disabled until user provides input
             setFormValid(false);
+            return;
         }
+
+        // We now only consider the form "persistently valid" if password AND confirmPassword
+        // actually exist in savedAccount. Since we don't persist them, this will usually be false.
+        const hasPersistedPasswords = Boolean(savedAccount.password && savedAccount.confirmPassword);
+
+        if (!hasPersistedPasswords) {
+            // Passwords are not in Redux, so user must re-enter them.
+            // Force the button disabled. AccountCreation will re-enable it
+            // only after the user fills password + confirm + T&C again.
+            setFormValid(false);
+            return;
+        }
+
+        // In the rare case you *do* decide to persist passwords in future,
+        // this path will handle recomputing validity from the stored snapshot.
+        const isFormValid = computeIsValid(savedAccount, "account");
+        setFormValid(Boolean(isFormValid));
     }, [currentStep, savedAccount]);
 
 
@@ -249,10 +262,16 @@ const USAnonyFlowValidation = ({
                 primaryButton: {
                     text: "CONTINUE TO COMPANY & BILLING",
                     onClick: () => {
-                        accountRef.current?.saveNow();
+                        const ok = accountRef.current?.isStepValidNow
+                            ? accountRef.current.isStepValidNow()
+                            : false;
+                        if (!ok) {
+                            return
+                        }
+                        accountRef.current?.saveNow(true);
                         onContinue();
                     },
-                    disabled: !step1Valid
+                    disabled: !formValid
                 },
                 secondaryButton: null,
                 buttonLayout: "flex-col sm:flex-row gap-4 pt-6 md:justify-center lg:justify-start"

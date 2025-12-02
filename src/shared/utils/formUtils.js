@@ -21,30 +21,35 @@ export const fieldComponents = {
 };
 
 export const getValidationRules = (field, password) => {
-  let validationRules = { required: field.errorMessage };
+  const validationRules = { ...(field.validation || {}) };
 
-  if (field.type === "email") {
-    validationRules.pattern = { value: emailRegex, message: field.errorMessage };
+  if (!validationRules.required && field.errorMessage) {
+    validationRules.required = field.errorMessage;
   }
 
-  if (field.type === "phone") {
-    validationRules.validate = (value) => {
-      const digitsOnly = value.replace(/\D/g, "");
+  // Type-specific overrides/additions
+  if (field.type === "email") {
+    validationRules.pattern = validationRules.pattern || { value: emailRegex, message: field.errorMessage };
+  }
+
+ if (field.type === "phone") {
+    validationRules.validate = validationRules.validate || ((value) => {
+      const digitsOnly = (value || "").replace(/\D/g, "");
       if (digitsOnly.length < 10) {
         return field.errorMessage || "Please enter at least 10 digits.";
       }
       return true;
-    };
+    });
   }
 
   if (field.type === "password") {
-    validationRules.validate = (value) => {
+    validationRules.validate = validationRules.validate || ((value) => {
       if (!value || value.length < 8)
         return "Password must be at least 8 characters long.";
       if (!isPasswordStrong(value))
         return field.helperText;
       return true;
-    };
+    });
   }
 
   if (field.name === "confirmPassword") {

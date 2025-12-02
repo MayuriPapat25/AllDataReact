@@ -18,6 +18,7 @@ const clone = (obj) => {
 
 const ShippingAddressReview = ({
   country = "United States",
+  fakeDelayMs = 1500,
 }) => {
   const dispatch = useDispatch();
 
@@ -26,6 +27,9 @@ const ShippingAddressReview = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [formInitialData, setFormInitialData] = useState(ShippingAddress);
+  const [loading, setLoading] = useState(false);
+
+  const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
 
   useEffect(() => {
     setFormInitialData(ShippingAddress);
@@ -36,18 +40,31 @@ const ShippingAddressReview = ({
     setIsEditing(true);
   };
 
-  const handleCancel = () => {
-    setIsEditing(false);
-    setFormInitialData(clone(ShippingAddress));
+  const handleCancel = async () => {
+    setLoading(true);
+    try {
+      setIsEditing(false);
+      setFormInitialData(clone(ShippingAddress));
+      await maybeDelay(fakeDelayMs)
+    } finally {
+      setLoading(false)
+    }
   };
 
-  const handleSave = (savedData) => {
-    // make a deep clone to avoid accidental shared references
-    const payload = JSON.parse(JSON.stringify(savedData || {}));
-    dispatch(setShippingAddress(payload));
-    setFormInitialData(payload);
-    setIsEditing(false);
+  const handleSave = async (savedData) => {
+    setLoading(true)
+    try { // make a deep clone to avoid accidental shared references
+      const payload = JSON.parse(JSON.stringify(savedData || {}));
+      dispatch(setShippingAddress(payload));
+      setFormInitialData(payload);
+      setIsEditing(false);
+      await maybeDelay(fakeDelayMs)
+    }
+    finally {
+      setLoading(false)
+    }
   };
+
   const isSameAsBusiness = useMemo(() => {
     if (!ShippingAddress || !BusinessAddress) return false;
 
@@ -115,7 +132,16 @@ const ShippingAddressReview = ({
             </div>
           )}
         </>
+      )}
 
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-40">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Spinner */}
+            <div className="w-16 h-16 rounded-full border-4 border-t-transparent border-black animate-spin" />
+            <div className="text-white text-lg font-medium">Saving...</div>
+          </div>
+        </div>
       )}
     </div>
   )
