@@ -132,7 +132,8 @@ const DynamicForm = ({
       <div className="inline-flex flex-wrap justify-between align-top">
         {fields.map((field) => {
 
-          const Component = fieldComponents[field.type] || InputField;
+          // resolve component from mapping (falls back to InputField)
+          const ResolvedComponent = fieldComponents[field.type] || InputField;
           const validationRules = getValidationRules(field, watch ? watch("password") : undefined);
 
           if (field.conditional && watch) {
@@ -164,59 +165,45 @@ const DynamicForm = ({
                   const { onChange: fieldOnChange, onBlur, value, name: fieldName } = fieldProps;
                   const shouldShowError = (isTouched || isDirty) && !!error;
 
-                  // --- SPECIAL CASE: radio group ---
-                  if (field.type === "radio") {
-                    // Defensive fallback for options
-                    const options = Array.isArray(field.options) ? field.options : [];
+                  // use the resolved component for all types (file, radio, select, etc.)
+                  // but make small adjustments for file-type and default value coercion.
 
+                  // --- FILE type: pass null when no value (do not coerce to empty string) ---
+                  if (field.type === "file") {
                     return (
-                      <div className="mb-4">
-                        <div className="text-sm mb-2" id={`${field.name}-label`}>
-                          {field.label}
-                          {field.required ? " *" : ""}
-                        </div>
+                      <ResolvedComponent
+                        id={fieldName}
+                        label={field.label}
+                        accept={field.accept}
+                        required={field.required}
+                        helperText={field.helperText}
+                        value={value ?? null} // important: keep object/File/null, don't coerce to ""
+                        error={shouldShowError}
+                        errorText={shouldShowError ? error?.message : undefined}
+                        className={field.className}
+                        onChange={(fileOrPersisted) => {
+                          // fileOrPersisted can be: File | null | persisted object | string
+                          fieldOnChange(fileOrPersisted);
 
-                        <div role="radiogroup" aria-labelledby={`${field.name}-label`}>
-                          {options.map((opt) => {
-                            // create stable id so label htmlFor works
-                            const id = `${field.name}__${opt.value}`;
-
-                            return (
-                              <label
-                                key={opt.value}
-                                htmlFor={id}
-                                className="flex items-center gap-2 cursor-pointer mb-2"
-                              >
-                                <input
-                                  id={id}
-                                  name={fieldName}
-                                  type="radio"
-                                  value={opt.value}
-                                  checked={String(value) === String(opt.value)}
-                                  onChange={() => fieldOnChange(opt.value)}
-                                  onBlur={onBlur}
-                                // keep uncontrolled props controlled by RHF via checked/onChange
-                                />
-                                <span>{opt.label}</span>
-                              </label>
-                            );
-                          })}
-                        </div>
-
-                        {shouldShowError && (
-                          <p className="text-xs text-red-600 mt-1">{error?.message}</p>
-                        )}
-                      </div>
+                          // propagate to parent's onChange with current form values
+                          if (onChange && typeof getValues === "function") {
+                            try {
+                              const allVals = deepClone(getValues());
+                              onChange(allVals);
+                            } catch (e) {
+                              onChange({ [field.name]: fileOrPersisted });
+                            }
+                          }
+                        }}
+                      />
                     );
                   }
 
-                  // --- DEFAULT PATH: use your fieldComponents (InputField etc.) ---
-                  const Component = fieldComponents[field.type] || InputField;
-                  if (!Component) return null;
-
+                  // --- DEFAULT: use ResolvedComponent for all other field types ---
+                  // Give it a string value fallback (so InputField/selects get expected "")
                   return (
-                    <Component
-                      id={field.name}
+                    <ResolvedComponent
+                      id={fieldName}
                       label={field.label}
                       options={field.options}
                       placeholder={field.placeholder}
@@ -243,10 +230,11 @@ const DynamicForm = ({
                       helperText={field.helperText}
                       type={field.type}
                       optional={field?.optional}
-                      disabled={(field.name === "billingEmail" && watch && watch("usePrimaryEmail") === "primary") || field.disabled}
+                      disabled={isDisabled}
                       inputMode={field.inputMode}
                       maxLength={field.maxLength}
                       onKeyPress={field.onKeyPress}
+                      className={field.className}
                     />
                   );
                 }}

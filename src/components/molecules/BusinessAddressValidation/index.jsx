@@ -50,6 +50,31 @@ const BusinessAddressValidation = ({
     return okStreetAddress && okCity && okState && okZipCode;
   })();
 
+  const findStateValue = (token) => {
+    if (!token) return "";
+    const t = String(token).trim().toLowerCase();
+
+    // Try exact code match first (e.g. "CA", "ca")
+    const byValue = US_STATES.find(s => String(s.value || "").toLowerCase() === t);
+    if (byValue) return byValue.value;
+
+    // Try matching label (case-insensitive, allow partial)
+    const byLabel = US_STATES.find(s => String(s.label || "").toLowerCase() === t);
+    if (byLabel) return byLabel.value;
+
+    // try loose contains match (e.g. "new york" matches "New York")
+    const byContains = US_STATES.find(s => String(s.label || "").toLowerCase().includes(t) || t.includes(String(s.label || "").toLowerCase()));
+    if (byContains) return byContains.value;
+
+    return "";
+  };
+
+  useEffect(() => {
+    // inform parent when required fields are present (so the Continue button can enable)
+    // we don't auto-mark as "validatedRef.current = true" — keep Validate / Update UX intact.
+    onValidationChange(Boolean(isAllRequiredPresent));
+  }, [isAllRequiredPresent, onValidationChange]);
+
   useEffect(() => {
     const incoming = (initialData && Object.keys(initialData).length) ? initialData : storeAddress;
     if (incoming && Object.keys(incoming).length) {
@@ -65,12 +90,37 @@ const BusinessAddressValidation = ({
         validatedRef.current = true;
         setReadonly(true);
         onValidationChange(true);
+      } else {
+        validatedRef.current = false;
+        setReadonly(false);
       }
     } else {
       validatedRef.current = false;
       setReadonly(false);
+      // reflect initial empty state to parent
+      onValidationChange(false);
     }
-  }, [initialData, storeAddress, reset, onValidationChange]);
+  }, [initialData, storeAddress, reset]);
+
+  const validateRequiredFields = useRef(null);
+
+  useEffect(() => {
+    if (validateRequiredFields.current) {
+      clearTimeout(validateRequiredFields.current);
+    }
+    validateRequiredFields.current = setTimeout(async () => {
+      // Only validate the required fields to speed up checks
+      const ok = await trigger(["streetAddress", "city", "state", "zipCode"]);
+      // Do not change validatedRef or readonly here — validatedRef tracks persisted readonly state.
+      onValidationChange(Boolean(ok));
+    }, 180); // 180ms debounce
+
+    return () => {
+      if (validateRequiredFields.current) clearTimeout(validateRequiredFields.current);
+    };
+    // trigger when any watched field changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watched?.[0], watched?.[1], watched?.[2], watched?.[3], trigger, onValidationChange]);
 
   const getStateLabel = (code) => {
     if (!code) return "";
@@ -80,19 +130,83 @@ const BusinessAddressValidation = ({
 
   // centralize dispatch so we always save both code and label
   const saveAddressToStore = (data) => {
-    const stateLabel = getStateLabel(data.state);
+    const normalizedState = data.state ? (findStateValue(data.state) || data.state) : "";
+
     const payload = {
       streetAddress: data.streetAddress || "",
       unit: data.unit || "",
       city: data.city || "",
-      state: data.state || "",
+      state: normalizedState,
       zipCode: data.zipCode || "",
-      stateName: stateLabel,
-      ...(storeAddress || {}),
+      stateName: getStateLabel(normalizedState),
     };
-    const merged = { ...storeAddress, ...payload };
-    dispatch(setBusinessAddress(merged));
-    return merged;
+
+    // debug: log what we're about to dispatch
+    // eslint-disable-next-line no-console
+
+    const result = dispatch(setBusinessAddress(payload));
+    return { payload, result };
+  };
+
+  // Parse freeform string like:
+  // "Amel, Hepscheid, Heppenbach, Amel, Verviers, Liège, Wallonia, 4771, Belgium"
+  const parseFromFreeformString = (str) => {
+    if (!str || typeof str !== "string") return null;
+    const parts = str.split(",").map(p => p.trim()).filter(Boolean);
+    if (parts.length === 0) return null;
+
+    // If last token is likely a country (alphabetic and not a short code), drop it.
+    const isLikelyCountry = (token) => {
+      // heuristics: pure letters and length > 2 (e.g., "Belgium", "United States")
+      return /^[A-Za-z\s]+$/.test(token) && token.length > 2;
+    };
+
+    let tokens = [...parts];
+    if (tokens.length > 1 && isLikelyCountry(tokens[tokens.length - 1])) {
+      tokens.pop();
+    }
+
+    // find a token from end that looks like a zip (has digits)
+    let zipIndex = -1;
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      if (/\d/.test(tokens[i])) {
+        zipIndex = i;
+        break;
+      }
+    }
+
+    let zip = "";
+    let stateToken = "";
+    let city = "";
+
+    if (zipIndex !== -1) {
+      zip = tokens[zipIndex];
+      // state is token before zipIndex
+      if (zipIndex - 1 >= 0) stateToken = tokens[zipIndex - 1];
+      // city is token before state
+      if (zipIndex - 2 >= 0) city = tokens[zipIndex - 2];
+    } else {
+      // No numeric zip found — fallback: use last tokens as city/state/zip placeholders
+      if (tokens.length >= 3) {
+        city = tokens[tokens.length - 3];
+        stateToken = tokens[tokens.length - 2];
+        zip = tokens[tokens.length - 1];
+      } else if (tokens.length === 2) {
+        city = tokens[0];
+        stateToken = tokens[1];
+      } else if (tokens.length === 1) {
+        // can't extract much
+        city = tokens[0];
+      }
+    }
+    const stateValue = findStateValue(stateToken);
+
+    // return empty strings instead of undefined
+    return {
+      city: city || "",
+      state: stateValue || stateToken || "",
+      zipCode: zip || ""
+    };
   };
 
   const parseAddressComponents = (placeResult) => {
@@ -100,7 +214,13 @@ const BusinessAddressValidation = ({
     //  - a place result with .address_components (Google)
     //  - an object { city, state, zipCode }
     //  - a simple object with keys like locality, administrative_area_level_1, postal_code
+    //  - a plain freeform string
     if (!placeResult) return null;
+
+    // If it's a plain string — attempt freeform parsing
+    if (typeof placeResult === "string") {
+      return parseFromFreeformString(placeResult);
+    }
 
     // If user supplied direct fields:
     if ("city" in placeResult || "state" in placeResult || "zipCode" in placeResult) {
@@ -202,6 +322,7 @@ const BusinessAddressValidation = ({
           // Try to detect a placeId pattern (place ids usually start with "ChI" for google but not guaranteed).
           // We attempt geocode if window.google present and string looks like an id (or if it's safe to call).
           const maybePlaceId = currentStreet;
+          let didAutofill = false;
           if (window?.google?.maps && maybePlaceId.length > 5 && !/\s/.test(maybePlaceId)) {
             // attempt geocode by placeId
             try {
@@ -211,11 +332,22 @@ const BusinessAddressValidation = ({
                 if (parsed.city) setValue("city", parsed.city, { shouldDirty: true });
                 if (parsed.state) setValue("state", parsed.state, { shouldDirty: true });
                 if (parsed.zipCode) setValue("zipCode", parsed.zipCode, { shouldDirty: true });
+                didAutofill = true;
               }
               const streetText = placeResult.formatted_address;
               if (streetText) setValue("streetAddress", streetText, { shouldDirty: true });
             } catch (err) {
-              // If geocode failed (or currentStreet is just typed text), do nothing.
+              // If geocode failed (or currentStreet is just typed text), we'll fall back below
+            }
+          }
+
+          // If not a placeId / geocode not done, try to parse freeform string
+          if (!didAutofill) {
+            const parsedFromString = parseFromFreeformString(currentStreet);
+            if (parsedFromString) {
+              if (parsedFromString.city) setValue("city", parsedFromString.city, { shouldDirty: true });
+              if (parsedFromString.state) setValue("state", parsedFromString.state, { shouldDirty: true });
+              if (parsedFromString.zipCode) setValue("zipCode", parsedFromString.zipCode, { shouldDirty: true });
             }
           }
         }
@@ -232,7 +364,7 @@ const BusinessAddressValidation = ({
   // Validate + save handler for "Validate" button (used on first save)
   const handleValidate = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    const ok = await trigger();
+    const ok = await trigger(["streetAddress", "city", "state", "zipCode"]);
     if (!ok) {
       onValidationChange(false);
       return;
@@ -262,23 +394,46 @@ const BusinessAddressValidation = ({
   // Update handler for the "UPDATE" button (when editing a validated address)
   const handleUpdate = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
-    const ok = await trigger();
+
+    // explicitly validate the address fields
+    const ok = await trigger(["streetAddress", "city", "state", "zipCode"]);
     if (!ok) {
       onValidationChange(false);
       return;
     }
+
     setLoading(true);
     try {
       const data = getValues();
-      const payload = saveAddressToStore(data);
 
-      // optional artificial wait so user sees loader
+      // save to store (normalizes state)
+      const { payload, result } = saveAddressToStore(data);
+
+      // if the action returned a promise (redux-thunk), await it
+      if (result && typeof result.then === "function") {
+        await result;
+      }
+
+      // optional delay for UX
       await maybeDelay(fakeDelayMs);
 
+      // sync react-hook-form to the saved payload so UI reflects store
+      reset({
+        streetAddress: payload.streetAddress || "",
+        unit: payload.unit || "",
+        city: payload.city || "",
+        state: payload.state || "",
+        zipCode: payload.zipCode || "",
+      });
+
+      validatedRef.current = true;
       setReadonly(true);
+
       onValidationChange(true);
       onSave(payload);
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Address update failed:", err);
       onValidationChange(false);
     } finally {
       setLoading(false);
@@ -350,7 +505,7 @@ const BusinessAddressValidation = ({
     const line2 = [vals.city, stateLabel, vals.zipCode].filter(Boolean).join(", ");
 
     return (
-      <div className={`max-w-2xl bg-card pb-8 border-b-2 border-gray-300 ${className}`}>
+      <div className={`max-w-2xl bg-card pb-8 border-b-2 border-gray-300 pt-6 ${className}`}>
         <div className="flex justify-between items-start">
           <h2 className="text-md mb-4">{translations?.business_address}</h2>
           <button onClick={handleEditClick} className="text-sm font-medium text-gray-600 hover:underline">

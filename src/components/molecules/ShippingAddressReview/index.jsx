@@ -128,7 +128,7 @@ const ShippingAddressReview = ({
               <p className="text-sm">
                 {ShippingAddress?.city}, {ShippingAddress?.state} {ShippingAddress?.zipCode}
               </p>
-              <p className="text-sm">{country}</p>
+              {/* <p className="text-sm">{country}</p> */}
             </div>
           )}
         </>

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { translations } from "../../../shared/translations"
 import { Button } from "../../../shared/ui/Buttons/Button"
 import { setBillingAddress } from "../../../store/store";
 import { billingAddressFields } from "../../../shared/constants/billingAddressFields";
 import DynamicForm from "../../../shared/ui/DynamicForm";
-import { useMemo } from "react";
 
 const BillingAddressReview = ({
   country = "United States",
@@ -22,43 +21,65 @@ const BillingAddressReview = ({
 
   const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
 
+  const wholeFormSlice = useSelector(s => s.form);
+  const wholeBillingSlice = useSelector(s => s.billing);
   useEffect(() => {
-    setFormInitialData(BillingAddress);
+    console.debug("DEBUG store.form:", wholeFormSlice);
+    console.debug("DEBUG store.billing:", wholeBillingSlice);
+  }, [wholeFormSlice, wholeBillingSlice]);
+
+  useEffect(() => {
+    if (!isEditing) {
+      setFormInitialData(BillingAddress ?? {});
+    }
+  }, [BillingAddress, isEditing]);
+
+  const handleEditClick = useCallback(() => {
+    setFormInitialData(BillingAddress ?? {});
+    setIsEditing(true);
   }, [BillingAddress]);
 
-  const handleEditClick = () => {
-    setFormInitialData(BillingAddress);
-    setIsEditing(true);
-  };
-
-  const handleCancel = async () => {
+  const handleCancel = useCallback(async () => {
     setLoading(true);
     try {
       setIsEditing(false);
-      setFormInitialData(BillingAddress);
+      // restore from store (important in case store changed while editing)
+      setFormInitialData(BillingAddress ?? {});
       await maybeDelay(fakeDelayMs);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  };
+  }, [BillingAddress, fakeDelayMs]);
 
+  const handleSave = useCallback(
+    async (savedData) => {
+      setLoading(true);
+      try {
+        // defensive: ensure we have an object
+        const dataToSave = savedData && typeof savedData === "object" ? savedData : formInitialData ?? {};
 
-  const handleSave = async (savedData) => {
-    setLoading(true);
-    try {
-      dispatch(setBillingAddress(JSON.parse(JSON.stringify(savedData || {}))));
-      setIsEditing(false);
-      await maybeDelay(fakeDelayMs);
-    } finally {
-      setLoading(false)
-    }
-  };
+        // optimistic local update so UI reflects change immediately
+        setFormInitialData(dataToSave);
+        setIsEditing(false);
+
+        // deep-clone payload to avoid accidental mutation later
+        const payload = JSON.parse(JSON.stringify(dataToSave));
+        console.log('payload', payload)
+        dispatch(setBillingAddress(payload));
+
+        // wait to simulate remote/save latency
+        await maybeDelay(fakeDelayMs);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [dispatch, formInitialData, fakeDelayMs]
+  );
 
   const isSameAsBusiness = useMemo(() => {
     if (!BillingAddress || !BusinessAddress) return false;
 
-    const normalize = (s) =>
-      (s ?? "").toString().trim().toLowerCase();
+    const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
 
     return (
       normalize(BillingAddress.city) === normalize(BusinessAddress.city) &&
@@ -67,6 +88,11 @@ const BillingAddressReview = ({
       (BillingAddress.zipCode ?? "").toString().trim() === (BusinessAddress.zipCode ?? "").toString().trim()
     );
   }, [BillingAddress, BusinessAddress]);
+
+  useEffect(() => {
+    console.debug("BillingAddress from store:", BillingAddress);
+    console.debug("Form initial data:", formInitialData);
+  }, [BillingAddress, formInitialData]);
 
   return (
     <div className="max-w-2xl border-b-2 border-gray-300 pb-8">
@@ -117,7 +143,7 @@ const BillingAddressReview = ({
               <p className="text-sm">
                 {BillingAddress?.city}, {BillingAddress?.state} {BillingAddress?.zipCode}
               </p>
-              <p className="text-sm">{country}</p>
+              {/* <p className="text-sm">{country}</p> */}
             </div>
           )}
         </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import DynamicForm from "../../../shared/ui/DynamicForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,14 +20,15 @@ const BillingAddress = ({
   );
 
   const persistedFromSlices = useSelector((s) =>
-    s.billing?.billingAddress ?? s.form?.billingAddress ?? s.form?.billing?.billingAddress ?? null
+    s.form?.billingAddress ?? s.billing?.billingAddress ?? s.form?.billing?.billingAddress ?? null
   );
 
   const [billingData, setBillingData] = useState(persistedFromSlices ?? initialBillingData ?? null);
 
   const [mode, setMode] = useState(() => {
+    if (persistedFromSlices) return "readonly";
+    if (initialBillingData) return "readonly";
     if (initialSameAsBusiness) return "same";
-    if (persistedFromSlices || initialBillingData) return "readonly";
     return "editing";
   });
 
@@ -85,8 +86,8 @@ const BillingAddress = ({
     const zipCode = b.zipCode ?? b.zip ?? b.postalCode ?? b.postcode ?? "";
 
     return {
-      firstName: firstName || "",
-      lastName: lastName || "",
+      firstName,
+      lastName,
       streetAddress,
       unit,
       city,
@@ -120,6 +121,66 @@ const BillingAddress = ({
       (a.zipCode ?? "") === (b.zipCode ?? "")
     );
   };
+
+  useEffect(() => {
+    setBillingData(persistedFromSlices ?? initialBillingData ?? null);
+  }, [persistedFromSlices, initialBillingData]);
+
+  useEffect(() => {
+    console.debug("Billing - persistedFromSlices changed:", persistedFromSlices, "business:", businessAddress, "mode:", mode);
+  }, [persistedFromSlices, businessAddress, mode]);
+
+  useEffect(() => {
+    // If no persisted billing yet, nothing to do.
+    if (!persistedFromSlices) return;
+
+    const normalizedPersisted = normalizeBillingShape(persistedFromSlices);
+    const mappedBusiness = normalizeBusinessToBilling(businessAddress);
+    const normalizedBusiness = normalizeBillingShape(mappedBusiness);
+
+    const persistedEqualsBusiness =
+      normalizedBusiness && normalizedPersisted && shallowEq(normalizedBusiness, normalizedPersisted);
+
+    if (persistedEqualsBusiness) {
+      // If persisted still equals business, reflect that
+      setBillingData(normalizedBusiness);
+      try { reset(normalizedBusiness); } catch (e) { }
+      setMode("same");
+      if (typeof onValidationChange === "function") onValidationChange(true);
+      return;
+    }
+
+    // Persisted exists and is different from business -> show persisted (readonly) and uncheck "same"
+    setBillingData(normalizedPersisted);
+    try { reset(normalizedPersisted); } catch (e) { }
+    setMode("readonly");
+    if (typeof onValidationChange === "function") onValidationChange(true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [persistedFromSlices, businessAddress]);
+
+  useEffect(() => {
+    // If we received an updated persisted billing that is different from the business address,
+    // ensure we leave "same" mode and show the persisted billing instead.
+    if (!persistedFromSlices) return;
+
+    const normalizedPersisted = normalizeBillingShape(persistedFromSlices);
+    const mappedBusiness = normalizeBusinessToBilling(businessAddress);
+    const normalizedBusiness = normalizeBillingShape(mappedBusiness);
+
+    // If persisted equals business, keep same mode (handled by your existing effect)
+    const persistedEqualsBusiness =
+      normalizedBusiness && normalizedPersisted && shallowEq(normalizedBusiness, normalizedPersisted);
+
+    if (!persistedEqualsBusiness) {
+      // Persisted billing is different — make sure the UI reflects that:
+      setBillingData(normalizedPersisted);
+      try { reset(normalizedPersisted); } catch (e) { }
+      setMode("readonly");
+      if (typeof onValidationChange === "function") onValidationChange(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [persistedFromSlices, businessAddress, normalizeBusinessToBilling, normalizeBillingShape, reset]);
 
   useEffect(() => {
     // Prefer persistedFromSlices (redux) if present
@@ -239,6 +300,17 @@ const BillingAddress = ({
       return Promise.resolve(false);
     }
   }, [getValues, REQUIRED_FIELDS]);
+
+  useEffect(() => {
+    // run once on mount to synchronously compute initial validity & notify parent
+    computeRequiredFieldsValid().then((valid) => {
+      setIsFormValid(Boolean(valid));
+      if (typeof onValidationChange === "function") onValidationChange(Boolean(valid));
+    }).catch(() => {
+      setIsFormValid(false);
+      if (typeof onValidationChange === "function") onValidationChange(false);
+    });
+  }, []);
 
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -521,6 +593,145 @@ const BillingAddress = ({
     }
   };
 
+  // We use a ref to remember last street that caused an autofill so we don't overwrite user edits repeatedly.
+  const lastAutoFilledStreet = useRef(null);
+  const lastAutoFilledValues = useRef({ city: null, state: null, zipCode: null });
+
+  const parseAddressFromStreet = (street) => {
+    if (!street || typeof street !== "string") return {};
+    const tokens = street.split(",").map((t) => t.trim()).filter(Boolean);
+    if (tokens.length === 0) return {};
+
+    // Find token that looks like a postal code: contains at least 3 consecutive digits (covers many countries)
+    let zipTokenIndex = -1;
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      const tk = tokens[i];
+      if (/\d{3,}/.test(tk)) {
+        zipTokenIndex = i;
+        break;
+      }
+    }
+
+    let zip = "";
+    if (zipTokenIndex !== -1) {
+      zip = tokens[zipTokenIndex];
+    }
+
+    // Country: choose last token that is non-numeric (skip zip token if numeric)
+    let country = "";
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      if (i === zipTokenIndex) continue;
+      if (tokens[i]) {
+        country = tokens[i];
+        break;
+      }
+    }
+
+    // State/region: pick the token immediately before the zip token if present,
+    // otherwise pick the token before the country token. Fallback to second-last token.
+    let state = "";
+    if (zipTokenIndex > 0) {
+      // try token before zip (and not equal to country)
+      const candidate = tokens[zipTokenIndex - 1];
+      if (candidate && candidate !== country) state = candidate;
+    }
+    if (!state) {
+      // token before country (if zip is last or not found)
+      const countryIndex = tokens.lastIndexOf(country);
+      if (countryIndex > 0) {
+        const cand = tokens[countryIndex - 1];
+        if (cand) state = cand;
+      }
+    }
+    if (!state && tokens.length >= 2) {
+      state = tokens[tokens.length - 2];
+    }
+
+    // City: choose token before state if available, otherwise tokens[0] or tokens[tokens.length-3]
+    let city = "";
+    const stateIndex = tokens.indexOf(state);
+    if (stateIndex > 0) {
+      city = tokens[stateIndex - 1];
+    } else {
+      // fallback heuristics
+      if (tokens.length >= 3) {
+        city = tokens[tokens.length - 3] || tokens[0];
+      } else if (tokens.length === 2) {
+        city = tokens[0];
+      } else {
+        city = tokens[0];
+      }
+    }
+
+    // Trim extras
+    return {
+      zipCode: zip || "",
+      state: (state || "").trim(),
+      city: (city || "").trim(),
+      country: (country || "").trim(),
+    };
+  };
+  // Watch streetAddress specifically and attempt autofill when in editing mode.
+  const streetValue = watch("streetAddress");
+  useEffect(() => {
+    // Only autofill while user is editing this section
+    if (mode !== "editing") return;
+    if (!streetValue || typeof streetValue !== "string") return;
+
+    const trimmed = streetValue.trim();
+    if (trimmed.length < 3) return;
+
+    // parse
+    const parsed = parseAddressFromStreet(trimmed);
+    const { city, state, zipCode } = parsed;
+
+    // if nothing extracted, skip
+    if (!city && !state && !zipCode) return;
+
+    // Check if these fields are already filled by user (non-empty and not previously autofilled),
+    // we avoid overwriting manual edits.
+    const currentValues = getValues ? getValues() : {};
+    const curCity = (currentValues?.city ?? "").trim();
+    const curState = (currentValues?.state ?? "").trim();
+    const curZip = (currentValues?.zipCode ?? currentValues?.zip ?? "").toString().trim();
+
+    const lastStreet = lastAutoFilledStreet.current;
+    const lastVals = lastAutoFilledValues.current;
+
+    // If the street hasn't changed since last autofill and parsed values equal last autofill, do nothing.
+    if (lastStreet === trimmed &&
+      lastVals.city === city &&
+      lastVals.state === state &&
+      lastVals.zipCode === zipCode) {
+      return;
+    }
+
+    // Only set when target field is empty OR it was previously autofilled from the same street
+    const shouldSetCity = (!curCity) || (lastStreet === trimmed && lastVals.city && !curCity);
+    const shouldSetState = (!curState) || (lastStreet === trimmed && lastVals.state && !curState);
+    const shouldSetZip = (!curZip) || (lastStreet === trimmed && lastVals.zipCode && !curZip);
+
+    let didSet = false;
+    if (shouldSetCity && city) {
+      try { setValue("city", city, { shouldDirty: true, shouldValidate: true }); didSet = true; } catch (e) { }
+    }
+    if (shouldSetState && state) {
+      try { setValue("state", state, { shouldDirty: true, shouldValidate: true }); didSet = true; } catch (e) { }
+    }
+    if (shouldSetZip && zipCode) {
+      try { setValue("zipCode", zipCode, { shouldDirty: true, shouldValidate: true }); didSet = true; } catch (e) { }
+    }
+
+    if (didSet) {
+      // remember what we autofilled and from which street string
+      lastAutoFilledStreet.current = trimmed;
+      lastAutoFilledValues.current = { city, state, zipCode };
+      // re-check validation
+      computeRequiredFieldsValid();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [streetValue, mode, setValue, getValues]);
+
   // small helper to format readonly address for display
   const formatAddress = (data) => {
     if (!data) return "";
@@ -534,20 +745,9 @@ const BillingAddress = ({
     return parts.join("\n");
   };
 
-  // useEffect(() => {
-  //   console.debug("BillingAddress debug:", {
-  //     persistedFromSlices,
-  //     initialBillingData,
-  //     billingData,
-  //     forceEditOnMount,
-  //     mode,
-  //     businessAddress,
-  //   });
-  // }, [persistedFromSlices, initialBillingData, billingData, forceEditOnMount, mode, businessAddress]);
-
   // Render different UIs by mode
   return (
-    <div className="max-w-2xl pb-8">
+    <div className="max-w-2xl pb-8 pt-6">
       <h2 className="text-md mb-4">{translations?.billing_address}</h2>
 
       {isLoading && (

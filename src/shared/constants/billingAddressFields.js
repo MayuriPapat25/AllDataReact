@@ -47,24 +47,47 @@ export const billingAddressFields = [
   },
 
   // 6. ZIP Code
+  // {
+  //   name: "zipCode",
+  //   label: translations?.zip_code,
+  //   type: "text",
+  //   required: true,
+  //   inputMode: "numeric",
+  //   maxLength: 5,
+  //   onKeyPress: (e) => {
+  //     if (!/[0-9]/.test(e.key)) {
+  //       e.preventDefault();
+  //     }
+  //   },
+  //   validation: {
+  //     required: translations?.zip_code_required,
+  //     pattern: {
+  //       value: /^[0-9]{5}$/,
+  //       message: translations?.enter_valid_zip_code,
+  //     },
+  //   },
+  // }
   {
-    name: "zipCode",
-    label: translations?.zip_code,
-    type: "text",
-    required: true,
-    inputMode: "numeric",
-    maxLength: 5,
-    onKeyPress: (e) => {
-      if (!/[0-9]/.test(e.key)) {
-        e.preventDefault();
-      }
+  name: "zipCode",
+  label: translations?.zip_code,
+  type: "text",
+  required: true,
+
+  // REMOVE numeric-only restriction
+  // REMOVE maxLength: 5
+  // REMOVE inputMode numeric (optional)
+  inputMode: "text",
+
+  validation: {
+    required: translations?.zip_code_required,
+
+    // REMOVE 5-digit regex pattern
+    // (optional) allow any characters
+    // If you want minimal validation, use a simple non-empty check:
+    pattern: {
+      value: /^.{1,50}$/,   // 1 to 50 chars (optional upper bound)
+      message: translations?.enter_valid_zip_code,
     },
-    validation: {
-      required: translations?.zip_code_required,
-      pattern: {
-        value: /^[0-9]{5}$/,
-        message: translations?.enter_valid_zip_code,
-      },
-    },
-  }
+  },
+}
 ];

@@ -6,28 +6,28 @@ export const businessInformationFields = [
     name: "businessName",
     label: translations?.business_shop_name,
     type: "text",
-    required: true,
+    // required: true,
     // validation: { required: translations?.business_shop_name_required },
   },
   {
     name: "authorizedSignerFirstName",
     label: translations?.authorize_signer_first_name,
     type: "text",
-    required: true,
+    // required: true,
     // validation: { required: translations?.first_name_required },
   },
   {
     name: "authorizedSignerlastName",
     label: translations?.authorized_signer_last_name,
     type: "text",
-    required: true,
+    // required: true,
     // validation: { required: translations?.last_name_required },
   },
   {
     name: "titleOfAuthorizedSigner",
     label: translations?.title_authorized_signer,
     type: "select",
-    required: true,
+    // required: true,
     options: [
       { value: "manager", label: translations?.manager },
       { value: "serviceManager", label: translations?.service_manager },
@@ -38,7 +38,7 @@ export const businessInformationFields = [
     name: "authorizedSignerEmailAddress",
     label: translations?.authorized_signer_email_address,
     type: "email",
-    required: true,
+    // required: true,
     validation: {
       required: translations?.email_address_required,
       pattern: {
@@ -51,7 +51,7 @@ export const businessInformationFields = [
     name: "shopType",
     label: translations?.shop_type,
     type: "select",
-    required: true,
+    // required: true,
     options: [
       { value: "general-repair", label: "General Repair" },
       { value: "collision", label: "Collision" },
@@ -68,7 +68,7 @@ export const businessInformationFields = [
     name: "ownershipType",
     label: translations?.ownership_type,
     type: "select",
-    required: true,
+    // required: true,
     options: [
       { value: "corporation", label: "Corporation" },
       { value: "sole-proprietor", label: "Sole Proprietor" },
@@ -82,7 +82,7 @@ export const businessInformationFields = [
     name: "taxExemptStatus",
     label: translations?.tax_exempt_status,
     type: "radio",
-    required: true,
+    // required: true,
     options: [
       { value: "not-exempt", label: translations?.my_business_not_tax_exempt },
       { value: "exempt", label: translations?.my_business_is_tax_exempt },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import DynamicForm from "../../../shared/ui/DynamicForm"; // adjust path if your file lives elsewhere
 import { useDispatch, useSelector } from "react-redux";
@@ -22,14 +22,15 @@ const ShippingAddressForm = ({
   );
 
   const persistedFromSlices = useSelector((s) =>
-    s.shipping?.shippingAddress ?? s.form?.shippingAddress ?? s.form?.shipping?.shippingAddress ?? null
+    s.form?.shippingAddress ?? s.shipping?.shippingAddress ?? s.form?.shipping?.shippingAddress ?? null
   );
 
   const [shippingData, setShippingData] = useState(persistedFromSlices ?? initialShippingData ?? null);
 
   const [mode, setMode] = useState(() => {
+    if (persistedFromSlices) return "readonly";
+    if (initialBillingData) return "readonly";
     if (initialSameAsBusiness) return "same";
-    if (persistedFromSlices || initialShippingData) return "readonly";
     return "editing";
   });
 
@@ -122,6 +123,43 @@ const ShippingAddressForm = ({
       (a.zipCode ?? "") === (b.zipCode ?? "")
     );
   };
+
+  useEffect(() => {
+    setShippingData(persistedFromSlices ?? initialShippingData ?? null);
+  }, [persistedFromSlices, initialShippingData]);
+
+  useEffect(() => {
+    console.debug("Billing - persistedFromSlices changed:", persistedFromSlices, "business:", businessAddress, "mode:", mode);
+  }, [persistedFromSlices, businessAddress, mode]);
+
+  useEffect(() => {
+    // If no persisted billing yet, nothing to do.
+    if (!persistedFromSlices) return;
+
+    const normalizedPersisted = normalizeShippingShape(persistedFromSlices);
+    const mappedBusiness = normalizeBusinessToShipping(businessAddress);
+    const normalizedBusiness = normalizeShippingShape(mappedBusiness);
+
+    const persistedEqualsBusiness =
+      normalizedBusiness && normalizedPersisted && shallowEq(normalizedBusiness, normalizedPersisted);
+
+    if (persistedEqualsBusiness) {
+      // If persisted still equals business, reflect that
+      setShippingData(normalizedBusiness);
+      try { reset(normalizedBusiness); } catch (e) { }
+      setMode("same");
+      if (typeof onValidationChange === "function") onValidationChange(true);
+      return;
+    }
+
+    // Persisted exists and is different from business -> show persisted (readonly) and uncheck "same"
+    setShippingData(normalizedPersisted);
+    try { reset(normalizedPersisted); } catch (e) { }
+    setMode("readonly");
+    if (typeof onValidationChange === "function") onValidationChange(true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [persistedFromSlices, businessAddress]);
 
   useEffect(() => {
     // Prefer persistedFromSlices (redux) if present
@@ -221,6 +259,7 @@ const ShippingAddressForm = ({
     if (typeof onValidationChange === "function") onValidationChange(true);
   }, [mode, businessAddress, persistedFromSlices, forceEditOnMount, normalizeBusinessToShipping, shippingData, dispatch, onValidationChange]);
 
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Compute validity only for required fields (ignores "unit").
   const computeRequiredFieldsValid = useCallback(() => {
@@ -240,7 +279,6 @@ const ShippingAddressForm = ({
     }
   }, [getValues, REQUIRED_FIELDS]);
 
-  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     setShippingData(persistedFromSlices ?? initialShippingData ?? null);
@@ -521,17 +559,145 @@ const ShippingAddressForm = ({
     return parts.join("\n");
   };
 
-  // useEffect(() => {
-  //   console.debug("Shipping debug:", {
-  //     persistedFromSlices,
-  //     initialShippingData,
-  //     shippingData,
-  //     forceEditOnMount,
-  //     mode,
-  //     businessAddress,
-  //   });
-  // }, [persistedFromSlices, initialShippingData, shippingData, forceEditOnMount, mode, businessAddress]);
+  // ---------- AUTOFILL: parse street address and set city/state/zip ----------
+  // Refs to remember last auto-filled street / values so we don't overwrite user edits repeatedly.
+  const lastAutoFilledStreet = useRef(null);
+  const lastAutoFilledValues = useRef({ city: null, state: null, zipCode: null });
 
+  const parseAddressFromStreet = (street) => {
+    if (!street || typeof street !== "string") return {};
+    const tokens = street.split(",").map((t) => t.trim()).filter(Boolean);
+    if (tokens.length === 0) return {};
+
+    // Find token that looks like a postal code: contains at least 3 consecutive digits
+    let zipTokenIndex = -1;
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      const tk = tokens[i];
+      if (/\d{3,}/.test(tk)) {
+        zipTokenIndex = i;
+        break;
+      }
+    }
+
+    let zip = "";
+    if (zipTokenIndex !== -1) {
+      zip = tokens[zipTokenIndex];
+    }
+
+    // Country: choose last token that is non-numeric (skip zip token if numeric)
+    let country = "";
+    for (let i = tokens.length - 1; i >= 0; i--) {
+      if (i === zipTokenIndex) continue;
+      if (tokens[i]) {
+        country = tokens[i];
+        break;
+      }
+    }
+
+    // State/region: pick the token immediately before the zip token if present,
+    // otherwise pick the token before the country token. Fallback to second-last token.
+    let state = "";
+    if (zipTokenIndex > 0) {
+      const candidate = tokens[zipTokenIndex - 1];
+      if (candidate && candidate !== country) state = candidate;
+    }
+    if (!state) {
+      const countryIndex = tokens.lastIndexOf(country);
+      if (countryIndex > 0) {
+        const cand = tokens[countryIndex - 1];
+        if (cand) state = cand;
+      }
+    }
+    if (!state && tokens.length >= 2) {
+      state = tokens[tokens.length - 2];
+    }
+
+    // City: choose token before state if available, otherwise tokens[0] or tokens[tokens.length-3]
+    let city = "";
+    const stateIndex = tokens.indexOf(state);
+    if (stateIndex > 0) {
+      city = tokens[stateIndex - 1];
+    } else {
+      if (tokens.length >= 3) {
+        city = tokens[tokens.length - 3] || tokens[0];
+      } else if (tokens.length === 2) {
+        city = tokens[0];
+      } else {
+        city = tokens[0];
+      }
+    }
+
+    return {
+      zipCode: zip || "",
+      state: (state || "").trim(),
+      city: (city || "").trim(),
+      country: (country || "").trim(),
+    };
+  };
+
+  // Watch streetAddress specifically and attempt autofill when in editing mode.
+  const streetValue = watch("streetAddress");
+  useEffect(() => {
+    // Only autofill while user is editing this section
+    if (mode !== "editing") return;
+    if (!streetValue || typeof streetValue !== "string") return;
+
+    const trimmed = streetValue.trim();
+    if (trimmed.length < 3) return;
+
+    // parse
+    const parsed = parseAddressFromStreet(trimmed);
+    const { city, state, zipCode } = parsed;
+
+    // if nothing extracted, skip
+    if (!city && !state && !zipCode) return;
+
+    // Check if these fields are already filled by user (non-empty and not previously autofilled),
+    // we avoid overwriting manual edits.
+    const currentValues = getValues ? getValues() : {};
+    const curCity = (currentValues?.city ?? "").trim();
+    const curState = (currentValues?.state ?? "").trim();
+    const curZip = (currentValues?.zipCode ?? currentValues?.zip ?? "").toString().trim();
+
+    const lastStreet = lastAutoFilledStreet.current;
+    const lastVals = lastAutoFilledValues.current;
+
+    // If the street hasn't changed since last autofill and parsed values equal last autofill, do nothing.
+    if (lastStreet === trimmed &&
+      lastVals.city === city &&
+      lastVals.state === state &&
+      lastVals.zipCode === zipCode) {
+      return;
+    }
+
+    // Only set when target field is empty OR it was previously autofilled from the same street
+    const shouldSetCity = (!curCity) || (lastStreet === trimmed && lastVals.city && !curCity);
+    const shouldSetState = (!curState) || (lastStreet === trimmed && lastVals.state && !curState);
+    const shouldSetZip = (!curZip) || (lastStreet === trimmed && lastVals.zipCode && !curZip);
+
+    let didSet = false;
+    if (shouldSetCity && city) {
+      try { setValue("city", city, { shouldDirty: true, shouldValidate: true }); didSet = true; } catch (e) { }
+    }
+    if (shouldSetState && state) {
+      try { setValue("state", state, { shouldDirty: true, shouldValidate: true }); didSet = true; } catch (e) { }
+    }
+    if (shouldSetZip && zipCode) {
+      try { setValue("zipCode", zipCode, { shouldDirty: true, shouldValidate: true }); didSet = true; } catch (e) { }
+    }
+
+    if (didSet) {
+      // remember what we autofilled and from which street string
+      lastAutoFilledStreet.current = trimmed;
+      lastAutoFilledValues.current = { city, state, zipCode };
+      // re-check validation
+      computeRequiredFieldsValid();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [streetValue, mode, setValue, getValues]);
+
+
+  // Render
   return (
     <section className="max-w-2xl pb-8">
       <h2 className="text-md mb-4">{translations?.shipping_address}</h2>

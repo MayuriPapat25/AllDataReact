@@ -5,6 +5,7 @@ import InfoField from "../../../shared/ui/InfoField";
 import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup";
 import { translations } from '../../../shared/translations';
 import billingForm from '../../../assets/images/billingform.png'
+import { useEffect } from "react";
 
 const BillingInformation = ({
   paymentType = "Credit Card",
@@ -23,6 +24,12 @@ const BillingInformation = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const maybeDelay = (ms) => ms > 0 ? new Promise((r) => setTimeout(r, ms)) : Promise.resolve();
+
+  useEffect(() => {
+    // treat initial/read-only as valid, editing as invalid
+    const isValid = mode === "initial" || mode === "readonly";
+    onValidationChange?.(Boolean(isValid));
+  }, [mode, onValidationChange]);
 
   const handleValidate = async () => {
     setIsLoading(true);

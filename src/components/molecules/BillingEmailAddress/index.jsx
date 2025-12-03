@@ -3,22 +3,23 @@ import { RadioGroup, RadioGroupItem } from "../../../shared/ui/RadioButtonGroup"
 import { translations } from '../../../shared/translations'
 
 const BillingEmailForm = ({ onValidationChange }) => {
+  const primaryEmail = "kiwow31027@inupup.com"
+
   const [radioValue, setRadioValue] = useState("primary")
-  const [customEmail, setCustomEmail] = useState("")
+  const [customEmail, setCustomEmail] = useState(primaryEmail)
 
   // Sample primary email address
-  const primaryEmail = "kiwow31027@inupup.com"
 
   const handleRadioClick = () => {
     if (radioValue === "primary") {
       // If already selected, deselect it
       setRadioValue(null)
-      onValidationChange?.(Boolean(customEmail))
+      // onValidationChange?.(Boolean(customEmail))
     } else {
       // Select the radio button
       setRadioValue("primary")
       setCustomEmail("")
-      onValidationChange?.(true)
+      // onValidationChange?.(true)
     }
   }
 
@@ -26,22 +27,20 @@ const BillingEmailForm = ({ onValidationChange }) => {
     setRadioValue(value)
     if (value === "primary") {
       setCustomEmail("")
-      onValidationChange?.(true)
-    } else {
-      onValidationChange?.(Boolean(customEmail))
+      // onValidationChange?.(true)
     }
   }
 
-  // Emit initial validity (primary selected by default)
   useEffect(() => {
-    onValidationChange?.(radioValue === "primary" ? true : Boolean(customEmail))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const valid = radioValue === "primary" ? true : Boolean(customEmail && customEmail.includes("@"));
+    console.debug("BillingEmailForm valid:", valid, { radioValue, customEmail });
+    onValidationChange?.(valid);
+  }, [radioValue, customEmail, onValidationChange]);
 
   const isDisabled = radioValue === "primary"
 
   return (
-    <div className="w-full space-y-6 pb-8 border-b-2 border-gray-300 ">
+    <div className="w-full max-w-2xl space-y-6 pb-8 border-b-2 border-gray-300 ">
       <h2 className="text-md">{translations?.billing_email_address}</h2>
 
       <div className="space-y-4">

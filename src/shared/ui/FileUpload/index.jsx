@@ -3,23 +3,86 @@ import { cn } from "../../utils/utils"
 import InputField from "../../../shared/ui/InputField/index"
 import { Button } from "../Buttons/Button"
 import { translations } from "../../translations"
+import { useEffect } from "react"
 
 
-const FileUpload = ({ label, onChange, accept = ".png,.jpg,.jpeg,.pdf", helperText, required = false, className, error,
-    errorText, }) => {
+const FileUpload = ({
+    label,
+    onChange,
+    accept = ".png,.jpg,.jpeg,.pdf",
+    helperText,
+    required = false,
+    className,
+    error,
+    errorText,
+    value = null
+}) => {
     const [fileName, setFileName] = useState("")
+    const [fileUrl, setFileUrl] = useState(null);
     const fileInputRef = useRef(null)
 
+    // derive display name + url from incoming `value`
+    useEffect(() => {
+        if (!value) {
+            setFileName("");
+            setFileUrl(null);
+            return;
+        }
+
+        // File instance
+        if (value instanceof File) {
+            setFileName(value.name || "");
+            setFileUrl(null);
+            return;
+        }
+
+        // object with name + url/dataUrl
+        if (typeof value === "object" && value !== null) {
+            const name = value.name || value.fileName || value.file?.name || "";
+            const url = value.dataUrl || value.url || null;
+            setFileName(name);
+            setFileUrl(url);
+            return;
+        }
+
+        // string url or data-url
+        if (typeof value === "string") {
+            const parts = value.split("/").pop().split("?")[0];
+            setFileName(parts || value);
+            setFileUrl(value);
+            return;
+        }
+
+        setFileName("");
+        setFileUrl(null);
+    }, [value]);
+
+
     const handleFileChange = (event) => {
-        const file = event.target.files?.[0] || null
-        setFileName(file ? file.name : "")
-        onChange(file)
-    }
+        const file = event.target.files?.[0] || null;
+        if (file) {
+            setFileName(file.name);
+            setFileUrl(null);
+            // send File to parent (so they can autosave or transform to base64)
+            onChange && onChange(file);
+        } else {
+            // no file chosen
+            setFileName("");
+            setFileUrl(null);
+            onChange && onChange(null);
+        }
+    };
 
     const handleRemove = () => {
+        // clear local UI
         setFileName("");
-        onChange(null);
-        if (fileInputRef.current) fileInputRef.current.value = null;
+        setFileUrl(null);
+        // clear input value so same file can be chosen again
+        if (fileInputRef.current) {
+            fileInputRef.current.value = null;
+        }
+        // notify parent
+        onChange && onChange(null);
     };
 
     const handleButtonClick = () => {
@@ -58,6 +121,18 @@ const FileUpload = ({ label, onChange, accept = ".png,.jpg,.jpeg,.pdf", helperTe
                 (<>
                     <div className="flex mt-2 items-center">
                         <p className="text-md mb-2 font-medium">{fileName}</p>
+                        {/* show link if we have a url/dataUrl for persisted file */}
+                        {fileUrl && (
+                            <a
+                                href={fileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-4 text-sm underline"
+                            >
+                                {translations?.view || "View"}
+                            </a>
+                        )}
+
                         <button
                             type="button"
                             onClick={handleRemove}

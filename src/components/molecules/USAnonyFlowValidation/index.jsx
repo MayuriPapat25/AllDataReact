@@ -1,10 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import LoginForm from "../LoinForm"
-import BillingAddressForm from '../BillingAddress'
-import ShippingAddressForm from '../ShippingAddress'
 import BillingEmailForm from "../BillingEmailAddress"
 import PhoneSignupForm from "../PhoneSignUpForm"
-import { useEffect, useState } from "react"
 import OrderSummary from "../OrderSummary"
 import AccountInformation from "../AccountInformation"
 import BusinessInfoReview from "../BusinessInfoReview"
@@ -39,22 +36,21 @@ const USAnonyFlowValidation = ({
     const prevStepRef = useRef(null);
     const billingRef = useRef(null); 
     const shippingRef = useRef(null);
+    const businessInfoRef = useRef(null);
 
+    const [returnedFromReview, setReturnedFromReview] = useState(false);
+
+    // capture previous step and compute returnedFromReview reliably
     useEffect(() => {
-        // prevStepRef.current contains the *previous* value of currentStep
-        // we update it at the end of this render cycle for the next change
-        const id = setTimeout(() => {
-            prevStepRef.current = currentStep;
-        }, 0);
-        return () => clearTimeout(id);
+        // prevStepRef.current holds previous value until we overwrite it below
+        setReturnedFromReview(prevStepRef.current === 3 && currentStep === 2);
+        // update prevStepRef for next render
+        prevStepRef.current = currentStep;
     }, [currentStep]);
-
-    const returnedFromReview = prevStepRef.current === 3 && currentStep === 2;
 
     // read saved account values
     const savedAccount = useSelector((state) => state.form?.accountCreation) ?? {};
 
-    const [step1Valid, setStep1Valid] = useState(false)
     const [businessInfoValid, setBusinessInfoValid] = useState(false)
     const [businessAddressValid, setBusinessAddressValid] = useState(false)
     const [billingEmailValid, setBillingEmailValid] = useState(false)
@@ -161,7 +157,32 @@ const USAnonyFlowValidation = ({
     const businessAddress = useSelector(state => state.form.businessAddress) ?? {};
     const billingAddress = useSelector(state => state.form.billingAddress) ?? {};
     const shippingAddress = useSelector(state => state.form.shippingAddress) ?? {};
-    
+
+    const businessInfoFromStore = useSelector((s) => s.form?.businessInfo ?? {});
+
+    useEffect(() => {
+        if (currentStep !== 2) return;
+
+        const safeCompute = (vals, schema) => {
+            try {
+                return Boolean(computeIsValid(vals || {}, schema));
+            } catch (e) {
+                return false;
+            }
+        };
+
+        // Only ever raise validation flags from store results; never lower them.
+        setBusinessInfoValid((prev) => prev || safeCompute(businessInfoFromStore, "businessInfo"));
+        setBusinessAddressValid((prev) => prev || safeCompute(businessAddress, "businessAddress"));
+        setBillingAddressValid((prev) => prev || safeCompute(billingAddress, "billingAddress"));
+        setShippingAddressValid((prev) => prev || safeCompute(shippingAddress, "shippingAddress"));
+        
+        const emailValid = Boolean(savedAccount?.email) || false;
+        setBillingEmailValid(emailValid);
+
+    }, [currentStep, businessInfoFromStore, businessAddress, billingAddress, shippingAddress, savedAccount]);
+
+    console.log('businessInfoValid && businessAddressValid && billingAddressValid && shippingAddressValid && billingEmailValid', businessInfoValid, businessAddressValid, billingAddressValid, shippingAddressValid, billingEmailValid)
     const renderStepContent = () => {
         switch (currentStep) {
             case 1:
@@ -183,21 +204,20 @@ const USAnonyFlowValidation = ({
                         </div>
                     </div>
                 )
-
             case 2:
                 return (
                     <div>
                         <div className="mx-auto flex justify-between gap-8">
                             <div className="w-1/2 space-y-6">
-                                <BusinessInformation onValidationChange={setBusinessInfoValid}/>
+                                <BusinessInformation ref={businessInfoRef} onValidationChange={setBusinessInfoValid}/>
                                 <BusinessAddressValidation initialData={businessAddress} onValidationChange={setBusinessAddressValid} 
                                 onSave={(vals) => {
                                     console.log("address saved", vals);
                                 }} />
-                                <BillingAddress ref={billingRef}  onValidationChange={setBillingAddressValid} forceEditOnMount={returnedFromReview} />
-                                <ShippingAddress ref={shippingRef}  onValidationChange={setShippingAddressValid} forceEditOnMount={returnedFromReview} />
+                                <BillingAddress ref={billingRef} onValidationChange={setBillingAddressValid} forceEditOnMount={returnedFromReview} />
+                                <ShippingAddress ref={shippingRef} onValidationChange={setShippingAddressValid} forceEditOnMount={returnedFromReview} />
                                 <div className="space-y-6">
-                                    <BillingInformation onValidationChange={setBusinessInfoValid}/>
+                                    <BillingInformation onValidationChange={setBillingInfoValid}/>
                                     <BillingEmailForm onValidationChange={setBillingEmailValid} />
                                     <PhoneSignupForm />
                                 </div>
