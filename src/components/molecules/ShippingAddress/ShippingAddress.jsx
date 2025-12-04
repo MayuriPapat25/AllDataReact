@@ -29,7 +29,7 @@ const ShippingAddressForm = ({
 
   const [mode, setMode] = useState(() => {
     if (persistedFromSlices) return "readonly";
-    if (initialBillingData) return "readonly";
+    if (initialShippingData) return "readonly";
     if (initialSameAsBusiness) return "same";
     return "editing";
   });
@@ -129,11 +129,11 @@ const ShippingAddressForm = ({
   }, [persistedFromSlices, initialShippingData]);
 
   useEffect(() => {
-    console.debug("Billing - persistedFromSlices changed:", persistedFromSlices, "business:", businessAddress, "mode:", mode);
+    console.debug("Shipping - persistedFromSlices changed:", persistedFromSlices, "business:", businessAddress, "mode:", mode);
   }, [persistedFromSlices, businessAddress, mode]);
 
   useEffect(() => {
-    // If no persisted billing yet, nothing to do.
+    // If no persisted shipping yet, nothing to do.
     if (!persistedFromSlices) return;
 
     const normalizedPersisted = normalizeShippingShape(persistedFromSlices);
@@ -180,7 +180,7 @@ const ShippingAddressForm = ({
         return;
       }
 
-      // 2) If we have a persisted billing (but not same as business) -> readonly
+      // 2) If we have a persisted shipping (but not same as business) -> readonly
 
       setShippingData(persisted);
       try { reset(persisted); } catch (e) { }
@@ -189,7 +189,7 @@ const ShippingAddressForm = ({
       return;
     }
 
-    // 3) No persisted billing -> if business exists and initialSameAsBusiness was true then set same
+    // 3) No persisted shipping -> if business exists and initialSameAsBusiness was true then set same
     if (businessAddress && initialSameAsBusiness) {
       const mapped = normalizeBusinessToShipping(businessAddress);
       setShippingData(mapped);
